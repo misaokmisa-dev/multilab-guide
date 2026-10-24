@@ -1,5 +1,3 @@
-/* 提携承認後、広告主/ASPが発行した適切なURLを貼り付けます。
-   指定媒体での掲載許可・広告表示の要件を事前に確認してください。
-   例: window.AFFILIATE_URL = 'https://...';
-   未提携時は通常の公式サイトURLに遷移します（成果報酬は発生しません）。 */
-window.AFFILIATE_URL = '';
+/* A8.net / ConoHa for GAME：正式発行済み自由テキスト広告リンク（素材035）。
+   URLはトラッキング用のため変更しないでください。広告表示は診断結果・記事内で明示します。 */
+window.AFFILIATE_URL = 'https://px.a8.net/svt/ejp?a8mat=4BEOXO+FJNHF6+50+7A688I';
