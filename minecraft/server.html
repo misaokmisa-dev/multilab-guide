@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="マイクラサーバーは何GB必要？4問の無料診断でJava版・統合版、人数、MOD、利用期間から容量の目安をチェック。契約前に比較ポイントも確認。">
+  <meta name="theme-color" content="#edf3e8">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="マイクラサーバー容量 無料診断｜MULTI LAB GUIDE">
+  <meta property="og:description" content="4問で容量の目安を確認。無料で遊べる方法も含めて比較。">
+  <title>マイクラサーバー容量診断｜人数・MODから無料で目安を確認 | MULTI LAB GUIDE</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="minecraft.css">
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+<link rel="canonical" href="https://lighthearted-longma-f21ba3.netlify.app/minecraft/server.html"></head>
+<body class="minecraft-body">
+  <div style="background:#f0f6ed;color:#28472b;padding:10px 18px;text-align:center;font-size:14px"><a href="index.html" style="color:#245c34;font-weight:700">Minecraftガイド TOP</a>　›　サーバー・4問診断　｜　<a href="mods/" style="color:#245c34">MODガイドはこちら</a></div>
+  <div style="padding:9px 16px;background:#fff8e5;color:#59420e;text-align:center;font-size:13px">PR：診断結果にはA8.net経由の広告リンクが含まれます。おすすめ容量は広告報酬とは独立して算出しています。</div>
+  <a class="skip-link" href="#diagnosis">診断フォームへ移動</a>
+  <header class="site-header" id="top">
+    <div class="shell header-inner">
+      <a href="../index.html" class="brand" aria-label="MULTI LAB GUIDE ポータルへ">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name">MULTI <b>LAB</b><small>GUIDE</small></span>
+      </a>
+      <nav class="header-nav" aria-label="メインナビゲーション"><a href="../index.html">総合トップ</a><a href="#how">選び方</a><a href="#articles">解説記事</a></nav>
+      <a class="button button-primary nav-cta" href="#diagnosis">無料で診断 <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <nav class="mc-crumb" aria-label="パンくず"><a href="../index.html">MULTI LAB GUIDE</a><span aria-hidden="true">／</span><span>Minecraft</span></nav>
+          <div class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> MINECRAFT GUIDE <span class="edition-badge">非公式</span></div>
+          <div class="voxel-art" aria-hidden="true"><span class="voxel voxel-a"></span><span class="voxel voxel-b"></span><span class="voxel voxel-c"></span><span class="voxel voxel-d"></span><span class="voxel voxel-e"></span></div>
+          <h1 id="hero-title">マイクラのサーバー、<br><span class="accent-text">何GBが必要？</span></h1>
+          <p class="hero-description">友達と遊ぶ人数やMODの有無から、サーバー容量の目安をチェック。<strong>自分に不要なプランを選ばない</strong>ための無料ガイドです。</p>
+          <div class="hero-cta-row"><a class="button button-primary button-large" href="#diagnosis">4問の無料診断を始める <span aria-hidden="true">→</span></a><a class="subtle-link" href="#how">まず選び方を知る <span aria-hidden="true">→</span></a></div>
+          <div class="hero-facts" aria-label="サービスの特徴"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>全4問</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>完全無料</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>会員登録なし</span></div>
+          <p class="hero-caution">※ 診断は容量の目安を示すもので、動作や快適さを保証するものではありません。</p>
+        </div>
+        <div class="quiz-card" id="diagnosis" aria-labelledby="quiz-title">
+          <div class="quiz-heading"><div><span class="quiz-overline">無料のサーバー容量診断</span><h2 id="quiz-title">あなたに合う容量をチェック</h2></div><span class="quiz-pill">4 STEP</span></div>
+          <div class="quiz-progress-meta"><span id="step-label">質問 1 / 4</span><span id="progress-percent">25%</span></div>
+          <div class="progress-track" role="progressbar" aria-label="診断の進行状況" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" id="progress-track"><span id="progress-fill" class="progress-fill"></span></div>
+          <form id="quiz" novalidate>
+            <fieldset class="quiz-step" data-step="0"><legend>どのエディションで遊ぶ？</legend><p class="question-help">遊ぶ端末に合わせて選んでください。</p>
+              <div class="choice-grid two-col">
+                <label class="choice"><input type="radio" name="edition" value="java" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>Java版</b><small>PC（Windows / Mac など）</small></span></label>
+                <label class="choice"><input type="radio" name="edition" value="bedrock" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>統合版</b><small>スマホ / ゲーム機 / PC</small></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="quiz-step" data-step="1" hidden><legend>同時に何人で遊ぶ？</legend><p class="question-help">最大人数ではなく、普段ログインする人数です。</p>
+              <div class="choice-grid two-col">
+                <label class="choice"><input type="radio" name="players" value="2" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>2〜4人</b><small>少人数</small></span></label>
+                <label class="choice"><input type="radio" name="players" value="6" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>5〜10人</b><small>友達グループ</small></span></label>
+                <label class="choice"><input type="radio" name="players" value="12" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>11〜20人</b><small>大人数</small></span></label>
+                <label class="choice"><input type="radio" name="players" value="21" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>21人以上</b><small>個別検証を推奨</small></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="quiz-step" data-step="2" hidden><legend>MOD・プラグインを使う？</legend><p class="question-help">分からなければ、使わない方を選んでください。</p>
+              <div class="choice-grid">
+                <label class="choice"><input type="radio" name="mods" value="none" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>ほぼ使わない</b><small>普通のサバイバルなど</small></span></label>
+                <label class="choice"><input type="radio" name="mods" value="light" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>少し使う</b><small>軽めのMODやプラグイン</small></span></label>
+                <label class="choice"><input type="radio" name="mods" value="heavy" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>大型MODパックを使う</b><small>配布元の動作要件を優先</small></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="quiz-step" data-step="3" hidden><legend>どのくらいの期間遊ぶ？</legend><p class="question-help">契約方式を選ぶときの参考にします。</p>
+              <div class="choice-grid">
+                <label class="choice"><input type="radio" name="duration" value="brief" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>週末・数日だけ</b><small>短期利用</small></span></label>
+                <label class="choice"><input type="radio" name="duration" value="month" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>1か月くらい</b><small>期間を決めて遊ぶ</small></span></label>
+                <label class="choice"><input type="radio" name="duration" value="long" required><span class="choice-body"><span class="choice-dot" aria-hidden="true"></span><b>3か月以上</b><small>長く遊ぶ予定</small></span></label>
+              </div>
+            </fieldset>
+            <p class="quiz-error" id="quiz-error" role="alert" hidden>選択肢を1つ選んでください。</p>
+            <div class="quiz-controls"><button type="button" class="button button-secondary" id="back" disabled>← 戻る</button><button type="button" class="button button-primary" id="next" disabled>次へ <span aria-hidden="true">→</span></button></div>
+          </form>
+          <section id="result" class="result" aria-live="polite" aria-labelledby="result-heading" hidden>
+            <p class="result-kicker">あなたの診断結果</p><div class="result-capacity"><span id="result-size">4GB</span><span id="result-suffix">から検討</span></div>
+            <p id="result-heading" class="result-note">一般的な構成を基にした出発点の目安です。</p>
+            <div class="result-details"><div><b>この容量を目安にする理由</b><p id="result-reason"></p></div><div><b>利用前の注意点</b><p id="result-advice"></p></div><div><b>料金方式の選び方</b><p id="result-duration"></p></div></div>
+            <div class="result-actions"><a id="offer-link" class="button button-primary result-offer" href="https://game.conoha.jp/function/minecraft/" target="_blank" rel="noopener noreferrer">公式サイトでプランを比較 <span aria-hidden="true">↗</span></a><a class="result-alternative" href="articles/free-vs-paid.html">無料で遊ぶ方法も確認する →</a></div>
+            <p class="offer-disclosure" id="link-state">このリンクは公式サイトへの通常リンクです。現時点で広告提携はありません。</p>
+            <button class="result-reset" type="button" id="restart">↻ 条件を変えてもう一度診断する</button>
+          </section>
+        </div>
+      </div>
+    </section>
+    <div id="ad-notice" class="ad-disclosure shell" hidden><strong>PR</strong><span>このサイトにはアフィリエイト広告が含まれます。リンク経由の申込みによって当サイトが報酬を得る場合があります。</span></div>
+    <section class="explain shell" id="how" aria-labelledby="how-title">
+      <div class="section-title"><span class="section-eyebrow">BEFORE YOU CHOOSE</span><h2 id="how-title">失敗しないサーバー選び、<br>押さえるのはこの3つ。</h2><p>まず遊ぶ環境を確認。その後で費用を比較すれば、不要な契約を避けやすくなります。</p></div>
+      <div class="feature-grid">
+        <article class="feature-card"><span class="feature-number">01</span><span class="feature-icon" aria-hidden="true">⌘</span><h3>エディションを合わせる</h3><p>Java版と統合版ではサーバーの種類が異なります。友達全員の環境を先に確認しましょう。</p><a href="articles/java-bedrock.html">違いを見る <span aria-hidden="true">→</span></a></article>
+        <article class="feature-card"><span class="feature-number">02</span><span class="feature-icon" aria-hidden="true">▤</span><h3>人数とMODで考える</h3><p>2GB・4GB・8GBは選ぶための出発点。追加要素やワールド負荷によって変わります。</p><a href="articles/memory-guide.html">容量の選び方 <span aria-hidden="true">→</span></a></article>
+        <article class="feature-card"><span class="feature-number">03</span><span class="feature-icon" aria-hidden="true">◷</span><h3>無料の方法も比較する</h3><p>遊ぶ時間が限られていれば有料サーバーは不要なことも。継続利用だけが正解ではありません。</p><a href="articles/free-vs-paid.html">無料と有料を比較 <span aria-hidden="true">→</span></a></article>
+      </div>
+    </section>
+    <section class="reading" id="articles" aria-labelledby="articles-title"><div class="shell"><div class="section-title small-title"><span class="section-eyebrow">READ & COMPARE</span><h2 id="articles-title">契約前に読んでおきたい解説</h2><p>必要なことだけ、短く。判断に役立つ3つのガイド。</p></div>
+      <div class="article-grid">
+        <a class="article-card" href="articles/memory-guide.html"><span class="article-label">容量・スペック</span><h3>2GB・4GB・8GB、どれを選ぶ？</h3><p>人数やMODごとに必要な容量の考え方を整理します。</p><span class="article-more">読む <span aria-hidden="true">→</span></span></a>
+        <a class="article-card" href="articles/java-bedrock.html"><span class="article-label">対応環境</span><h3>Java版と統合版は何が違う？</h3><p>Switch・PC・スマホで遊ぶときの確認ポイント。</p><span class="article-more">読む <span aria-hidden="true">→</span></span></a>
+        <a class="article-card" href="articles/free-vs-paid.html"><span class="article-label">料金・サービス</span><h3>無料・Realms・専用サーバーの違い</h3><p>費用と運用の手間を見比べて選びましょう。</p><span class="article-more">読む <span aria-hidden="true">→</span></span></a>
+      </div></div>
+    </section>
+    <section class="faq shell" id="faq" aria-labelledby="faq-title"><div class="section-title small-title"><span class="section-eyebrow">QUESTIONS</span><h2 id="faq-title">よくある質問</h2></div><div class="faq-list">
+      <details><summary>診断結果の容量なら必ず快適？</summary><div>保証はできません。MOD、CPU、ワールド規模、バージョン、接続人数などで負荷は変わります。大型MODでは配布元の推奨要件を優先してください。</div></details>
+      <details><summary>Java版と統合版の友達は一緒に遊べる？</summary><div>通常はエディションに対応した別サーバーが必要です。特殊な接続方式もありますが、端末とサービス側の対応条件を確認してください。</div></details>
+      <details><summary>無料でマルチプレイできる？</summary><div>ホストのゲーム画面から一緒に遊べる構成や、利用条件に合う公式機能を使える場合があります。常時公開したい場合はRealmsや専用サーバーとの比較をおすすめします。</div></details>
+      <details><summary>このサイトはMinecraftやConoHaの公式サイト？</summary><div>いいえ。独立した非公式の情報サイトです。プランの仕様・料金・契約条件はサービスの公式サイトで必ずご確認ください。</div></details>
+    </div></section>
+    <section class="bottom-banner shell"><div><span class="banner-overline">4問だけ・登録不要</span><h2>あなたに必要な容量を、<br>まず無料で確認。</h2></div><a class="button button-white" href="#diagnosis">無料診断に戻る <span aria-hidden="true">↑</span></a></section>
+  </main>
+  <footer class="site-footer"><div class="shell footer-main"><div><a href="../index.html" class="brand brand-footer"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-name">MULTI <b>LAB</b><small>GUIDE</small></span></a><p>ゲームを選ぶなら迷わない。<br><a href="../index.html">ゲーム別ガイドの一覧へ戻る →</a></p></div><div><p class="footer-heading">運営情報</p><a href="../index.html">ゲーム別ガイド一覧</a><a href="../sitemap.html">サイトマップ</a><a href="../about.html">このサイトについて</a><a href="../privacy.html">プライバシーポリシー</a></div><div><p class="footer-heading">大切なお知らせ</p><p>独立した非公式ガイドです。Minecraftなど各サービスとの提携・承認を示すものではありません。料金・仕様は公式情報を優先してください。広告にはPR表記を行っています。</p></div></div><div class="shell footer-legal">© 2026 MULTI LAB GUIDE <span>情報確認：2026年10月25日</span></div></footer>
+  <div class="mobile-action" id="mobile-action" hidden><a class="button button-primary" href="#diagnosis">4問で無料診断 <span aria-hidden="true">→</span></a></div>
+</body>
+</html>
