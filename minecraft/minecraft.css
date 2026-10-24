@@ -1,0 +1,49 @@
+/* Minecraft branch — same accessible controls, a distinct contextual identity.
+   Voxel-inspired geometry is original CSS, not Minecraft game artwork. */
+.minecraft-body{
+  --surface:#fff; --background:#f2f6ed; --surface-subtle:#ecf2e9;
+  --ink:#25352b; --muted:#506354; --muted-soft:#677a68; --border:#d6e1d2;
+  --brand:#387948; --brand-hover:#245c34; --brand-soft:#e5f1e5; --focus:#e8ab3d;
+  --green:#276b38; --green-soft:#e5f5e9; --dark:#29472e;
+}
+.minecraft-body .site-header{background:rgba(252,253,250,.98)}
+.minecraft-body .brand-mark{border-radius:6px;transform:none;background:#387948}
+.minecraft-body .brand-mark i{border-radius:0}
+.minecraft-body .button,.minecraft-body .quiz-card,.minecraft-body .feature-card,.minecraft-body .article-card{border-radius:12px}
+.minecraft-body .button-primary{box-shadow:0 5px 12px rgba(37,106,53,.18)}
+.minecraft-body .button-primary:hover{box-shadow:0 7px 14px rgba(37,106,53,.25)}
+.minecraft-body .hero{position:relative;overflow:hidden;background:radial-gradient(circle at 17% 0%, #d9edcf 0, transparent 38%),linear-gradient(145deg,#f5f8ee 0%,#eef4e7 72%,#e9f0e4 100%)}
+.minecraft-body .hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(89,131,73,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(89,131,73,.035) 1px,transparent 1px);background-size:29px 29px;mask-image:linear-gradient(90deg,black,transparent 72%);pointer-events:none}
+.minecraft-body .hero-grid{position:relative;z-index:1}
+.minecraft-body .hero h1{margin-top:13px}
+.minecraft-body .accent-text{color:#357344}
+.minecraft-body .eyebrow{color:#32643c;gap:10px}
+.minecraft-body .eyebrow-dot{border-radius:2px;background:#548a42;box-shadow:0 0 0 4px #d8ecd1}
+.minecraft-body .quiz-card{border:1px solid #bfceb8;box-shadow:0 14px 0 -8px #b0c5a7,0 19px 46px rgba(42,70,39,.09)}
+.minecraft-body .quiz-pill{border-radius:6px}
+.minecraft-body .progress-track,.minecraft-body .progress-fill{border-radius:4px}
+.minecraft-body .choice-body{border-radius:9px}
+.minecraft-body .choice-body:hover{border-color:#83aa88;background:#f5faf4}
+.minecraft-body .choice input:checked+.choice-body{background:#edf6e9}
+.minecraft-body .result-details>div{background:#f7faf5}
+.minecraft-body .article-label{color:#285f36}
+.minecraft-body .feature-icon{border-radius:8px}
+.minecraft-body .bottom-banner{background:linear-gradient(120deg,#234c32,#365f39);border-bottom:6px solid #6c8b49}
+.minecraft-body .button-white{color:#245b34}
+.minecraft-body .button-white:hover{color:#245b34}
+.minecraft-body .site-footer{background:#f4f6f0}
+.minecraft-body .article-cta{border-color:#c5dabc}
+.minecraft-body .ad-inline{background:#f2f8f1;border-color:#c5dac1;border-left-color:#387948}
+.minecraft-body .article-wrap th{background:#e5f1e5}
+.edition-badge{font-size:10px;line-height:1;background:#e3e9dc;color:#455b42;padding:6px 8px;border-radius:5px;letter-spacing:0}
+.mc-crumb{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;color:#637a64;margin-bottom:30px}
+.mc-crumb a{color:#3b6e45;text-decoration:underline;text-underline-offset:4px}
+.voxel-art{display:flex;align-items:end;gap:0;height:66px;width:max-content;position:relative;margin:19px 0 1px 1px;filter:drop-shadow(5px 9px 2px rgba(62,75,40,.09))}
+.voxel{display:block;width:40px;height:38px;position:relative;background:#936d42;border:3px solid #4f6e33;border-top-width:11px;box-shadow:inset 0 -6px 0 rgba(53,37,22,.12)}
+.voxel:before{content:"";position:absolute;left:-3px;right:-3px;top:-11px;height:9px;background:repeating-linear-gradient(90deg,#60963c 0 8px,#84ad53 8px 16px,#3c7739 16px 21px)}
+.voxel:after{content:"";position:absolute;width:6px;height:6px;background:#b18a59;left:11px;top:14px;box-shadow:15px -8px #6f5439, 15px 6px #b18a59}
+.voxel-a{height:27px}.voxel-b{height:47px}.voxel-c{height:65px}.voxel-d{height:47px}.voxel-e{height:30px}
+.voxel-c:before{background:repeating-linear-gradient(90deg,#5a8b36 0 8px,#a4c76e 8px 14px,#3b7a3d 14px 21px)}
+.minecraft-body .article-wrap .breadcrumb a{color:#2e6942}
+.minecraft-body .header .logo-icon{border-radius:4px;background:#377c48}
+@media(max-width:800px){.mc-crumb{margin-bottom:16px}.voxel-art{height:50px;margin:14px 0 0}.voxel{width:33px;height:30px}.voxel-a{height:21px}.voxel-b{height:36px}.voxel-c{height:49px}.voxel-d{height:36px}.voxel-e{height:23px}}
