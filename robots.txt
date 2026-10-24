@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lighthearted-longma-f21ba3.netlify.app/sitemap.xml
+Sitemap: https://multilab-guide.misa-ok-misa.workers.dev/sitemap.xml
