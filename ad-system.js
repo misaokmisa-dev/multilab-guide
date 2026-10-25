@@ -4,7 +4,7 @@
 const conf=window.MULTILAB_ADS||{}, main=document.querySelector("main");
 if(conf.adsterraEnabled) {
   // Social Bar: one script per page. Native Banner: one container and one script.
-  if(!/\\/(?:about|privacy|sitemap)\\.html$/.test(location.pathname)) {
+  if(!["about.html","privacy.html","sitemap.html"].some(p => location.pathname.endsWith("/"+p))) {
     if(!document.querySelector('[data-mlg-native]')) {
       const aside=document.createElement("aside");
       aside.className="as-slot as-native";
