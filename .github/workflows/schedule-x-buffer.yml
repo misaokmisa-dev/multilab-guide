@@ -1,5 +1,10 @@
 name: X Buffer Free Scheduler
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/schedule-x-buffer.yml
+      - scripts/buffer_x_schedule.py
   workflow_dispatch:
     inputs:
       target_date:
@@ -27,6 +32,6 @@ jobs:
       - name: Schedule X posts for tomorrow
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-          TARGET_DATE: ${{ inputs.target_date }}
+          TARGET_DATE: ${{ github.event_name == 'push' && '2026-10-26' || inputs.target_date }}
           DRY_RUN: ${{ inputs.dry_run }}
         run: python3 scripts/buffer_x_schedule.py

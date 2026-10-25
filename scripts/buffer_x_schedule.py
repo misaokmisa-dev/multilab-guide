@@ -36,13 +36,15 @@ def get_channel():
     account = gql("query { account { organizations { id } } }").get("account") or {}
     matched = []
     for org in account.get("organizations") or []:
-        channels = gql("query { channels(input: {organizationId: %s}) { id name service isQueuePaused } }" % q(org["id"])).get("channels") or []
+        channels = gql("query { channels(input: {organizationId: %s}) { id name displayName externalLink service isQueuePaused isDisconnected isLocked } }" % q(org["id"])).get("channels") or []
         for item in channels:
-            if (item.get("service") or "").lower() in ("twitter", "x") and (item.get("name") or "").lstrip("@").lower() == TARGET_HANDLE:
+            if (item.get("service") or "").lower() in ("twitter", "x") and TARGET_HANDLE in (" ".join(str(item.get(k) or "") for k in ("name", "externalLink"))).lower():
                 matched.append((org["id"], item))
     if len(matched) != 1:
         raise RuntimeError("Bufferに @sukura_kunn のX連携が一意に見つかりません。接続先を確認してください。")
     org_id, channel = matched[0]
+    if channel.get("isDisconnected") or channel.get("isLocked"):
+        raise RuntimeError("BufferのXチャンネルが切断済みかロック中です。再連携を確認してください。")
     if channel.get("isQueuePaused"):
         raise RuntimeError("BufferのX投稿キューが一時停止されています。")
     return org_id, channel["id"]
