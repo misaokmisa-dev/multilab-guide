@@ -17,65 +17,35 @@
 @media(max-width:1699px){.mlg-ad-rail{display:none!important}}
 @media(max-width:680px){.mlg-ad-block{margin:26px 10px}.mlg-ad-grid{grid-template-columns:1fr}}
 
-/* Adsterra: 各サイズ1枠。主要コンテンツと重ねない */
-.as-slot{box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;clear:both;max-width:100%;margin:34px auto;padding:8px 10px 10px;text-align:center;isolation:isolate}
-.as-slot-label{box-sizing:border-box;width:100%;max-width:728px;text-align:left;font:11px/1.5 system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#828b9c;margin:0 0 8px}
-.as-slot .as-ad-content{max-width:100%;min-width:0;margin:0 auto;line-height:0}
+
+/* Actual publisher units. Keep small spacing; never reserve a full 250px blank strip. */
+.as-slot{display:block;box-sizing:border-box;clear:both;width:max-content;max-width:100%;margin:16px auto;padding:3px 0;text-align:center;background:transparent;border:0;min-height:0}
+.as-slot-label{display:block;width:100%;margin:0 0 4px;text-align:left;font:10px/1.4 system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#777f91}
+.as-ad-content{max-width:100%;line-height:0;margin:0 auto}
 .as-top .as-ad-content{max-width:728px}
-.as-bottom .as-ad-content{max-width:468px}
 .as-inline .as-ad-content{max-width:300px}
-.as-native{max-width:1050px;padding:10px;margin:38px auto;min-height:0}
-.as-native>.as-slot-label{max-width:960px}
-.as-native #container-573f32537a9358baa2f58056e10eb15f{width:100%;min-height:0}
-.as-rail{position:fixed;right:10px;top:130px;box-sizing:border-box;width:178px;padding:6px 7px 8px;border:1px solid #e3e4ef;border-radius:12px;background:#fff;box-shadow:0 8px 20px rgba(20,25,55,.10);z-index:23;display:block}
-.as-rail>.as-slot-label{font-size:10px;margin-bottom:5px}
-.as-rail .as-ad-content{width:160px;height:600px}
-.as-close{position:absolute;top:2px;right:2px;width:22px;height:22px;border:1px solid #ddd;border-radius:4px;background:#fff;color:#4b5563;cursor:pointer;font-size:15px;line-height:18px}
-@media(max-width:1599px){.as-rail{display:none!important}}
-@media(max-width:1899px){body.ranking-page .as-rail{display:none!important}}
-@media(max-width:759px){.as-top{margin:18px auto}.as-top .as-ad-content{max-width:320px}.as-slot{padding:4px 8px;margin:22px auto}.as-bottom{display:none!important}}
-@media(max-width:559px){.as-rail{display:none!important}}
-
-/* 追従広告用の余白を確保する。見切れ・文字重なりを防ぐ。 */
-@media(min-width:1280px) {
-  body:has(.as-rail) main{box-sizing:border-box;margin-right:198px!important;width:auto!important;max-width:none!important}
-  .as-rail{display:block!important;right:12px;top:112px;max-height:calc(100vh - 120px);overflow-y:auto}
-}
-@media(max-width:1279px) {
-  .as-rail{display:none!important}
-}
-.as-slot .as-ad-content{position:relative;overflow:visible}
-.as-top,.as-inline,.as-bottom{min-width:0}
-
-/* 2026-10-25: left and right Ninja AdMax, responsive top ad mosaic, no giant empty areas */
-.as-rail.as-rail-left{left:12px;right:auto}
-.as-rail.as-rail-right{right:12px;left:auto}
-.as-rail{width:178px}
-.as-top-mosaic{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:14px;align-items:center;max-width:1100px;margin:14px auto 18px;padding:0 16px}
-.as-top-mosaic>.as-top{grid-column:span 2}
-.as-top-mosaic>.as-inline{grid-column:span 1}
-.as-top-mosaic>.as-slot{margin:0!important;padding:5px!important}
-.as-top-mosaic .as-ad-content{max-width:100%}
-.as-top-mosaic.as-empty{display:none!important}
-.as-slot.as-empty,.as-rail.as-empty{display:none!important}
-.as-game-inline{max-width:700px;margin:30px auto;text-align:center}
+.as-bottom .as-ad-content{max-width:468px}
+.as-slot.as-empty{display:none!important}
+.as-native{max-width:1000px;margin:22px auto;min-height:0}
+.as-native .as-ad-content{line-height:normal}
+.as-rail{position:fixed;box-sizing:border-box;top:143px;width:176px;z-index:20;border:0;background:transparent;box-shadow:none;padding:2px 8px;display:block;max-height:calc(100vh - 158px);overflow:auto}
+.as-rail-left{left:7px;right:auto}
+.as-rail-right{right:7px;left:auto}
+.as-rail>.as-slot-label{margin-bottom:3px}
+.as-rail .as-ad-content{width:160px;min-height:0;max-width:160px}
+.as-rail.as-empty{display:none!important}
+.as-close{position:absolute;z-index:1;top:0;right:0;width:19px;height:19px;font-size:13px;line-height:15px;border:1px solid #ddd;border-radius:4px;background:#fff;color:#555;cursor:pointer}
+.as-game-inline{max-width:700px;margin:20px auto;text-align:center}
 .as-game-inline>small{display:block;text-align:left;font-size:10px;color:#667085}
 .as-game-inline a{display:block;margin:auto;max-width:468px}
 .as-game-inline img{display:block;margin:auto;max-width:100%;height:auto}
-@media(min-width:1600px){
- body:has(.as-rail-left) main{box-sizing:border-box;margin-left:194px!important;margin-right:194px!important;width:auto!important;max-width:none!important}
- .as-rail-left,.as-rail-right{display:block!important;top:112px;max-height:calc(100vh - 120px);overflow-y:auto}
+@media (min-width:1600px){
+  body:has(.as-rail.as-filled) main{box-sizing:border-box;width:calc(100% - 376px)!important;max-width:calc(100% - 376px);margin-inline:auto!important}
+  .as-rail{display:block}
 }
-@media(min-width:1280px) and (max-width:1599px){
- body:has(.as-rail) main{margin:0 auto!important;width:auto!important;max-width:none!important}
- .as-rail{display:none!important}
+@media (max-width:1599px){.as-rail{display:none!important}}
+@media (max-width:759px){
+ .as-slot{margin:12px auto;max-width:calc(100% - 16px)}
+ .as-top .as-ad-content{max-width:320px}
+ .as-bottom{display:none!important}
 }
-@media(max-width:1599px){.as-rail-left,.as-rail-right{display:none!important}}
-@media(max-width:1023px){.as-top-mosaic{grid-template-columns:1fr 1fr}.as-top-mosaic>.as-top{grid-column:span 2}.as-top-mosaic>.as-inline{grid-column:span 2}}
-@media(max-width:759px){.as-top-mosaic{display:block;margin:8px auto}.as-top-mosaic>.as-inline{margin-top:12px!important}}
-
-
-/* Restore visible publisher slots. Do not hide advertising creatives before vendor renders. */
-.as-slot.as-ad-loading,.as-slot.as-empty,.as-rail.as-empty{display:block!important;visibility:visible!important;height:auto!important;overflow:visible!important}
-.as-rail{visibility:visible!important;pointer-events:auto!important}
-@media(max-width:1599px){.as-rail{display:none!important}}
