@@ -1,0 +1,11 @@
+# Only deploy public site resources
+.git
+.github
+node_modules
+.wrangler
+wrangler.jsonc
+.assetsignore
+.gitignore
+README.md
+package.json
+package-lock.json
