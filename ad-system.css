@@ -74,11 +74,8 @@
 @media(max-width:1023px){.as-top-mosaic{grid-template-columns:1fr 1fr}.as-top-mosaic>.as-top{grid-column:span 2}.as-top-mosaic>.as-inline{grid-column:span 2}}
 @media(max-width:759px){.as-top-mosaic{display:block;margin:8px auto}.as-top-mosaic>.as-inline{margin-top:12px!important}}
 
-/* Ads load without reserving enormous blank boxes. Frames expand on confirmed creative. */
-.as-slot.as-ad-loading,.as-slot:not(.as-ad-loaded):not(.as-filled){margin:0 auto!important;padding:0!important;height:0!important;min-height:0!important;overflow:hidden!important;border:0!important}
-.as-slot.as-ad-loading .as-slot-label,.as-slot:not(.as-ad-loaded) .as-slot-label{display:none}
-.as-slot.as-ad-loaded{height:auto!important;overflow:visible!important}
-.as-rail:not(.as-ad-loaded){visibility:hidden!important;pointer-events:none!important}
-body:has(.as-rail-left:not(.as-ad-loaded)) main{margin-left:0!important}
-.as-ad-marker{display:block!important;width:1px!important;height:1px!important;pointer-events:none!important}
-@media(min-width:1600px){body:has(.as-rail-left.as-ad-loaded) main{margin-left:194px!important}}
+
+/* Restore visible publisher slots. Do not hide advertising creatives before vendor renders. */
+.as-slot.as-ad-loading,.as-slot.as-empty,.as-rail.as-empty{display:block!important;visibility:visible!important;height:auto!important;overflow:visible!important}
+.as-rail{visibility:visible!important;pointer-events:auto!important}
+@media(max-width:1599px){.as-rail{display:none!important}}
