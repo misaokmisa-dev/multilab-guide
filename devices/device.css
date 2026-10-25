@@ -104,3 +104,13 @@ body.dv-body{margin:0;background:var(--dv-bg);color:var(--dv-ink);font:16px/1.78
 .dv-detail{padding:20px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dv-topic{transition:none}}
+
+/* Amazon Associates ad blocks. */
+.amazon-note{margin:20px 0 18px;padding:13px 16px;border:1px solid #e8d6c0;border-radius:12px;background:#fffaf4;color:#614d3a;font-size:13px;line-height:1.8}
+.amazon-offer{margin-top:14px;padding-top:15px;border-top:1px solid var(--dv-border);display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.amazon-pr{font-size:11px;font-weight:800;color:#835521;letter-spacing:.025em}
+.amazon-cta{display:inline-flex;align-items:center;justify-content:center;min-height:44px;background:#f4d58a;border:1px solid #d4aa51;color:#332812;border-radius:10px;padding:10px 17px;font-size:14px;font-weight:800;text-decoration:none;transition:background .18s ease}
+.amazon-cta:hover,.amazon-cta:focus-visible{background:#ffe6ae}
+.amazon-offer small{font-size:12px;line-height:1.6;color:var(--dv-muted)}
+.amazon-cat-links{display:flex;flex-wrap:wrap;gap:12px;margin:15px 0}
+@media(max-width:520px){.amazon-cta{width:100%;text-align:center}.amazon-cat-links{flex-direction:column}}
