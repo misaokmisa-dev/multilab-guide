@@ -138,3 +138,8 @@ body.dv-body{margin:0;background:var(--dv-bg);color:var(--dv-ink);font:16px/1.78
 .dv-source-foot{font-size:11px;line-height:1.7;opacity:.7;padding:12px 20px;text-align:center;margin:0}
 @media(max-width:1020px){.rank-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:680px){.rank-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.rank-item{padding:10px}.rank-image-link{min-height:120px}.rank-placeholder{min-height:120px}}
+
+/* Original AI-generated visual sheet for mouse category; not official product photos. */
+.ai-mouse-sprite{display:block;aspect-ratio:55/73;width:min(100%,148px);margin:auto;background-image:url("../assets/ai-mice.webp");background-repeat:no-repeat;background-size:500% 200%;border-radius:10px}
+.ai-mouse-0{background-position:0% 0%}.ai-mouse-1{background-position:25% 0%}.ai-mouse-2{background-position:50% 0%}.ai-mouse-3{background-position:75% 0%}.ai-mouse-4{background-position:100% 0%}
+.ai-mouse-5{background-position:0% 100%}.ai-mouse-6{background-position:25% 100%}.ai-mouse-7{background-position:50% 100%}.ai-mouse-8{background-position:75% 100%}.ai-mouse-9{background-position:100% 100%}
