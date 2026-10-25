@@ -13,8 +13,8 @@
   // Ninja AdMax runs exclusively in the right-side advertising slot.
   // Keep Adsterra display banners in all other slots; never load both in one rail.
   if (slot === "rail") {
-    if (width >= (ranking ? 1900 : 1600)) {
-      document.write('<script src="https://adm.shinobi.jp/s/606eff35a5c797d67862f6a388753942"><\\/script>');
+    if (width >= 1280) {
+      document.write('<script src="https://adm.shinobi.jp/s/606eff35a5c797d67862f6a388753942"><\/script>');
     }
     return;
   }
