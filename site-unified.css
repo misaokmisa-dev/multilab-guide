@@ -1,0 +1,134 @@
+/* MULTI LAB GUIDE / unified design language, 2026-10-25
+   Shared visual hierarchy: dark header, image/voxel hero, white cards,
+   blue primary CTAs on tech pages, forest-green on Minecraft pages.
+   Minecraft voxel motifs are original CSS (not official Minecraft artwork).
+*/
+:root{--site-ink:#101b2b;--site-dark:#08111f;--site-blue:#0879f9;--site-edge:#dfe6ef;--site-bg:#f4f7fb;--site-radius:14px}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #ffca63;outline-offset:3px}
+img{max-width:100%}
+
+/* Root portal, information pages and sitemap */
+body:not(.dv-body):not(.ml-body):not(.minecraft-body){background:#f4f7fb;color:#162235}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .top{background:#07111f;border-bottom:1px solid #263449;backdrop-filter:none}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .top .logo{color:#fff}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .top .logo b{color:#54a9ff}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .top .logo small{color:#adbad2}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .top nav a{color:#e8f0ff;border-radius:7px;padding:9px 10px;font-size:13px}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .top nav a:hover{background:#19314d;color:white}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .symbol{background:#147ef5}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .btn:not(.ghost){border-color:#0b78f5;background:#0679f6;color:white;border-radius:9px}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .btn:not(.ghost):hover{background:#035bbe}
+.portal-hero{position:relative;isolation:isolate;overflow:hidden;min-height:355px;padding:70px 0 65px;background:#081320!important;color:#fff;border-bottom:1px solid #203a54}
+.portal-hero:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(4,12,25,.96) 0%,rgba(4,13,29,.91) 48%,rgba(4,13,29,.23) 100%),url("assets/ranking/hero-gaming-pc.webp") center right /cover no-repeat;opacity:.96}
+.portal-hero .portal-kicker{color:#a8d4ff}
+.portal-hero h1{color:#fff!important;font-size:clamp(36px,4.5vw,57px)!important;max-width:820px;border-left:6px solid #268dfc;padding-left:22px;margin:15px 0 20px!important}
+.portal-hero h1 span{color:#a8d4ff!important}
+.portal-hero p{color:#e4edfa!important;max-width:680px;font-size:15px;line-height:1.85}
+.portal-hero .btn{margin-top:14px}
+.portal-grid{gap:18px}
+.portal-card{isolation:isolate;overflow:hidden;border:1px solid #e2e7ee!important;background:#fff!important;border-radius:14px!important;box-shadow:0 4px 17px #19304a0b;min-height:410px!important;padding:0 25px 25px!important}
+.portal-card:before{content:"";display:block;height:175px;margin:0 -25px 18px;background-color:#18314f}
+.portal-card.minecraft:before{background-image:linear-gradient(90deg,rgba(5,33,16,.5),transparent),linear-gradient(165deg,transparent 45%,#244f35 45% 63%,#142f25 63%),repeating-linear-gradient(90deg,#548847 0 44px,#64a054 44px 78px,#345e38 78px 114px);background-position:center;background-size:cover}
+.portal-card.devices:before{background:linear-gradient(90deg,#090f20a8,#07111c33),url("assets/ranking/hero-keyboards.webp") center/cover}
+.portal-card .portal-icon{display:none}
+.portal-card .portal-kicker{color:#516b91}
+.portal-card h2{color:#182235;font-weight:900}
+.portal-card p{color:#52647e;line-height:1.7}
+.portal-card .portal-action{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;margin-top:auto;padding:11px 17px;border-radius:8px;color:white!important;background:#0b76ed;font-size:13px}
+.portal-card.minecraft .portal-action{background:#2b7245}
+.portal-card:hover{box-shadow:0 13px 30px #21334d1e;transform:translateY(-3px)}
+.portal-mini a{border:1px solid #e1e8f0;border-radius:11px;box-shadow:0 3px 12px #18304709;padding:23px}
+.portal-mini a:hover{border-color:#8eadd6;transform:translateY(-2px)}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .section.alt{background:#edf2f8}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .section h2{font-weight:900;color:#17243a}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .footer{background:#07111f;color:#dce5f1}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .footer a,body:not(.dv-body):not(.ml-body):not(.minecraft-body) .footer strong{color:#dce5f1}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .footer .copyright{border-color:#34465b}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .subpage{background:#fff;border:1px solid #e4eaf1;border-radius:14px;margin-top:27px;margin-bottom:40px;padding:38px 45px}
+body:not(.dv-body):not(.ml-body):not(.minecraft-body) .sitemap-group{border:1px solid #e0e6ed;border-radius:12px;box-shadow:0 3px 13px #1327430a}
+
+/* Device hub and companion buying articles; rank cards remain owned by ranking-theme.css */
+.dv-body.device-hub,.dv-body.device-guide{background:#f5f8fc;color:#182638}
+.dv-body.device-hub .dv-wrap,.dv-body.device-guide .dv-wrap{width:min(1470px,calc(100% - 54px))}
+.dv-body.device-hub .dv-top,.dv-body.device-guide .dv-top{background:#07111e;border-color:#28364a}
+.dv-body.device-hub .dv-logo,.dv-body.device-guide .dv-logo{font-size:20px}
+.dv-body.device-hub .dv-logo em,.dv-body.device-guide .dv-logo em{color:#71b6ff}
+.dv-body.device-hub .dv-top nav a:hover,.dv-body.device-guide .dv-top nav a:hover{background:#173252}
+.dv-body.device-hub .dv-hero,.dv-body.device-guide .dv-hero{position:relative;isolation:isolate;overflow:hidden;background-image:linear-gradient(90deg,#061122fa,#071325dc 49%,#0715264d),url("assets/ranking/hero-gaming-pc.webp");background-size:cover;background-position:center,center;color:#fff;border-color:#132b46;padding:66px 0;min-height:250px}
+.dv-body.device-hub .dv-hero h1,.dv-body.device-guide .dv-hero h1{color:white;font-size:clamp(30px,3.1vw,44px);line-height:1.34;letter-spacing:-.035em;border-left:6px solid #168bff;padding-left:20px;max-width:970px}
+.dv-body.device-hub .dv-hero .dv-lead,.dv-body.device-guide .dv-hero .dv-lead,.dv-body.device-hub .dv-hero p,.dv-body.device-guide .dv-hero p{color:#eaf2fb;max-width:870px}
+.dv-body.device-hub .dv-hero .dv-kicker,.dv-body.device-guide .dv-hero .dv-kicker{color:#a4cfff}
+.dv-body.device-hub .dv-hero .dv-btn,.dv-body.device-guide .dv-hero .dv-btn{border-radius:8px;background:#087afa;border-color:#087afa;color:#fff}
+.dv-body.device-hub .dv-hero .dv-btn.secondary,.dv-body.device-guide .dv-hero .dv-btn.secondary{background:#fff2;border-color:#96a8c9;color:#fff}
+.dv-body.device-hub .dv-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.dv-body.device-hub .dv-topic{display:flex;flex-direction:column;min-height:320px;border:1px solid #e0e8ef;border-radius:13px;padding:0 17px 17px;overflow:hidden;background:#fff;color:#1a2c40;box-shadow:0 4px 14px #12304d0b;transition:transform .17s ease,box-shadow .17s ease}
+.dv-body.device-hub .dv-topic:before{content:"";height:140px;flex:0 0 140px;background:linear-gradient(90deg,#07152675,#08132b22),url("assets/ranking/hero-gaming-pc.webp") center/cover;margin:0 -17px 13px}
+.dv-body.device-hub .dv-topic:nth-child(2):before{background-image:linear-gradient(90deg,#07152644,#08132b22),url("assets/ranking/hero-monitors.webp")}
+.dv-body.device-hub .dv-topic:nth-child(3):before{background-image:linear-gradient(90deg,#07152644,#08132b22),url("assets/ranking/hero-mice.webp")}
+.dv-body.device-hub .dv-topic:nth-child(4):before{background-image:linear-gradient(90deg,#07152644,#08132b22),url("assets/ranking/hero-keyboards.webp")}
+.dv-body.device-hub .dv-topic:nth-child(5):before{background-image:linear-gradient(90deg,#07152644,#08132b22),url("assets/ranking/hero-audio.webp")}
+.dv-body.device-hub .dv-topic:nth-child(6):before{background-image:linear-gradient(90deg,#07152644,#08132b22),url("assets/ranking/hero-gaming-pc.webp")}
+.dv-body.device-hub .dv-topic:nth-child(7){grid-column:4}
+.dv-body.device-hub .dv-topic:hover{transform:translateY(-3px);box-shadow:0 10px 24px #15304c1b}
+.dv-body.device-hub .dv-topic-icon{display:none}
+.dv-body.device-hub .dv-topic h3{font-size:18px;font-weight:900;color:#182539;line-height:1.4}
+.dv-body.device-hub .dv-topic p{font-size:13px;line-height:1.65;color:#586a80}
+.dv-body.device-hub .dv-topic .dv-link{display:flex;align-items:center;justify-content:center;min-height:39px;border-radius:7px;background:#087afa;color:#fff;margin-top:auto;padding:7px 8px;font-size:11.5px;font-weight:800}
+.dv-body.device-hub .dv-section-title{font-size:26px;font-weight:900;color:#17243b}
+.dv-body.device-hub .dv-band{background:#ebf1f8}
+.dv-body.device-hub .dv-band .dv-overview,.dv-body.device-guide .dv-detail{background:#fff;border:1px solid #dfe7f0;border-radius:12px;box-shadow:0 4px 12px #122d4e08}
+.dv-body.device-guide .dv-hero{background-image:linear-gradient(90deg,#071323fa,#061629db 55%,#07162962),url("assets/ranking/hero-monitors.webp")}
+.dv-body.device-guide .dv-btn:not(.secondary){background:#0a77ed;border-color:#0a77ed}
+.dv-body.device-hub .dv-footer,.dv-body.device-guide .dv-footer{background:#07111e;color:#cfddec}
+.dv-body.device-hub .dv-footer a,.dv-body.device-guide .dv-footer a{color:#d2e7ff}
+
+/* Minecraft family. Distinct nature palette, identical card / hierarchy rhythm */
+body.ml-body,body.minecraft-body{--mc-ink:#192f23;--mc-green:#3c945c;--mc-deep:#092618;--mc-edge:#d5e4d7;background:#f3f7f0;color:#21362a}
+.ml-body .ml-shell{width:min(1360px,calc(100% - 48px))}
+.ml-body .ml-header{background:#081d14;border-bottom:1px solid #2c4c39;position:sticky;top:0;z-index:40}
+.ml-body .ml-mark{font-size:21px;color:#fff}
+.ml-body .ml-mark small{color:#acd9ae}
+.ml-body .ml-nav a{color:#e3f2e6;white-space:nowrap;border-radius:7px;padding:10px 12px}
+.ml-body .ml-nav a:hover{background:#234e31;color:white}
+.ml-body .ml-hero{isolation:isolate;overflow:hidden;position:relative;background:linear-gradient(105deg,#071f15 0%,#0c301b 46%,#28502c 100%);border-bottom:1px solid #2e5434;padding:67px 0 77px;min-height:285px;color:#fff}
+.ml-body .ml-hero:before{content:"";position:absolute;z-index:-1;inset:0;opacity:.48;background:linear-gradient(90deg,#081a12 5%,transparent 84%),radial-gradient(ellipse at 85% 35%,#8ec36870,transparent 53%),repeating-linear-gradient(90deg,#193d2699 0 54px,#2e5436ba 54px 96px,#23422aa8 96px 143px);clip-path:polygon(0 0,100% 0,100% 48%,96% 48%,96% 60%,90% 60%,90% 45%,83% 45%,83% 65%,73% 65%,73% 55%,67% 55%,67% 75%,58% 75%,58% 93%,0 100%)}
+.ml-body .ml-hero:after{content:"";position:absolute;right:7%;bottom:-30px;width:220px;height:150px;transform:skewY(-12deg);opacity:.54;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 28px,#578649 28px 42px,transparent 42px 60px),repeating-linear-gradient(90deg,#39723d 0 46px,#609357 46px 88px);box-shadow:35px -37px 0 -7px #42804a,65px -65px 0 -7px #62995e}
+.ml-body .ml-hero h1{color:#fff;font-size:clamp(28px,3.5vw,46px);font-weight:900;line-height:1.33;max-width:900px;border-left:6px solid #81d386;padding-left:18px;margin:13px 0 17px}
+.ml-body .ml-hero .ml-lead,.ml-body .ml-hero p{color:#e1f3e4;max-width:880px;font-size:15px;line-height:1.8}
+.ml-body .ml-hero .ml-eyebrow{color:#a5e5a6}
+.ml-body .ml-hero .ml-btn{border:1px solid #4aac69;background:#3c9557;color:#fff;border-radius:8px;padding:12px 19px}
+.ml-body .ml-hero .ml-btn-alt{background:#ffffff1e;border-color:#bed3bf;color:#fff}
+.ml-body .ml-section h2{color:#1b3828;font-size:clamp(22px,2.2vw,29px);font-weight:900}
+.ml-body .ml-grid{gap:16px}
+.ml-body .ml-card{display:flex;flex-direction:column;min-height:235px;border-radius:13px;border:1px solid #d9e5d9;background:#fff;padding:24px;box-shadow:0 4px 15px #1a3c280d}
+.ml-body .ml-card:hover{border-color:#8dbb8c;box-shadow:0 11px 27px #1237251a;transform:translateY(-2px)}
+.ml-body .ml-card .ml-arrow{color:#277944;margin-top:auto;font-weight:850}
+.ml-body .ml-mini{background:#fff;border-radius:11px;border:1px solid #dce7dc;box-shadow:0 3px 12px #17332508}
+.ml-body .ml-band{background:#e8f0e6}
+.ml-body .ml-article{background:#fff;border:1px solid #dce8da;border-radius:14px;box-shadow:0 4px 18px #1939250d;padding:clamp(18px,3vw,38px)}
+.ml-body .ml-article h1{border-left:6px solid #4cad68;padding-left:16px}
+.ml-body .ml-btn{background:#368f56;border-radius:8px;border:1px solid #368f56;color:#fff}
+.ml-body .ml-footer{background:#092619;color:#dceadd;border-top:1px solid #34523b}
+.ml-body .ml-footer a{color:#d1ecda}
+body.minecraft-body{background:#f3f7f0}
+.minecraft-body .site-header,.minecraft-body .topbar{background:#081d14!important;border-color:#33533c}
+.minecraft-body .site-header a,.minecraft-body .topbar a{color:#eaf4eb}
+.minecraft-body .hero{position:relative;isolation:isolate;background:linear-gradient(103deg,#081d14,#174628 64%,#295b34);color:#f4fff4}
+.minecraft-body .hero:before{content:"";position:absolute;z-index:-1;inset:0;opacity:.26;background:repeating-linear-gradient(90deg,#2c5b31 0 55px,#48864e 55px 104px,#0c321e 104px 140px);clip-path:polygon(0 0,100% 0,100% 60%,86% 60%,86% 75%,75% 75%,75% 69%,65% 69%,65% 94%,0 94%)}
+.minecraft-body .hero h1{color:#fff}
+.minecraft-body .hero .hero-description,.minecraft-body .hero .eyebrow,.minecraft-body .hero .hero-caution,.minecraft-body .hero .mc-crumb{color:#edf7ec}
+.minecraft-body .hero .accent-text{color:#abefae}
+.minecraft-body .site-footer,.minecraft-body .footer{background:#0d291a;color:#e6f4e6}
+.minecraft-body .site-footer a,.minecraft-body .footer a{color:#d8efdc}
+.minecraft-body .article-wrap{background:#fff;border:1px solid #dfe7df;border-radius:14px;margin-top:25px;margin-bottom:34px;padding:clamp(18px,3vw,40px);box-shadow:0 4px 15px #1837250e}
+.minecraft-body .article-wrap h1{border-left:6px solid #45a164;padding-left:16px;line-height:1.35}
+.minecraft-body .button-primary{border-radius:8px;background:#368e54}
+.minecraft-body .feature-card,.minecraft-body .article-card{border-radius:12px;box-shadow:0 4px 15px #1734200a}
+
+/* Responsiveness */
+@media(max-width:1080px){.dv-body.device-hub .dv-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.dv-body.device-hub .dv-topic:nth-child(7){grid-column:3}}
+@media(max-width:760px){.portal-hero{padding:42px 0 48px;min-height:280px}.portal-hero h1{font-size:36px!important}.portal-grid{grid-template-columns:1fr}.portal-card{min-height:330px!important}.portal-card:before{height:140px}.dv-body.device-hub .dv-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.dv-body.device-hub .dv-topic:nth-child(7){grid-column:2}.dv-body.device-hub .dv-topic{min-height:280px;padding:0 12px 12px}.dv-body.device-hub .dv-topic:before{height:115px;flex-basis:115px;margin:0 -12px 12px}.dv-body.device-hub .dv-topic h3{font-size:15px}.dv-body.device-hub .dv-topic .dv-link{font-size:10px}.dv-body.device-hub .dv-wrap,.dv-body.device-guide .dv-wrap{width:calc(100% - 30px)}.dv-body.device-hub .dv-hero,.dv-body.device-guide .dv-hero{padding:41px 0}.dv-body.device-hub .dv-hero h1,.dv-body.device-guide .dv-hero h1{font-size:28px}.ml-body .ml-shell{width:calc(100% - 30px)}.ml-body .ml-hero{padding:43px 0;min-height:230px}.ml-body .ml-hero h1{font-size:30px}.ml-body .ml-hero:after{transform:scale(.6);transform-origin:right bottom;right:0}.ml-body .ml-article{padding:22px}.minecraft-body .article-wrap{width:calc(100% - 30px)}body:not(.dv-body):not(.ml-body):not(.minecraft-body) .subpage{margin:17px auto 30px;padding:22px 17px}}
+@media(max-width:480px){.dv-body.device-hub .dv-topic{min-height:300px}.dv-body.device-hub .dv-topic:before{height:95px;flex-basis:95px}.dv-body.device-hub .dv-topic p{font-size:12px}.portal-hero h1{font-size:31px!important}.ml-body .ml-hero h1{font-size:26px}.ml-body .ml-hero p{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.portal-card,.dv-topic,.ml-card{transition:none!important}}
