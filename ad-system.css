@@ -18,40 +18,23 @@
 @media(max-width:680px){.mlg-ad-block{margin:26px 10px}.mlg-ad-grid{grid-template-columns:1fr}}
 
 
-/* 2026-10-25: predictable ad layout, three distinct inventory sizes, no creative overlap. */
-.as-slot{box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;clear:both;max-width:100%;width:max-content;min-width:0;min-height:0;margin:14px auto;padding:4px 0;text-align:center;background:transparent;border:0;isolation:isolate}
-.as-slot-label{display:block;width:100%;font:10px/1.5 system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#7e8795;text-align:left;margin:0 0 6px;padding:0}
-.as-slot .as-ad-content{box-sizing:border-box;position:relative;max-width:100%;min-width:0;margin:0 auto;line-height:0;overflow:visible}
+/* Responsive 300x250 ad unit grid; empty unconfigured placements hidden. */
+.as-slot{display:flex;flex-direction:column;align-items:center;box-sizing:border-box;clear:both;width:max-content;max-width:100%;min-height:0;margin:14px auto;padding:0;text-align:center}
+.as-slot-label{display:block;width:100%;font:10px/1.5 system-ui,sans-serif;color:#838b99;text-align:left;margin:0 0 5px}
+.as-ad-content{max-width:100%;margin:0 auto;line-height:0}
 .as-top .as-ad-content{max-width:728px}
-.as-mosaic .as-slot{flex:0 0 auto;max-width:100%;margin:0!important;padding:0!important;clear:none;min-height:0}
-.as-mosaic .as-slot .as-slot-label{margin-bottom:5px}
-.as-mosaic .as-mosaic-small .as-ad-content{width:320px;max-width:100%}
-.as-mosaic .as-mosaic-medium .as-ad-content{width:300px;max-width:100%}
-.as-mosaic .as-mosaic-wide .as-ad-content{width:468px;max-width:100%}
-.as-mosaic{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;column-gap:15px;row-gap:13px;box-sizing:border-box;width:min(1140px,calc(100% - 28px));max-width:100%;min-height:0;margin:19px auto 24px;padding:0;background:transparent}
-.as-mosaic>.as-slot.as-empty{display:none!important}
+.as-bottom{width:468px;max-width:100%;margin:26px auto 18px}
+.as-bottom .as-ad-content{max-width:468px}
 .as-slot.as-empty{display:none!important;margin:0!important;padding:0!important}
-.as-mosaic:not(:has(.as-slot:not(.as-empty))){display:none!important}
-.as-native{max-width:1050px;margin:20px auto;min-height:0}
-.as-native>.as-slot-label{max-width:960px}
-.as-native .as-ad-content{line-height:normal}
-.as-rail{position:fixed;right:12px;top:112px;z-index:20;box-sizing:border-box;width:178px;max-height:calc(100vh - 128px);overflow:auto;margin:0;border:0;background:transparent;padding:3px 7px;box-shadow:none}
-.as-rail>.as-slot-label{margin:0 0 5px;font:10px/1.5 system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#7e8795}
-.as-rail .as-ad-content{width:160px;max-width:160px;min-height:0;line-height:0}
+.as-mosaic{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:18px;box-sizing:border-box;width:min(936px,calc(100% - 24px));max-width:100%;margin:20px auto 24px;min-height:0}
+.as-mosaic .as-square{flex:0 0 300px;clear:none;box-sizing:border-box;width:300px;max-width:100%;margin:0!important;padding:0!important}
+.as-mosaic .as-square .as-ad-content{width:300px;max-width:100%}
+.as-mosaic .as-square-pending,.as-mosaic .as-square[hidden]{display:none!important}
+.as-mosaic:not(:has(>.as-square:not(.as-empty):not(.as-square-pending):not([hidden]))){display:none!important}
+.as-rail{position:fixed;right:12px;top:112px;z-index:20;box-sizing:border-box;width:178px;max-height:calc(100vh - 128px);overflow:auto;padding:3px 7px;background:transparent}
+.as-rail .as-ad-content{width:160px;max-width:160px;line-height:0}
 .as-rail.as-empty{display:none!important}
-.as-close{position:absolute;top:0;right:0;z-index:1;border:1px solid #ddd;border-radius:4px;background:#fff;color:#49515e;padding:2px 6px;cursor:pointer}
-@media(min-width:1280px){
- body:has(.as-rail:not(.as-empty)) main{box-sizing:border-box;margin-right:192px!important;width:auto!important;max-width:none!important}
- .as-rail{display:block}
-}
+.as-close{position:absolute;top:0;right:0;z-index:1;border:1px solid #ddd;border-radius:4px;background:#fff;color:#444;cursor:pointer}
+@media(min-width:1280px){body:has(.as-rail:not(.as-empty)) main{box-sizing:border-box;margin-right:192px!important;width:auto!important;max-width:none!important}}
 @media(max-width:1279px){.as-rail{display:none!important}}
-@media(max-width:759px){
- .as-top{margin:12px auto;max-width:calc(100% - 12px)}
- .as-top .as-ad-content{max-width:320px}
- .as-mosaic{margin:12px auto 17px;row-gap:12px}
- .as-mosaic-small,.as-mosaic-wide{display:none!important}
- .as-mosaic .as-mosaic-medium{margin:auto}
- .as-bottom{display:none!important}
-}
-/* When a device has insufficient available width, fixed ad units wrap instead of overlapping. */
-@media(max-width:440px){.as-mosaic,.as-slot{max-width:100%}}
+@media(max-width:759px){.as-slot{margin:12px auto}.as-mosaic{margin:14px auto 18px}.as-top .as-ad-content{max-width:320px}.as-bottom{display:none!important}}
