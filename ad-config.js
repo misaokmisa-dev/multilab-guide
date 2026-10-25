@@ -1,7 +1,7 @@
 /* 契約済みの広告を設定してください。未設定時は実際の広告を表示しません。 */
 window.MULTILAB_ADS = {
   adsterraEnabled: true, // ユーザー提供のAdsterra広告を設置
-  socialBarEnabled: true, // 既存の公式Social Bar配信。全画面広告は配信元が判断\n  popunderEnabled: false, // ブラウザ別タブ広告は安全性・ASP規約を確認してから
+  socialBarEnabled: true, // Adsterra official Social Bar
   smartlinkEnabled: false, // 自動転送禁止
   nativeBannerEnabled: false, // 広告画像と説明文が重なるため修正まで停止
   adsenseClient: "", // AdSense の ca-pub-...。承認後に設定
