@@ -42,3 +42,9 @@
 
 /* Single right 160x600 rail; fixed while scrolling and no overlap with articles. */
 .as-rail.as-rail-right{left:auto;right:12px;position:fixed;top:112px;width:178px}
+
+/* Fixed-size right Ninja AdMax 160x600. No scaling or clipping. */
+.as-rail.as-rail-right{box-sizing:border-box;width:178px;max-height:none;overflow:visible;padding:3px 7px;right:12px;top:112px}
+.as-rail.as-rail-right .as-ad-content{box-sizing:content-box;width:160px!important;min-width:160px;max-width:160px!important;height:600px;min-height:600px;overflow:visible;transform:none!important}
+.as-rail.as-rail-right .as-close{right:0;top:-26px;width:24px;height:22px;z-index:30}
+@media(max-width:1179px){.as-rail.as-rail-right{display:none!important}}
