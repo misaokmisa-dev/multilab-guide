@@ -70,3 +70,13 @@
 .ranking-page.ranking-pc .rank-item,.ranking-page.ranking-laptop .rank-item{min-height:430px}
 .ranking-page.ranking-laptop .rank-image img,.ranking-page.ranking-pc .rank-image img{object-fit:contain}
 @media(max-width:680px){.ranking-page.ranking-pc .rank-item,.ranking-page.ranking-laptop .rank-item{min-height:410px}.ranking-page .rank-amazon-meta{font-size:10px}}
+
+/* Dated marketplace reference prices (not Amazon price). */
+.ranking-page .rank-amazon-meta{min-height:56px;margin:5px 0 9px}
+.ranking-page .rank-price-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px}
+.ranking-page .rank-price-number{font-size:20px;line-height:1.2;color:#e12618;letter-spacing:-.025em;font-weight:900;font-variant-numeric:tabular-nums}
+.ranking-page .rank-price-source{font-size:10px;color:#59697b;white-space:nowrap}
+.ranking-page .rank-price-small{font-size:10px;color:#788395}
+.ranking-page .rank-price-small a{color:#647ca2;text-underline-offset:2px}
+.ranking-page .rank-no-price{opacity:.77}
+@media(max-width:680px){.ranking-page .rank-price-number{font-size:17px}.ranking-page .rank-price-small{font-size:9px}}
