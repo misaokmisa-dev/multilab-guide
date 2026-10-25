@@ -28,6 +28,7 @@
   if(slot === "leaderboard") selected = (width < 760 ? units.banner320 : units.banner728);
   else if(slot === "inline") selected = units.banner300;
   else if(slot === "bottom" && width >= 760) selected = units.banner468;
+  else if(slot === "mosaic-small" && width >= 760) selected = units.banner320;
   else if(slot === "rail" && width >= 1280) selected = units.banner160;
   if (!selected) return;
   var adConfig = "atOptions = { 'key' : '" + selected.key + "', 'format' : 'iframe', 'height' : " + selected.height + ", 'width' : " + selected.width + ", 'params' : {} };";
