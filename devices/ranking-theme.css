@@ -1,0 +1,55 @@
+/* Ranking page layout — reference design 2026-10-25, desktop five by two. */
+.ranking-page{--rank-blue:#056de8;--rank-ink:#101723;background:#f6f8fb!important;color:var(--rank-ink);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
+.ranking-page .dv-wrap{width:min(1500px,calc(100% - 64px));max-width:none}
+.ranking-page .rank-site-header{background:#050c17;border-bottom:1px solid #263648;box-shadow:none;position:relative}
+.ranking-page .dv-top-row{min-height:69px;gap:20px;flex-wrap:nowrap}
+.ranking-page .dv-logo{font-size:22px;font-weight:900;letter-spacing:.015em;white-space:nowrap;color:#fff!important}
+.rank-brand-icon{display:inline-grid;place-items:center;width:29px;height:30px;border:2px solid #fafafa;margin-right:12px;vertical-align:middle;transform:rotate(0);border-radius:4px;font-weight:900}
+.ranking-page .dv-top nav{gap:9px;flex-wrap:nowrap}
+.ranking-page .dv-top nav a{font-size:14px;font-weight:700;color:#f7f9ff!important;white-space:nowrap;padding:11px 12px;text-decoration:none;border-bottom:2px solid transparent}
+.ranking-page .dv-top nav a:hover,.ranking-page .dv-top nav a.is-active{color:#fff!important;border-bottom-color:#2c90ff}
+.rank-header-search{display:block;min-width:160px;border:1px solid #586375;border-radius:9px;color:#dbe1eb!important;text-decoration:none;padding:8px 13px;font-size:13px;white-space:nowrap;background:rgba(255,255,255,.08)}
+.rank-header-search span{font-size:22px;vertical-align:middle;margin-right:5px}
+.ranking-page .dv-hero.rank-hero{background-image:linear-gradient(90deg,rgba(2,7,16,.98) 0%,rgba(2,8,18,.88) 44%,rgba(2,8,18,.32) 100%),var(--rank-hero-image);background-color:#071328;background-size:cover;background-position:center, right center;padding:26px 0 31px;min-height:173px;color:#fff}
+.ranking-page .rank-hero h1{color:#fff;font-weight:900;font-size:clamp(26px,2.6vw,42px);letter-spacing:-.025em;line-height:1.35;margin:0 0 12px;border-left:6px solid #1085ff;padding-left:22px;max-width:980px;text-shadow:0 2px 12px rgba(0,0,0,.55)}
+.ranking-page .rank-hero p{margin:0 0 0 30px;color:#f2f6ff;font-size:clamp(12px,1.1vw,16px);font-weight:520;max-width:880px;line-height:1.6;text-shadow:0 2px 5px #03040c}
+.ranking-page.ranking-mice{--rank-hero-image:url("https://images.unsplash.com/photo-1636489895903-931c009d3574?auto=format&fit=crop&w=1800&q=78");--rank-card-image:url("https://images.unsplash.com/photo-1636489895903-931c009d3574?auto=format&fit=crop&w=600&q=65")}
+.ranking-page.ranking-keyboards{--rank-hero-image:url("https://images.unsplash.com/photo-1674621703172-ef68b33e52da?auto=format&fit=crop&w=1800&q=78");--rank-card-image:url("https://images.unsplash.com/photo-1674621703172-ef68b33e52da?auto=format&fit=crop&w=650&q=65")}
+.ranking-page.ranking-monitors{--rank-hero-image:url("https://images.unsplash.com/photo-1567603453093-aab2247d3cf3?auto=format&fit=crop&w=1800&q=78");--rank-card-image:url("https://images.unsplash.com/photo-1567603453093-aab2247d3cf3?auto=format&fit=crop&w=650&q=65")}
+.ranking-page.ranking-audio{--rank-hero-image:url("https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1800&q=78");--rank-card-image:url("https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=650&q=65")}
+.ranking-page.ranking-pc{--rank-hero-image:url("https://images.unsplash.com/photo-1736457833722-35cf6dd38deb?auto=format&fit=crop&w=1800&q=78");--rank-card-image:url("https://images.unsplash.com/photo-1736457833722-35cf6dd38deb?auto=format&fit=crop&w=650&q=65")}
+.ranking-page .rank-tabs{display:flex;gap:5px;flex-wrap:wrap;background:white;padding:10px 0;border-bottom:1px solid #e5eaf1}
+.ranking-page .rank-tabs .dv-wrap{display:flex;gap:6px;flex-wrap:wrap}
+.ranking-page .rank-tab{display:inline-flex;align-items:center;justify-content:center;padding:9px 16px;border-radius:8px;background:#f3f6fb;color:#28364b!important;text-decoration:none;font-weight:800;font-size:12px;border:1px solid #e4eaf3;min-height:42px}
+.ranking-page .rank-tab:hover,.ranking-page .rank-tab.selected{color:#fff!important;background:#006de8;border-color:#006de8}
+.ranking-page .ranking-content{padding:16px 0 18px}
+.ranking-page .dv-rank-heading h2.rank-list-title{font-size:1px;line-height:0;height:1px;overflow:hidden;clip-path:inset(50%);position:absolute}
+.ranking-page .dv-rank-heading{margin:0;padding:0;background:transparent;border:0}
+.ranking-page .rank-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch}
+.ranking-page .rank-item{position:relative;display:flex;flex-direction:column;min-width:0;background:#fff;border:1px solid #e2e7ee;border-radius:11px;gap:0;padding:12px 12px 13px;box-shadow:0 3px 14px rgba(30,48,73,.045);min-height:366px;transition:transform .18s ease,box-shadow .18s ease}
+.ranking-page .rank-item:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(28,42,67,.11)}
+.ranking-page .rank-image{height:172px;min-height:172px;width:100%;margin:0 0 10px;padding:6px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.ranking-page .rank-image-link{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:0;background:#fff!important;border-radius:7px;overflow:hidden}
+.ranking-page .rank-image-link:hover{transform:none;filter:brightness(.98)}
+.ranking-page .rank-details{display:flex;flex:1;flex-direction:column;align-items:stretch;gap:0}
+.ranking-page .rank-chip{position:absolute;top:12px;left:12px;background:#293440;color:#fff;border-radius:6px;font-weight:900;font-size:14px;padding:4px 9px;z-index:1;box-shadow:0 2px 5px #1b243233}
+.ranking-page .rank-item:nth-child(1) .rank-chip{background:#eda600;color:#fff}
+.ranking-page .rank-item:nth-child(2) .rank-chip{background:#9aa9b0;color:#fff}
+.ranking-page .rank-item:nth-child(3) .rank-chip{background:#b66c40;color:#fff}
+.ranking-page .rank-details h3{font-size:clamp(13px,1.0vw,16px);font-weight:900;color:#151923;margin:0 0 5px;line-height:1.35;min-height:39px}
+.ranking-page .rank-product-title{color:#111923!important;line-height:1.32}
+.ranking-page .rank-spec{font-size:12px;line-height:1.5;color:#636d7b;margin:0 0 8px;min-height:35px}
+.ranking-page .amazon-cta{display:flex;justify-content:center;align-items:center;background:linear-gradient(180deg,#188bff,#0065dc);color:#fff!important;border:none;border-radius:7px;width:100%;min-height:43px;padding:9px 9px;font-size:13px;font-weight:900;text-decoration:none;box-shadow:0 2px 4px #135ebf22;margin-top:auto}
+.ranking-page .amazon-cta:hover{background:#0055bd;color:#fff!important}
+.ranking-page .rank-placeholder{min-height:150px;height:150px;max-width:100%;font-size:0;display:block;border-radius:6px;background:var(--rank-card-image) center/cover no-repeat;background-color:#e9edf1}
+.ranking-page .rank-placeholder:after{content:"参考イメージ";display:block;position:relative;top:128px;right:2px;text-align:right;color:#576174;font-size:10px;background:rgba(255,255,255,.88);width:max-content;margin-left:auto;padding:1px 5px;border-radius:3px}
+.ranking-page .rank-placeholder.rank-pc{color:transparent}
+.ranking-page .ai-mouse-sprite{height:157px;width:130px;max-width:100%;aspect-ratio:auto;border-radius:5px;background-color:#fff;background-size:500% 200%}
+.ranking-page .dv-detail,.ranking-page .dv-pr{margin-top:28px}
+.ranking-page .dv-source-foot{font-size:10px;opacity:.8;margin:0 auto 4px;max-width:1300px;padding:7px 12px;line-height:1.6}
+.ranking-page .dv-footer{margin-top:18px}
+.ranking-page .dv-footer .dv-footer-inner{padding-top:14px;padding-bottom:8px}
+.ranking-page .rank-after{margin-top:20px}
+@media(max-width:1220px){.ranking-page .dv-top nav a{padding:9px 7px}.ranking-page .rank-header-search{display:none}.ranking-page .rank-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:930px){.ranking-page .rank-list{grid-template-columns:repeat(3,minmax(0,1fr))}.ranking-page .dv-top nav{gap:0}.ranking-page .dv-top nav a{font-size:12px}.ranking-page .dv-wrap{width:min(100% - 28px,1500px)}}
+@media(max-width:680px){.ranking-page .dv-top-row{min-height:62px;flex-wrap:wrap;justify-content:center;padding:8px 0}.ranking-page .dv-logo{font-size:18px}.ranking-page .dv-top nav{width:100%;justify-content:center;gap:2px}.ranking-page .dv-top nav a{font-size:11px;padding:6px 9px;min-height:34px}.ranking-page .dv-hero.rank-hero{min-height:160px;padding:27px 0;background-position:60% center}.ranking-page .rank-hero h1{font-size:24px;padding-left:12px;border-left-width:4px}.ranking-page .rank-hero p{margin-left:16px;font-size:12px}.ranking-page .rank-tabs{padding:5px 0}.ranking-page .rank-tabs .dv-wrap{flex-wrap:nowrap;overflow-x:auto}.ranking-page .rank-tab{white-space:nowrap;min-height:34px;font-size:11px;padding:6px 8px}.ranking-page .rank-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ranking-page .rank-item{min-height:333px;padding:8px;border-radius:9px}.ranking-page .rank-image{height:145px;min-height:145px}.ranking-page .rank-placeholder{height:130px;min-height:130px}.ranking-page .rank-placeholder:after{top:108px}.ranking-page .ai-mouse-sprite{width:100px;height:137px}.ranking-page .rank-details h3{font-size:13px;min-height:38px}.ranking-page .rank-spec{font-size:11px}.ranking-page .amazon-cta{min-height:42px;font-size:12px;padding:8px 4px}.ranking-page .rank-chip{top:8px;left:8px;font-size:12px;padding:3px 6px}}
