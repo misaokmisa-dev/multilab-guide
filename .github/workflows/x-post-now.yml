@@ -1,0 +1,80 @@
+name: X One-Time Extra Post (Buffer)
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/x-post-now.yml'
+permissions:
+  contents: read
+concurrency:
+  group: buffer-x-extra-one-time
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish one extra X post now (not in daily schedule)
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import sys, time
+          sys.path.insert(0, 'scripts')
+          import buffer_x_schedule as b
+
+          text = (
+              "【猫にキーボードを奪われた!?】🐈\n"
+              "実はゲーミングキーボード、光り方だけで選ぶと後悔するかも。"
+              "打鍵感・配列・サイズの3つをチェック！\n"
+              "https://multilab-guide.mlguide.workers.dev/devices/keyboards.html\n"
+              "#ゲーミングキーボード #PCゲーム"
+          )
+          image = "https://upload.wikimedia.org/wikipedia/commons/6/68/Wikipedians_cat.jpg"
+          org, channel = b.get_channel()
+
+          def get_posts():
+              query = (
+                  'query { posts(first: 100, input: {organizationId: %s, '
+                  'filter: {channelIds: [%s], status: [scheduled, sent]}, '
+                  'sort: [{field: createdAt, direction: desc}]}) '
+                  '{ edges { node { id text status dueAt sentAt externalLink } } '
+                  'pageInfo { hasNextPage } } }'
+              ) % (b.q(org), b.q(channel))
+              result = b.gql(query).get('posts') or {}
+              if (result.get('pageInfo') or {}).get('hasNextPage'):
+                  raise RuntimeError('Cannot safely check existing posts; too many results')
+              return [x['node'] for x in result.get('edges', []) if x.get('node')]
+
+          existing = [p for p in get_posts() if p.get('text') == text]
+          if existing:
+              post_id = existing[0]['id']
+              print('EXTRA_POST_ALREADY_EXISTS', post_id, existing[0].get('status'))
+          else:
+              mutation = (
+                  'mutation { createPost(input: {text: %s, channelId: %s, '
+                  'schedulingType: automatic, mode: shareNow, '
+                  'assets: [{image: {url: %s}}]}) '
+                  '{ ... on PostActionSuccess { post {id text status dueAt} } '
+                  '... on MutationError { message } } }'
+              ) % (b.q(text), b.q(channel), b.q(image))
+              response = b.gql(mutation).get('createPost') or {}
+              if not response.get('post'):
+                  raise RuntimeError('Buffer rejected immediate post: '+str(response.get('message') or response))
+              post_id = response['post']['id']
+              print('EXTRA_SHARE_NOW_ACCEPTED', post_id, response['post'].get('status'))
+
+          for attempt in range(6):
+              found = [p for p in get_posts() if p['id'] == post_id]
+              if found:
+                  p = found[0]
+                  print('EXTRA_POST_STATUS', p.get('status'), p.get('externalLink') or '', p.get('sentAt') or '')
+                  if p.get('status') == 'sent':
+                      print('EXTRA_POST_PUBLISHED', p.get('externalLink') or 'external URL not yet available')
+                      break
+              if attempt != 5:
+                  time.sleep(8)
+          else:
+              print('EXTRA_POST_SUBMITTED_PUBLICATION_NOT_YET_CONFIRMED', post_id)
+          PY
