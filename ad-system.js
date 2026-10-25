@@ -2,6 +2,7 @@
 (() => {
 "use strict";
 const conf=window.MULTILAB_ADS||{}, main=document.querySelector("main");
+if(conf.adsterraEnabled) return; // デモ広告との重複を回避
 if(!main) return;
 const preview=new URLSearchParams(location.search).get("ads-preview")==="1";
 const legal=/\/(?:about|privacy|sitemap)\.html$/.test(location.pathname);
