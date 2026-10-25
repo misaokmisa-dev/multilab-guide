@@ -35,3 +35,14 @@
 @media(max-width:1899px){body.ranking-page .as-rail{display:none!important}}
 @media(max-width:759px){.as-top{margin:18px auto}.as-top .as-ad-content{max-width:320px}.as-slot{padding:4px 8px;margin:22px auto}.as-bottom{display:none!important}}
 @media(max-width:559px){.as-rail{display:none!important}}
+
+/* 追従広告用の余白を確保する。見切れ・文字重なりを防ぐ。 */
+@media(min-width:1280px) {
+  body:has(.as-rail) main{box-sizing:border-box;margin-right:198px!important;width:auto!important;max-width:none!important}
+  .as-rail{display:block!important;right:12px;top:112px;max-height:calc(100vh - 120px);overflow-y:auto}
+}
+@media(max-width:1279px) {
+  .as-rail{display:none!important}
+}
+.as-slot .as-ad-content{position:relative;overflow:visible}
+.as-top,.as-inline,.as-bottom{min-width:0}
