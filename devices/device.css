@@ -143,3 +143,82 @@ body.dv-body{margin:0;background:var(--dv-bg);color:var(--dv-ink);font:16px/1.78
 .ai-mouse-sprite{display:block;aspect-ratio:55/73;width:min(100%,148px);margin:auto;background-image:url("../assets/ai-mice.webp");background-repeat:no-repeat;background-size:500% 200%;border-radius:10px}
 .ai-mouse-0{background-position:0% 0%}.ai-mouse-1{background-position:25% 0%}.ai-mouse-2{background-position:50% 0%}.ai-mouse-3{background-position:75% 0%}.ai-mouse-4{background-position:100% 0%}
 .ai-mouse-5{background-position:0% 100%}.ai-mouse-6{background-position:25% 100%}.ai-mouse-7{background-position:50% 100%}.ai-mouse-8{background-position:75% 100%}.ai-mouse-9{background-position:100% 100%}
+
+
+/* Cross-category navigation thumbnails: enforce compact size directly in device.css,
+   which EVERY device ranking page loads. This also protects pages not using site-unified.css. */
+.dv-body .dv-related.dv-related-visual{
+ display:grid!important;
+ grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ gap:10px!important;
+ align-items:stretch;
+}
+.dv-body .dv-related-visual .dv-related-tile{
+ display:flex!important;
+ flex-direction:row!important;
+ align-items:center!important;
+ gap:9px!important;
+ min-width:0!important;
+ min-height:60px!important;
+ padding:7px 9px!important;
+ background:#fff!important;
+ border:1px solid #e0e7ef!important;
+ border-radius:10px!important;
+ overflow:hidden!important;
+ box-shadow:none!important;
+}
+.dv-body .dv-related-visual a.dv-related-thumb{
+ display:flex!important;
+ flex:0 0 44px!important;
+ width:44px!important;
+ min-width:44px!important;
+ max-width:44px!important;
+ height:44px!important;
+ min-height:44px!important;
+ max-height:44px!important;
+ padding:2px!important;
+ margin:0!important;
+ align-items:center!important;
+ justify-content:center!important;
+ border:1px solid #e8edf3!important;
+ border-radius:6px!important;
+ background:#f8fafc!important;
+ overflow:hidden!important;
+}
+.dv-body .dv-related-visual a.dv-related-thumb img{
+ display:block!important;
+ width:38px!important;
+ min-width:0!important;
+ max-width:38px!important;
+ height:38px!important;
+ max-height:38px!important;
+ object-fit:contain!important;
+ margin:auto!important;
+}
+.dv-body .dv-related-visual a.dv-related-destination{
+ display:flex!important;
+ flex:1 1 0!important;
+ width:auto!important;
+ min-width:0!important;
+ min-height:42px!important;
+ padding:2px 4px!important;
+ margin:0!important;
+ gap:6px!important;
+ align-items:center!important;
+ justify-content:space-between!important;
+ font-size:12px!important;
+ line-height:1.35!important;
+ font-weight:800;
+ border:0!important;
+ background:transparent!important;
+}
+@media(max-width:850px){
+ .dv-body .dv-related.dv-related-visual{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:560px){
+ .dv-body .dv-related.dv-related-visual{gap:7px!important}
+ .dv-body .dv-related-visual .dv-related-tile{padding:5px!important;gap:6px!important;min-height:55px!important}
+ .dv-body .dv-related-visual a.dv-related-thumb{flex-basis:38px!important;width:38px!important;min-width:38px!important;max-width:38px!important;height:38px!important;min-height:38px!important;max-height:38px!important}
+ .dv-body .dv-related-visual a.dv-related-thumb img{width:32px!important;max-width:32px!important;height:32px!important;max-height:32px!important}
+ .dv-body .dv-related-visual a.dv-related-destination{font-size:10.5px!important;line-height:1.3!important}
+}
