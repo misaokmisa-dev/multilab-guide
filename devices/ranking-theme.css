@@ -17,7 +17,8 @@
 .ranking-page.ranking-keyboards{--rank-hero-image:url("../assets/ranking/hero-keyboards.webp");--rank-card-image:none}
 .ranking-page.ranking-monitors{--rank-hero-image:url("../assets/ranking/hero-monitors.webp");--rank-card-image:none}
 .ranking-page.ranking-audio{--rank-hero-image:url("../assets/ranking/hero-audio.webp");--rank-card-image:none}
-.ranking-page.ranking-pc{--rank-hero-image:none;--rank-card-image:url("https://images.unsplash.com/photo-1736457833722-35cf6dd38deb?auto=format&fit=crop&w=650&q=65")}
+.ranking-page.ranking-pc{--rank-hero-image:url("../assets/ranking/hero-gaming-pc.webp");--rank-card-image:none}
+.ranking-page.ranking-laptop{--rank-hero-image:url("../assets/ranking/hero-gaming-pc.webp");--rank-card-image:none}
 .ranking-page .rank-tabs{display:flex;gap:5px;flex-wrap:wrap;background:white;padding:10px 0;border-bottom:1px solid #e5eaf1}
 .ranking-page .rank-tabs .dv-wrap{display:flex;gap:6px;flex-wrap:wrap}
 .ranking-page .rank-tab{display:inline-flex;align-items:center;justify-content:center;padding:9px 16px;border-radius:8px;background:#f3f6fb;color:#28364b!important;text-decoration:none;font-weight:800;font-size:12px;border:1px solid #e4eaf3;min-height:42px}
@@ -58,3 +59,14 @@
 .ranking-page .rank-image .rank-product-photo{display:block;width:100%;height:100%;max-height:170px;object-fit:contain;object-position:center;background:#fff;image-rendering:auto}
 .ranking-page .rank-image-link{background:#fff}
 @media(max-width:680px){.ranking-page .rank-image .rank-product-photo{max-height:145px}}
+
+/* Uniform marketplace data check affordances. Never manufacture unverified prices, ratings, or discounts. */
+.ranking-page .rank-amazon-meta{display:flex;flex-direction:column;gap:4px;margin:6px 0 12px;min-height:43px;font-size:11px;line-height:1.35;color:#556578}
+.ranking-page .rank-shop-price{font-weight:800;color:#bc392c}
+.ranking-page .rank-shop-rating{color:#82713f}
+.ranking-page .rank-brand{font-size:12px;color:#637184;margin:0 0 5px}
+.ranking-page .rank-spec-chips{display:flex;flex-wrap:wrap;gap:4px;margin:5px 0}
+.ranking-page .rank-spec-pill{font-size:10px;font-weight:700;background:#edf3fb;color:#3a526e;padding:4px 6px;border-radius:5px}
+.ranking-page.ranking-pc .rank-item,.ranking-page.ranking-laptop .rank-item{min-height:430px}
+.ranking-page.ranking-laptop .rank-image img,.ranking-page.ranking-pc .rank-image img{object-fit:contain}
+@media(max-width:680px){.ranking-page.ranking-pc .rank-item,.ranking-page.ranking-laptop .rank-item{min-height:410px}.ranking-page .rank-amazon-meta{font-size:10px}}
