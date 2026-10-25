@@ -1,0 +1,18 @@
+/* サイト全体のゲーム広告配置。広告未登録ならスペースを取りません。 */
+.mlg-ad-block{box-sizing:border-box;clear:both;max-width:1000px;margin:36px auto;padding:12px;border:1px solid #dfe3eb;border-radius:12px;background:#f8f9fb;font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif}
+.mlg-ad-label{display:block;color:#737f92;font-size:10px;line-height:1.5;margin-bottom:7px}
+.mlg-ad-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.mlg-ad-card{display:block;overflow:hidden;border:1px solid #e0dce9;border-radius:10px;background:#fff;color:#272338!important;text-decoration:none!important}
+.mlg-ad-card img{display:block;width:100%;height:148px;object-fit:cover}
+.mlg-ad-copy{display:block;padding:9px 10px}.mlg-ad-copy strong{display:block;font-size:13px}.mlg-ad-copy small{display:block;margin-top:3px;font-size:11px;color:#647084}
+.mlg-ad-card:hover{border-color:#8f91ba}
+.mlg-ad-rail{box-sizing:border-box;position:fixed;top:175px;width:170px;z-index:20;padding:7px;border:1px solid #dedce5;border-radius:12px;background:#fff;box-shadow:0 8px 26px #15122b19;font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif}
+.mlg-ad-rail.left{left:10px}.mlg-ad-rail.right{right:10px}
+.mlg-ad-rail .mlg-ad-card img{height:175px}
+.mlg-ad-close{position:absolute;right:5px;top:5px;z-index:2;cursor:pointer;background:#fff;color:#333;border:1px solid #ddd;border-radius:5px;padding:2px 8px;font-size:16px}
+.mlg-video video{display:block;width:100%;height:130px;object-fit:cover;border-radius:7px}
+.mlg-video a{display:block;margin-top:7px;text-align:center;font-size:12px;text-decoration:none;color:#44348b!important;font-weight:700}
+.mlg-ad-preview{display:flex;align-items:center;justify-content:center;min-height:150px;padding:12px;background:linear-gradient(125deg,#d9cefc,#ffb8d2 56%,#ffe5cf);color:#683d91;font-size:23px;font-weight:800;text-align:center}
+.mlg-ad-rail .mlg-ad-preview{font-size:17px;min-height:180px}
+@media(max-width:1699px){.mlg-ad-rail{display:none!important}}
+@media(max-width:680px){.mlg-ad-block{margin:26px 10px}.mlg-ad-grid{grid-template-columns:1fr}}
