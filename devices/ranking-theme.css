@@ -80,3 +80,13 @@
 .ranking-page .rank-price-small a{color:#647ca2;text-underline-offset:2px}
 .ranking-page .rank-no-price{opacity:.77}
 @media(max-width:680px){.ranking-page .rank-price-number{font-size:17px}.ranking-page .rank-price-small{font-size:9px}}
+
+
+/* Consistent labelled specification rows on all 60 ranking cards. */
+.ranking-page .rank-feature-list{display:flex;flex-direction:column;gap:3px;margin:3px 0 9px;min-height:74px;line-height:1.4}
+.ranking-page .rank-feature-row{display:grid;grid-template-columns:51px minmax(0,1fr);gap:7px;align-items:start;font-size:11px;background:#f5f7fa;border-radius:4px;padding:3px 6px}
+.ranking-page .rank-feature-row dt{font-size:10px;font-weight:850;color:#526982;white-space:nowrap}
+.ranking-page .rank-feature-row dd{font-size:11px;min-width:0;margin:0;color:#27374b;font-weight:680;overflow-wrap:anywhere}
+.ranking-page .rank-item{min-height:422px}
+.ranking-page.ranking-pc .rank-item,.ranking-page.ranking-laptop .rank-item{min-height:466px}
+@media(max-width:680px){.ranking-page .rank-feature-list{min-height:73px;gap:3px}.ranking-page .rank-feature-row{grid-template-columns:43px minmax(0,1fr);gap:4px;padding:4px 5px}.ranking-page .rank-feature-row dt{font-size:9px}.ranking-page .rank-feature-row dd{font-size:10px}.ranking-page .rank-item{min-height:421px}.ranking-page.ranking-pc .rank-item,.ranking-page.ranking-laptop .rank-item{min-height:455px}}

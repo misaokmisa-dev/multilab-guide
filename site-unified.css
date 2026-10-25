@@ -150,3 +150,20 @@ body.minecraft-body{background:#f3f7f0}
 @media(max-width:1080px){.dv-body.device-hub .dv-grid .dv-topic:nth-child(7){grid-column:3}}
 @media(max-width:760px){.dv-body.device-hub .dv-grid .dv-topic:nth-child(7){grid-column:2}.dv-body.device-hub .dv-grid .dv-topic .dv-topic-image{height:125px;flex-basis:125px}.dv-body.device-hub .dv-grid .dv-topic .dv-topic-body{padding:12px 11px 13px}.dv-body.device-hub .dv-grid .dv-topic{min-height:295px}.dv-body.device-hub .dv-grid .dv-topic .dv-topic-image-tag{font-size:9px}}
 @media(max-width:440px){.dv-body.device-hub .dv-grid .dv-topic .dv-topic-image{height:112px;flex-basis:112px}.dv-body.device-hub .dv-grid .dv-topic .dv-topic-body h3{font-size:14px}}
+
+
+/* Device hub: authentic Amazon microphone image links to its own Amazon detail page. */
+.dv-body.device-hub .dv-grid .dv-topic--extras .dv-topic-image{background:#fafbfe}
+.dv-body.device-hub .dv-grid .dv-topic--extras .dv-topic-image img{object-fit:contain;max-width:100%;max-height:100%;background:#fff}
+.dv-body.device-hub .dv-grid .dv-topic--extras .dv-topic-body{color:#152b42;text-decoration:none;cursor:pointer}
+.dv-body.device-hub .dv-grid .dv-topic--extras .dv-topic-body:hover .dv-link{background:#005ed5;color:white}
+/* Thumbnail-linked device navigation; external Amazon content is linked only to its matching Amazon product. */
+.dv-body .dv-related-visual{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.dv-body .dv-related-visual .dv-related-tile{display:flex;flex-direction:column;overflow:hidden;min-width:0;background:#fff;border:1px solid #e3e9f0;border-radius:12px;box-shadow:0 4px 12px rgba(21,42,70,.045);transition:transform .16s,box-shadow .16s}
+.dv-body .dv-related-visual .dv-related-tile:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(21,42,70,.12)}
+.dv-body .dv-related-visual .dv-related-thumb{display:flex;align-items:center;justify-content:center;min-height:0;height:124px;width:100%;padding:8px;background:#f9fafc;border:0;border-bottom:1px solid #e8edf2;border-radius:0}
+.dv-body .dv-related-visual .dv-related-thumb img{display:block;object-fit:contain;width:100%;height:100%;max-width:160px}
+.dv-body .dv-related-visual .dv-related-destination{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:55px;padding:11px 13px;width:100%;border:0;border-radius:0;text-decoration:none;background:#fff;font-size:13px;font-weight:850;color:#20354e}
+.dv-body .dv-related-visual .dv-related-destination:hover{background:#eaf3ff;color:#0469dc}
+.dv-body .dv-related-visual .dv-related-destination>span:last-child{color:#076deb;font-weight:900}
+@media(max-width:700px){.dv-body .dv-related-visual{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.dv-body .dv-related-visual .dv-related-thumb{height:100px}.dv-body .dv-related-visual .dv-related-destination{font-size:11.5px;min-height:52px;padding:9px}}
