@@ -2,7 +2,26 @@
 (() => {
 "use strict";
 const conf=window.MULTILAB_ADS||{}, main=document.querySelector("main");
-if(conf.adsterraEnabled) return; // デモ広告との重複を回避
+if(conf.adsterraEnabled) {
+  // Social Bar: one script per page. Native Banner: one container and one script.
+  if(!/\\/(?:about|privacy|sitemap)\\.html$/.test(location.pathname)) {
+    if(!document.querySelector('[data-mlg-native]')) {
+      const aside=document.createElement("aside");
+      aside.className="as-slot as-native";
+      aside.setAttribute("data-mlg-native","1");
+      aside.setAttribute("aria-label","広告");
+      const lbl=document.createElement("span");lbl.className="as-slot-label";lbl.textContent="広告";aside.appendChild(lbl);
+      const wrap=document.createElement("div");wrap.className="as-ad-content";
+      const target=document.createElement("div");target.id="container-573f32537a9358baa2f58056e10eb15f";wrap.appendChild(target);aside.appendChild(wrap);
+      main.appendChild(aside);
+      const script=document.createElement("script");script.async=true;script.setAttribute("data-cfasync","false");script.src="https://bauval.org/21/573f32537a9358baa2f58056e10eb15f";wrap.insertBefore(script,target);
+    }
+    if(!document.querySelector('script[data-mlg-social]')) {
+      const social=document.createElement("script");social.dataset.mlgSocial="1";social.setAttribute("data-cfasync","false");social.src="https://bauval.org/14/d1c2cf14e4ee52bc288ba370d44bfd6a";document.body.appendChild(social);
+    }
+  }
+  return;
+} // Adsterra実広告を優先し、以前のダミー広告は表示しない
 if(!main) return;
 const preview=new URLSearchParams(location.search).get("ads-preview")==="1";
 const legal=/\/(?:about|privacy|sitemap)\.html$/.test(location.pathname);
