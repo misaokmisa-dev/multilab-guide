@@ -1,0 +1,37 @@
+name: One-time Buffer X Queue Clear
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/clear-old-buffer-x.yml'
+permissions:
+  contents: read
+jobs:
+  clear:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Delete all remaining scheduled X posts from Buffer
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import sys
+          sys.path.insert(0, "scripts")
+          import buffer_x_schedule as b
+          org,channel=b.get_channel()
+          def list_scheduled():
+              d=b.gql('query { posts(first: 100, input: {organizationId: %s, filter: {channelIds: [%s], status: [scheduled]}, sort: [{field: dueAt, direction: asc}]}) { edges { node {id dueAt} } pageInfo {hasNextPage} } }' % (b.q(org),b.q(channel)))['posts']
+              if d['pageInfo']['hasNextPage']: raise RuntimeError("More than 100 scheduled; stop for safe pagination")
+              return [x['node'] for x in d['edges']]
+          old=list_scheduled()
+          print("SCHEDULED_BEFORE",len(old))
+          for post in old:
+              r=b.gql('mutation { deletePost(input: {id: %s}) { ... on DeletePostSuccess {id} ... on MutationError {message} } }' % b.q(post['id']))['deletePost']
+              if r.get('id') != post['id']: raise RuntimeError("DELETE_FAILED "+str(r))
+              print("DELETED",post['id'])
+          remain=list_scheduled()
+          print("SCHEDULED_AFTER",len(remain))
+          if remain: raise RuntimeError("Old scheduled posts still present")
+          PY
