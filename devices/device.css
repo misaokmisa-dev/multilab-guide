@@ -114,3 +114,10 @@ body.dv-body{margin:0;background:var(--dv-bg);color:var(--dv-ink);font:16px/1.78
 .amazon-offer small{font-size:12px;line-height:1.6;color:var(--dv-muted)}
 .amazon-cat-links{display:flex;flex-wrap:wrap;gap:12px;margin:15px 0}
 @media(max-width:520px){.amazon-cta{width:100%;text-align:center}.amazon-cat-links{flex-direction:column}}
+
+/* Product image + title share the same tagged Amazon destination as the CTA. */
+.rank-image-link{display:flex;align-items:center;justify-content:center;width:100%;min-height:164px;border-radius:12px;outline-offset:4px;text-decoration:none;transition:transform .15s ease,background .15s ease}
+.rank-image-link:hover,.rank-image-link:focus-visible{transform:scale(1.025);background:#fff0d7}
+.rank-image-link img{width:100%;max-width:230px;height:auto;object-fit:contain}
+.rank-product-title{color:inherit;text-decoration:none;text-decoration-thickness:2px;text-underline-offset:3px}
+.rank-product-title:hover,.rank-product-title:focus-visible{text-decoration:underline;color:var(--dv-accent)}
