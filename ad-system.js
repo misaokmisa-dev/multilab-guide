@@ -16,18 +16,8 @@ if(conf.adsterraEnabled) {
       main.appendChild(aside);
       const script=document.createElement("script");script.async=true;script.setAttribute("data-cfasync","false");script.src="https://bauval.org/21/573f32537a9358baa2f58056e10eb15f";wrap.insertBefore(script,target);
     }
-    if(conf.socialBarEnabled && !document.querySelector('script[data-mlg-social]')) {
-      // Delay optional overlay ads until the main document is usable.
-      const loadSocial=()=>{
-        if(document.querySelector('script[data-mlg-social]'))return;
-        const social=document.createElement("script");
-        social.dataset.mlgSocial="1";social.async=true;
-        social.setAttribute("data-cfasync","false");
-        social.src="https://bauval.org/14/d1c2cf14e4ee52bc288ba370d44bfd6a";
-        document.body.appendChild(social);
-      };
-      if(document.readyState==="complete")setTimeout(loadSocial,3500);
-      else window.addEventListener("load",()=>setTimeout(loadSocial,3500),{once:true});
+    if(!document.querySelector('script[data-mlg-social]')) {
+      const social=document.createElement("script");social.dataset.mlgSocial="1";social.setAttribute("data-cfasync","false");social.src="https://bauval.org/14/d1c2cf14e4ee52bc288ba370d44bfd6a";document.body.appendChild(social);
     }
   }
   return;
