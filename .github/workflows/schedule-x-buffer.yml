@@ -1,0 +1,32 @@
+name: X Buffer Free Scheduler
+on:
+  workflow_dispatch:
+    inputs:
+      target_date:
+        description: 'Target Japan date YYYY-MM-DD, blank = tomorrow'
+        required: false
+        type: string
+      dry_run:
+        description: 'Preview only'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    - cron: '0 4 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: buffer-x-scheduler
+  cancel-in-progress: false
+jobs:
+  schedule:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Schedule X posts for tomorrow
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          TARGET_DATE: ${{ inputs.target_date }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: python3 scripts/buffer_x_schedule.py
