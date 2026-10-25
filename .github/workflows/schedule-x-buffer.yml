@@ -11,8 +11,6 @@ on:
         required: false
         default: false
         type: boolean
-  schedule:
-    - cron: '0 4 * * *'
 permissions:
   contents: read
 concurrency:
