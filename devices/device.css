@@ -222,3 +222,29 @@ body.dv-body{margin:0;background:var(--dv-bg);color:var(--dv-ink);font:16px/1.78
  .dv-body .dv-related-visual a.dv-related-thumb img{width:32px!important;max-width:32px!important;height:32px!important;max-height:32px!important}
  .dv-body .dv-related-visual a.dv-related-destination{font-size:10.5px!important;line-height:1.3!important}
 }
+
+
+/* Clear, brand-specific partner cards.
+   Illustrations are site-created reference images (not partner supplied ad creatives).
+   Existing approved outbound affiliate text links remain intact. */
+.dv-body .dv-pr .dv-partners{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
+.dv-body .dv-pr .dv-partners .partner-shop{min-width:0;overflow:hidden;padding:0!important;background:#fff;border:1px solid #dce5f0!important;border-radius:13px!important;box-shadow:0 5px 17px rgba(19,34,56,.065);display:flex;flex-direction:column}
+.dv-body .partner-shop .partner-visual{position:relative;display:flex;align-items:center;min-height:153px;overflow:hidden;isolation:isolate;padding:19px 16px 19px 23px;background:linear-gradient(108deg,#080e1b 0%,#172b4b 100%);color:#fff}
+.dv-body .partner-shop .partner-visual:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 78% 30%,rgba(255,255,255,.16),transparent 65%)}
+.dv-body .partner-shop .partner-visual-copy{flex:1;min-width:0;position:relative;z-index:1;padding-right:3px}
+.dv-body .partner-shop .partner-visual-kicker{font-size:10px;letter-spacing:.13em;color:#a1c9fb;font-weight:900}
+.dv-body .partner-shop .partner-visual h3{font-size:clamp(21px,2.1vw,29px)!important;line-height:1.12;letter-spacing:.01em;margin:9px 0 10px!important;color:inherit;font-weight:900}
+.dv-body .partner-shop .partner-visual p{font-size:12px!important;line-height:1.45;color:inherit;opacity:.94;margin:0!important;font-weight:760}
+.dv-body .partner-shop .partner-visual img{display:block;flex:0 0 39%;width:39%;min-width:0;max-width:180px;height:132px!important;max-height:132px!important;object-fit:contain;border-radius:7px;background:#ffffffed;mix-blend-mode:normal}
+.dv-body .partner-shop .partner-visual--qualit{background:linear-gradient(108deg,#243449,#3b617a)}
+.dv-body .partner-shop .partner-visual--qualit .partner-visual-kicker{color:#d2edff}
+.dv-body .partner-shop .partner-visual--pixio{background:linear-gradient(108deg,#2e355e,#7767ae)}
+.dv-body .partner-shop .partner-visual--pixio .partner-visual-kicker{color:#e6dbff}
+.dv-body .partner-shop .partner-visual--earfun{background:linear-gradient(108deg,#19253c,#245b77)}
+.dv-body .partner-shop .partner-visual--earfun .partner-visual-kicker{color:#8ce5ff}
+.dv-body .partner-shop .partner-shop-bottom{padding:14px 18px 17px;display:flex;flex-direction:column;gap:10px;flex:1}
+.dv-body .partner-shop .partner-shop-bottom p{font-size:12px;line-height:1.5;color:#59687b;margin:0}
+.dv-body .partner-shop .partner-shop-bottom a{display:flex!important;align-items:center;justify-content:center;width:100%;min-width:0;min-height:43px;padding:9px 10px;background:#076eec;border-radius:7px;color:#fff!important;font-weight:850;font-size:12px;line-height:1.4;text-align:center;text-decoration:none;transition:background .16s}
+.dv-body .partner-shop .partner-shop-bottom a:hover{background:#045ac5;color:#fff!important}
+@media(max-width:800px){.dv-body .dv-pr .dv-partners{grid-template-columns:repeat(1,minmax(0,1fr));gap:12px}.dv-body .partner-shop .partner-visual{min-height:136px}.dv-body .partner-shop .partner-visual img{height:116px!important;max-height:116px!important}}
+@media(max-width:480px){.dv-body .partner-shop .partner-visual{padding:15px 13px 15px 15px;min-height:127px}.dv-body .partner-shop .partner-visual h3{font-size:21px!important}.dv-body .partner-shop .partner-visual p{font-size:11px!important}.dv-body .partner-shop .partner-visual img{height:104px!important;max-height:104px!important;max-width:130px}.dv-body .partner-shop .partner-shop-bottom{padding:12px 13px}}
