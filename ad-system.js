@@ -85,3 +85,6 @@ if(!legal&&!client&&(campaigns.length||video)){
  }else if(campaigns.length>1)rail("right",card(campaigns[1]));
 }
 })();
+
+/* Load missing-creative slot cleanup after the publisher markup is parsed. */
+(function(){const script=document.createElement("script");script.src="/ad-empty-collapse.js";script.defer=true;document.head.appendChild(script);})();
