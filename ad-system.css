@@ -35,29 +35,10 @@
 .as-rail .as-ad-content{width:160px;max-width:160px;line-height:0}
 .as-rail.as-empty{display:none!important}
 .as-close{position:absolute;top:0;right:0;z-index:1;border:1px solid #ddd;border-radius:4px;background:#fff;color:#444;cursor:pointer}
-@media(min-width:1280px){body:has(.as-rail:not(.as-empty)) main{box-sizing:border-box;margin-right:192px!important;width:auto!important;max-width:none!important}}
-@media(max-width:1279px){.as-rail{display:none!important}}
+@media(min-width:1180px){body:has(.as-rail-right:not(.as-empty)) main{box-sizing:border-box;margin-right:192px!important;width:auto!important;max-width:none!important}}
+@media(max-width:1179px){.as-rail{display:none!important}}
 @media(max-width:759px){.as-slot{margin:12px auto}.as-mosaic{margin:14px auto 18px}.as-top .as-ad-content{max-width:320px}.as-bottom{display:none!important}}
 
-/* Left/right 160x600 Ninja AdMax rails. Do not overlap central 300x250 grid. */
-.as-rail.as-rail-left{left:10px;right:auto}
-.as-rail.as-rail-right{right:10px;left:auto}
-.as-rail{width:178px;max-height:calc(100vh - 128px)}
-.as-rail .as-ad-content{box-sizing:content-box;width:160px;max-width:160px}
-@media (min-width:1380px){
-  body:has(.as-rail-left) main{
-    box-sizing:border-box;
-    margin-left:192px!important;
-    margin-right:192px!important;
-    width:calc(100% - 384px)!important;
-    max-width:calc(100% - 384px)!important;
-  }
-  .as-rail.as-rail-left,.as-rail.as-rail-right{display:block!important}
-}
-@media (max-width:1379px){
-  .as-rail.as-rail-left,.as-rail.as-rail-right{display:none!important}
-  body:has(.as-rail-left) main{
-    margin-left:auto!important;margin-right:auto!important;
-    width:auto!important;max-width:100%!important;
-  }
-}
+
+/* Single right 160x600 rail; fixed while scrolling and no overlap with articles. */
+.as-rail.as-rail-right{left:auto;right:12px;position:fixed;top:112px;width:178px}
