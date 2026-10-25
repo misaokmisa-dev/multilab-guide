@@ -1,0 +1,42 @@
+{
+  "2026-10-26": [
+    {
+      "time": "08:10",
+      "page": "minecraft/mods/install.html",
+      "text": "【MODが動かない!?】まずMinecraft本体とMODローダーのバージョンを確認。入れ方を間違えると起動できないことも。猫とチェック🐈 #マイクラ",
+      "cat_image": "https://upload.wikimedia.org/wikipedia/commons/6/68/Wikipedians_cat.jpg"
+    },
+    {
+      "time": "12:20",
+      "page": "devices/mice.html",
+      "text": "【軽ければ正解？】マウスの重さだけで選ぶと手に合わないかも。持ち方・形状・接続方式も比較しよう🐈 #ゲーミングマウス",
+      "cat_image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=1200"
+    },
+    {
+      "time": "20:30",
+      "page": "devices/gaming-pc.html",
+      "text": "【そのPC選び待って！】GPUだけでなくCPU・メモリも要チェック。遊びたいゲームに合わせて比較してみよう🐈 #ゲーミングPC",
+      "cat_image": "https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=1200"
+    }
+  ],
+  "2026-10-27": [
+    {
+      "time": "08:10",
+      "page": "minecraft/articles/java-bedrock.html",
+      "text": "【買う前に確認！】マイクラJava版と統合版は遊び方が異なる。友達の環境とMODの対応を確認しよう🐈 #Minecraft",
+      "cat_image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=1200"
+    },
+    {
+      "time": "12:20",
+      "page": "devices/monitors.html",
+      "text": "【Hzだけで選ぶと損？】ゲーミングモニターは解像度とサイズも大切。3項目を比較しよう🐈 #ゲーミングモニター",
+      "cat_image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=1200"
+    },
+    {
+      "time": "20:30",
+      "page": "minecraft/mods/troubleshooting.html",
+      "text": "【マイクラ起動しない!?】MODの対応バージョンや依存ファイルをまず確認。原因の切り分けをまとめたよ🐈 #マイクラMOD",
+      "cat_image": "https://upload.wikimedia.org/wikipedia/commons/6/68/Wikipedians_cat.jpg"
+    }
+  ]
+}
