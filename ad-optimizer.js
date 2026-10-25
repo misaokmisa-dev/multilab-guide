@@ -44,32 +44,9 @@
       if(sections.length>=3) sections[1].after(inline);
     }
 
-    // 表示コードが生成されないケースでは余白を撤去。タグ配信後は自動的に復帰。
-    const visibleCreative=box=>{
-      const body=box.querySelector(".as-ad-content");if(!body)return false;
-      return !!body.querySelector("iframe,img,object,embed,ins,a[href],video,svg,canvas");
-    };
-    [...document.querySelectorAll(".as-slot,.as-rail")].forEach(slot=>{
-      const update=()=> {
-        const filled=visibleCreative(slot);
-        slot.classList.toggle("as-filled",filled);
-        if(filled)slot.classList.remove("as-empty");
-      };
-      const observer=new MutationObserver(update);
-      observer.observe(slot,{childList:true,subtree:true});
-      update();
-      setTimeout(()=>{if(!visibleCreative(slot))slot.classList.add("as-empty");},5000);
-    });
-    const row=document.querySelector(".as-top-mosaic");
-    if(row){
-      const observer=new MutationObserver(()=>{
-        if([...row.children].every(x=>x.classList.contains("as-empty")))row.classList.add("as-empty");
-        else row.classList.remove("as-empty");
-      });
-      observer.observe(row,{attributes:true,subtree:false,childList:true});
-      // 子要素のclass変化も監視
-      row.querySelectorAll(".as-slot").forEach(x=>observer.observe(x,{attributes:true,attributeFilter:["class"]}));
-    }
+
+    // Network ad frames self-manage their visibility. Do not hide active lazy slots.
+  
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
   else init();
