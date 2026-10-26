@@ -136,3 +136,31 @@
     transform-origin: top center;
   }
 }
+
+
+/* Individually placed 300x250 AdMax units before selected sections. */
+.as-slot.as-inline-single {
+  box-sizing: border-box;
+  width: 300px;
+  max-width: calc(100% - 24px);
+  margin: 30px auto;
+  padding: 0;
+  clear: both;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.as-slot.as-inline-single .as-ad-content {
+  box-sizing: border-box;
+  width: 300px;
+  max-width: 100%;
+  overflow: clip;
+}
+@media (max-width: 760px) {
+  .as-slot.as-inline-single {
+    width: 300px;
+    max-width: calc(100% - 24px);
+    margin: 24px auto;
+    overflow-x: clip;
+  }
+}
