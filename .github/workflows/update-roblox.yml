@@ -4,6 +4,7 @@ on:
     paths:
       - '.github/workflows/update-roblox.yml'
       - 'roblox/data/catalog.json'
+      - 'scripts/update_roblox.py'
   schedule:
     - cron: '21 0,6,12,18 * * *'
   workflow_dispatch:

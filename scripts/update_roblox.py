@@ -58,6 +58,11 @@ def main():
     games=c["games"]
     ids=[str(g["placeId"]) for g in games]
     universe=state.get("universeIds",{})
+    # Universe IDs are recorded alongside root place IDs by the discovery index.
+    # Avoid requesting one endpoint per game when processing hundreds of games.
+    for game in games:
+        uid=game.get("universeId")
+        if uid and str(uid).isdigit(): universe[str(game["placeId"])]=str(uid)
     for place in ids:
         if place in universe:continue
         try:
