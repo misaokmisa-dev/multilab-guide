@@ -17,6 +17,36 @@ async function auth(request,env) {
 export default {
  async fetch(request,env) {
   const url=new URL(request.url);
+  if(url.pathname==='/api/roblox-live') {
+   if(request.method!=='GET')return json({error:'Method not allowed'},405);
+   // Each page load requests a fresh snapshot of the all-country, all-device
+   // Roblox Top Playing Now ranking. No simulated counts, no page-level cache.
+   try {
+    const params=new URLSearchParams({sessionId:'mlg-live-site',sortId:'top-playing-now',device:'computer',country:'all'});
+    const originUrl='https://apis.roblox.com/explore-api/v1/get-sort-content?'+params.toString();
+    const upstream=await fetch(originUrl,{headers:{'accept':'application/json'},signal:AbortSignal.timeout(8500),cache:'no-store'});
+    if(!upstream.ok)throw Error('Official Roblox chart returned '+upstream.status);
+    const data=await upstream.json();
+    if(data?.sortId!=='top-playing-now'||!Array.isArray(data.games))throw Error('Invalid official Roblox response');
+    const uniq=new Map();
+    for(const entry of data.games) {
+      if(entry?.isSponsored||!entry?.rootPlaceId||!Number.isInteger(entry?.playerCount)||entry.playerCount<0)continue;
+      const id=String(entry.rootPlaceId);
+      if(!/^\d{6,20}$/.test(id))continue;
+      const up=entry.totalUpVotes,down=entry.totalDownVotes;
+      uniq.set(id,{
+       placeId:id,universeId:String(entry.universeId||''),name:String(entry.name||'ROBLOXゲーム').slice(0,160),
+       officialName:String(entry.name||'').slice(0,160),playing:entry.playerCount,
+       rating:Number.isInteger(up)&&Number.isInteger(down)&&up+down>0?Math.round(up/(up+down)*1000)/10:null
+      });
+    }
+    const games=[...uniq.values()].sort((a,b)=>b.playing-a.playing).slice(0,30);
+    if(games.length!==30)throw Error('Only '+games.length+' Roblox games available');
+    return json({source:'Roblox Top Playing Now — all countries and devices',updatedAt:new Date().toISOString(),games});
+   }catch(e){
+    return json({error:'Robloxの最新データを取得できませんでした'},503);
+   }
+  }
   if(url.pathname==='/api/affiliate-event') {
    if(request.method!=='POST')return json({error:'Method not allowed'},405);
    if(!env.MLG_EVENTS)return json({error:'Tracking is not configured'},503);

@@ -126,3 +126,6 @@
    max-width:100%;overflow:hidden;
  }
 }
+
+/* Active ranking now uses red status indicator; the left tab is default. */
+.rb-body .rb-active-dot{background:#e54848!important;box-shadow:0 0 0 4px #e5484828!important}
