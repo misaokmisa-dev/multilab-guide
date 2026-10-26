@@ -34,10 +34,17 @@ export default {
      if(iconUrl.protocol!=='https:'||!(iconUrl.hostname==='tr.rbxcdn.com'||iconUrl.hostname.endsWith('.rbxcdn.com')))throw Error('Untrusted image host');
      const response=await fetch(iconUrl.href,{signal:AbortSignal.timeout(7000)});
      if(!response.ok)throw Error('Image request failed');
-     const mime=(response.headers.get('content-type')||'').split(';')[0].trim();
-     if(!['image/png','image/jpeg','image/webp'].includes(mime))throw Error('Invalid image response');
+     // Roblox CDN can deliver real PNG bytes as application/octet-stream.
+     // Derive the content type from file signature, never from an untrusted header.
      const buffer=await response.arrayBuffer();
-     if(buffer.byteLength>2000000||buffer.byteLength===0)throw Error('Invalid image size');
+     const bytes=new Uint8Array(buffer);
+     if(bytes.length>2000000||bytes.length<16)throw Error('Invalid image size');
+     const png=bytes[0]===137&&bytes[1]===80&&bytes[2]===78&&bytes[3]===71&&bytes[4]===13&&bytes[5]===10;
+     const jpg=bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
+     const webp=String.fromCharCode(...bytes.slice(0,4))==='RIFF'&&String.fromCharCode(...bytes.slice(8,12))==='WEBP';
+     const avif=String.fromCharCode(...bytes.slice(4,12)).includes('ftypavif');
+     const mime=png?'image/png':jpg?'image/jpeg':webp?'image/webp':avif?'image/avif':null;
+     if(!mime)throw Error('Invalid image signature: '+(response.headers.get('content-type')||'unknown'));
      const output=new Response(buffer,{headers:{'content-type':mime,'cache-control':'public,max-age=86400,s-maxage=604800','x-content-type-options':'nosniff'}});
      if(cache&&ctx?.waitUntil)ctx.waitUntil(cache.put(request,output.clone()).catch(()=>{}));
      return output;
