@@ -59,3 +59,29 @@
 .rb-seo-rank-item h3{font-size:13px}.rb-seo-rank-num{font-size:16px}
 .rb-seo-rank-item a{grid-column:3;font-size:11px}
 }
+
+/* Match the original Roblox live-ranking 「プレイ ↗」 button exactly.
+   This selector outranks legacy article link styling on both desktop and mobile. */
+.rb-seo-page .rb-active-visit{
+ display:inline-flex;align-items:center;justify-content:center;
+ background:#6743cc;color:#fff!important;text-align:center;
+ text-decoration:none!important;border-radius:9px;
+ padding:9px 8px;font-size:11px;font-weight:850;line-height:1.4;
+ white-space:nowrap;min-width:80px;
+ transition:background-color .17s ease,box-shadow .17s ease;
+}
+.rb-seo-page .rb-active-visit:hover,
+.rb-seo-page .rb-active-visit:focus-visible{
+ background:#5231b1;color:#fff!important;box-shadow:0 3px 12px #3c25833b;
+}
+.rb-seo-page .rb-seo-rank-item .rb-active-visit{
+ justify-self:end;
+}
+.rb-seo-page .rb-seo-curation .rb-active-visit{
+ margin-top:8px;
+}
+@media(max-width:720px){
+ .rb-seo-page .rb-seo-rank-item .rb-active-visit{
+   grid-column:3;justify-self:start;padding:8px 10px;
+ }
+}
