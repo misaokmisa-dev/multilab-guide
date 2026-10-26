@@ -200,9 +200,25 @@
   }
   function gameExamples(a,tierIndex) {
     const genre=a[0],base=gameSuggestions[genre]||[];
-    const popular=tiers[tierIndex].games;
-    const list = Array.from(new Set([...base,...popular]));
-    // Relevant examples, not confirmed benchmarks for a specific quality/fps.
+    // Omit very heavy games on low-tier cards, rather than implying that
+    // they are suited to the user's preferred high-quality settings.
+    const minimumClass = {
+      "VALORANT":0,"Fortnite":0,"Apex Legends":1,
+      "Counter-Strike 2":0,"ARC Raiders":2,
+      "ELDEN RING":1,"モンスターハンターワイルズ":2,
+      "Cyberpunk 2077":3,"黒神話：悟空":3,
+      "バイオハザード RE:4":1,
+      "原神":0,"FINAL FANTASY XIV":1,
+      "ホグワーツ・レガシー":2,"Starfield":3,
+      "崩壊：スターレイル":0,"Minecraft":0,
+      "パルワールド":2,"ARK: Survival Ascended":3,
+      "Terraria":0,"Valheim":1,"ストリートファイター6":0,
+      "Stardew Valley":0,"Hades":0,
+      "Forza Horizon":2,"Microsoft Flight Simulator":3,
+      "Cities: Skylines II":3,"Euro Truck Simulator 2":0
+    };
+    const relevant=base.filter(g=>(minimumClass[g]??2)<=tierIndex);
+    const list=Array.from(new Set([...relevant,...tiers[tierIndex].games]));
     return list.slice(0,5);
   }
   function amazonSearch(gpu,ram) {
@@ -213,6 +229,9 @@
     // Offer a verified existing ranking ASIN only if the model's stated GPU
     // matches the recommendation and RAM is not understated.
     const matches=tier.links.filter(([name]) => {
+      // Existing ranking's RTX 5060 Ti pages do not specify GPU VRAM;
+      // a 16GB-class result must search for the exact variant instead.
+      if(tier.short==="RTX 5060 Ti 16GB")return false;
       if(ram<=16)return true;
       return /Thermaltake|Cooler Master/.test(name);
     });
@@ -227,16 +246,19 @@
     const need=getRequirement(a);
     const cap=budgetLimits[a[6]];
     const constrained=cap<need;
-    const preferred=constrained ? cap : need;
-    const indices = [
-      Math.max(0,preferred-1),
-      preferred,
-      Math.min(5,Math.max(preferred+1,need))
-    ];
-    if(indices[0]===indices[1] && indices[1]===indices[2])indices[2]=Math.min(5,indices[2]+1);
-    if(indices[0]===indices[1] && indices[1]>0)indices[0]--;
-    if(indices[1]===indices[2] && indices[2]<5)indices[2]++;
-    if(indices[1]===indices[2] && indices[0]>0)indices[0]--;
+    // Three distinct GPU classes in every result, including strict budgets.
+    // When need exceeds budget, show the realistic upgrade path explicitly.
+    let indices;
+    if(constrained){
+      indices = cap===0 ? [0,1,Math.max(2,need)]
+        : [Math.max(0,cap-1),cap,Math.max(cap+1,need)];
+    }else if(need===0){
+      indices=[0,1,2];
+    }else if(need===5){
+      indices=[3,4,5];
+    }else{
+      indices=[need-1,need,need+1];
+    }
     const labels=["予算を抑えるなら","おすすめのバランス","性能に余裕を持つなら"];
     const kinds=["budget","recommended","premium"];
     summary.replaceChildren();
