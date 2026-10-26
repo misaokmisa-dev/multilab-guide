@@ -5,7 +5,7 @@
   "games": [
     {
       "placeId": "4924922222",
-      "name": "Brookhaven 🏡RP",
+      "name": "ブルックヘイブン 🏡RP",
       "short": "街で自由に暮らす、遊び方無限大のロールプレイ",
       "genre": "ロールプレイ",
       "icon": "🏡",
@@ -22,11 +22,12 @@
       "week": 5,
       "month": 2,
       "rising": 16,
-      "beginner": 1
+      "beginner": 1,
+      "originalName": "Brookhaven 🏡RP"
     },
     {
       "placeId": "920587237",
-      "name": "Adopt Me!",
+      "name": "Adopt Me!（アドプトミー）",
       "short": "ペットと暮らす、交換する、育てる",
       "genre": "育成・生活",
       "icon": "🐾",
@@ -43,11 +44,12 @@
       "week": 8,
       "month": 5,
       "rising": 6,
-      "beginner": 2
+      "beginner": 2,
+      "originalName": "Adopt Me!"
     },
     {
       "placeId": "2753915549",
-      "name": "Blox Fruits",
+      "name": "ブロックスフルーツ",
       "short": "能力を育てて冒険するアクションRPG",
       "genre": "RPG・冒険",
       "icon": "⚔️",
@@ -64,11 +66,12 @@
       "week": 4,
       "month": 3,
       "rising": 13,
-      "beginner": 11
+      "beginner": 11,
+      "originalName": "Blox Fruits"
     },
     {
       "placeId": "142823291",
-      "name": "Murder Mystery 2",
+      "name": "殺人ミステリー2（Murder Mystery 2）",
       "short": "犯人を見抜いて生き残る推理サバイバル",
       "genre": "ホラー・サバイバル",
       "icon": "🔎",
@@ -85,11 +88,12 @@
       "week": 2,
       "month": 4,
       "rising": 14,
-      "beginner": 5
+      "beginner": 5,
+      "originalName": "Murder Mystery 2"
     },
     {
       "placeId": "79546208627805",
-      "name": "99 Nights in the Forest",
+      "name": "森で99の夜 🔦",
       "short": "森でキャンプを守り、夜を越える協力サバイバル",
       "genre": "ホラー・サバイバル",
       "icon": "🌲",
@@ -106,11 +110,12 @@
       "week": 3,
       "month": 7,
       "rising": 7,
-      "beginner": 12
+      "beginner": 12,
+      "originalName": "99 Nights in the Forest"
     },
     {
       "placeId": "17625359962",
-      "name": "RIVALS",
+      "name": "ライバル",
       "short": "1対1からチーム戦までのハイスピードFPS",
       "genre": "対戦・アクション",
       "icon": "🎯",
@@ -127,11 +132,12 @@
       "week": 6,
       "month": 6,
       "rising": 12,
-      "beginner": 15
+      "beginner": 15,
+      "originalName": "RIVALS"
     },
     {
       "placeId": "109983668079237",
-      "name": "Steal a Brainrot",
+      "name": "ブレインロットを盗む",
       "short": "ミームキャラを集めて守るカオスな育成ゲーム",
       "genre": "育成・生活",
       "icon": "🧠",
@@ -148,11 +154,12 @@
       "week": 10,
       "month": 8,
       "rising": 8,
-      "beginner": 9
+      "beginner": 9,
+      "originalName": "Steal a Brainrot"
     },
     {
       "placeId": "6516141723",
-      "name": "DOORS",
+      "name": "DOORS 👁️（ドアーズ）",
       "short": "謎と危険が待つホテルを進むホラー",
       "genre": "ホラー・サバイバル",
       "icon": "🚪",
@@ -169,11 +176,12 @@
       "week": 9,
       "month": 11,
       "rising": 4,
-      "beginner": 14
+      "beginner": 14,
+      "originalName": "DOORS"
     },
     {
       "placeId": "16732694052",
-      "name": "Fisch",
+      "name": "フィッシュ",
       "short": "広い世界でレアな魚を追いかける釣り冒険",
       "genre": "育成・生活",
       "icon": "🎣",
@@ -190,11 +198,12 @@
       "week": 12,
       "month": 10,
       "rising": 15,
-      "beginner": 4
+      "beginner": 4,
+      "originalName": "Fisch"
     },
     {
       "placeId": "16116270224",
-      "name": "Dandy's World",
+      "name": "ダンディの世界",
       "short": "仲間と協力しながら脱出を目指すホラー",
       "genre": "ホラー・サバイバル",
       "icon": "🌻",
@@ -211,11 +220,12 @@
       "week": 7,
       "month": 12,
       "rising": 3,
-      "beginner": 10
+      "beginner": 10,
+      "originalName": "Dandy's World"
     },
     {
       "placeId": "15101393044",
-      "name": "Dress To Impress",
+      "name": "ドレス・トゥ・インプレス💖",
       "short": "テーマに合わせたコーデを競うファッションゲーム",
       "genre": "ロールプレイ",
       "icon": "👗",
@@ -232,11 +242,12 @@
       "week": 11,
       "month": 9,
       "rising": 5,
-      "beginner": 3
+      "beginner": 3,
+      "originalName": "Dress To Impress"
     },
     {
       "placeId": "18687417158",
-      "name": "Forsaken",
+      "name": "フォーセイクン（Forsaken）",
       "short": "追う側・逃げる側の非対称ホラー対戦",
       "genre": "ホラー・サバイバル",
       "icon": "👁️",
@@ -253,11 +264,12 @@
       "week": 13,
       "month": 15,
       "rising": 2,
-      "beginner": 16
+      "beginner": 16,
+      "originalName": "Forsaken"
     },
     {
       "placeId": "9391468976",
-      "name": "Jujutsu Shenanigans",
+      "name": "呪術の大混乱",
       "short": "能力を駆使して戦う爽快バトルアクション",
       "genre": "対戦・アクション",
       "icon": "💥",
@@ -274,11 +286,12 @@
       "week": 14,
       "month": 13,
       "rising": 9,
-      "beginner": 13
+      "beginner": 13,
+      "originalName": "Jujutsu Shenanigans"
     },
     {
       "placeId": "73956553001240",
-      "name": "Volleyball Legends",
+      "name": "バレーボールレジェンド",
       "short": "チームでつなぐスピーディーなバレーボール",
       "genre": "スポーツ",
       "icon": "🏐",
@@ -295,11 +308,12 @@
       "week": 15,
       "month": 16,
       "rising": 10,
-      "beginner": 7
+      "beginner": 7,
+      "originalName": "Volleyball Legends"
     },
     {
       "placeId": "1962086868",
-      "name": "Tower of Hell",
+      "name": "地獄のタワー",
       "short": "腕試しにぴったりの高難度アスレチック",
       "genre": "アスレ・パズル",
       "icon": "🧗",
@@ -316,11 +330,12 @@
       "week": 16,
       "month": 14,
       "rising": 17,
-      "beginner": 8
+      "beginner": 8,
+      "originalName": "Tower of Hell"
     },
     {
       "placeId": "13772394625",
-      "name": "Blade Ball",
+      "name": "ブレードボール",
       "short": "ボールを弾き返す反射神経対決",
       "genre": "対戦・アクション",
       "icon": "⚡",
@@ -337,11 +352,12 @@
       "week": 17,
       "month": 17,
       "rising": 11,
-      "beginner": 6
+      "beginner": 6,
+      "originalName": "Blade Ball"
     },
     {
       "placeId": "107778070777162",
-      "name": "Steal An Egg",
+      "name": "卵を盗む",
       "short": "卵を集めて孵化し、レアなペットを育てよう",
       "genre": "育成・生活",
       "icon": "🥚",
@@ -358,7 +374,8 @@
       "week": 1,
       "month": 1,
       "rising": 1,
-      "beginner": 7
+      "beginner": 7,
+      "originalName": "Steal An Egg"
     }
   ]
 }
