@@ -1,0 +1,61 @@
+/* Search-friendly Roblox topic pages: indexable HTML content and deep links. */
+.rb-seo-page{background:#f7f8fd;color:#1d2335;min-height:100vh}
+.rb-seo-global{display:flex;gap:21px;align-items:center;flex-wrap:wrap}
+.rb-seo-global a{font-size:13px;font-weight:700;color:#35415d;text-decoration:none}
+.rb-seo-global a:hover{color:#7445cd}
+.rb-seo-container{width:min(1120px,calc(100% - 38px));margin:0 auto}
+.rb-seo-hero{padding:72px 0 64px;background:linear-gradient(115deg,#0a1127,#1d1a44 66%,#402d7b);color:#fff}
+.rb-seo-eyebrow{color:#c4adff;font-weight:800;font-size:12px;letter-spacing:.14em;margin:0 0 16px}
+.rb-seo-hero h1{font-size:clamp(34px,5vw,64px);letter-spacing:-.055em;line-height:1.15;margin:0 0 18px;color:white;font-weight:900;max-width:950px}
+.rb-seo-hero h1 em{font-style:normal;color:#c4adff}
+.rb-seo-hero>div>p:not(.rb-seo-eyebrow){max-width:760px;line-height:1.85;font-size:15px;color:#ebe9fb}
+.rb-seo-hero-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
+.rb-seo-hero-links a{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;min-height:46px;padding:10px 18px;font-size:13px;font-weight:800;text-decoration:none}
+.rb-seo-primary{background:#7654d5;color:#fff!important}.rb-seo-primary:hover{background:#633bbd}
+.rb-seo-secondary{border:1px solid #ffffff66;color:#f1eaff!important}
+.rb-seo-main{padding:24px 0 55px}
+.rb-seo-crumb{display:flex;align-items:center;gap:9px;font-size:12px;color:#57627b;flex-wrap:wrap;margin:0 0 26px}
+.rb-seo-crumb a{color:#5c43a3;text-decoration:none}
+.rb-seo-related{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:0 0 25px}
+.rb-seo-related a{display:flex;align-items:center;justify-content:center;min-height:58px;padding:12px 10px;background:white;border:1px solid #e4def4;border-radius:12px;color:#563c96;text-decoration:none;font-size:13px;font-weight:800;text-align:center}
+.rb-seo-related a:hover{border-color:#8e6de0;background:#f5f0ff}
+.rb-seo-panel{background:#fff;border:1px solid #e5e8f2;border-radius:15px;padding:34px;margin-bottom:23px;box-shadow:0 3px 18px #1b1a4609}
+.rb-seo-panel h2,.rb-seo-article h2,.rb-seo-closing h2{color:#1b2340;font-size:clamp(22px,3vw,29px);line-height:1.3;margin:0 0 18px}
+.rb-seo-panel>p,.rb-seo-article p,.rb-seo-closing p{color:#52617c;line-height:1.85;font-size:14px}
+.rb-seo-rank-list{list-style:none;padding:0;margin:22px 0}
+.rb-seo-rank-item{display:grid;grid-template-columns:47px 64px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid #e9eaf2}
+.rb-seo-rank-num{font-size:20px;color:#7452c4;font-weight:900;font-variant-numeric:tabular-nums}
+.rb-seo-rank-item img{width:64px;height:64px;border-radius:12px;object-fit:cover}
+.rb-seo-noicon{font-size:27px;display:grid;place-items:center;background:#eee8ff;border-radius:12px;width:64px;height:64px}
+.rb-seo-rank-item h3{font-size:15px;line-height:1.4;margin:0 0 5px;color:#1b2745}
+.rb-seo-rank-item p{margin:0;font-size:12px;color:#52617c}
+.rb-seo-rank-item a{color:#603abc;font-weight:850;font-size:12px;text-decoration:none;white-space:nowrap}
+.rb-seo-source{font-size:12px!important;color:#66738b!important}
+.rb-seo-article{background:white;padding:30px 35px;border:1px solid #e5e8f2;border-radius:15px;margin-bottom:23px}
+.rb-seo-article h2:not(:first-child){margin-top:25px}
+.rb-seo-article a{color:#6140b7}
+.rb-seo-curation{padding:0;margin:25px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;list-style:none}
+.rb-seo-curation li{padding:22px;border:1px solid #e6e5f2;border-radius:13px;background:#fdfcff}
+.rb-seo-curation-tag{font-weight:850;color:#855bc6;font-size:11px;letter-spacing:.03em}
+.rb-seo-curation h3{font-size:19px;margin:8px 0 3px;color:#202b45;line-height:1.35}
+.rb-seo-curation p{line-height:1.75;font-size:13px;color:#52607b}
+.rb-seo-original{font-size:11px!important;color:#7e879b!important;margin-top:2px}
+.rb-seo-meta{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+.rb-seo-meta span{background:#eeeafe;border-radius:99px;color:#6446a3;padding:5px 10px;font-size:11px;font-weight:700}
+.rb-seo-game-cta{font-size:13px;color:#5b38b9;font-weight:900;text-decoration:none}
+.rb-seo-closing{border:1px solid #e6e8f1;background:#fff;border-radius:15px;padding:28px}
+.rb-seo-closing .rb-seo-related{margin:21px 0 0}
+.rb-seo-footer{background:#11172b;padding:26px 20px;display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:center;align-items:center}
+.rb-seo-footer a,.rb-seo-footer span{color:#d4d9ed;font-size:12px}
+@media(max-width:720px){
+.rb-seo-hero{padding:44px 0 42px}.rb-seo-hero h1{font-size:clamp(31px,9vw,47px)}
+.rb-seo-container{width:calc(100% - 26px)}.rb-seo-related{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rb-seo-related a{font-size:11px;padding:8px;min-height:48px}
+.rb-seo-global{gap:9px}.rb-seo-global a{font-size:10px}
+.rb-seo-panel,.rb-seo-article,.rb-seo-closing{padding:20px 15px}
+.rb-seo-curation{grid-template-columns:1fr;gap:10px}
+.rb-seo-rank-item{grid-template-columns:32px 47px minmax(0,1fr);gap:7px}
+.rb-seo-rank-item img,.rb-seo-noicon{width:47px;height:47px;border-radius:9px}
+.rb-seo-rank-item h3{font-size:13px}.rb-seo-rank-num{font-size:16px}
+.rb-seo-rank-item a{grid-column:3;font-size:11px}
+}
