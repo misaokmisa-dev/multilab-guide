@@ -7,6 +7,10 @@ const imageOkay=src=>{try{let u=new URL(src);return u.protocol==="https:"&&(u.ho
 const pop=$("#rb-popular-view"),act=$("#rb-active-view"),popularBtn=$("#rb-show-popular"),activeBtn=$("#rb-show-active");
 function switchTo(mode){
  const active=mode==="active";pop.hidden=active;act.hidden=!active;
+ // Show one (not two) ad slots after the shared "game choice" guide for the selected ranking.
+ const popularGuideAd=$("#rb-popular-guide-ad"),activeGuideAd=$("#rb-active-guide-ad");
+ if(popularGuideAd)popularGuideAd.hidden=active;
+ if(activeGuideAd)activeGuideAd.hidden=!active;
  popularBtn.classList.toggle("is-active",!active);activeBtn.classList.toggle("is-active",active);
  popularBtn.setAttribute("aria-pressed",String(!active));activeBtn.setAttribute("aria-pressed",String(active));
  $("#ranking").scrollIntoView({behavior:"smooth",block:"start"});
