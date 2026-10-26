@@ -1,19 +1,188 @@
 {
-  "updatedAt": null,
-  "games": {},
-  "rankings": {
-    "week": {
-      "ready": false,
-      "ranks": []
+  "games": {
+    "109983668079237": {
+      "favorites": 29631651,
+      "icon": "https://tr.rbxcdn.com/180DAY-3ac8bc815065c53cd8aa417f9a78d896/512/512/Image/Png/noFilter",
+      "playing": 285002,
+      "rating": 85.1,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 74169048824
     },
-    "month": {
-      "ready": false,
-      "ranks": []
+    "13772394625": {
+      "favorites": 13058065,
+      "icon": "https://tr.rbxcdn.com/180DAY-38e75c9ff1051ad6ca868f39be2cf095/512/512/Image/Png/noFilter",
+      "playing": 14346,
+      "rating": 93.5,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 6508806512
     },
-    "rising": {
-      "ready": false,
-      "ranks": []
+    "142823291": {
+      "favorites": 24669536,
+      "icon": "https://tr.rbxcdn.com/180DAY-ab1484ff8063476d413da09dd25df93f/512/512/Image/Png/noFilter",
+      "playing": 241736,
+      "rating": 90.8,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 31839859841
+    },
+    "15101393044": {
+      "favorites": 7680151,
+      "icon": "https://tr.rbxcdn.com/180DAY-300a8c319bcffed13b5120cdb98d1213/512/512/Image/Png/noFilter",
+      "playing": 75507,
+      "rating": 90.6,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 11242614065
+    },
+    "16116270224": {
+      "favorites": 4752057,
+      "icon": "https://tr.rbxcdn.com/180DAY-888663d5087991ea655a35df6a515ac5/512/512/Image/Png/noFilter",
+      "playing": 71102,
+      "rating": 87.9,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 7791404686
+    },
+    "16732694052": {
+      "favorites": 3703890,
+      "icon": "https://tr.rbxcdn.com/180DAY-53aa8e02a9fdac8deaa0f697a2aaad9a/512/512/Image/Png/noFilter",
+      "playing": 64388,
+      "rating": 90.8,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 5067472174
+    },
+    "17625359962": {
+      "favorites": 95947191,
+      "icon": "https://tr.rbxcdn.com/180DAY-1912e777e949b6490e59fa4ac83b1063/512/512/Image/Png/noFilter",
+      "playing": 169326,
+      "rating": 93.7,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 18970065127
+    },
+    "18687417158": {
+      "favorites": 3274974,
+      "icon": "https://tr.rbxcdn.com/180DAY-9ac77b9e9552150c8e485ddf26dac48f/512/512/Image/Png/noFilter",
+      "playing": 35244,
+      "rating": 84.4,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 5874674967
+    },
+    "1962086868": {
+      "favorites": 12089362,
+      "icon": "https://tr.rbxcdn.com/180DAY-9704151d9c8a70e7ebe0ced8cb2b95c1/512/512/Image/Png/noFilter",
+      "playing": 35890,
+      "rating": 73.6,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 29265055769
+    },
+    "2753915549": {
+      "favorites": 20129530,
+      "icon": "https://tr.rbxcdn.com/180DAY-774ec14539b264f85fdb6e8a34dfa344/512/512/Image/Png/noFilter",
+      "playing": 150021,
+      "rating": 92.3,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 65106732149
+    },
+    "4924922222": {
+      "favorites": 30687502,
+      "icon": "https://tr.rbxcdn.com/180DAY-577f3f78d1f056c80db7d2a54c8d384d/512/512/Image/Png/noFilter",
+      "playing": 314917,
+      "rating": 85.9,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 88916404968
+    },
+    "6516141723": {
+      "favorites": 8330343,
+      "icon": "https://tr.rbxcdn.com/180DAY-6d72472d3b2a47c5441194c8cf9f002c/512/512/Image/Png/noFilter",
+      "playing": 47599,
+      "rating": 93.0,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 7955371205
+    },
+    "73956553001240": {
+      "favorites": 5723009,
+      "icon": "https://tr.rbxcdn.com/180DAY-3ae0a0c2e2bd0e7fc5372d08ce40a189/512/512/Image/Png/noFilter",
+      "playing": 40022,
+      "rating": 95.2,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 4041980504
+    },
+    "79546208627805": {
+      "favorites": 10071049,
+      "icon": "https://tr.rbxcdn.com/180DAY-6fea21af78ed824cf3e2e998f63b687c/512/512/Image/Png/noFilter",
+      "playing": 209487,
+      "rating": 90.5,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 30265315925
+    },
+    "920587237": {
+      "favorites": 29808092,
+      "icon": "https://tr.rbxcdn.com/180DAY-4dd71502e99ee8c47cbafec4c95c442d/512/512/Image/Png/noFilter",
+      "playing": 202218,
+      "rating": 86.4,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 45219141744
+    },
+    "9391468976": {
+      "favorites": 3205689,
+      "icon": "https://tr.rbxcdn.com/180DAY-d050b3c50d30c76d215accd60ddbb1c5/512/512/Image/Png/noFilter",
+      "playing": 104268,
+      "rating": 86.3,
+      "sampledAt": "2026-10-26T10:52:10Z",
+      "visits": 7772650606
     }
   },
-  "observations": []
+  "observations": [
+    {
+      "players": {
+        "109983668079237": 285002,
+        "13772394625": 14346,
+        "142823291": 241736,
+        "15101393044": 75507,
+        "16116270224": 71102,
+        "16732694052": 64388,
+        "17625359962": 169326,
+        "18687417158": 35244,
+        "1962086868": 35890,
+        "2753915549": 150021,
+        "4924922222": 314917,
+        "6516141723": 47599,
+        "73956553001240": 40022,
+        "79546208627805": 209487,
+        "920587237": 202218,
+        "9391468976": 104268
+      },
+      "ts": "2026-10-26T10:52:10Z"
+    }
+  ],
+  "rankings": {
+    "month": {
+      "ranks": [],
+      "ready": false
+    },
+    "rising": {
+      "ranks": [],
+      "ready": false
+    },
+    "week": {
+      "ranks": [],
+      "ready": false
+    }
+  },
+  "universeIds": {
+    "109983668079237": "7709344486",
+    "13772394625": "4777817887",
+    "142823291": "66654135",
+    "15101393044": "5203828273",
+    "16116270224": "5569032992",
+    "16732694052": "5750914919",
+    "17625359962": "6035872082",
+    "18687417158": "6331902150",
+    "1962086868": "703124385",
+    "2753915549": "994732206",
+    "4924922222": "1686885941",
+    "6516141723": "2440500124",
+    "73956553001240": "6931042565",
+    "79546208627805": "7326934954",
+    "920587237": "383310974",
+    "9391468976": "3508322461"
+  },
+  "updatedAt": "2026-10-26T10:52:10Z"
 }
