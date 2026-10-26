@@ -1,9 +1,5 @@
 /* 契約済みの広告を設定してください。未設定時は実際の広告を表示しません。 */
 window.MULTILAB_ADS = {
-  adsterraEnabled: false, // Adsterra全面停止。忍者AdMaxに置換
-  popunderEnabled: false, // ブラウザ別タブ広告は安全性・ASP規約を確認してから
-  smartlinkEnabled: false, // 自動転送禁止
-  nativeBannerEnabled: false, // 広告画像と説明文が重なるため修正まで停止
   adsenseClient: "", // AdSense の ca-pub-...。承認後に設定
   adsenseSlots: { inline: "", bottom: "" }, // 手動広告枠（任意）
   gameCampaigns: [
