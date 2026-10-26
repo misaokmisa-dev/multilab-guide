@@ -104,8 +104,8 @@
 @media(max-width:690px){#categories .portal-grid{grid-template-columns:1fr!important}}
 @media(max-width:760px){
  .mlg-home-rotator.portal-hero{
-  width:calc(100% - 24px);margin:12px auto 0;border-radius:16px;
-  box-shadow:0 9px 29px #10264218;
+  width:100%;margin:0;border-radius:0;
+  box-shadow:none;
  }
  .mlg-home-slide-viewport{height:clamp(286px,73vw,318px)}
  .mlg-home-slide-content{
