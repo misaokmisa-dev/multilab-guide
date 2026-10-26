@@ -15,8 +15,34 @@ async function auth(request,env) {
   return a.length===b.length&&a.every((v,i)=>v===b[i]);
 }
 export default {
- async fetch(request,env) {
+ async fetch(request,env,ctx) {
   const url=new URL(request.url);
+  if(url.pathname==='/api/roblox-icon') {
+   if(request.method!=='GET')return json({error:'Method not allowed'},405);
+   const uid=url.searchParams.get('universeId')||'';
+   if(!/^[0-9]{6,20}$/.test(uid))return json({error:'Invalid game ID'},400);
+   try {
+     const cache=typeof caches!=='undefined'?caches.default:null;
+     if(cache){const hit=await cache.match(request);if(hit)return hit}
+     const params=new URLSearchParams({universeIds:uid,returnPolicy:'PlaceHolder',size:'256x256',format:'Png',isCircular:'false'});
+     const info=await fetch('https://thumbnails.roblox.com/v1/games/icons?'+params,{headers:{accept:'application/json'},signal:AbortSignal.timeout(7000)});
+     if(!info.ok)throw Error('Thumbnail API returned '+info.status);
+     const data=await info.json();
+     const item=(data.data||[]).find(x=>String(x.targetId)===uid&&x.state==='Completed');
+     if(!item?.imageUrl)throw Error('Thumbnail not ready');
+     const iconUrl=new URL(item.imageUrl);
+     if(iconUrl.protocol!=='https:'||!(iconUrl.hostname==='tr.rbxcdn.com'||iconUrl.hostname.endsWith('.rbxcdn.com')))throw Error('Untrusted image host');
+     const response=await fetch(iconUrl.href,{signal:AbortSignal.timeout(7000)});
+     if(!response.ok)throw Error('Image request failed');
+     const mime=(response.headers.get('content-type')||'').split(';')[0].trim();
+     if(!['image/png','image/jpeg','image/webp'].includes(mime))throw Error('Invalid image response');
+     const buffer=await response.arrayBuffer();
+     if(buffer.byteLength>2000000||buffer.byteLength===0)throw Error('Invalid image size');
+     const output=new Response(buffer,{headers:{'content-type':mime,'cache-control':'public,max-age=86400,s-maxage=604800','x-content-type-options':'nosniff'}});
+     if(cache&&ctx?.waitUntil)ctx.waitUntil(cache.put(request,output.clone()).catch(()=>{}));
+     return output;
+   }catch(_){return json({error:'Icon temporarily unavailable'},502)}
+  }
   if(url.pathname==='/api/roblox-live') {
    if(request.method!=='GET')return json({error:'Method not allowed'},405);
    // Each page load requests a fresh snapshot of the all-country, all-device
