@@ -41,7 +41,7 @@ export default {
      const output=new Response(buffer,{headers:{'content-type':mime,'cache-control':'public,max-age=86400,s-maxage=604800','x-content-type-options':'nosniff'}});
      if(cache&&ctx?.waitUntil)ctx.waitUntil(cache.put(request,output.clone()).catch(()=>{}));
      return output;
-   }catch(_){return json({error:'Icon temporarily unavailable'},502)}
+   }catch(err){return json({error:'Icon debug',reason:String(err?.message||err).slice(0,250)},200)}
   }
   if(url.pathname==='/api/roblox-live') {
    if(request.method!=='GET')return json({error:'Method not allowed'},405);
