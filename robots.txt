@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://multilab-guide.mlguide.workers.dev/sitemap.xml
+Sitemap: https://mlabg.com/sitemap.xml
