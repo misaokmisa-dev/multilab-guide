@@ -1,0 +1,343 @@
+{
+  "date": "2026-10-26",
+  "basis": "Roblox公式チャート掲載ゲームを中心に、遊びやすさ・ジャンルの多様性・継続性を考慮した編集上のおすすめ順位です。実測の週間・月間順位ではありません。",
+  "source": "https://www.roblox.com/ja/charts",
+  "games": [
+    {
+      "placeId": "4924922222",
+      "name": "Brookhaven 🏡RP",
+      "short": "街で自由に暮らす、遊び方無限大のロールプレイ",
+      "genre": "ロールプレイ",
+      "icon": "🏡",
+      "tone": "sky",
+      "with": "friends",
+      "minutes": 15,
+      "difficulty": "かんたん",
+      "reason": "家・車・街を使った自由なごっこ遊び。決まったゴールがないから、初めてでも入りやすい。",
+      "tags": [
+        "自由度",
+        "まったり",
+        "友達"
+      ],
+      "week": 4,
+      "month": 1,
+      "rising": 15,
+      "beginner": 1
+    },
+    {
+      "placeId": "920587237",
+      "name": "Adopt Me!",
+      "short": "ペットと暮らす、交換する、育てる",
+      "genre": "育成・生活",
+      "icon": "🐾",
+      "tone": "pink",
+      "with": "both",
+      "minutes": 15,
+      "difficulty": "かんたん",
+      "reason": "ペット育成とトレードを楽しめる定番。かわいい世界観が好きな人に。",
+      "tags": [
+        "かわいい",
+        "ペット",
+        "交流"
+      ],
+      "week": 7,
+      "month": 4,
+      "rising": 5,
+      "beginner": 2
+    },
+    {
+      "placeId": "2753915549",
+      "name": "Blox Fruits",
+      "short": "能力を育てて冒険するアクションRPG",
+      "genre": "RPG・冒険",
+      "icon": "⚔️",
+      "tone": "blue",
+      "with": "both",
+      "minutes": 40,
+      "difficulty": "じっくり",
+      "reason": "フルーツの能力と戦闘・探索が魅力。長くやり込めるゲームを探す人に。",
+      "tags": [
+        "アクション",
+        "成長",
+        "冒険"
+      ],
+      "week": 3,
+      "month": 2,
+      "rising": 12,
+      "beginner": 11
+    },
+    {
+      "placeId": "142823291",
+      "name": "Murder Mystery 2",
+      "short": "犯人を見抜いて生き残る推理サバイバル",
+      "genre": "ホラー・サバイバル",
+      "icon": "🔎",
+      "tone": "violet",
+      "with": "friends",
+      "minutes": 10,
+      "difficulty": "ふつう",
+      "reason": "短いラウンドで駆け引きが楽しめる定番。友達と盛り上がりやすい。",
+      "tags": [
+        "推理",
+        "対戦",
+        "短時間"
+      ],
+      "week": 1,
+      "month": 3,
+      "rising": 13,
+      "beginner": 5
+    },
+    {
+      "placeId": "79546208627805",
+      "name": "99 Nights in the Forest",
+      "short": "森でキャンプを守り、夜を越える協力サバイバル",
+      "genre": "ホラー・サバイバル",
+      "icon": "🌲",
+      "tone": "forest",
+      "with": "friends",
+      "minutes": 40,
+      "difficulty": "じっくり",
+      "reason": "探索・クラフト・防衛を協力して進める。友達と腰を据えて遊びたい人向け。",
+      "tags": [
+        "協力",
+        "サバイバル",
+        "探索"
+      ],
+      "week": 2,
+      "month": 6,
+      "rising": 6,
+      "beginner": 12
+    },
+    {
+      "placeId": "17625359962",
+      "name": "RIVALS",
+      "short": "1対1からチーム戦までのハイスピードFPS",
+      "genre": "対戦・アクション",
+      "icon": "🎯",
+      "tone": "red",
+      "with": "both",
+      "minutes": 10,
+      "difficulty": "競技向け",
+      "reason": "短時間でも実力勝負ができるFPS。狙いを磨いて勝ちたい人に。",
+      "tags": [
+        "FPS",
+        "対戦",
+        "短時間"
+      ],
+      "week": 5,
+      "month": 5,
+      "rising": 11,
+      "beginner": 15
+    },
+    {
+      "placeId": "109983668079237",
+      "name": "Steal a Brainrot",
+      "short": "ミームキャラを集めて守るカオスな育成ゲーム",
+      "genre": "育成・生活",
+      "icon": "🧠",
+      "tone": "yellow",
+      "with": "both",
+      "minutes": 15,
+      "difficulty": "かんたん",
+      "reason": "収集・防衛・略奪の予想外な展開が魅力。わいわい遊びたい人に。",
+      "tags": [
+        "収集",
+        "ミーム",
+        "交流"
+      ],
+      "week": 9,
+      "month": 7,
+      "rising": 7,
+      "beginner": 9
+    },
+    {
+      "placeId": "6516141723",
+      "name": "DOORS",
+      "short": "謎と危険が待つホテルを進むホラー",
+      "genre": "ホラー・サバイバル",
+      "icon": "🚪",
+      "tone": "dark",
+      "with": "both",
+      "minutes": 30,
+      "difficulty": "ふつう",
+      "reason": "探索と緊張感が絶妙。怖いもの好き、謎解きが好きな人に。",
+      "tags": [
+        "ホラー",
+        "協力",
+        "謎解き"
+      ],
+      "week": 8,
+      "month": 10,
+      "rising": 3,
+      "beginner": 14
+    },
+    {
+      "placeId": "16732694052",
+      "name": "Fisch",
+      "short": "広い世界でレアな魚を追いかける釣り冒険",
+      "genre": "育成・生活",
+      "icon": "🎣",
+      "tone": "blue",
+      "with": "both",
+      "minutes": 30,
+      "difficulty": "かんたん",
+      "reason": "のんびり釣りからレア魚探しまで、自分のペースで楽しめる。",
+      "tags": [
+        "釣り",
+        "探索",
+        "まったり"
+      ],
+      "week": 11,
+      "month": 9,
+      "rising": 14,
+      "beginner": 4
+    },
+    {
+      "placeId": "16116270224",
+      "name": "Dandy's World",
+      "short": "仲間と協力しながら脱出を目指すホラー",
+      "genre": "ホラー・サバイバル",
+      "icon": "🌻",
+      "tone": "pink",
+      "with": "friends",
+      "minutes": 25,
+      "difficulty": "ふつう",
+      "reason": "ポップなキャラクターと不穏な雰囲気のギャップが魅力。協力プレイ向き。",
+      "tags": [
+        "ホラー",
+        "協力",
+        "個性派"
+      ],
+      "week": 6,
+      "month": 11,
+      "rising": 2,
+      "beginner": 10
+    },
+    {
+      "placeId": "15101393044",
+      "name": "Dress To Impress",
+      "short": "テーマに合わせたコーデを競うファッションゲーム",
+      "genre": "ロールプレイ",
+      "icon": "👗",
+      "tone": "pink",
+      "with": "both",
+      "minutes": 10,
+      "difficulty": "かんたん",
+      "reason": "短い時間で自由にコーディネート。気軽に創作と交流ができる。",
+      "tags": [
+        "ファッション",
+        "かわいい",
+        "短時間"
+      ],
+      "week": 10,
+      "month": 8,
+      "rising": 4,
+      "beginner": 3
+    },
+    {
+      "placeId": "18687417158",
+      "name": "Forsaken",
+      "short": "追う側・逃げる側の非対称ホラー対戦",
+      "genre": "ホラー・サバイバル",
+      "icon": "👁️",
+      "tone": "violet",
+      "with": "friends",
+      "minutes": 15,
+      "difficulty": "ふつう",
+      "reason": "チームワークと駆け引きで勝敗が変わる。緊迫感のある対戦を探す人に。",
+      "tags": [
+        "対戦",
+        "ホラー",
+        "協力"
+      ],
+      "week": 12,
+      "month": 14,
+      "rising": 1,
+      "beginner": 16
+    },
+    {
+      "placeId": "9391468976",
+      "name": "Jujutsu Shenanigans",
+      "short": "能力を駆使して戦う爽快バトルアクション",
+      "genre": "対戦・アクション",
+      "icon": "💥",
+      "tone": "red",
+      "with": "both",
+      "minutes": 15,
+      "difficulty": "競技向け",
+      "reason": "技の組み合わせと派手な戦闘が魅力。アクション派におすすめ。",
+      "tags": [
+        "バトル",
+        "アニメ風",
+        "対戦"
+      ],
+      "week": 13,
+      "month": 12,
+      "rising": 8,
+      "beginner": 13
+    },
+    {
+      "placeId": "73956553001240",
+      "name": "Volleyball Legends",
+      "short": "チームでつなぐスピーディーなバレーボール",
+      "genre": "スポーツ",
+      "icon": "🏐",
+      "tone": "orange",
+      "with": "friends",
+      "minutes": 10,
+      "difficulty": "ふつう",
+      "reason": "短い試合でも連携の面白さを実感。スポーツ好きに。",
+      "tags": [
+        "スポーツ",
+        "チーム",
+        "短時間"
+      ],
+      "week": 14,
+      "month": 15,
+      "rising": 9,
+      "beginner": 7
+    },
+    {
+      "placeId": "1962086868",
+      "name": "Tower of Hell",
+      "short": "腕試しにぴったりの高難度アスレチック",
+      "genre": "アスレ・パズル",
+      "icon": "🧗",
+      "tone": "yellow",
+      "with": "both",
+      "minutes": 10,
+      "difficulty": "競技向け",
+      "reason": "何度も挑戦してクリアを狙う。集中して腕試ししたい人に。",
+      "tags": [
+        "パルクール",
+        "短時間",
+        "高難度"
+      ],
+      "week": 15,
+      "month": 13,
+      "rising": 16,
+      "beginner": 8
+    },
+    {
+      "placeId": "13772394625",
+      "name": "Blade Ball",
+      "short": "ボールを弾き返す反射神経対決",
+      "genre": "対戦・アクション",
+      "icon": "⚡",
+      "tone": "blue",
+      "with": "both",
+      "minutes": 10,
+      "difficulty": "ふつう",
+      "reason": "反応速度とタイミングで勝負。短時間の対戦が好きな人に。",
+      "tags": [
+        "反射神経",
+        "対戦",
+        "短時間"
+      ],
+      "week": 16,
+      "month": 16,
+      "rising": 10,
+      "beginner": 6
+    }
+  ]
+}

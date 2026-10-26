@@ -1,0 +1,19 @@
+{
+  "updatedAt": null,
+  "games": {},
+  "rankings": {
+    "week": {
+      "ready": false,
+      "ranks": []
+    },
+    "month": {
+      "ready": false,
+      "ranks": []
+    },
+    "rising": {
+      "ready": false,
+      "ranks": []
+    }
+  },
+  "observations": []
+}
