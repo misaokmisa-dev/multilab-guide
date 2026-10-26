@@ -61,29 +61,63 @@ export default {
     }
     const games=[...uniq.values()].sort((a,b)=>b.playing-a.playing).slice(0,30);
     if(games.length!==30)throw Error('Only '+games.length+' Roblox games available');
-    // Resolve current icons for the chart in one official batch request.
-    // Counts are still authoritative and are returned even if thumbnail lookup fails.
-    try {
-     const universes=games.map(g=>g.universeId).filter(id=>/^[0-9]{6,20}$/.test(id));
-     if(universes.length){
-      const thumbParams=new URLSearchParams({universeIds:universes.join(','),returnPolicy:'PlaceHolder',size:'256x256',format:'Png',isCircular:'false'});
-      const imgResponse=await fetch('https://thumbnails.roblox.com/v1/games/icons?'+thumbParams,{headers:{accept:'application/json'},signal:AbortSignal.timeout(4500)});
-      if(imgResponse.ok){
-       const thumbPayload=await imgResponse.json();
-       const iconMap=new Map();
-       for(const item of thumbPayload.data||[]){
-        if(item?.state!=='Completed'||typeof item.imageUrl!=='string')continue;
-        let target;
-        try{target=new URL(item.imageUrl)}catch{continue}
-        if(target.protocol==='https:'&&(target.hostname==='tr.rbxcdn.com'||target.hostname.endsWith('.rbxcdn.com'))){
-         iconMap.set(String(item.targetId),target.href);
-        }
-       }
-       for(const game of games)if(iconMap.has(game.universeId))game.icon=iconMap.get(game.universeId);
+    // The discover chart identifies which 30 games are popular, but its
+    // playerCount is often a cached chart snapshot. Fetch the actual "playing"
+    // value for each selected universe from Roblox's game-details endpoint.
+    // A unique query key bypasses intermediary URL caches on every visit.
+    const universeIds=games.map(g=>g.universeId).filter(id=>/^[0-9]{6,20}$/.test(id));
+    const liveNonce=Date.now().toString(36)+'-'+crypto.randomUUID().slice(0,8);
+    const countsPromise=(async()=>{
+     try{
+      const detailsParams=new URLSearchParams({universeIds:universeIds.join(','),_fresh:liveNonce});
+      const response=await fetch('https://games.roblox.com/v1/games?'+detailsParams,{
+       headers:{'accept':'application/json','cache-control':'no-cache'},
+       signal:AbortSignal.timeout(8500),cache:'no-store'
+      });
+      if(!response.ok)throw Error('Experience details returned '+response.status);
+      const result=await response.json();
+      if(!Array.isArray(result.data))throw Error('Invalid experience details');
+      const byUniverse=new Map(result.data.filter(g=>g&&Number.isSafeInteger(g.playing)&&g.playing>=0)
+       .map(g=>[String(g.id),g.playing]));
+      let updatedCount=0;
+      for(const game of games){
+       const c=byUniverse.get(game.universeId);
+       if(c!==undefined){game.playing=c;updatedCount++}
       }
-     }
-    }catch(_){}
-    return json({source:'Roblox Top Playing Now — all countries and devices',updatedAt:new Date().toISOString(),games});
+      return updatedCount;
+     }catch(_){return 0}
+    })();
+    // Icons are independent of player counts. Neither path can make up counts.
+    const iconsPromise=(async()=>{
+     try{
+      if(!universeIds.length)return;
+      const thumbParams=new URLSearchParams({universeIds:universeIds.join(','),returnPolicy:'PlaceHolder',size:'256x256',format:'Png',isCircular:'false'});
+      const response=await fetch('https://thumbnails.roblox.com/v1/games/icons?'+thumbParams,{
+       headers:{accept:'application/json'},signal:AbortSignal.timeout(4500)
+      });
+      if(!response.ok)return;
+      const data=await response.json();
+      const byUniverse=new Map();
+      for(const item of data.data||[]){
+       if(item?.state!=='Completed'||typeof item.imageUrl!=='string')continue;
+       let parsed;
+       try{parsed=new URL(item.imageUrl)}catch{continue}
+       if(parsed.protocol==='https:'&&(parsed.hostname==='tr.rbxcdn.com'||parsed.hostname.endsWith('.rbxcdn.com')))
+        byUniverse.set(String(item.targetId),parsed.href);
+      }
+      for(const game of games)if(byUniverse.has(game.universeId))game.icon=byUniverse.get(game.universeId);
+     }catch(_){}
+    })();
+    const [updatedCount]=await Promise.all([countsPromise,iconsPromise]);
+    // Order after replacing chart estimates with the freshest available official counts.
+    games.sort((a,b)=>b.playing-a.playing);
+    const countSource=updatedCount===games.length?'experience-details':updatedCount>0?'mixed':'chart';
+    const fetchedAt=new Date().toISOString();
+    return json({
+     source:'Roblox Top Playing Now — all countries and devices',
+     countSource,detailCount:updatedCount,totalCount:games.length,
+     updatedAt:fetchedAt,requestedAt:fetchedAt,games
+    });
    }catch(e){
     return json({error:'Robloxの最新データを取得できませんでした'},503);
    }

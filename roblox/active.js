@@ -41,13 +41,18 @@ function render(data,live){
      icon:imageOkay(g.icon)?g.icon:(imageOkay(old.icon)?old.icon:null)};
  });
  for(let i=0;i<3;i++)$("#rb-active-"+(i+1)).innerHTML=merged.slice(i*10,i*10+10).map((g,j)=>row(g,i*10+j+1)).join("");
- status.textContent=(live?"最新取得: ":"保存データ: ")+dateStr(data.updatedAt)+(live?"":"（最新情報を確認中…）");
+ if(live){
+  const source=data.countSource==='experience-details'?"公式ゲーム詳細API":data.countSource==='mixed'?"ゲーム詳細 "+data.detailCount+"/"+data.totalCount+"件（残りはチャート値）":"公式チャート値（詳細API取得失敗）";
+  status.textContent="同接取得: "+dateStr(data.updatedAt)+" / "+source;
+ }else{
+  status.textContent="保存データ: "+dateStr(data.updatedAt)+"（現在の人数ではありません）";
+ }
 }
 async function load(){
  // Render once: prefer fresh official counts; saved data is a fallback only.
  const savedPromise=fetch("/roblox/data/global-active.json",{cache:"no-cache"})
   .then(r=>{if(!r.ok)throw Error("Stored ranking unavailable");return r.json()}).catch(()=>null);
- const livePromise=fetch("/api/roblox-live",{cache:"no-store"})
+ const livePromise=fetch("/api/roblox-live?fresh="+encodeURIComponent(Date.now()+"-"+Math.random().toString(36).slice(2)),{cache:"no-store",headers:{"Cache-Control":"no-cache"}})
   .then(r=>{if(!r.ok)throw Error("Official ranking unavailable");return r.json()})
   .then(data=>{if(data.error)throw Error(data.error);return data}).catch(()=>null);
  const pair=await Promise.all([savedPromise,livePromise]);
