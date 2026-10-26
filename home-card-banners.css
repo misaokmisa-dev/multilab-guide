@@ -33,3 +33,6 @@
 .portal-card .mlg-category-roblox.is-empty:after {background:radial-gradient(circle at 65% 20%,#ac88ff50,transparent 45%),linear-gradient(90deg,#14102c,#362c80ab)}
 @media(max-width:760px){.portal-card .mlg-category-visual{height:140px}}
 @media(max-width:470px){.portal-card .mlg-category-visual{height:154px}}
+
+.mlg-home-image-credit{font-size:10px;color:#7d899b;margin:13px 0 0;text-align:right;line-height:1.6}
+.mlg-home-image-credit a{color:#637995;text-decoration:underline;text-underline-offset:2px}
