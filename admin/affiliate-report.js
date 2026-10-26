@@ -77,6 +77,18 @@ function render(){
  el('kpi-ctr').textContent=state.events&&imp>0?(100*click/imp).toFixed(2)+'%':'—';
  const tbody=el('provider-rows');tbody.replaceChildren();
  for(const g of groups){const tr=document.createElement('tr');addCell(tr,g.title);addCell(tr,none(g.impressions),true);addCell(tr,none(g.clicks),true);addCell(tr,g.ctr===null?'—':g.ctr.toFixed(2)+'%',true);addCell(tr,money(g.gross),true);addCell(tr,money(g.confirmed),true);tbody.appendChild(tr);}
+ const linkRows=el('link-rows');linkRows.replaceChildren();
+ const linkMap=new Map();
+ for(const e of events.filter(x=>['impression','click'].includes(x.event))){
+  const key=[e.platform,e.page,e.item].join('|');
+  if(!linkMap.has(key))linkMap.set(key,{platform:e.platform,page:e.page,item:e.item,impressions:0,clicks:0});
+  const s=linkMap.get(key);s[e.event==='click'?'clicks':'impressions']+=Number(e.hits)||0;
+ }
+ const links=[...linkMap.values()].sort((a,b)=>b.clicks-a.clicks||b.impressions-a.impressions).slice(0,200);
+ for(const x of links){const tr=document.createElement('tr');
+  addCell(tr,platforms.find(p=>p[0]===x.platform)?.[1]||x.platform);addCell(tr,x.page||'—');addCell(tr,x.item||'—');addCell(tr,fmt(x.impressions),true);addCell(tr,fmt(x.clicks),true);addCell(tr,x.impressions?(100*x.clicks/x.impressions).toFixed(2)+'%':'—',true);linkRows.appendChild(tr);
+ }
+ if(!links.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=6;td.textContent='クリック計測データはまだありません。';tr.appendChild(td);linkRows.appendChild(tr);}
  const tb=el('imports');tb.replaceChildren();
  for(const r of records.slice().reverse().slice(0,300)){const tr=document.createElement('tr');addCell(tr,r.date);addCell(tr,platforms.find(x=>x[0]===r.provider)?.[1]||r.provider);addCell(tr,none(r.impressions),true);addCell(tr,none(r.clicks),true);addCell(tr,money(r.gross),true);addCell(tr,money(r.confirmed),true);tb.appendChild(tr);}
  if(!records.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=6;td.textContent='公式レポートのデータはまだ取り込まれていません。';tr.appendChild(td);tb.appendChild(tr);}
