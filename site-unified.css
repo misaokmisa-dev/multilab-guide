@@ -225,3 +225,4 @@ body.minecraft-body{background:#f3f7f0}
     flex: 0 0 300px;
   }
 }
+\n/* Three-category portal: Roblox visual identity is purple, separate from Minecraft and gear. */\n@media(min-width:901px){.portal-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}\n.portal-card.roblox:before{background:radial-gradient(circle at 70% 25%,#aa89ffbb,transparent 39%),linear-gradient(130deg,#171132,#693bc1 60%,#35236a)!important}\n.portal-card.roblox .portal-action{color:#6532bd!important}\n.portal-card.roblox:hover{border-color:#9675e1!important}\n@media(max-width:900px){.portal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}\n@media(max-width:690px){.portal-grid{grid-template-columns:1fr!important}}\n
