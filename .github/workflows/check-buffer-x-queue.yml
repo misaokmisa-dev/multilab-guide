@@ -1,0 +1,33 @@
+name: Check Buffer X connection and queue
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/check-buffer-x-queue.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read Buffer X connection and actual scheduled items
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os,sys,json
+          if not os.environ.get('BUFFER_API_KEY'):
+              print('CHECK_FAILED: BUFFER_API_KEY missing from repository action secrets')
+              sys.exit(2)
+          sys.path.insert(0,'scripts')
+          import buffer_x_schedule as b
+          org,channel=b.get_channel()
+          print('BUFFER_CHANNEL_CONNECTED', 'true')
+          posts=b.scheduled_posts(org,channel)
+          print('BUFFER_QUEUE_COUNT',len(posts))
+          for p in posts[:90]:
+              print('BUFFER_QUEUED',json.dumps({'id':p.get('id'),'dueAt':p.get('dueAt'),'textPreview':(p.get('text') or '')[:55]},ensure_ascii=False))
+          PY
