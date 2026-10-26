@@ -1,0 +1,198 @@
+/* MULTI LAB GUIDE: one identical navigation system across public pages.
+   Category color is only an accent; logo dimensions, position and text never change. */
+html{scroll-padding-top:144px}
+body .mlg-site-header,
+body .mlg-site-header *{box-sizing:border-box}
+body .mlg-site-header{
+  --mlg-header-accent:#62a9ff;--mlg-header-soft:#192b45;
+  position:sticky!important;top:0!important;z-index:999!important;
+  display:block!important;min-height:0!important;width:100%!important;
+  margin:0!important;padding:0!important;
+  background:#07111f!important;color:#f5f8ff!important;
+  border:0!important;border-bottom:1px solid #27374b!important;
+  font-family:Inter,system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif!important;
+  font-size:14px!important;font-weight:500!important;line-height:1.3!important;
+  letter-spacing:0!important;text-transform:none!important;
+  -webkit-font-smoothing:antialiased;
+}
+body .mlg-site-header[data-section="roblox"]{--mlg-header-accent:#c1a2ff;--mlg-header-soft:#31244e}
+body .mlg-site-header[data-section="minecraft"]{--mlg-header-accent:#87d6a0;--mlg-header-soft:#193a2c}
+body .mlg-site-header[data-section="devices"]{--mlg-header-accent:#7dbbff;--mlg-header-soft:#163252}
+body .mlg-site-header[data-section="articles"]{--mlg-header-accent:#9cc9ff;--mlg-header-soft:#1c2e48}
+body .mlg-site-header .mlg-site-topline{
+  width:min(1450px,100%)!important;max-width:none!important;
+  margin:0 auto!important;padding:0 30px!important;
+  min-height:70px!important;display:flex!important;align-items:center!important;
+  justify-content:space-between!important;gap:20px!important;
+  flex-wrap:nowrap!important;border:0!important;
+}
+body .mlg-site-header .mlg-site-brand{
+  display:inline-flex!important;align-items:center!important;
+  flex:none!important;gap:10px!important;padding:0!important;margin:0!important;
+  min-height:44px!important;white-space:nowrap!important;
+  background:transparent!important;border:0!important;
+  color:#f9fbff!important;text-decoration:none!important;
+  opacity:1!important;transform:none!important;box-shadow:none!important;
+  cursor:pointer!important;line-height:1!important;
+}
+body .mlg-site-header .mlg-site-brand-icon{
+  display:block!important;flex:none!important;
+  width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;
+  border:0!important;border-radius:9px!important;
+  object-fit:contain!important;object-position:center!important;
+  padding:0!important;margin:0!important;transform:none!important;
+  filter:none!important;opacity:1!important;
+}
+body .mlg-site-header .mlg-site-brand-name{
+  display:flex!important;align-items:baseline!important;gap:6px!important;
+  flex:none!important;margin:0!important;padding:0!important;
+  color:#f9fbff!important;line-height:1!important;
+}
+body .mlg-site-header .mlg-site-brand-main{
+  font-size:19px!important;font-weight:900!important;
+  letter-spacing:-.047em!important;line-height:1!important;
+  color:#f9fbff!important;white-space:nowrap!important;
+}
+body .mlg-site-header .mlg-site-brand-main strong{
+  color:#60b5ff!important;font:inherit!important;font-weight:900!important;
+}
+body .mlg-site-header .mlg-site-brand-guide{
+  font-size:9px!important;font-weight:850!important;letter-spacing:.105em!important;
+  line-height:1!important;color:#afc1db!important;
+}
+body .mlg-site-header .mlg-site-brand:hover,
+body .mlg-site-header .mlg-site-brand:focus-visible{opacity:.89!important;color:#fff!important}
+body .mlg-site-header .mlg-site-primary{
+  display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  flex:none!important;gap:5px!important;flex-wrap:nowrap!important;
+  width:auto!important;min-height:0!important;max-width:100%!important;
+  margin:0!important;padding:0!important;background:none!important;
+  border:0!important;overflow:visible!important;
+}
+body .mlg-site-header .mlg-site-link{
+  position:relative!important;display:inline-flex!important;align-items:center!important;
+  justify-content:center!important;flex:none!important;
+  height:42px!important;min-height:42px!important;
+  padding:0 13px!important;margin:0!important;
+  color:#c0cbdd!important;background:transparent!important;
+  border:1px solid transparent!important;border-radius:9px!important;
+  font-family:inherit!important;font-size:13px!important;font-weight:750!important;
+  letter-spacing:0!important;line-height:1!important;text-align:center!important;
+  text-decoration:none!important;white-space:nowrap!important;
+  opacity:.85!important;transform:none!important;box-shadow:none!important;
+  transition:background .16s,color .16s,opacity .16s!important;
+}
+body .mlg-site-header .mlg-site-link:hover{
+  color:#fff!important;background:#15263c!important;opacity:1!important;
+}
+body .mlg-site-header .mlg-site-link[aria-current]{
+  color:var(--mlg-header-accent)!important;background:var(--mlg-header-soft)!important;
+  border-color:color-mix(in srgb,var(--mlg-header-accent) 28%,transparent)!important;
+  opacity:1!important;font-weight:850!important;
+}
+body .mlg-site-header .mlg-site-link[aria-current]:after{
+  content:"";position:absolute;left:18px;right:18px;bottom:2px;height:2px;
+  border-radius:2px;background:var(--mlg-header-accent);
+}
+body .mlg-site-header a:focus-visible{
+  outline:2px solid #f6ce78!important;outline-offset:2px!important;
+}
+body .mlg-site-header .mlg-site-context{
+  display:flex!important;align-items:center!important;gap:14px!important;
+  background:#0c192a!important;border:0!important;
+  border-top:1px solid #223349!important;min-height:40px!important;
+  margin:0!important;padding:0 30px!important;
+}
+body .mlg-site-header .mlg-site-context-inner{
+  display:flex!important;align-items:center!important;gap:5px!important;
+  width:min(1390px,100%)!important;max-width:none!important;
+  margin:0 auto!important;padding:0!important;min-height:40px!important;
+  overflow-x:auto!important;overscroll-behavior-x:contain!important;
+  scrollbar-width:none!important;
+}
+body .mlg-site-header .mlg-site-context-inner::-webkit-scrollbar{display:none}
+body .mlg-site-header .mlg-site-context-label{
+  display:inline-flex!important;align-items:center!important;
+  font-size:10px!important;font-weight:850!important;letter-spacing:.08em!important;
+  color:var(--mlg-header-accent)!important;padding-right:10px!important;
+  margin-right:6px!important;border-right:1px solid #40506a!important;
+  white-space:nowrap!important;flex:none!important;opacity:.9!important;
+}
+body .mlg-site-header .mlg-site-context-link{
+  display:inline-flex!important;align-items:center!important;
+  padding:7px 11px!important;margin:0!important;
+  min-height:30px!important;height:30px!important;
+  border-radius:7px!important;border:1px solid transparent!important;
+  color:#abbcd4!important;background:transparent!important;
+  font-family:inherit!important;font-size:11.5px!important;
+  font-weight:650!important;white-space:nowrap!important;
+  text-decoration:none!important;line-height:1!important;flex:none!important;
+  opacity:.92!important;
+}
+body .mlg-site-header .mlg-site-context-link:hover{
+  color:#fff!important;background:#20314a!important;opacity:1!important;
+}
+body .mlg-site-header .mlg-site-context-link[aria-current]{
+  color:var(--mlg-header-accent)!important;font-weight:850!important;
+  background:var(--mlg-header-soft)!important;
+  border-color:color-mix(in srgb,var(--mlg-header-accent) 23%,transparent)!important;
+  opacity:1!important;
+}
+body .mlg-site-header .mlg-site-current-label{
+  display:inline-flex!important;align-items:center!important;
+  flex:none!important;padding:6px 10px!important;margin-left:auto!important;
+  font-size:11px!important;font-weight:700!important;
+  color:#d1def0!important;white-space:nowrap!important;
+  background:#152438!important;border-radius:7px!important;
+  max-width:250px!important;overflow:hidden!important;text-overflow:ellipsis!important;
+}
+@media(max-width:1120px){
+ body .mlg-site-header .mlg-site-topline{padding:0 20px!important;gap:12px!important}
+ body .mlg-site-header .mlg-site-link{padding:0 9px!important;font-size:12px!important}
+ body .mlg-site-header .mlg-site-context{padding:0 18px!important}
+ body .mlg-site-header .mlg-site-current-label{display:none!important}
+}
+@media(max-width:760px){
+ body .mlg-site-header .mlg-site-topline{
+   display:flex!important;flex-direction:column!important;align-items:stretch!important;
+   justify-content:center!important;gap:2px!important;
+   min-height:0!important;padding:7px 13px 0!important;
+ }
+ body .mlg-site-header .mlg-site-brand{
+   min-height:40px!important;height:40px!important;align-self:flex-start!important;
+   gap:8px!important;
+ }
+ body .mlg-site-header .mlg-site-brand-icon{
+   width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;
+ }
+ body .mlg-site-header .mlg-site-brand-main{font-size:17px!important}
+ body .mlg-site-header .mlg-site-brand-guide{font-size:8px!important}
+ body .mlg-site-header .mlg-site-primary{
+   width:100%!important;min-height:41px!important;max-width:none!important;
+   justify-content:space-between!important;align-items:center!important;
+   overflow-x:auto!important;scrollbar-width:none!important;
+   gap:1px!important;padding:0!important;margin:0!important;
+ }
+ body .mlg-site-header .mlg-site-primary::-webkit-scrollbar{display:none}
+ body .mlg-site-header .mlg-site-link{
+   height:37px!important;min-height:37px!important;
+   padding:0 7px!important;font-size:11px!important;border-radius:7px!important;
+ }
+ body .mlg-site-header .mlg-site-link[aria-current]:after{left:12px;right:12px;bottom:1px}
+ body .mlg-site-header .mlg-site-context{
+   min-height:36px!important;padding:0 12px!important;
+ }
+ body .mlg-site-header .mlg-site-context-inner{min-height:36px!important;gap:2px!important}
+ body .mlg-site-header .mlg-site-context-link{
+   min-height:29px!important;height:29px!important;font-size:11px!important;padding:6px 9px!important;
+ }
+ body .mlg-site-header .mlg-site-context-label{font-size:9px!important;padding-right:8px!important;margin-right:4px!important}
+}
+@media(max-width:380px){
+ body .mlg-site-header .mlg-site-link{font-size:10px!important;padding:0 5px!important}
+ body .mlg-site-header .mlg-site-topline{padding-inline:9px!important}
+ body .mlg-site-header .mlg-site-context{padding-inline:9px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ body .mlg-site-header .mlg-site-link{transition:none!important}
+}
