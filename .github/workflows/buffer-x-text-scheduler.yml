@@ -1,0 +1,27 @@
+name: Buffer X Text Scheduler
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/buffer-x-text-scheduler.yml'
+      - 'scripts/buffer_x_text_schedule.py'
+      - 'social/buffer_x_text_posts.json'
+  schedule:
+    - cron: '5 10 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: buffer-x-text-post-scheduler
+  cancel-in-progress: false
+jobs:
+  schedule:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Queue X text posts safely with Buffer (no media or extra fee)
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          MAX_BUFFER_QUEUE: '10'
+        run: python3 scripts/buffer_x_text_schedule.py
