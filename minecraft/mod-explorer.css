@@ -1,0 +1,100 @@
+/* Minecraft mod discovery / ranking / 10-question guide, 2026-10 */
+:root{--md-forest:#204a30;--md-green:#317c48;--md-sage:#ecf5eb;--md-line:#dae8d9;--md-ink:#203028;--md-muted:#5c7164}
+.md-container{width:min(1130px,calc(100% - 34px));margin-inline:auto}
+.md-main{background:#f8fbf6;color:var(--md-ink)}
+.md-hero{background:linear-gradient(145deg,#173e28,#255d39 52%,#123622);color:#fff;position:relative;overflow:hidden;padding:52px 0 48px}
+.md-hero:before{content:"";position:absolute;inset:0;opacity:.16;background:repeating-linear-gradient(90deg,transparent 0 29px,#d6f9dd 30px 31px),repeating-linear-gradient(0deg,transparent 0 29px,#d6f9dd 30px 31px);mask-image:linear-gradient(100deg,transparent,black)}
+.md-hero>*{position:relative}
+.md-crumb{font-size:12px;color:#d6ebd5;margin-bottom:18px}
+.md-crumb a{color:#edffe8;text-underline-offset:3px}
+.md-eyebrow{font-size:11px;font-weight:900;letter-spacing:.13em;color:#abdac0}
+.md-hero h1{font-size:clamp(32px,4.3vw,53px);line-height:1.3;letter-spacing:-.045em;margin:12px 0}
+.md-hero h1 em{font-style:normal;color:#b8f2b5}
+.md-hero p{color:#d3ebd4;line-height:1.95;max-width:720px;margin:12px 0}
+.md-hero-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:23px}
+.md-primary,.md-secondary{display:inline-flex;justify-content:center;align-items:center;gap:7px;text-decoration:none;font-size:14px;font-weight:850;padding:12px 20px;min-height:46px;border-radius:10px}
+.md-primary{background:#f4cc6b;color:#273b25!important}.md-primary:hover{background:#ffe29c;color:#273b25!important}
+.md-secondary{border:1px solid #94bc99;color:#fff!important;background:#ffffff12}.md-secondary:hover{background:#ffffff23}
+.md-note{font-size:12px!important;color:var(--md-muted);line-height:1.9}
+.md-section{padding:36px 0}
+.md-section h2{font-size:clamp(23px,2.6vw,32px);letter-spacing:-.02em;margin:0 0 8px}
+.md-section-lead{color:#607365;font-size:14px;line-height:1.8;margin:0 0 19px}
+.md-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.md-tile{display:flex;flex-direction:column;gap:8px;padding:21px;border:1px solid var(--md-line);border-radius:15px;background:#fff;text-decoration:none;color:#253a2b!important;box-shadow:0 7px 25px #193c2009}
+.md-tile strong{font-size:18px}.md-tile p{font-size:13px;color:#5b7061;margin:0;line-height:1.7}.md-tile:hover{border-color:#77ae82;transform:translateY(-2px)}
+.md-tile-icon{font-size:30px}.md-tile-tag{font-size:11px;letter-spacing:.08em;color:#377c4c;font-weight:850}
+.md-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid #ccdecf;padding-bottom:12px}
+.md-tab{appearance:none;cursor:pointer;border:1px solid #cbddce;background:white;padding:11px 19px;border-radius:10px;color:#42604a;font:850 13px/1.4 inherit}
+.md-tab[aria-selected="true"]{background:#276942;border-color:#276942;color:#fff}
+.md-tab:focus-visible,.md-mod-link:focus-visible,.md-choice input:focus-visible+.md-choice-inner,.md-control:focus-visible{outline:3px solid #edac3c;outline-offset:3px}
+.md-rank-toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:13px;margin-bottom:13px}
+.md-search{border:1px solid #c6d9cb;border-radius:10px;min-width:0;width:min(310px,100%);padding:11px 13px;font:inherit;font-size:14px;color:#23392a;background:#fff}
+.md-rank-caption{font-size:12px;color:#698174;line-height:1.65}
+.md-mod-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;list-style:none;margin:0;padding:0}
+.md-mod-item{position:relative;border:1px solid #dae5dc;border-radius:13px;background:#fff;min-width:0;overflow:hidden;padding:15px 16px;display:flex;align-items:flex-start;gap:13px}
+.md-mod-item[data-rank="1"]{border:2px solid #d3a130;background:linear-gradient(110deg,#fff2d3,#fff 44%)}
+.md-mod-item[data-rank="2"]{border-color:#acbdc9;background:linear-gradient(110deg,#edf4f6,#fff 40%)}
+.md-mod-item[data-rank="3"]{border-color:#d9b18e;background:linear-gradient(110deg,#f9eee3,#fff 43%)}
+.md-mod-rank{flex:0 0 34px;width:34px;height:34px;background:#e6f1e8;border-radius:9px;color:#317041;font-size:14px;font-weight:900;display:grid;place-items:center}
+.md-mod-item[data-rank="1"] .md-mod-rank{background:#dba637;color:#3c2903}
+.md-mod-item[data-rank="2"] .md-mod-rank{background:#aec1cd;color:#21333f}
+.md-mod-item[data-rank="3"] .md-mod-rank{background:#d6a982;color:#382415}
+.md-mod-icon{width:53px;height:53px;object-fit:cover;border-radius:11px;background:#eff6ee;flex:none}
+.md-mod-body{min-width:0;flex:1}
+.md-mod-title{font-size:16px;font-weight:900;line-height:1.45;margin:0;overflow-wrap:anywhere;color:#183c26}
+.md-mod-desc{font-size:12px;line-height:1.7;color:#607067;margin:7px 0}
+.md-mod-tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.md-mod-tags span{background:#eef6ee;color:#4c6851;padding:3px 7px;border-radius:5px;font-size:10px}
+.md-mod-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.md-mod-dl{font-size:12px;color:#356147;font-weight:900;white-space:nowrap}
+.md-mod-dl b{font-size:16px;color:#214b30;font-variant-numeric:tabular-nums}
+.md-mod-link{font-size:12px;text-decoration:none;font-weight:850;background:#286d45;color:#fff!important;padding:9px 12px;border-radius:8px}
+.md-mod-link:hover{background:#164c2b}
+.md-mod-count{font-size:13px;font-weight:750;color:#4d6656}
+.md-no-results{padding:35px;color:#54695c;text-align:center;border:1px dashed #aac5af;border-radius:12px;background:#fff}
+.md-rank-source{font-size:12px;color:#617464;line-height:1.85;padding:15px 18px;background:#edf5ec;border-radius:10px;margin-top:15px}
+.md-rank-source a{color:#246f42}
+.md-quiz-hero-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:32px;align-items:start}
+.md-quiz-card{background:#fff;color:#1d3023;border:1px solid #d8e8d8;border-radius:18px;padding:24px;box-shadow:0 17px 42px #0003}
+.md-quiz-top{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:900}
+.md-quiz-pill{font-size:11px;background:#e9f3e9;color:#286c39;border-radius:50px;padding:5px 9px;white-space:nowrap}
+.md-progress{height:9px;border-radius:20px;background:#e8f0e9;overflow:hidden;margin:13px 0}
+.md-progress span{width:10%;height:100%;display:block;background:linear-gradient(90deg,#47985b,#a4cf68);transition:width .2s}
+.md-quiz-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#587260;font-weight:850}
+.md-quiz-title{font-size:clamp(19px,2.2vw,24px);font-weight:900;margin:21px 0 7px;line-height:1.5}
+.md-quiz-help{font-size:13px;color:#697b70;margin:0 0 14px}
+.md-quiz-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.md-choice{display:block;cursor:pointer}
+.md-choice input{position:absolute;opacity:0;width:1px;height:1px}
+.md-choice-inner{display:block;min-height:53px;padding:11px 13px;border-radius:10px;border:1.5px solid #d7e5d8;color:#293e2e;font-size:13px;font-weight:800;line-height:1.5}
+.md-choice input:checked+.md-choice-inner{background:#ebf6e9;border-color:#378950;color:#1d5f32;box-shadow:inset 0 0 0 1px #378950}
+.md-choice-inner:hover{background:#f5fbf4;border-color:#8caf92}
+.md-controls{display:flex;gap:10px;margin-top:20px}
+.md-control{border:0;cursor:pointer;border-radius:9px;min-height:45px;padding:11px 17px;font:850 13px/1.4 inherit}
+.md-prev{background:#e9eee9;color:#2f4935}.md-next{background:#277343;color:#fff;flex:1}
+.md-control:disabled{opacity:.4;cursor:not-allowed}
+.md-quiz-error{font-size:12px;color:#a12d26;min-height:17px}
+.md-results[hidden]{display:none!important}
+.md-summary{background:linear-gradient(115deg,#fff,#f0f7f0);border:1px solid #d0e3d0;padding:21px;border-radius:15px;margin:16px 0 26px}
+.md-summary strong{font-size:21px;display:block}
+.md-summary p{font-size:13px;color:#607260;line-height:1.8;margin:6px 0}
+.md-rec-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.md-rec-card{--rec-color:#25846f;--rec-line:#90cabc;background:linear-gradient(170deg,#edfaf4,#fff 35%);border:2px solid var(--rec-line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.md-rec-card.is-first{--rec-color:#87540b;--rec-line:#d39c2d;border:3px solid #d39c2d;background:linear-gradient(165deg,#ffefbe,#fff9e9 27%,white 53%);box-shadow:0 18px 42px #a47c2933;transform:translateY(-9px);padding:17px}
+.md-rec-card.is-third{--rec-color:#6251ab;--rec-line:#aa9bcf;background:linear-gradient(170deg,#f2effb,#fff 35%)}
+.md-rec-top{display:flex;gap:10px;align-items:center}
+.md-rec-position{border-radius:10px;padding:8px 10px;background:var(--rec-color);color:white;font-weight:950;white-space:nowrap;font-size:12px}
+.md-rec-card.is-first .md-rec-position{background:linear-gradient(110deg,#ad7a1b,#e3b541);color:#382800}
+.md-rec-tag{font-size:12px;font-weight:900;color:var(--rec-color)}
+.md-rec-title{font-size:21px;margin:0;line-height:1.4;overflow-wrap:anywhere}
+.md-rec-image{width:70px;height:70px;border-radius:14px;object-fit:cover;background:#ecf5e9}
+.md-rec-desc{font-size:13px;color:#536656;line-height:1.85;margin:0}
+.md-rec-reason{font-size:13px;line-height:1.8;color:#334f3a;border-left:3px solid var(--rec-color);padding-left:10px;margin:0}
+.md-rec-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:11px;color:#637e68;margin-top:auto}
+.md-rec-card .md-mod-link{display:block;text-align:center;background:var(--rec-color);padding:12px;margin-top:4px}
+.md-reset{background:#e6f1e5;color:#1e6b33;border:0;border-radius:9px;padding:12px 15px;font-size:13px;font-weight:850;cursor:pointer;margin-top:20px}
+.md-quiz-note{background:#edf7eb;border:1px solid #cfe5cd;border-radius:12px;padding:17px;font-size:13px;color:#58735c;line-height:1.8}
+.md-loading{font-size:13px;color:#48704e;padding:14px}
+@media(max-width:920px){.md-quiz-hero-grid{grid-template-columns:1fr}.md-rec-grid,.md-tiles{grid-template-columns:1fr}.md-rec-card.is-first{transform:none;order:-1}}
+@media(max-width:710px){.md-mod-list{grid-template-columns:1fr}.md-hero{padding:34px 0}.md-quiz-card{padding:16px}.md-mod-icon{width:45px;height:45px}.md-tab{flex:1;padding:11px 8px;font-size:12px}.md-quiz-options{grid-template-columns:1fr}.md-rec-card{padding:16px}.md-rec-card.is-first{padding:15px}.md-search{width:100%}}
+@media(prefers-reduced-motion:reduce){.md-progress span,.md-tile{transition:none}}
