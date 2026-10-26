@@ -39,11 +39,8 @@ function applyFilters(g){
     &&(!q||[g.name,g.genre,g.short,g.reason,g.originalName||"",...(g.tags||[])].join(" ").toLocaleLowerCase().includes(q));
 }
 function render(){
- const measured=modes(), useObserved=measured[state.tab], label={week:"今週",month:"今月",rising:"急上昇",beginner:"はじめて"}[state.tab];
+ const measured=modes();
  const chosen=state.catalog.filter(applyFilters).sort((a,b)=>ordering(a)-ordering(b));
- const note=$("#rb-period-note"),modeLabel=$("#rb-mode-label");
- modeLabel.textContent=useObserved?(state.tab==="rising"?"24時間の増加率ランキング":label+"の平均プレイヤー数ランキング"):"編集部選定ランキング";
- note.textContent=useObserved?(state.tab==="rising"?" ／ 公開観測データを比較":" ／ 観測データに基づく順位"):" ／ 観測期間が足りないため選定順";
  $("#rb-count").textContent=Math.min(20,chosen.length)+"件表示 / "+chosen.length+"候補";
  const view=chosen.slice(0,20);
  $("#rb-empty").hidden=chosen.length!==0;
@@ -68,8 +65,8 @@ function initControls(){
  $("#rb-reset").addEventListener("click",reset);
  $("#rb-empty-reset").addEventListener("click",reset);
  $("#rb-more-btn").addEventListener("click",()=>{state.limit+=10;render()});
- $$(".rb-suggestion").forEach(b=>b.addEventListener("click",()=>{reset();let pick=b.dataset.pick;if(pick==="friends"){state.party="friends";$("#rb-party").value="friends"}else{state.time=pick;$("#rb-time").value=pick}render();$("#ranking").scrollIntoView({behavior:"smooth",block:"start"})}));
- $("#surprise-top").addEventListener("click",()=>{let c=state.catalog.filter(applyFilters);if(!c.length)c=state.catalog;const r=c[Math.floor(Math.random()*c.length)];$("#rb-recommendation").innerHTML=`<div><b>🎲 今日のおまかせは「${safeString(r.name)}」！</b><p>${safeString(r.reason)}</p></div><a href="${roUrl(r.placeId)}" rel="nofollow noopener noreferrer" target="_blank">プレイする ↗</a><button type="button" id="rb-reco-close" aria-label="閉じる">×</button>`;$("#rb-recommendation").hidden=false;$("#rb-reco-close").addEventListener("click",()=>$("#rb-recommendation").hidden=true);$("#ranking").scrollIntoView({behavior:"smooth",block:"start"})});
+ $(".rb-suggestion").forEach(b=>b.addEventListener("click",()=>{if($("#rb-popular-view")?.hidden)$("#rb-show-popular")?.click();reset();let pick=b.dataset.pick;if(pick==="friends"){state.party="friends";$("#rb-party").value="friends"}else{state.time=pick;$("#rb-time").value=pick}render();$("#ranking").scrollIntoView({behavior:"smooth",block:"start"})}));
+
 }
 function reset(){state.query="";state.genre="all";state.party="all";state.time="all";state.limit=20;$("#rb-search").value="";$("#rb-genre").value="all";$("#rb-party").value="all";$("#rb-time").value="all";render()}
 Promise.all([

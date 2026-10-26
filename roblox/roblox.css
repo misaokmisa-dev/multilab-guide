@@ -34,3 +34,74 @@
 @media(max-width:1050px){.rb-filter-bar{grid-template-columns:2fr 1fr 1fr}.rb-filter-bar .rb-select-label:nth-of-type(4){grid-column:1 / 3}.rb-hero-art{height:270px}.rb-art-3{left:50%}}
 @media(max-width:780px){.rb-global{gap:10px}.rb-global a{font-size:11px}.rb-hero-grid{grid-template-columns:1fr;padding:53px 0 35px}.rb-hero-art{display:none}.rb-feature-strip{margin-bottom:45px}.rb-feature-strip>div{padding:14px 11px;gap:6px}.rb-strip-symbol{font-size:18px}.rb-feature-strip b{font-size:11px}.rb-feature-strip small{font-size:9px}.rb-grid{grid-template-columns:1fr}.rb-guide-grid{grid-template-columns:1fr}.rb-guide-grid p{min-height:0}}
 @media(max-width:560px){.rb-container{width:calc(100% - 28px)}.rb-global{gap:9px}.rb-global a{font-size:10px}.rb-global a:first-child{display:none}.rb-body .top-row{gap:8px}.rb-body .logo{font-size:13px;gap:5px}.rb-body .symbol{transform:scale(.7) rotate(-5deg);margin-left:-5px;margin-right:-4px}.rb-hero h1{font-size:43px}.rb-hero p{font-size:13px}.rb-hero-chips span{font-size:10px}.rb-feature-strip{grid-template-columns:1fr;gap:0}.rb-feature-strip>div{border-right:0;border-bottom:1px solid #eef0f5}.rb-feature-strip>div:last-child{border-bottom:0}.rb-feature-strip small{font-size:10px}.rb-section-head{align-items:start;flex-direction:column}.rb-tabs{gap:6px}.rb-tab{padding:10px 2px}.rb-tab span{font-size:10px}.rb-tab small{font-size:8px}.rb-filter-bar{grid-template-columns:1fr 1fr}.rb-filter-bar .rb-search-label{grid-column:1/-1}.rb-filter-bar .rb-select-label:nth-of-type(4){grid-column:auto}.rb-reset{grid-column:1/-1}.rb-game{grid-template-columns:118px minmax(0,1fr);min-height:177px}.rb-card-body{padding:12px}.rb-game h3{font-size:14px}.rb-game .rb-desc{font-size:10px}.rb-cover .rb-emoji{font-size:48px}.rb-stats>span{font-size:9px}.rb-card-bottom small{display:none}.rb-feature-reco{flex-wrap:wrap}.rb-feature-reco a{margin-left:auto}}
+
+
+/* ROBLOX feature hero with official experience game-icon mosaic. */
+.rb-body .rb-hero{background:#0b1024!important;isolation:isolate;min-height:450px}
+.rb-body .rb-hero-bg{position:absolute;inset:0 0 0 35%;z-index:-2;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:7px;overflow:hidden;transform:skewX(-7deg) scale(1.13);transform-origin:center}
+.rb-hero-bg figure{margin:0;min-width:0;min-height:0;background:#313b7b;overflow:hidden}
+.rb-hero-bg img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(1.12) contrast(1.03)}
+.rb-body .rb-hero:before{z-index:-1;background:linear-gradient(90deg,#090d22 3%,#0b1023f9 24%,#0b1023cf 48%,#0b102370 78%,#0a0f2780),linear-gradient(0deg,#10152b77,transparent 70%)}
+.rb-body .rb-hero-grid{grid-template-columns:minmax(0,1fr);max-width:1160px;min-height:455px;align-content:center;padding:66px 0}
+.rb-body .rb-hero-grid>div:first-child{max-width:690px}
+.rb-body .rb-hero h1{font-size:clamp(54px,6vw,78px)}
+.rb-body .rb-hero-art{display:none!important}
+.rb-body .rb-ad-mosaic{margin:14px 0 48px;display:flex;gap:15px;justify-content:center;align-items:start;flex-wrap:nowrap}
+.rb-body .rb-ad-mosaic>.as-slot{flex:1 1 0;min-width:0;max-width:33.33%}
+.rb-body .rb-top-ad{max-width:1200px;margin:14px auto}
+.rb-body .rb-mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:12px;scroll-margin-top:105px;margin:22px 0 39px}
+.rb-body .rb-mode-btn{border-radius:15px;border:1px solid #e1e5ed;background:#fff;padding:17px 22px;text-align:left;box-shadow:0 6px 25px #19233c0b;color:#18243d}
+.rb-body .rb-mode-btn.is-active{background:#211747;border-color:#7560cf;color:#fff;box-shadow:0 8px 25px #2a1b6e33}
+.rb-mode-btn span{display:block;font-size:18px;font-weight:900;letter-spacing:-.035em}
+.rb-mode-btn small{display:block;color:#71809a;font-size:11px;margin-top:5px}
+.rb-mode-btn.is-active small{color:#d0c9ed}
+.rb-body .rb-ranking-meta.rb-count-only{justify-content:flex-end;padding:7px 0 16px}
+.rb-body .rb-active{padding:0 0 54px}
+.rb-active-intro{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:13px 18px;border:1px solid #dde6ee;background:#eff9fc;border-radius:13px;color:#416174;margin-bottom:14px;font-size:12px}
+.rb-active-intro b{color:#22586b}.rb-active-dot{width:9px;height:9px;border-radius:50%;background:#29be88;box-shadow:0 0 0 4px #29be8828}
+.rb-active-list{display:grid;gap:10px}
+.rb-active-row{background:#fff;border:1px solid #e4e8f1;border-radius:13px;min-height:94px;display:grid;grid-template-columns:62px 78px minmax(0,1fr) minmax(95px,150px) 88px;gap:12px;align-items:center;padding:11px 20px;box-shadow:0 3px 10px #11182f05;transition:transform .15s,border .15s}
+.rb-active-row:hover{transform:translateY(-1px);border-color:#b9afe5}
+.rb-active-number{font-size:24px;font-weight:900;letter-spacing:-.07em;color:#72819d;text-align:center;font-variant-numeric:tabular-nums}
+.rb-active-row:nth-child(-n+3) .rb-active-number{color:#7550cc}
+.rb-active-icon{display:flex;align-items:center;justify-content:center;border-radius:12px;width:72px;height:72px;background:linear-gradient(135deg,#b9a9f3,#3250a2);overflow:hidden;color:white;font-size:32px}
+.rb-active-icon img{display:block;width:100%;height:100%;object-fit:cover}
+.rb-active-title{font-size:15px;font-weight:880;color:#1b2942;line-height:1.45;margin:0;overflow-wrap:anywhere}
+.rb-active-sub{color:#8b95a7;font-size:11px;margin-top:4px;display:block}
+.rb-active-stats{text-align:right}.rb-active-stats strong{display:block;color:#18254b;font-size:18px;font-variant-numeric:tabular-nums}.rb-active-stats small{color:#818ba0;font-size:10px}
+.rb-active-visit{background:#6743cc;color:#fff!important;text-align:center;text-decoration:none;border-radius:9px;padding:9px 8px;font-size:11px;font-weight:850}
+.rb-active-adgap{margin:26px 0 30px;padding:18px 12px;border-radius:16px;border:1px dashed #dde1eb;background:#fff}
+.rb-active-adgap .rb-ad-mosaic{margin:0}
+.rb-active-footnote{color:#74819a;font-size:11px;margin-top:20px;line-height:1.8}.rb-active-footnote a{color:#7147ca}
+.rb-extra-ads{margin:18px 0 52px}.rb-extra-ads .rb-ad-mosaic{margin:0}.rb-bottom-ads{margin:16px 0 50px}.rb-bottom-ads .rb-ad-mosaic{margin:0}
+.rb-body.rb-modal-open{overflow:hidden}
+.rb-gacha-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.rb-gacha-shade{position:absolute;inset:0;background:#0d0c27db;backdrop-filter:blur(9px)}
+.rb-gacha-panel{position:relative;width:min(610px,100%);max-height:min(93dvh,880px);overflow-y:auto;text-align:center;color:white;border-radius:26px;border:1px solid #a895ff60;background:radial-gradient(circle at 50% 35%,#34307a 0,#171a43 55%,#0f1432 100%);padding:30px 30px 25px;box-shadow:0 35px 90px #0008}
+.rb-gacha-close{position:absolute;right:15px;top:12px;width:39px;height:39px;border:1px solid #ffffff40;border-radius:50%;background:#ffffff16;color:white;font-size:24px;line-height:1}
+.rb-gacha-topline{display:flex;gap:8px;justify-content:center;color:#d5c9ff;font-weight:800;font-size:11px;letter-spacing:.14em}.rb-gacha-topline span{color:#9aece6}
+.rb-gacha-panel h2{color:white;font-size:32px;margin:13px 0 5px;letter-spacing:-.055em}
+.rb-gacha-sub{color:#cbcbe3;font-size:13px;margin:0}
+.rb-gacha-machine{position:relative;min-height:270px;display:flex;align-items:center;justify-content:center;margin:14px auto 0;overflow:hidden}
+.rb-gacha-halo{position:absolute;width:230px;height:230px;border-radius:50%;background:conic-gradient(from 0deg,#68fbf5,#a46df5,#ffcf6f,#62eff4);filter:blur(12px);opacity:.66;animation:rb-gacha-halo 5s linear infinite}
+.rb-gacha-cap{z-index:1;width:192px;height:192px;border-radius:30px;transform:rotate(-5deg);background:linear-gradient(160deg,#9471fa,#54309d);border:5px solid #dfd1ff;box-shadow:0 24px 37px #09071777,0 0 0 9px #ffffff18;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px}
+.rb-gacha-cap span{font-size:65px;line-height:1}.rb-gacha-cap strong{font-size:11px;letter-spacing:.07em;max-width:160px;line-height:1.4}
+.rb-gacha-machine.spinning .rb-gacha-cap{animation:rb-gacha-spin .16s infinite alternate}
+.rb-gacha-sparks{position:absolute;top:8px;right:20%;font-size:24px;color:#ffe387;animation:rb-gacha-spark 2s ease-in-out infinite}.rb-gacha-sparks span{margin:0 17px;color:#adf1ff}
+.rb-gacha-status{font-size:13px;color:#e5dcff;min-height:24px;margin:4px 0 16px}
+.rb-gacha-result{border:1px solid #9383fc69;border-radius:15px;padding:16px;background:#ffffff16;text-align:left}
+.rb-gacha-result h3{font-size:21px;margin:0 0 5px;color:white}.rb-gacha-result p{font-size:12px;line-height:1.75;color:#dedaff;margin:0}
+.rb-gacha-result-line{display:flex;gap:15px;align-items:center}.rb-gacha-result-image{width:92px;height:92px;border-radius:15px;overflow:hidden;background:#7551cf;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:34px}
+.rb-gacha-result-image img{width:100%;height:100%;object-fit:cover}
+.rb-gacha-reward{color:#ffd992;letter-spacing:.12em;font-size:10px;font-weight:800;margin-bottom:5px}
+.rb-gacha-visit{display:block;margin-top:14px;border-radius:11px;padding:13px;text-align:center;background:#a1f2d7;color:#143a46!important;text-decoration:none;font-weight:850;font-size:13px}
+.rb-gacha-footer{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;font-size:11px;color:#acb7d9;margin-top:16px}
+@keyframes rb-gacha-halo{to{transform:rotate(360deg)}}@keyframes rb-gacha-spin{from{transform:rotate(-10deg) scale(1)}to{transform:rotate(9deg) scale(1.06)}}@keyframes rb-gacha-spark{50%{opacity:.4;transform:scale(1.4)}}
+@media(max-width:730px){.rb-body .rb-hero-bg{inset:0 0 0 15%;grid-template-columns:repeat(3,1fr)}.rb-body .rb-hero:before{background:linear-gradient(90deg,#0b1025ef,#0d1224ad),linear-gradient(0deg,#0a1026ad,#0a102644)}
+.rb-body .rb-mode-switch{gap:8px}.rb-mode-btn span{font-size:14px}.rb-mode-btn small{font-size:10px}
+.rb-active-row{grid-template-columns:36px 56px minmax(0,1fr) 90px;gap:8px;padding:9px}
+.rb-active-icon{width:52px;height:52px}.rb-active-number{font-size:17px}.rb-active-stats strong{font-size:13px}.rb-active-title{font-size:12px}.rb-active-visit{grid-column:4;grid-row:2;margin-top:-12px;padding:6px 3px;font-size:10px}
+.rb-body .rb-ad-mosaic{gap:5px}.rb-body .rb-ad-mosaic .as-slot-label{font-size:9px}.rb-active-adgap{padding:8px 0}}
+@media(max-width:440px){.rb-mode-btn{padding:13px!important}.rb-mode-btn span{font-size:12px}.rb-mode-btn small{font-size:9px}
+.rb-gacha-panel{padding:27px 14px 17px}.rb-gacha-panel h2{font-size:25px}.rb-gacha-machine{min-height:220px}.rb-gacha-cap{width:148px;height:148px;border-radius:23px}.rb-gacha-cap span{font-size:48px}.rb-gacha-halo{width:180px;height:180px}.rb-gacha-result-line{gap:10px}.rb-gacha-result-image{width:73px;height:73px}}
+@media(prefers-reduced-motion:reduce){.rb-gacha-halo,.rb-gacha-sparks,.rb-gacha-machine.spinning .rb-gacha-cap{animation:none!important}}
