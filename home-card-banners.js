@@ -12,7 +12,7 @@
      const frag=document.createDocumentFragment();
      for(const [,g] of selected){
        const tile=document.createElement("span"),img=document.createElement("img");
-       tile.className="mlg-game-image";img.src=g.icon;img.alt="";img.loading="lazy";img.decoding="async";img.referrerPolicy="no-referrer";tile.append(img);frag.append(tile);
+       tile.className="mlg-game-image";img.src=g.icon;img.alt="";img.loading=holder.id==="mlg-home-roblox-hero-images"?"eager":"lazy";img.decoding="async";img.referrerPolicy="no-referrer";tile.append(img);frag.append(tile);
      }
      holder.replaceChildren(frag);holder.classList.remove("is-empty");
    }
