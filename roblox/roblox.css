@@ -105,3 +105,24 @@
 @media(max-width:440px){.rb-mode-btn{padding:13px!important}.rb-mode-btn span{font-size:12px}.rb-mode-btn small{font-size:9px}
 .rb-gacha-panel{padding:27px 14px 17px}.rb-gacha-panel h2{font-size:25px}.rb-gacha-machine{min-height:220px}.rb-gacha-cap{width:148px;height:148px;border-radius:23px}.rb-gacha-cap span{font-size:48px}.rb-gacha-halo{width:180px;height:180px}.rb-gacha-result-line{gap:10px}.rb-gacha-result-image{width:73px;height:73px}}
 @media(prefers-reduced-motion:reduce){.rb-gacha-halo,.rb-gacha-sparks,.rb-gacha-machine.spinning .rb-gacha-cap{animation:none!important}}
+
+/* Three advertisement units stay side by side. On narrow screens scroll sideways
+   instead of shrinking 300px creatives into unreadable 100px slots. */
+@media(max-width:760px){
+ .rb-body .rb-ad-mosaic{
+   box-sizing:border-box;display:flex!important;flex-wrap:nowrap!important;
+   justify-content:flex-start!important;width:100%;max-width:100%;
+   overflow-x:auto!important;overscroll-behavior-x:contain;
+   scroll-snap-type:x mandatory;padding:8px 3px 14px;gap:12px;
+   scrollbar-width:thin;-webkit-overflow-scrolling:touch;
+ }
+ .rb-body .rb-ad-mosaic>.as-slot.as-square{
+   flex:0 0 min(300px,calc(100vw - 55px))!important;
+   width:min(300px,calc(100vw - 55px))!important;
+   max-width:none!important;
+   scroll-snap-align:start;overflow:hidden;
+ }
+ .rb-body .rb-ad-mosaic>.as-slot.as-square .as-ad-content{
+   max-width:100%;overflow:hidden;
+ }
+}
