@@ -19,9 +19,9 @@
         "まったり",
         "友達"
       ],
-      "week": 4,
-      "month": 1,
-      "rising": 15,
+      "week": 5,
+      "month": 2,
+      "rising": 16,
       "beginner": 1
     },
     {
@@ -40,9 +40,9 @@
         "ペット",
         "交流"
       ],
-      "week": 7,
-      "month": 4,
-      "rising": 5,
+      "week": 8,
+      "month": 5,
+      "rising": 6,
       "beginner": 2
     },
     {
@@ -61,9 +61,9 @@
         "成長",
         "冒険"
       ],
-      "week": 3,
-      "month": 2,
-      "rising": 12,
+      "week": 4,
+      "month": 3,
+      "rising": 13,
       "beginner": 11
     },
     {
@@ -82,9 +82,9 @@
         "対戦",
         "短時間"
       ],
-      "week": 1,
-      "month": 3,
-      "rising": 13,
+      "week": 2,
+      "month": 4,
+      "rising": 14,
       "beginner": 5
     },
     {
@@ -103,9 +103,9 @@
         "サバイバル",
         "探索"
       ],
-      "week": 2,
-      "month": 6,
-      "rising": 6,
+      "week": 3,
+      "month": 7,
+      "rising": 7,
       "beginner": 12
     },
     {
@@ -124,9 +124,9 @@
         "対戦",
         "短時間"
       ],
-      "week": 5,
-      "month": 5,
-      "rising": 11,
+      "week": 6,
+      "month": 6,
+      "rising": 12,
       "beginner": 15
     },
     {
@@ -145,9 +145,9 @@
         "ミーム",
         "交流"
       ],
-      "week": 9,
-      "month": 7,
-      "rising": 7,
+      "week": 10,
+      "month": 8,
+      "rising": 8,
       "beginner": 9
     },
     {
@@ -166,9 +166,9 @@
         "協力",
         "謎解き"
       ],
-      "week": 8,
-      "month": 10,
-      "rising": 3,
+      "week": 9,
+      "month": 11,
+      "rising": 4,
       "beginner": 14
     },
     {
@@ -187,9 +187,9 @@
         "探索",
         "まったり"
       ],
-      "week": 11,
-      "month": 9,
-      "rising": 14,
+      "week": 12,
+      "month": 10,
+      "rising": 15,
       "beginner": 4
     },
     {
@@ -208,9 +208,9 @@
         "協力",
         "個性派"
       ],
-      "week": 6,
-      "month": 11,
-      "rising": 2,
+      "week": 7,
+      "month": 12,
+      "rising": 3,
       "beginner": 10
     },
     {
@@ -229,9 +229,9 @@
         "かわいい",
         "短時間"
       ],
-      "week": 10,
-      "month": 8,
-      "rising": 4,
+      "week": 11,
+      "month": 9,
+      "rising": 5,
       "beginner": 3
     },
     {
@@ -250,9 +250,9 @@
         "ホラー",
         "協力"
       ],
-      "week": 12,
-      "month": 14,
-      "rising": 1,
+      "week": 13,
+      "month": 15,
+      "rising": 2,
       "beginner": 16
     },
     {
@@ -271,9 +271,9 @@
         "アニメ風",
         "対戦"
       ],
-      "week": 13,
-      "month": 12,
-      "rising": 8,
+      "week": 14,
+      "month": 13,
+      "rising": 9,
       "beginner": 13
     },
     {
@@ -292,9 +292,9 @@
         "チーム",
         "短時間"
       ],
-      "week": 14,
-      "month": 15,
-      "rising": 9,
+      "week": 15,
+      "month": 16,
+      "rising": 10,
       "beginner": 7
     },
     {
@@ -313,9 +313,9 @@
         "短時間",
         "高難度"
       ],
-      "week": 15,
-      "month": 13,
-      "rising": 16,
+      "week": 16,
+      "month": 14,
+      "rising": 17,
       "beginner": 8
     },
     {
@@ -334,10 +334,31 @@
         "対戦",
         "短時間"
       ],
-      "week": 16,
-      "month": 16,
-      "rising": 10,
+      "week": 17,
+      "month": 17,
+      "rising": 11,
       "beginner": 6
+    },
+    {
+      "placeId": "107778070777162",
+      "name": "Steal An Egg",
+      "short": "卵を集めて孵化し、レアなペットを育てよう",
+      "genre": "育成・生活",
+      "icon": "🥚",
+      "tone": "orange",
+      "with": "both",
+      "minutes": 15,
+      "difficulty": "かんたん",
+      "reason": "卵を手に入れて孵化・育成し、拠点を大きくする収集ゲーム。最近の人気作から始めたい人に。",
+      "tags": [
+        "収集",
+        "育成",
+        "新定番"
+      ],
+      "week": 1,
+      "month": 1,
+      "rising": 1,
+      "beginner": 7
     }
   ]
 }
