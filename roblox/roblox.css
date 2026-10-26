@@ -139,3 +139,20 @@
 .rb-body:has(>.as-fixed-bottom .as-fixed-bottom-content iframe) .rb-footer,
 .rb-body:has(>.as-fixed-bottom .as-fixed-bottom-content img) .rb-footer{padding-bottom:100px}
 @media(max-width:1179px){.rb-body .as-rail.as-rail-right{display:none!important}}
+
+/* Ranking ad rhythm: one real 300x250 unit immediately after the final
+   active/popular entry, game-selection guide, then one unit before the method.
+   Never show the previously duplicated triple block at the same boundary. */
+.rb-body .rb-ad-after30,
+.rb-body .rb-popular-after20{
+  margin:24px auto 35px;
+  padding:12px 0;
+  border-top:1px solid #e4e9f1;
+  border-bottom:1px solid #e4e9f1;
+  display:flex;
+  justify-content:center;
+}
+.rb-body .rb-ad-after30 .as-inline-single,
+.rb-body .rb-popular-after20 .as-inline-single {margin:15px auto;flex:0 0 300px}
+.rb-body .rb-popular-mid-ads{margin:25px 0 30px}
+.rb-body [hidden]{display:none!important}

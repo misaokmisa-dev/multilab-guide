@@ -42,10 +42,13 @@ function render(){
  const measured=modes();
  const chosen=state.catalog.filter(applyFilters).sort((a,b)=>ordering(a)-ordering(b));
  $("#rb-count").textContent=Math.min(20,chosen.length)+"件表示 / "+chosen.length+"候補";
- const view=chosen.slice(0,20);
+ const first=chosen.slice(0,10),second=chosen.slice(10,20);
  $("#rb-empty").hidden=chosen.length!==0;
  $("#rb-more-btn").hidden=true;
- $("#rb-grid").innerHTML=view.map((g,i)=>card(g,i+1,measured)).join("");
+ $("#rb-popular-mid-ads").hidden=chosen.length<=10;
+ $("#rb-popular-after20").hidden=chosen.length===0;
+ $("#rb-grid").innerHTML=first.map((g,i)=>card(g,i+1,measured)).join("");
+ $("#rb-grid-more").innerHTML=second.map((g,i)=>card(g,i+11,measured)).join("");
  $$(".rb-cover img").forEach(img=>img.addEventListener("error",()=>{img.remove()}, {once:true}));
  $$(".rb-save").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.save;if(state.bookmarks.has(id))state.bookmarks.delete(id);else state.bookmarks.add(id);try{localStorage.setItem("mlg-roblox-bookmarks",JSON.stringify([...state.bookmarks]))}catch{}render()}));
 }
