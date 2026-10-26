@@ -289,7 +289,7 @@
       card.append(dl);
       card.append(el("div","pc-result-detail-label","この構成を選ぶ理由"));
       card.append(el("p","pc-result-reason",reasons(idx,a,kinds[n])));
-      card.append(el("strong","pc-result-games-title","この構成で検討したいゲーム例"));
+      card.append(el("strong","pc-result-games-title","この構成におすすめのゲーム例"));
       const badges=el("div","pc-example-games");
       gameExamples(a,idx).forEach(game=>badges.append(el("span","",game)));
       card.append(badges);
