@@ -1,7 +1,7 @@
 {
   "source": "Roblox public Explore API / top-playing-now, all countries and devices",
   "sourceUrl": "https://www.roblox.com/ja/charts/top-playing-now",
-  "updatedAt": "2026-10-26T11:35:06.408Z",
+  "updatedAt": "2026-10-26T11:35:21Z",
   "totalSourceEntries": 99,
   "games": [
     {
@@ -9,7 +9,7 @@
       "universeId": "10563114921",
       "name": "卵を盗む",
       "officialName": "Steal An Egg",
-      "playing": 1241162,
+      "playing": 1246332,
       "rating": 91.7,
       "icon": "https://tr.rbxcdn.com/180DAY-02351c6dea8f18de5c6fbe3311834287/512/512/Image/Png/noFilter"
     },
@@ -18,7 +18,7 @@
       "universeId": "1686885941",
       "name": "ブルックヘイブン 🏡RP",
       "officialName": "Brookhaven 🏡RP",
-      "playing": 334260,
+      "playing": 332855,
       "rating": 85.9,
       "icon": "https://tr.rbxcdn.com/180DAY-577f3f78d1f056c80db7d2a54c8d384d/512/512/Image/Png/noFilter"
     },
@@ -27,7 +27,7 @@
       "universeId": "7709344486",
       "name": "ブレインロットを盗む",
       "officialName": "[💀] Steal a Brainrot",
-      "playing": 268687,
+      "playing": 272671,
       "rating": 85.1,
       "icon": "https://tr.rbxcdn.com/180DAY-3ac8bc815065c53cd8aa417f9a78d896/512/512/Image/Png/noFilter"
     },
@@ -63,7 +63,7 @@
       "universeId": "6035872082",
       "name": "ライバル",
       "officialName": "[🎃] RIVALS",
-      "playing": 177273,
+      "playing": 177279,
       "rating": 93.7,
       "icon": "https://tr.rbxcdn.com/180DAY-1912e777e949b6490e59fa4ac83b1063/512/512/Image/Png/noFilter"
     },
@@ -72,7 +72,7 @@
       "universeId": "10765288803",
       "name": "卵を壊して盗む",
       "officialName": "Break and Steal an Egg",
-      "playing": 158857,
+      "playing": 162462,
       "rating": 97.4,
       "icon": "https://tr.rbxcdn.com/180DAY-edbc7d8a482a8630b63670a450bee6a3/512/512/Image/Png/noFilter"
     },
@@ -81,7 +81,7 @@
       "universeId": "994732206",
       "name": "ブロックスフルーツ",
       "officialName": "Blox Fruits",
-      "playing": 155351,
+      "playing": 154863,
       "rating": 92.3,
       "icon": "https://tr.rbxcdn.com/180DAY-774ec14539b264f85fdb6e8a34dfa344/512/512/Image/Png/noFilter"
     },
@@ -162,7 +162,7 @@
       "universeId": "5750914919",
       "name": "フィッシュ",
       "officialName": "Fisch 👻 [HORSEMAN]",
-      "playing": 67097,
+      "playing": 66910,
       "rating": 90.8,
       "icon": "https://tr.rbxcdn.com/180DAY-53aa8e02a9fdac8deaa0f697a2aaad9a/512/512/Image/Png/noFilter"
     },
@@ -180,7 +180,7 @@
       "universeId": "3808081382",
       "name": "最強の戦場",
       "officialName": "The Strongest Battlegrounds",
-      "playing": 63279,
+      "playing": 63429,
       "rating": 83.7,
       "icon": "https://tr.rbxcdn.com/180DAY-68c92fc62a8753793f7963e146b5197f/512/512/Image/Png/noFilter"
     },
@@ -200,14 +200,14 @@
       "officialName": "[🔥TRADES+X2 EXP💎}Cameraman Tower Defense",
       "playing": 50003,
       "rating": 98.8,
-      "icon": null
+      "icon": "https://tr.rbxcdn.com/180DAY-211ee683f986cfe82527b4887009d8e2/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "85738654635245",
       "universeId": "10765490774",
       "name": "[🎃] 動物の卵のために登る🥚",
       "officialName": "[🎃]Climb For Animals Eggs🥚",
-      "playing": 49255,
+      "playing": 49917,
       "rating": 98.8,
       "icon": "https://tr.rbxcdn.com/180DAY-efb52b5acdceb1d84e1e5a02a423b22d/512/512/Image/Png/noFilter"
     },
@@ -216,8 +216,8 @@
       "universeId": "2440500124",
       "name": "DOORS 👁️（ドアーズ）",
       "officialName": "DOORS 🍬🍭",
-      "playing": 49246,
-      "rating": 93,
+      "playing": 49433,
+      "rating": 93.0,
       "icon": "https://tr.rbxcdn.com/180DAY-6d72472d3b2a47c5441194c8cf9f002c/512/512/Image/Png/noFilter"
     },
     {
@@ -230,22 +230,22 @@
       "icon": "https://tr.rbxcdn.com/180DAY-fd00abbf1432558ee3c31fcba7a207dc/512/512/Image/Png/noFilter"
     },
     {
-      "placeId": "95082159892680",
-      "universeId": "9584852943",
-      "name": "[🎵] +1 スピードキーボードエスケープ | キャンディとチョコレート",
-      "officialName": "[🎵] +1 Speed Keyboard Escape | Candy & Chocolate",
-      "playing": 47029,
-      "rating": 96.7,
-      "icon": "https://tr.rbxcdn.com/180DAY-cd2ebe7e03f5bf9d9a107cc4b62ced26/512/512/Image/Png/noFilter"
-    },
-    {
       "placeId": "7041939546",
       "universeId": "2711375305",
       "name": "Catalog Avatar Creator",
       "officialName": "Catalog Avatar Creator",
-      "playing": 46976,
+      "playing": 47125,
       "rating": 93.7,
-      "icon": null
+      "icon": "https://tr.rbxcdn.com/180DAY-1798dc712146d595252ccc52f554baed/512/512/Image/Png/noFilter"
+    },
+    {
+      "placeId": "95082159892680",
+      "universeId": "9584852943",
+      "name": "[🎵] +1 スピードキーボードエスケープ | キャンディとチョコレート",
+      "officialName": "[🎵] +1 Speed Keyboard Escape | Candy & Chocolate",
+      "playing": 47116,
+      "rating": 96.7,
+      "icon": "https://tr.rbxcdn.com/180DAY-cd2ebe7e03f5bf9d9a107cc4b62ced26/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "6961824067",
@@ -263,7 +263,7 @@
       "officialName": "[🤹APRIL FOOL'S🤡] Anime Adventures",
       "playing": 45437,
       "rating": 91.9,
-      "icon": null
+      "icon": "https://tr.rbxcdn.com/180DAY-ceec97df50507c3436e05dfca16cd467/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "73956553001240",
