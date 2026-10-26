@@ -88,11 +88,11 @@
       ["video","動画編集・イラスト制作をする"],
       ["heavy","3D制作・重い編集・AI処理をする"]
     ]},
-    {key:"mods",title:"MODや同時起動アプリはどのくらい？",help:"影MOD・大規模MOD・ブラウザー同時起動はメモリを多く使います。",choices:[
-      ["none","ほぼ使わない"],
-      ["some","Discordやブラウザーを同時起動"],
-      ["many","MODを多く使う・ゲーム中に多数起動"],
-      ["extreme","大規模MOD・影MOD・高解像度素材"]
+    {key:"multitask",title:"ゲーム中、ほかのアプリをどれくらい同時に使う？",help:"通話・ブラウザ・録画などを一緒に使うほど、メモリに余裕が必要です。",choices:[
+      ["none","ゲームだけで遊ぶことが多い"],
+      ["some","Discordで通話やブラウザを見る"],
+      ["many","通話・動画・ブラウザなどを複数開く"],
+      ["extreme","配信・録画をしながら複数のアプリも使う"]
     ]},
     {key:"budget",title:"PC本体の予算は？",help:"モニター・キーボード等を除く、税込み本体予算の目安です。",choices:[
       ["under12","12万円未満"],
@@ -193,7 +193,7 @@
     else if(a[2]==="wqhd")notes.push("WQHDでの画質とフレームレートの両立を意識した構成です。");
     if(a[3]==="240")notes.push("240fps級はゲーム設定とCPU性能、モニターの対応も重要です。");
     if(["stream","video","heavy"].includes(a[4]))notes.push("配信や制作作業と並行するため、メモリ32GB以上を推奨します。");
-    if(["many","extreme"].includes(a[5]))notes.push("MODや同時起動アプリに備えてメモリとSSD容量に余裕を持たせます。");
+    if(["many","extreme"].includes(a[5]))notes.push("ゲーム以外のアプリも同時に使うため、メモリに余裕を持たせます。");
     if(kind==="budget")notes.push("費用を抑えるため、重いゲームでは画質・fpsを下げる想定です。");
     if(kind==="premium")notes.push("新作タイトルや今後の用途拡大への余裕を重視しています。");
     return notes.join("");
@@ -259,28 +259,37 @@
     }else{
       indices=[need-1,need,need+1];
     }
-    const labels=["予算を抑えるなら","おすすめのバランス","性能に余裕を持つなら"];
+    const labels=["コスト重視","総合おすすめ","性能・将来性重視"];
     const kinds=["budget","recommended","premium"];
+    const ranks=["2位","1位","3位"];
+    const subtitles=["出費を抑えて始める","迷ったらこのバランス","高画質と長く使う余裕"];
     summary.replaceChildren();
     summary.append(el("strong","",genreLabels[a[0]]+" × "+budgetText[a[6]]+" の診断結果"));
-    summary.append(el("p","pc-summary-muted","8問の回答から、グラフィックボード・CPU・メモリ・SSDの3構成を比較しました。"));
+    summary.append(el("p","pc-summary-muted","8問の回答から、グラフィックボード・CPU・メモリ・SSDを比較して3つの候補を選びました。金色の1位が今回の総合おすすめです。"));
     if(constrained)summary.append(el("p","pc-diag-warning","希望条件に対して予算が低めです。予算内候補では解像度・画質・fpsなどの調整が必要な場合があります。右側の上位案は予算を超える可能性があります。"));
     if(a[6]==="under12")summary.append(el("p","pc-diag-warning","12万円未満では新品の独立GPU搭載デスクトップが予算を超える場合があります。中古品や予算の引き上げも比較してください。"));
     cards.replaceChildren();
     indices.forEach((idx,n)=>{
       const t=tiers[idx],spec=createSpecs(idx,a),product=productFor(t,spec.ram);
-      const card=el("article","pc-result"+(n===1?" is-recommended":""));
-      card.append(el("div","pc-result-kicker",labels[n]));
+      const card=el("article","pc-result is-"+kinds[n]);
+      const rankHead=el("div","pc-rank-head");
+      rankHead.append(el("span","pc-rank-medal",ranks[n]),el("span","pc-result-kicker",labels[n]));
+      card.append(rankHead);
+      card.append(el("div","pc-result-subtitle",subtitles[n]));
       const heading=el("h3","",t.gpu);
       heading.append(el("span","",t.range));
       card.append(heading);
+      const quick=el("div","pc-result-quick");
+      quick.append(el("span","",t.short),el("span","","メモリ "+spec.ram+"GB"));
+      card.append(quick);
       const dl=el("dl","pc-result-spec");
       [["GPU",t.gpu],["VRAM",t.vram],["CPU",t.cpu],["メモリ",spec.ram+"GB"],["ストレージ",spec.ssd]].forEach(([name,value])=>{
         dl.append(el("dt","",name),el("dd","",value));
       });
       card.append(dl);
+      card.append(el("div","pc-result-detail-label","この構成を選ぶ理由"));
       card.append(el("p","pc-result-reason",reasons(idx,a,kinds[n])));
-      card.append(el("strong","", "このクラスで検討したいゲーム例"));
+      card.append(el("strong","pc-result-games-title","この構成で検討したいゲーム例"));
       const badges=el("div","pc-example-games");
       gameExamples(a,idx).forEach(game=>badges.append(el("span","",game)));
       card.append(badges);
