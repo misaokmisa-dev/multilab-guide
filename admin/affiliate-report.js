@@ -104,7 +104,7 @@ function render(){
 el('load-server').addEventListener('click',async()=>{
  const token=el('token').value,status=el('server-status');if(!token){status.textContent='トークンを入力してください';return}
  status.textContent='読み込み中…';status.className='status';
- try{const r=await fetch('/api/affiliate-summary?days='+duration(),{headers:{Authorization:'Bearer '+token},cache:'no-store'});const d=await r.json();
+ try{const r=await fetch('/api/affiliate-summary?days='+duration(),{headers:{Authorization:'Bearer '+token},cache:'no-store'});if(r.status===404)throw Error('Cloudflareの計測APIが未接続です');const d=await r.json();
   if(!r.ok)throw Error(d.error||'APIの接続に失敗しました');
   state.events=d.rows||[];status.textContent='計測データ受信済み';status.className='status good';render();
  }catch(e){status.textContent=e.message||'通信エラー';status.className='status bad'}
@@ -135,5 +135,6 @@ el('export').addEventListener('click',()=>{
  const blob=new Blob(['\uFEFF'+[header.join(','),...data].join('\r\n')],{type:'text/csv;charset=utf-8'});
  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='multilab-affiliate-results-'+today()+'.csv';a.click();URL.revokeObjectURL(url);
 });
+fetch('/api/affiliate-summary',{cache:'no-store'}).then(r=>{const s=el('server-status');if(r.status===404){s.textContent='計測API未接続（Cloudflare設定が必要）';s.className='status bad'}else if(r.status===401){s.textContent='管理トークンの入力待ち';s.className='status'}else if(r.status===503){s.textContent='APIは有効・管理用設定は未完了';s.className='status bad'}}).catch(()=>{});
 render();
 })();
