@@ -68,7 +68,7 @@ function initControls(){
  $("#rb-reset").addEventListener("click",reset);
  $("#rb-empty-reset").addEventListener("click",reset);
  $("#rb-more-btn").addEventListener("click",()=>{state.limit+=10;render()});
- $(".rb-suggestion").forEach(b=>b.addEventListener("click",()=>{if($("#rb-popular-view")?.hidden)$("#rb-show-popular")?.click();reset();let pick=b.dataset.pick;if(pick==="friends"){state.party="friends";$("#rb-party").value="friends"}else{state.time=pick;$("#rb-time").value=pick}render();$("#ranking").scrollIntoView({behavior:"smooth",block:"start"})}));
+ $$(".rb-suggestion").forEach(b=>b.addEventListener("click",()=>{if($("#rb-popular-view")?.hidden)$("#rb-show-popular")?.click();reset();let pick=b.dataset.pick;if(pick==="friends"){state.party="friends";$("#rb-party").value="friends"}else{state.time=pick;$("#rb-time").value=pick}render();$("#ranking").scrollIntoView({behavior:"smooth",block:"start"})}));
 
 }
 function reset(){state.query="";state.genre="all";state.party="all";state.time="all";state.limit=20;$("#rb-search").value="";$("#rb-genre").value="all";$("#rb-party").value="all";$("#rb-time").value="all";render()}
