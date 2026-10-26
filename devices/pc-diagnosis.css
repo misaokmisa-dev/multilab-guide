@@ -1,0 +1,69 @@
+/* MULTI LAB GUIDE · desktop gaming PC diagnosis */
+.pc-diag{--pc-ink:#111a2b;--pc-blue:#116ae6;--pc-mute:#667487;background:#f4f7fb;color:var(--pc-ink)}
+.pc-diag main{min-width:0}
+.pc-dwrap{width:min(1280px,calc(100% - 36px));margin:0 auto}
+.pc-diag-hero{background:radial-gradient(circle at 20% 0%,#223b69 0,transparent 45%),linear-gradient(135deg,#07111e,#142b48);color:#fff;padding:53px 0 60px}
+.pc-diag-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);align-items:start;gap:38px}
+.pc-eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:850;color:#85b4ff}
+.pc-diag h1{color:#fff;font-size:clamp(32px,3.9vw,53px);line-height:1.35;letter-spacing:-.04em;margin:16px 0}
+.pc-diag h1 em{color:#91bfff;font-style:normal}
+.pc-diag-lead{font-size:16px;line-height:1.95;color:#d5e2f4;max-width:545px}
+.pc-diag-points{display:flex;gap:9px;flex-wrap:wrap;margin:24px 0}
+.pc-diag-points span{display:inline-flex;border:1px solid #557292;border-radius:50px;padding:5px 11px;font-size:12px;color:#e8f2ff}
+.pc-diag-lead-link{color:#bad9ff!important;font-size:13px;font-weight:800}
+.pc-quiz-card{padding:25px;border:1px solid #dfebfc;border-radius:19px;background:#fff;color:#15243a;box-shadow:0 24px 65px #0003;min-width:0}
+.pc-quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pc-quiz-top h2{font-size:23px;line-height:1.35;letter-spacing:-.02em;margin:4px 0 6px}
+.pc-quiz-tag{display:inline-block;background:#e9f2ff;color:#1659ad;padding:5px 10px;border-radius:25px;font-size:11px;font-weight:850;white-space:nowrap}
+.pc-quiz-meta{display:flex;justify-content:space-between;font-size:12px;color:#5c6e86;font-weight:800;margin:12px 0 8px}
+.pc-progress{width:100%;height:8px;border-radius:9px;background:#e9eef6;overflow:hidden}
+.pc-progress span{display:block;width:12.5%;height:100%;background:linear-gradient(90deg,#287de9,#63c1ff);transition:width .22s}
+.pc-quiz-question{font-size:21px;line-height:1.45;font-weight:900;letter-spacing:-.018em;margin:22px 0 7px}
+.pc-quiz-help{font-size:13px;line-height:1.65;color:#617087;margin:0 0 16px}
+.pc-quiz-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.pc-quiz-choice{display:block;cursor:pointer;min-width:0}
+.pc-quiz-choice input{position:absolute;opacity:0;width:1px;height:1px}
+.pc-choice-inner{display:flex;align-items:center;gap:9px;min-height:64px;border:1.5px solid #dce4ee;border-radius:11px;background:#fff;padding:11px 12px;color:#243249;font-weight:750;font-size:13px;line-height:1.55;transition:border-color .12s,background .12s}
+.pc-choice-inner:before{content:"";height:17px;width:17px;flex:0 0 17px;border-radius:50%;border:2px solid #a4b2c5;background:#fff}
+.pc-quiz-choice input:checked+.pc-choice-inner{background:#edf5ff;border-color:#247be9;color:#164d96}
+.pc-quiz-choice input:checked+.pc-choice-inner:before{border-color:#247be9;background:#247be9;box-shadow:inset 0 0 0 3px white}
+.pc-quiz-choice input:focus-visible+.pc-choice-inner{outline:3px solid #ffba50;outline-offset:3px}
+.pc-quiz-actions{display:flex;align-items:center;gap:11px;margin-top:20px}
+.pc-quiz-actions button,.pc-action{appearance:none;border:0;border-radius:9px;min-height:45px;padding:11px 17px;font:800 14px/1.5 inherit;cursor:pointer;text-decoration:none}
+.pc-next,.pc-action{background:#146de7;color:#fff!important;box-shadow:0 4px 13px #0f6ed32c}
+.pc-next:hover,.pc-action:hover{background:#0056c3;color:#fff!important}
+.pc-back{background:#e9eef5;color:#364457}
+.pc-quiz-actions button:disabled{cursor:not-allowed;opacity:.4}
+.pc-quiz-error{color:#a83939;font-size:12px;min-height:18px;margin:9px 0 0}
+.pc-diag-section{padding:47px 0}
+.pc-diag-section h2{font-size:clamp(23px,2.7vw,32px);letter-spacing:-.025em;margin:0 0 8px}
+.pc-diag-section p{color:#596a82;line-height:1.8}
+.pc-summary{background:#fff;border:1px solid #dbe6f3;padding:24px;border-radius:16px;margin:0 auto 23px}
+.pc-summary strong{display:block;font-size:20px}
+.pc-summary .pc-summary-muted{font-size:13px;margin:6px 0 0}
+.pc-diag-warning{border-left:4px solid #d59b39;background:#fff8e7;padding:12px 15px;color:#654718!important;border-radius:5px}
+.pc-result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;align-items:stretch}
+.pc-result{background:#fff;border:1px solid #dce5f0;border-radius:15px;padding:19px;display:flex;flex-direction:column;gap:12px;min-width:0;box-shadow:0 5px 22px #18385508}
+.pc-result.is-recommended{border:2px solid #247ceb;box-shadow:0 12px 30px #247ceb20}
+.pc-result-kicker{font-size:12px;letter-spacing:.06em;color:#386fae;font-weight:900}
+.pc-result h3{font-size:23px;line-height:1.4;margin:2px 0 0}
+.pc-result h3 span{display:block;font-size:12px;font-weight:600;color:#657387;margin-top:5px}
+.pc-result-spec{display:grid;grid-template-columns:1fr auto;gap:7px 9px;font-size:13px;margin:0}
+.pc-result-spec dt{color:#58697d}
+.pc-result-spec dd{text-align:right;font-weight:850;min-width:0;margin:0;overflow-wrap:anywhere}
+.pc-result-reason{font-size:13px!important;color:#485c76!important;margin:0}
+.pc-example-games{display:flex;flex-wrap:wrap;gap:6px}
+.pc-example-games span{font-size:11px;color:#2d496e;background:#eef4fc;border-radius:6px;padding:4px 7px}
+.pc-result .pc-action{display:block;text-align:center;margin-top:auto}
+.pc-shopnote{font-size:12px!important;color:#69798b!important;margin:0}
+.pc-results[hidden]{display:none!important}
+.pc-detail{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.pc-detail article{background:white;border:1px solid #e1e7ee;border-radius:13px;padding:20px}
+.pc-detail h3{margin:0;font-size:17px}
+.pc-detail p{font-size:13px;margin:8px 0 0}
+.pc-footnote{font-size:12px!important;line-height:1.8;color:#69768a!important}
+.pc-repeat{display:inline-flex;align-items:center;gap:7px;background:#e9f2ff;color:#145fc4!important;text-decoration:none;border-radius:10px;padding:11px 16px;font-weight:800;border:0;cursor:pointer}
+.pc-source a{color:#1868cd;text-underline-offset:3px}
+@media(max-width:990px){.pc-diag-grid{grid-template-columns:1fr}.pc-diag-hero{padding:35px 0 45px}.pc-diag-lead{max-width:780px}.pc-result-grid,.pc-detail{grid-template-columns:1fr}}
+@media(max-width:600px){.pc-dwrap{width:calc(100% - 24px)}.pc-diag-hero{padding:26px 0 34px}.pc-quiz-card{padding:16px}.pc-quiz-top h2{font-size:20px}.pc-quiz-question{font-size:19px}.pc-quiz-options{grid-template-columns:1fr}.pc-choice-inner{min-height:53px;padding:9px 12px}.pc-diag-section{padding:32px 0}.pc-result{padding:16px}.pc-diag-points{margin:16px 0}.pc-quiz-actions button{flex:1}}
+@media(prefers-reduced-motion:reduce){.pc-progress span,.pc-choice-inner{transition:none}}
