@@ -68,3 +68,60 @@ if(!legal&&!client&&(campaigns.length||video)){
 
 /* Load missing-creative slot cleanup after the publisher markup is parsed. */
 (function(){const script=document.createElement("script");script.src="/ad-empty-collapse.js";script.defer=true;document.head.appendChild(script);})();
+
+
+/* Fit the existing wide header AdMax placement inside a narrow phone viewport.
+   The ad markup itself is not rewritten. Native 320px mobile creatives
+   are shown at their original size; only overwide creatives are fitted. */
+(function () {
+  "use strict";
+  const media = window.matchMedia("(max-width: 760px)");
+  const slots = Array.from(document.querySelectorAll(".as-slot.as-top"));
+  if (!slots.length) return;
+  let pending = false;
+  function update() {
+    pending = false;
+    slots.forEach(slot => {
+      const area = slot.querySelector(".as-ad-content");
+      if (!area) return;
+      // Clear only layout properties previously set by this helper.
+      area.style.removeProperty("transform");
+      area.style.removeProperty("width");
+      area.style.removeProperty("min-width");
+      area.style.removeProperty("margin-bottom");
+      if (!media.matches) return;
+      const creative = area.querySelector("iframe, img, ins, object, embed, video, canvas");
+      if (!creative) return;
+      const width = Math.max(
+        area.scrollWidth,
+        creative.scrollWidth || 0,
+        creative.offsetWidth || 0,
+        Number(creative.getAttribute("width")) || 0
+      );
+      const available = Math.max(0, slot.clientWidth - 16);
+      if (!(width > available && available >= 250)) return;
+      const height = Math.max(
+        area.scrollHeight,
+        creative.offsetHeight || 0,
+        Number(creative.getAttribute("height")) || 0
+      );
+      const scale = available / width;
+      area.style.width = width + "px";
+      area.style.minWidth = width + "px";
+      area.style.transform = "scale(" + scale + ")";
+      // Transforms affect paint but not layout height; collapse unused space.
+      if (height > 0) area.style.marginBottom = (-height * (1 - scale)) + "px";
+    });
+  }
+  function schedule() {
+    if (!pending) {
+      pending = true;
+      requestAnimationFrame(update);
+    }
+  }
+  const observer = new MutationObserver(schedule);
+  slots.forEach(slot => observer.observe(slot, { childList: true, subtree: true }));
+  window.addEventListener("resize", schedule, { passive: true });
+  if (media.addEventListener) media.addEventListener("change", schedule);
+  schedule();
+})();
