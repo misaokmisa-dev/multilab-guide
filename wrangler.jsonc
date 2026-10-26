@@ -2,7 +2,21 @@
   "name": "multilab-guide",
   "compatibility_date": "2026-10-25",
   "workers_dev": true,
+  "main": "worker/affiliate-analytics.js",
   "assets": {
-    "directory": "./"
+    "directory": "./",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "analytics_engine_datasets": [
+    {
+      "binding": "MLG_EVENTS",
+      "dataset": "mlg_site_events"
+    }
+  ],
+  "analytics": {
+    "binding": "MLG_SQL"
   }
 }
