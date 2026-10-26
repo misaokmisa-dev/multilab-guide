@@ -184,3 +184,44 @@ body.minecraft-body{background:#f3f7f0}
  .dv-body .dv-related-visual .dv-related-thumb img{max-width:31px!important;width:31px!important;max-height:31px!important;height:31px!important}
  .dv-body .dv-related-visual .dv-related-destination{font-size:10.5px;min-height:37px!important}
 }
+
+
+/* Minecraft hero CTA contrast: light secondary buttons on the dark hero.
+   The earlier portal.css !important text color made translucent buttons illegible. */
+.ml-body .ml-hero .ml-actions a.ml-btn-alt,
+.ml-body .ml-hero .ml-actions a.ml-btn-alt:visited {
+  background: #f4fff5 !important;
+  color: #16482b !important;
+  border: 1px solid #e1f3e2 !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .12);
+  text-decoration: none;
+  opacity: 1;
+}
+.ml-body .ml-hero .ml-actions a.ml-btn-alt:hover,
+.ml-body .ml-hero .ml-actions a.ml-btn-alt:focus-visible {
+  background: #d8f2dd !important;
+  color: #103e24 !important;
+  border-color: #c3e7c9 !important;
+}
+.ml-body .ml-hero .ml-actions a.ml-btn-alt:focus-visible {
+  outline: 3px solid #ffcc56;
+  outline-offset: 3px;
+}
+
+/* Let the three 300px AdMax squares extend outside narrow article columns
+   on wide screens. Center them within the viewport without resizing creatives. */
+@media (min-width: 960px) {
+  .ml-body article.guide-body > .as-mosaic:not(.as-mosaic-bottom) {
+    width: 936px;
+    max-width: calc(100vw - 24px);
+    margin-left: 50%;
+    margin-right: 0;
+    transform: translateX(-50%);
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 18px;
+  }
+  .ml-body article.guide-body > .as-mosaic:not(.as-mosaic-bottom) > .as-square {
+    flex: 0 0 300px;
+  }
+}
