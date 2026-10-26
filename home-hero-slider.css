@@ -154,3 +154,83 @@
  .mlg-home-slide,.mlg-home-slide.is-active,.mlg-home-slide.is-swipe-target,.mlg-home-slide.is-swipe-out{transition:none!important}
  .mlg-home-rotator.is-playing .mlg-home-slide-step.is-active .mlg-home-step-fill{animation:none!important;width:100%}
 }
+
+
+/* v5: headline hierarchy and category accent based on guide-page design. */
+.mlg-home-rotator.portal-hero .mlg-home-slide :is(h1,h2){
+  font-size:clamp(54px,6vw,78px)!important;
+  line-height:1.09;letter-spacing:-.07em;
+  margin:10px 0 14px!important;max-width:min(880px,95%)!important;
+}
+.mlg-home-rotator.portal-hero .mlg-home-slide .mlg-home-slide-name,
+.mlg-home-rotator.portal-hero .mlg-home-slide .mlg-home-slide-guide{
+  display:block;color:#fff!important;line-height:1.12;
+  text-shadow:0 2px 16px #0a103026;
+}
+.mlg-home-rotator.portal-hero #mlg-home-slide-roblox .mlg-home-slide-guide{color:#c3afff!important}
+.mlg-home-rotator.portal-hero #mlg-home-slide-minecraft .mlg-home-slide-guide{color:#a7e8b4!important}
+.mlg-home-rotator.portal-hero #mlg-home-slide-devices .mlg-home-slide-guide{color:#92ceff!important}
+.mlg-home-rotator.portal-hero #mlg-home-slide-devices .mlg-home-slide-name{
+  font-size:clamp(32px,4.15vw,56px);letter-spacing:-.065em;
+}
+.mlg-home-rotator.portal-hero .mlg-slide-cta-roblox{
+  background:#6f47d8!important;border-color:#8f6aef!important;
+  color:#fff!important;box-shadow:0 6px 20px #4a218f57;
+}
+.mlg-home-rotator.portal-hero .mlg-slide-cta-roblox:hover{
+  background:#5932c0!important;border-color:#b49aff!important;
+  box-shadow:0 9px 24px #4e26986b;
+}
+#categories .portal-card.roblox .portal-action{
+  background:#6f47d8!important;color:#fff!important;
+  border:1px solid #8f6aef!important;box-shadow:0 4px 13px #4c2b9f23;
+}
+#categories .portal-card.roblox:hover .portal-action,
+#categories .portal-card.roblox:focus-visible .portal-action{
+  background:#5932c0!important;color:#fff!important;
+}
+#categories .portal-card.roblox .portal-kicker{color:#7952c6!important}
+@media(min-width:761px){
+  .mlg-home-slide-viewport{height:450px}
+  .mlg-home-slide-content{min-height:450px;padding-top:32px;padding-bottom:40px}
+  .mlg-home-slide-kicker{font-size:12px}
+}
+@media(max-width:760px){
+  .mlg-home-slide-viewport{height:clamp(330px,88vw,385px)}
+  .mlg-home-slide-content{
+    min-height:0;height:100%;width:calc(100% - 20px)!important;
+    padding:18px 10px 36px;justify-content:center;
+  }
+  .mlg-home-rotator.portal-hero .mlg-home-slide :is(h1,h2){
+    font-size:clamp(46px,12.5vw,58px)!important;
+    line-height:1.06;margin:6px 0 9px!important;
+    max-width:100%!important;
+  }
+  .mlg-home-rotator.portal-hero #mlg-home-slide-minecraft :is(h1,h2){
+    font-size:clamp(43px,11.2vw,56px)!important;
+  }
+  .mlg-home-rotator.portal-hero #mlg-home-slide-devices :is(h1,h2){
+    font-size:clamp(45px,12.2vw,56px)!important;
+  }
+  .mlg-home-rotator.portal-hero #mlg-home-slide-devices .mlg-home-slide-name{
+    font-size:clamp(26px,7vw,37px)!important;
+    line-height:1.3;letter-spacing:-.06em;
+  }
+  .mlg-home-rotator.portal-hero .mlg-home-slide .mlg-home-slide-name,
+  .mlg-home-rotator.portal-hero .mlg-home-slide .mlg-home-slide-guide{
+    line-height:1.1;
+  }
+  .mlg-home-rotator.portal-hero .mlg-home-slide p{
+    font-size:12.5px!important;line-height:1.57;
+    max-width:min(95%,335px)!important;margin-bottom:11px!important;
+  }
+  .mlg-home-slide-kicker{font-size:10px}
+  .mlg-home-slide-cta{min-height:38px;padding:8px 15px}
+}
+@media(max-width:360px){
+  .mlg-home-slide-viewport{height:340px}
+  .mlg-home-rotator.portal-hero .mlg-home-slide :is(h1,h2){font-size:44px!important}
+  .mlg-home-rotator.portal-hero #mlg-home-slide-minecraft :is(h1,h2){font-size:41px!important}
+  .mlg-home-rotator.portal-hero #mlg-home-slide-devices .mlg-home-slide-name{font-size:25px!important}
+  .mlg-home-rotator.portal-hero .mlg-home-slide p{font-size:11.5px!important}
+}
