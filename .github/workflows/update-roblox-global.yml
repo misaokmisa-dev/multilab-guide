@@ -1,0 +1,35 @@
+name: Refresh global ROBLOX concurrent ranking
+on:
+  push:
+    paths:
+      - '.github/workflows/update-roblox-global.yml'
+      - 'scripts/update_roblox_global.py'
+  schedule:
+    - cron: '37 */2 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: roblox-global-ranking
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch public all-Roblox active ranking
+        run: python scripts/update_roblox_global.py
+      - name: Publish accurate snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add roblox/data/global-active.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh global Roblox active top 30"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
