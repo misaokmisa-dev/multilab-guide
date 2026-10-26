@@ -1,0 +1,27 @@
+name: Probe Roblox source markup
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/roblox-source-probe.yml'
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Probe public pages
+        run: |
+          python - <<'PY'
+          import urllib.request,re
+          from html import unescape
+          for uri in ['https://www.roburo.jp/genres/roleplay/', 'https://www.roburo.jp/genres/horror/', 'https://www.ro-brojp.com/']:
+            try:
+              data=urllib.request.urlopen(urllib.request.Request(uri,headers={'User-Agent':'Mozilla/5.0'}),timeout=16).read().decode('utf-8')
+              print('URL',uri,'LEN',len(data))
+              for p in [r'/games/\d+/[^"\s<>]+',r'/game/\d+',r'<a[^>]+href="[^"]+"[^>]*>',r'<h3[^>]*>[^<]+</h3>']:
+                matches=re.findall(p,data)
+                print('PATTERN',p,'COUNT',len(matches),'SAMPLES',[unescape(x[:250]) for x in matches[:5]])
+              m=re.search(r'href="[^"]*/games/\d+[^"]*"',data)
+              if m:print('CONTEXT',data[max(0,m.start()-250):m.end()+350])
+            except Exception as e:print('ERROR',uri,type(e).__name__,str(e))
+          PY
