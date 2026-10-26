@@ -67,3 +67,127 @@
 @media(max-width:990px){.pc-diag-grid{grid-template-columns:1fr}.pc-diag-hero{padding:35px 0 45px}.pc-diag-lead{max-width:780px}.pc-result-grid,.pc-detail{grid-template-columns:1fr}}
 @media(max-width:600px){.pc-dwrap{width:calc(100% - 24px)}.pc-diag-hero{padding:26px 0 34px}.pc-quiz-card{padding:16px}.pc-quiz-top h2{font-size:20px}.pc-quiz-question{font-size:19px}.pc-quiz-options{grid-template-columns:1fr}.pc-choice-inner{min-height:53px;padding:9px 12px}.pc-diag-section{padding:32px 0}.pc-result{padding:16px}.pc-diag-points{margin:16px 0}.pc-quiz-actions button{flex:1}}
 @media(prefers-reduced-motion:reduce){.pc-progress span,.pc-choice-inner{transition:none}}
+
+
+/* 2026-10: diagnosis result hierarchy — gold #1, teal value #2, violet performance #3 */
+.pc-results{scroll-margin-top:90px}
+.pc-results>h2{font-weight:900;letter-spacing:-.04em}
+.pc-results .pc-summary{border-radius:17px;border:1px solid #d8e5f3;box-shadow:0 10px 32px #142d4c0b;background:linear-gradient(115deg,#fff,#f3f8ff);padding:23px 25px}
+.pc-results .pc-summary strong{font-size:clamp(19px,2.4vw,25px);color:#102443}
+.pc-results .pc-summary-muted{color:#52647f;max-width:850px}
+.pc-result-grid{gap:19px;padding-top:12px;align-items:stretch}
+.pc-result-grid .pc-result{
+  --tier-accent:#087565;
+  --tier-soft:#edfaf6;
+  --tier-line:#7dc8b8;
+  background:linear-gradient(180deg,var(--tier-soft) 0,#fff 26%);
+  border:2px solid var(--tier-line);
+  border-radius:18px;
+  padding:22px;
+  gap:13px;
+  box-shadow:0 10px 26px #19384b0c;
+  position:relative;
+  isolation:isolate;
+  transition:box-shadow .16s ease,transform .16s ease;
+}
+.pc-result-grid .pc-result.is-premium{--tier-accent:#5746a8;--tier-soft:#f3efff;--tier-line:#aa9ddf}
+.pc-result-grid .pc-result.is-recommended{
+  --tier-accent:#865407;
+  --tier-soft:#fff6d9;
+  --tier-line:#d99f26;
+  border:3px solid var(--tier-line);
+  background:linear-gradient(162deg,#fff2c5 0%,#fff9e9 27%,#fff 58%);
+  box-shadow:0 15px 39px rgba(168,112,12,.22);
+  transform:translateY(-10px);
+  z-index:1;
+  padding:21px;
+}
+.pc-result-grid .pc-result.is-recommended:before{
+  content:"★ 8問の回答から選んだ総合1位";
+  display:block;
+  position:relative;
+  margin:-21px -21px 7px;
+  padding:10px 15px;
+  border-radius:14px 14px 0 0;
+  text-align:center;
+  background:linear-gradient(110deg,#7b4b09,#c18c22 52%,#8a580d);
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.025em;
+}
+.pc-rank-head{display:flex;align-items:center;gap:10px;justify-content:flex-start}
+.pc-rank-medal{
+  display:inline-flex;flex:0 0 auto;min-width:50px;height:47px;
+  align-items:center;justify-content:center;
+  border-radius:13px;
+  background:var(--tier-accent);
+  color:white;
+  font-weight:950;
+  font-size:16px;
+  letter-spacing:-.025em;
+}
+.pc-result.is-recommended .pc-rank-medal{
+  color:#5e3600;
+  background:linear-gradient(135deg,#ffe4a0,#e7b543 52%,#c38a22);
+  border:1px solid #b6790f;
+  box-shadow:0 3px 9px rgba(137,78,5,.24);
+}
+.pc-result-grid .pc-result-kicker{font-size:14px;font-weight:900;color:var(--tier-accent);letter-spacing:.01em}
+.pc-result-subtitle{font-weight:720;font-size:12px;color:#576578;margin-top:-4px}
+.pc-result-grid .pc-result h3{font-size:clamp(19px,2.1vw,24px);letter-spacing:-.035em;line-height:1.36;margin:0;color:#1b2a41}
+.pc-result-grid .pc-result.is-recommended h3{color:#4b340b}
+.pc-result-grid .pc-result h3 span{font-size:12px;margin-top:7px;font-weight:760;color:#52627a}
+.pc-result-quick{display:flex;flex-wrap:wrap;gap:6px}
+.pc-result-quick span{
+  background:#fff;color:var(--tier-accent);
+  border:1px solid var(--tier-line);border-radius:8px;
+  font-size:12px;line-height:1.45;font-weight:850;padding:5px 9px
+}
+.pc-result.is-recommended .pc-result-quick span{background:#fff8dc}
+.pc-result-grid .pc-result-spec{
+  background:rgba(255,255,255,.82);
+  border:1px solid #dee5ed;border-radius:11px;
+  padding:14px;gap:9px 10px;
+}
+.pc-result-grid .pc-result-spec dt{font-size:12px;font-weight:700;color:#61708a}
+.pc-result-grid .pc-result-spec dd{font-size:12px;font-weight:850;color:#253750}
+.pc-result-detail-label{font-weight:900;font-size:13px;color:var(--tier-accent);border-left:3px solid var(--tier-accent);padding-left:9px;margin-top:2px}
+.pc-result-grid .pc-result-reason{font-size:13px!important;color:#364a64!important;line-height:1.85;margin:0}
+.pc-result-games-title{font-size:13px;color:#243752}
+.pc-result-grid .pc-example-games span{
+  border-radius:7px;background:var(--tier-soft);color:#33445f;
+  border:1px solid var(--tier-line);font-size:11px;font-weight:750;
+  padding:5px 8px;line-height:1.35
+}
+.pc-result-grid .pc-result .pc-action{
+  background:var(--tier-accent);color:white!important;border-radius:11px;
+  padding:13px 10px;font-size:14px;font-weight:900;
+  box-shadow:none;min-height:48px;
+  transition:opacity .12s ease;
+}
+.pc-result-grid .pc-result .pc-action:hover{background:var(--tier-accent);color:white!important;opacity:.85}
+.pc-result-grid .pc-result.is-recommended .pc-action{
+  background:linear-gradient(105deg,#8d5608,#bf861a);
+  color:white!important;box-shadow:0 5px 15px #ad781c2e
+}
+.pc-result-grid .pc-shopnote{font-size:11px!important;line-height:1.75;color:#607085!important}
+@media(hover:hover) and (min-width:991px){
+  .pc-result-grid .pc-result:not(.is-recommended):hover{transform:translateY(-4px);box-shadow:0 15px 33px #19384b20}
+  .pc-result-grid .pc-result.is-recommended:hover{transform:translateY(-14px);box-shadow:0 20px 44px rgba(168,112,12,.28)}
+}
+@media(max-width:990px){
+  .pc-result-grid{gap:16px}
+  .pc-result-grid .pc-result{padding:19px}
+  .pc-result-grid .pc-result.is-recommended{order:-1;transform:none;padding:18px}
+  .pc-result-grid .pc-result.is-recommended:before{margin:-18px -18px 8px}
+}
+@media(max-width:600px){
+  .pc-results .pc-summary{padding:17px}
+  .pc-result-grid .pc-result{padding:16px}
+  .pc-result-grid .pc-result.is-recommended{padding:15px}
+  .pc-result-grid .pc-result.is-recommended:before{margin:-15px -15px 8px}
+  .pc-result-grid .pc-result h3{font-size:20px}
+  .pc-result-grid .pc-result-spec{padding:11px}
+}
+@media(prefers-reduced-motion:reduce){.pc-result-grid .pc-result{transition:none}.pc-result-grid .pc-result .pc-action{transition:none}}
