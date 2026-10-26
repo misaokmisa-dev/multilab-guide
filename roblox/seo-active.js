@@ -34,7 +34,7 @@
   box.innerHTML=games.map((g,index)=>{
    const id=String(g.placeId),old=snapshot.get(id)||{};
    const title=old.name||g.name||g.officialName||"ROBLOXゲーム";
-   const picture=makeImage(g.universeId||old.universeId,old.fallback,index);
+   const picture=makeImage(g.universeId||old.universeId,g.icon||old.fallback,index);
    return '<li class="rb-seo-rank-item"><span class="rb-seo-rank-num">'+String(index+1).padStart(2,"0")+'</span>'+picture+'<div><h3>'+esc(title)+'</h3><p>現在の同時プレイヤー数：<b>'+Math.round(g.playing).toLocaleString("ja-JP")+'人</b></p></div><a class="rb-active-visit" href="https://www.roblox.com/games/'+encodeURIComponent(id)+'" rel="nofollow noopener noreferrer" target="_blank">プレイ ↗</a></li>';
   }).join("");
   status.textContent="Roblox公式データ取得日時："+formatTime(data.updatedAt)+"。更新時点の同接数を表示しています。";

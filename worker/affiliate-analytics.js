@@ -22,33 +22,19 @@ export default {
    const uid=url.searchParams.get('universeId')||'';
    if(!/^[0-9]{6,20}$/.test(uid))return json({error:'Invalid game ID'},400);
    try {
-     const cache=typeof caches!=='undefined'?caches.default:null;
-     if(cache){const hit=await cache.match(request);if(hit)return hit}
-     const params=new URLSearchParams({universeIds:uid,returnPolicy:'PlaceHolder',size:'256x256',format:'Png',isCircular:'false'});
-     const info=await fetch('https://thumbnails.roblox.com/v1/games/icons?'+params,{headers:{accept:'application/json'},signal:AbortSignal.timeout(7000)});
-     if(!info.ok)throw Error('Thumbnail API returned '+info.status);
-     const data=await info.json();
-     const item=(data.data||[]).find(x=>String(x.targetId)===uid&&x.state==='Completed');
-     if(!item?.imageUrl)throw Error('Thumbnail not ready');
-     const iconUrl=new URL(item.imageUrl);
-     if(iconUrl.protocol!=='https:'||!(iconUrl.hostname==='tr.rbxcdn.com'||iconUrl.hostname.endsWith('.rbxcdn.com')))throw Error('Untrusted image host');
-     const response=await fetch(iconUrl.href,{signal:AbortSignal.timeout(7000)});
-     if(!response.ok)throw Error('Image request failed');
-     // Roblox CDN can deliver real PNG bytes as application/octet-stream.
-     // Derive the content type from file signature, never from an untrusted header.
-     const buffer=await response.arrayBuffer();
-     const bytes=new Uint8Array(buffer);
-     if(bytes.length>2000000||bytes.length<16)throw Error('Invalid image size');
-     const png=bytes[0]===137&&bytes[1]===80&&bytes[2]===78&&bytes[3]===71&&bytes[4]===13&&bytes[5]===10;
-     const jpg=bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
-     const webp=String.fromCharCode(...bytes.slice(0,4))==='RIFF'&&String.fromCharCode(...bytes.slice(8,12))==='WEBP';
-     const avif=String.fromCharCode(...bytes.slice(4,12)).includes('ftypavif');
-     const mime=png?'image/png':jpg?'image/jpeg':webp?'image/webp':avif?'image/avif':null;
-     if(!mime)throw Error('Invalid image signature: '+(response.headers.get('content-type')||'unknown'));
-     const output=new Response(buffer,{headers:{'content-type':mime,'cache-control':'public,max-age=86400,s-maxage=604800','x-content-type-options':'nosniff'}});
-     if(cache&&ctx?.waitUntil)ctx.waitUntil(cache.put(request,output.clone()).catch(()=>{}));
-     return output;
-   }catch(_){return json({error:'Icon temporarily unavailable'},502)}
+    const params=new URLSearchParams({universeIds:uid,returnPolicy:'PlaceHolder',size:'256x256',format:'Png',isCircular:'false'});
+    const res=await fetch('https://thumbnails.roblox.com/v1/games/icons?'+params,{headers:{accept:'application/json'},signal:AbortSignal.timeout(7000)});
+    if(!res.ok)throw Error('Roblox thumbnails unavailable');
+    const data=await res.json();
+    const item=(data.data||[]).find(x=>String(x.targetId)===uid&&x.state==='Completed');
+    const icon=item?.imageUrl;
+    if(typeof icon!=='string')throw Error('No icon');
+    const dest=new URL(icon);
+    if(dest.protocol!=='https:'||!(dest.hostname==='tr.rbxcdn.com'||dest.hostname.endsWith('.rbxcdn.com')))throw Error('Invalid thumbnail host');
+    // Redirect to the up-to-date official image. Avoid content-type errors when
+    // fetching Roblox's binary CDN from a Cloudflare Worker.
+    return new Response(null,{status:302,headers:{location:dest.href,'cache-control':'public, max-age=1800','x-content-type-options':'nosniff'}});
+   }catch(_){return json({error:'Roblox icon temporarily unavailable'},502)}
   }
   if(url.pathname==='/api/roblox-live') {
    if(request.method!=='GET')return json({error:'Method not allowed'},405);
@@ -75,6 +61,28 @@ export default {
     }
     const games=[...uniq.values()].sort((a,b)=>b.playing-a.playing).slice(0,30);
     if(games.length!==30)throw Error('Only '+games.length+' Roblox games available');
+    // Resolve current icons for the chart in one official batch request.
+    // Counts are still authoritative and are returned even if thumbnail lookup fails.
+    try {
+     const universes=games.map(g=>g.universeId).filter(id=>/^[0-9]{6,20}$/.test(id));
+     if(universes.length){
+      const thumbParams=new URLSearchParams({universeIds:universes.join(','),returnPolicy:'PlaceHolder',size:'256x256',format:'Png',isCircular:'false'});
+      const imgResponse=await fetch('https://thumbnails.roblox.com/v1/games/icons?'+thumbParams,{headers:{accept:'application/json'},signal:AbortSignal.timeout(4500)});
+      if(imgResponse.ok){
+       const thumbPayload=await imgResponse.json();
+       const iconMap=new Map();
+       for(const item of thumbPayload.data||[]){
+        if(item?.state!=='Completed'||typeof item.imageUrl!=='string')continue;
+        let target;
+        try{target=new URL(item.imageUrl)}catch{continue}
+        if(target.protocol==='https:'&&(target.hostname==='tr.rbxcdn.com'||target.hostname.endsWith('.rbxcdn.com'))){
+         iconMap.set(String(item.targetId),target.href);
+        }
+       }
+       for(const game of games)if(iconMap.has(game.universeId))game.icon=iconMap.get(game.universeId);
+      }
+     }
+    }catch(_){}
     return json({source:'Roblox Top Playing Now — all countries and devices',updatedAt:new Date().toISOString(),games});
    }catch(e){
     return json({error:'Robloxの最新データを取得できませんでした'},503);
