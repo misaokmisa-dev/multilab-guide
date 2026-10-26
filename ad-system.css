@@ -118,3 +118,21 @@
   .dv-top nav, .ml-nav { max-width: 100%; min-width: 0; flex-wrap: wrap; }
   .dv-top nav a, .ml-nav a { overflow-wrap: anywhere; }
 }
+
+/* Keep the entire top banner in view on phones; the supporting script
+   scales only creatives wider than the available viewport. */
+@media (max-width: 760px) {
+  .as-slot.as-top {
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
+    overflow-x: clip;
+  }
+  .as-slot.as-top .as-ad-content {
+    display: block;
+    flex: none;
+    max-width: none;
+    overflow: visible;
+    transform-origin: top center;
+  }
+}
