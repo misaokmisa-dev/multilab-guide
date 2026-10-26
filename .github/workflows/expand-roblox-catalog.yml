@@ -1,0 +1,32 @@
+name: Expand ROBLOX candidate catalog
+on:
+  push:
+    paths:
+      - 'scripts/expand_roblox_catalog.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: expand-roblox
+  cancel-in-progress: false
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Discover real Roblox games in Japanese listings
+        run: python scripts/expand_roblox_catalog.py
+      - name: Save expanded candidate index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add roblox/data/catalog.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Expand Japanese ROBLOX game candidates"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
