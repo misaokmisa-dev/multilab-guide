@@ -3,7 +3,8 @@
  function rescue(img){
   if(!(img instanceof HTMLImageElement)||!img.classList.contains("rb-seo-game-icon"))return;
   const source=img.dataset.fallbackSrc||"";
-  if(!img.dataset.fallbackTried&&source.startsWith("https://tr.rbxcdn.com/")){
+  const permitted=source.startsWith("https://tr.rbxcdn.com/")||source.startsWith("/api/roblox-icon?universeId=");
+  if(!img.dataset.fallbackTried&&permitted){
    img.dataset.fallbackTried="1";img.src=source;return;
   }
   const placeholder=document.createElement("span");

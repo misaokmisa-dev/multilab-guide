@@ -11,9 +11,13 @@
   return [id,{name:li.querySelector("h3")?.textContent||"",universeId:icon?.dataset.universeId||"",fallback:icon?.dataset.fallbackSrc||""}];
  }).filter(row=>row[0]));
  const makeImage=(universeId,fallback,index)=>{
-  if(!new RegExp("^[0-9]{6,20}$").test(String(universeId||"")))return '<span class="rb-seo-noicon">🎮</span>';
-  const extra=fallback&&String(fallback).startsWith("https://tr.rbxcdn.com/")?' data-fallback-src="'+esc(fallback)+'"':'';
-  return '<img class="rb-seo-game-icon rb-seo-rank-thumb" src="/api/roblox-icon?universeId='+encodeURIComponent(universeId)+'" data-universe-id="'+esc(universeId)+'"'+extra+' loading="'+(index<4?'eager':'lazy')+'" decoding="async" referrerpolicy="no-referrer" alt="">';
+  const validImage=typeof fallback==="string"&&fallback.startsWith("https://tr.rbxcdn.com/");
+  const validId=new RegExp("^[0-9]{6,20}$").test(String(universeId||""));
+  if(!validImage&&!validId)return '<span class="rb-seo-noicon">🎮</span>';
+  const proxy=validId?'/api/roblox-icon?universeId='+encodeURIComponent(universeId):'';
+  const source=validImage?fallback:proxy;
+  const retry=validImage&&proxy?' data-fallback-src="'+esc(proxy)+'"':'';
+  return '<img class="rb-seo-game-icon rb-seo-rank-thumb" src="'+esc(source)+'" data-universe-id="'+esc(universeId||"")+'"'+retry+' loading="'+(index<4?'eager':'lazy')+'" decoding="async" referrerpolicy="no-referrer" alt="">';
  };
  const formatTime=raw=>{
   const dt=new Date(raw);
