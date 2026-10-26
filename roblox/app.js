@@ -10,18 +10,44 @@ const hist=()=>state.feed?.rankings||{};
 function metric(g){return last()[g.placeId]||{}}
 function validImg(url){try{return /^https:$/i.test(new URL(url).protocol)&&(/\.rbxcdn\.com$/.test(new URL(url).hostname)||new URL(url).hostname==="tr.rbxcdn.com")}catch{return false}}
 function modes(){let h=hist();let measured={week:!!h.week?.ready,month:!!h.month?.ready,rising:!!h.rising?.ready};return measured}
-function ordering(g){let mode=state.tab, observed=hist()[mode], ranks=observed?.ranks||[];if(observed?.ready){const pos=ranks.findIndex(x=>String(x.id)===g.placeId);return pos<0?999:pos}return g[mode]??999}
-function applyFilters(g){const q=state.query.trim().toLocaleLowerCase();return(state.genre==="all"||g.genre===state.genre)&&(state.party==="all"||(state.party==="friends"?g.with!=="solo":g.with!=="friends"))&&(state.time==="all"||(state.time==="short"?g.minutes<=15:g.minutes>=25))&&(!q||[g.name,g.genre,g.short,g.reason,g.originalName||"",...g.tags].join(" ").toLocaleLowerCase().includes(q))}
+function ordering(g){
+ const mode=state.tab, observed=hist()[mode], ranks=observed?.ranks||[];
+ const playing=Number(metric(g).playing)||0;
+ if(observed?.ready){
+   const pos=ranks.findIndex(x=>String(x.id)===g.placeId);
+   return pos>=0?pos:100000-playing/1000000;
+ }
+ if(Number.isFinite(Number(g[mode])))return Number(g[mode]);
+ // Newly discovered games are sorted by verified current players, not imaginary week/month ranks.
+ return 1000-Math.log10(1+playing)*10+(Number(g.discoveryRank)||999)/100000;
+}
+// A game can suit both a 15-minute visit and a longer session.
+// The visible duration filter is an editorial play-style guide, not a fixed game time limit.
+function durationFit(g, mode){
+ if(mode==="all")return true;
+ if(mode==="short"&&Number(g.minutes)<=15)return true;
+ if(mode==="long"&&Number(g.minutes)>=25)return true;
+ // Versatile well-established games may support both quick and long sessions.
+ return Number.isFinite(Number(g.discoveryRank))&&Number(g.discoveryRank)<=100;
+}
+function applyFilters(g){
+ const q=state.query.trim().toLocaleLowerCase();
+ const genres=[g.genre,...(Array.isArray(g.genres)?g.genres:[])];
+ return(state.genre==="all"||genres.includes(state.genre))
+    &&(state.party==="all"||(state.party==="friends"?g.with!=="solo":g.with!=="friends"))
+    && durationFit(g,state.time)
+    &&(!q||[g.name,g.genre,g.short,g.reason,g.originalName||"",...(g.tags||[])].join(" ").toLocaleLowerCase().includes(q));
+}
 function render(){
  const measured=modes(), useObserved=measured[state.tab], label={week:"今週",month:"今月",rising:"急上昇",beginner:"はじめて"}[state.tab];
  const chosen=state.catalog.filter(applyFilters).sort((a,b)=>ordering(a)-ordering(b));
  const note=$("#rb-period-note"),modeLabel=$("#rb-mode-label");
  modeLabel.textContent=useObserved?(state.tab==="rising"?"24時間の増加率ランキング":label+"の平均プレイヤー数ランキング"):"編集部選定ランキング";
  note.textContent=useObserved?(state.tab==="rising"?" ／ 公開観測データを比較":" ／ 観測データに基づく順位"):" ／ 観測期間が足りないため選定順";
- $("#rb-count").textContent=chosen.length+"ゲーム";
- const view=chosen.slice(0,state.limit);
+ $("#rb-count").textContent=Math.min(20,chosen.length)+"件表示 / "+chosen.length+"候補";
+ const view=chosen.slice(0,20);
  $("#rb-empty").hidden=chosen.length!==0;
- $("#rb-more-btn").hidden=chosen.length<=state.limit;
+ $("#rb-more-btn").hidden=true;
  $("#rb-grid").innerHTML=view.map((g,i)=>card(g,i+1,measured)).join("");
  $$(".rb-cover img").forEach(img=>img.addEventListener("error",()=>{img.remove()}, {once:true}));
  $$(".rb-save").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.save;if(state.bookmarks.has(id))state.bookmarks.delete(id);else state.bookmarks.add(id);try{localStorage.setItem("mlg-roblox-bookmarks",JSON.stringify([...state.bookmarks]))}catch{}render()}));
