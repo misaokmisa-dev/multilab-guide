@@ -17,12 +17,6 @@ async function auth(request,env) {
 export default {
  async fetch(request,env) {
   const url=new URL(request.url);
-  // Preserve paths and queries when permanently moving the old Workers URL.
-  if(url.hostname==='multilab-guide.mlguide.workers.dev') {
-    url.protocol='https:';
-    url.hostname='mlabg.com';
-    return Response.redirect(url.toString(),301);
-  }
   if(url.pathname==='/api/affiliate-event') {
    if(request.method!=='POST')return json({error:'Method not allowed'},405);
    if(!env.MLG_EVENTS)return json({error:'Tracking is not configured'},503);
