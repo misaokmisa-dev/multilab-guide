@@ -85,3 +85,28 @@
    grid-column:3;justify-self:start;padding:8px 10px;
  }
 }
+
+/* Official Roblox thumbnails and a stable initial loading state */
+.rb-seo-page .rb-seo-game-icon{
+ display:block;width:64px;height:64px;object-fit:cover;
+ border-radius:12px;background:#ede8fa;
+}
+.rb-seo-page .rb-seo-curation .rb-seo-curation-thumb{
+ width:92px;height:92px;float:right;
+ margin:0 0 12px 16px;
+ border:1px solid #dedcf0;box-shadow:0 4px 14px #251c6721;
+}
+.rb-seo-page .rb-seo-curation li:after{content:"";display:block;clear:both}
+.rb-seo-page .rb-seo-rank-item .rb-seo-game-icon{width:64px;height:64px}
+.rb-seo-await-live #rb-seo-active-list{position:relative;min-height:350px;overflow:hidden}
+.rb-seo-await-live #rb-seo-active-list>li{visibility:hidden}
+.rb-seo-await-live #rb-seo-active-list:before{
+ content:"最新の同接人数を取得中…";position:absolute;top:16px;left:0;right:0;
+ min-height:85px;display:flex;align-items:center;justify-content:center;
+ border-radius:12px;background:linear-gradient(90deg,#f7f3ff,#e9e3fc,#f7f3ff);
+ color:#5c428c;font-size:13px;font-weight:800;
+}
+@media(max-width:720px){
+ .rb-seo-page .rb-seo-rank-item .rb-seo-game-icon{width:47px;height:47px;border-radius:9px}
+ .rb-seo-page .rb-seo-curation .rb-seo-curation-thumb{width:80px;height:80px;margin:0 0 9px 12px}
+}
