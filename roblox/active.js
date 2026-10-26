@@ -44,16 +44,22 @@ function render(data,live){
  status.textContent=(live?"最新取得: ":"保存データ: ")+dateStr(data.updatedAt)+(live?"":"（最新情報を確認中…）");
 }
 async function load(){
- // Display the verified saved ranking immediately, then replace it with official live counts.
- const savedPromise=fetch("/roblox/data/global-active.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json()})
-    .then(data=>{saved=data;render(data,false);return data}).catch(()=>null);
- const livePromise=fetch("/api/roblox-live",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json()})
-   .then(data=>{if(data.error)throw Error(data.error);return data}).catch(()=>null);
+ // Render once: prefer fresh official counts; saved data is a fallback only.
+ const savedPromise=fetch("/roblox/data/global-active.json",{cache:"no-cache"})
+  .then(r=>{if(!r.ok)throw Error("Stored ranking unavailable");return r.json()}).catch(()=>null);
+ const livePromise=fetch("/api/roblox-live",{cache:"no-store"})
+  .then(r=>{if(!r.ok)throw Error("Official ranking unavailable");return r.json()})
+  .then(data=>{if(data.error)throw Error(data.error);return data}).catch(()=>null);
  const pair=await Promise.all([savedPromise,livePromise]);
- if(pair[1]){
-   try{render(pair[1],true);return}catch(_){}
+ saved=pair[0];
+ if(pair[1]){try{render(pair[1],true);return}catch(_){}}
+ if(pair[0]){
+  try{
+   render(pair[0],false);
+   status.textContent="保存データ: "+dateStr(pair[0].updatedAt)+"（公式の最新値を取得できませんでした）";
+   return;
+  }catch(_){}
  }
- if(pair[0]){status.textContent="保存データ: "+dateStr(pair[0].updatedAt)+"（公式API取得不可）";return}
  status.textContent="同接データを取得できませんでした";
  $("#rb-active-1").innerHTML='<div class="rb-empty"><b>公式データを読み込めませんでした</b><p>Roblox公式チャートをご確認ください。</p><a href="https://www.roblox.com/ja/charts/top-playing-now" target="_blank" rel="nofollow noopener noreferrer">公式チャートを見る ↗</a></div>';
 }
