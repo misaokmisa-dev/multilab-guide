@@ -48,3 +48,73 @@
 .as-rail.as-rail-right .as-ad-content{box-sizing:content-box;width:160px!important;min-width:160px;max-width:160px!important;height:600px;min-height:600px;overflow:visible;transform:none!important}
 .as-rail.as-rail-right .as-close{right:0;top:-26px;width:24px;height:22px;z-index:30}
 @media(max-width:1179px){.as-rail.as-rail-right{display:none!important}}
+
+
+/* Mobile width guard: keep off-screen ad creatives and long navigation from
+   increasing the document's horizontal scroll width. Clip, rather than hidden,
+   so sticky headers remain sticky on modern browsers. */
+@media (max-width: 760px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+  main, header, footer { max-width: 100%; }
+  main { min-width: 0; }
+
+  /* The 300px square ads fit on typical 320px+ phone screens. */
+  .as-mosaic, .as-mosaic.as-mosaic-bottom {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 8px;
+    gap: 14px;
+    margin-inline: auto;
+    overflow-x: clip;
+  }
+  .as-mosaic .as-square {
+    flex: 0 1 300px;
+    width: 300px;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+  }
+  .as-mosaic .as-square .as-ad-content {
+    width: 300px;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  /* A desktop-size creative must not widen the mobile page. */
+  .as-top {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+  .as-top .as-ad-content {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  /* Root-site navigation previously kept logo + links in one long row. */
+  .top .top-row {
+    flex-wrap: wrap;
+    column-gap: 12px;
+    row-gap: 6px;
+    padding-block: 10px;
+  }
+  .top .top-row nav {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+
+  /* Keep device and Minecraft navigation inside the viewport. */
+  .dv-top-row, .ml-head-inner { max-width: 100%; min-width: 0; }
+  .dv-top nav, .ml-nav { max-width: 100%; min-width: 0; flex-wrap: wrap; }
+  .dv-top nav a, .ml-nav a { overflow-wrap: anywhere; }
+}
