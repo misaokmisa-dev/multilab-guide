@@ -48,3 +48,19 @@
    ob.observe(document.documentElement,{subtree:true,childList:true});
  }
 })();
+
+/* Google Analytics 4 pageview measurement. */
+(() => {
+ 'use strict';
+ const id='G-XHNKY16YHE';
+ if(location.pathname.startsWith('/admin/')||window.__mlgGa4Installed)return;
+ window.__mlgGa4Installed=true;
+ window.dataLayer=window.dataLayer||[];
+ window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+ window.gtag('js',new Date());
+ window.gtag('config',id);
+ const s=document.createElement('script');
+ s.async=true;
+ s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id);
+ document.head.appendChild(s);
+})();
