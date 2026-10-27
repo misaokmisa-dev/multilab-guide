@@ -64,12 +64,3 @@
  s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id);
  document.head.appendChild(s);
 })();
-
-/* Load the shared language UI across every public page using this site-wide entrypoint. */
-(() => {
- if (location.pathname.startsWith('/admin/')) return;
- const s=document.createElement('script');
- s.src='/site-language.js?v=20261027b';
- s.async=true;
- document.head.appendChild(s);
-})();
