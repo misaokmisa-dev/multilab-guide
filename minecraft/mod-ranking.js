@@ -94,8 +94,9 @@ function render(){
   const yes=tab.dataset.modTab===category;
   tab.setAttribute("aria-selected",String(yes));
   tab.tabIndex=yes?0:-1;
-  tab.textContent=labels[tab.dataset.modTab]+" TOP100";
  });
+ const panel=document.getElementById("md-ranking-panel");
+ if(panel)panel.setAttribute("aria-labelledby","md-tab-"+category);
  if(summary)summary.textContent=descriptions[category];
  const first=(page-1)*pageSize;
  const current=entries.slice(first,first+pageSize);
