@@ -14,6 +14,7 @@ REPORT = ROOT / "i18n" / "build-report.json"
 LOCALES = ("en","ko","zh")
 CJK = re.compile(r"[\u3040-\u30ff\u3400-\u9fff]")
 SKIP = {"script","style","noscript","svg","math","pre","code","template","textarea"}
+VOID = {"area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"}
 ATTRS = {"placeholder","title","aria-label","alt"}
 MAX_LEN = 230
 
@@ -23,17 +24,23 @@ class Extractor(HTMLParser):
         self.skips=[]
         self.texts=set()
     def handle_starttag(self,tag,attrs):
-        self.skips.append(tag in SKIP or (bool(self.skips) and self.skips[-1]))
-        if not self.skips[-1]:
+        ignored=tag in SKIP or (bool(self.skips) and self.skips[-1][1])
+        if not ignored:
             for key,value in attrs:
                 if key in ATTRS and value is not None:self.add(value)
+        if tag not in VOID:self.skips.append((tag,ignored))
     def handle_startendtag(self,tag,attrs):
-        self.handle_starttag(tag,attrs)
-        self.handle_endtag(tag)
+        ignored=tag in SKIP or (bool(self.skips) and self.skips[-1][1])
+        if not ignored:
+            for key,value in attrs:
+                if key in ATTRS and value is not None:self.add(value)
     def handle_endtag(self,tag):
-        if self.skips:self.skips.pop()
+        for i in range(len(self.skips)-1,-1,-1):
+            if self.skips[i][0]==tag:
+                del self.skips[i:]
+                break
     def handle_data(self,data):
-        if not self.skips or not self.skips[-1]:self.add(data)
+        if not self.skips or not self.skips[-1][1]:self.add(data)
     def add(self,text):
         text=text.strip()
         if 2<=len(text)<=2000 and CJK.search(text) and "$"+"{" not in text:self.texts.add(text)
