@@ -36,17 +36,29 @@ jobs:
           python-version: '3.11'
       - name: Install offline translation engine
         run: python -m pip install --disable-pip-version-check argostranslate==1.11.0
-      - name: Generate English Korean Chinese static dictionaries
-        run: python scripts/pretranslate.py
-      - name: Validate translations and all public page switches
-        run: python scripts/check_i18n.py
-      - name: Publish only completed translation bundles
+      - name: Generate, validate and publish from latest site revision
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add i18n/catalog.js i18n/build-report.json
-          if ! git diff --cached --quiet; then
+          # Changes can occur while offline language packs are downloading.
+          # Regenerate from the latest remote revision instead of rebasing
+          # a very large translation JSON file and causing merge conflicts.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/pretranslate.py
+            python scripts/check_i18n.py
+            git add i18n/catalog.js i18n/build-report.json
+            if git diff --cached --quiet; then
+              echo "Translation bundles already current"
+              exit 0
+            fi
             git commit -m "Update pretranslated language bundles"
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
+            if git push origin HEAD:main; then
+              echo "Pretranslated languages published"
+              exit 0
+            fi
+            echo "Concurrent edit detected; rebuilding against newest main"
+          done
+          echo "Failed to publish pretranslations after retries"
+          exit 1
