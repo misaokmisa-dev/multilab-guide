@@ -86,7 +86,8 @@
  function preloadCatalog(){
    if(window.MLG_I18N_CATALOG){hydrateCatalog();return;}
    const s=document.createElement('script');
-   s.async=true;s.src='/i18n/catalog.js?v=20261027pre2';
+   // Short-lived cache key: published article changes refresh the catalog without a hard reload.
+   s.async=true;s.src='/i18n/catalog.js?v='+Math.floor(Date.now()/300000);
    s.onload=hydrateCatalog;
    s.onerror=()=>{console.warn('Pretranslated language catalog was not available.');};
    document.head.appendChild(s);
