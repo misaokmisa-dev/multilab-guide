@@ -109,6 +109,12 @@ def setup_models():
 def write_result(store,strings):
     OUT.parent.mkdir(parents=True,exist_ok=True)
     ordered={lang:{s:store[lang][s] for s in strings if s in store[lang]} for lang in LOCALES}
+    # Reviewed site/game terminology always takes precedence over machine translation.
+    overrides_file=ROOT/"i18n"/"overrides.json"
+    if overrides_file.exists():
+        fixes=json.loads(overrides_file.read_text(encoding="utf-8"))
+        for language in LOCALES:
+            ordered[language].update({str(k):str(v) for k,v in fixes.get(language,{}).items()})
     OUT.write_text("window.MLG_I18N_CATALOG="+json.dumps(ordered,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
     counts={lang:len(ordered[lang]) for lang in LOCALES}
     REPORT.write_text(json.dumps({"source_segments":len(strings),"translated":counts,"generator":"offline Argos Translate"},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
