@@ -76,7 +76,7 @@
  const records = new WeakMap();
  let observer, scheduled=false, generation=0, translating=false, root, trigger, list, status;
  let stored=new Map();
- let cacheSaveTimer=null;
+ const attempted={en:new Set(),ko:new Set(),zh:new Set()};
  function readCache(l) {
    try {
      const raw=JSON.parse(localStorage.getItem(CACHE_PREFIX+l)||'[]');
@@ -254,23 +254,25 @@
       });
       if(changes)saveCache(selected,cache);
       if(token===generation&&changes)schedule();
-   } catch (_) {}
+      return changes;
+   } catch (_) {return 0;}
  }
  async function fillPending(missing,selected,token) {
    if(!missing.size||selected==='ja')return;
    translating=true;markBusy(true);
    const chunks=[];
-   const all=Array.from(missing).slice(0,600);
+   const all=Array.from(missing).filter(t=>!attempted[selected].has(t)).slice(0,600);
+   all.forEach(t=>attempted[selected].add(t));
    for(let i=0;i<all.length;i+=12)chunks.push(all.slice(i,i+12));
-   let index=0;
+   let index=0,completed=0;
    const runners=Array.from({length:Math.min(3,chunks.length)},async()=>{
       while(index<chunks.length&&token===generation){
         const batch=chunks[index++];
-        await requestTranslations(batch,selected,token);
+        completed+=await requestTranslations(batch,selected,token)||0;
       }
    });
    await Promise.all(runners);
-   if(token===generation){translating=false;markBusy(false);}
+   if(token===generation){translating=false;markBusy(false);if(completed>0)schedule();}
  }
  let filling=false;
  async function refresh() {
@@ -291,7 +293,13 @@
    const style=document.createElement('link');
    style.rel='stylesheet';style.href='/site-language.css?v=20261027a';document.head.appendChild(style);
    createControl();
-   observer=new MutationObserver(schedule);
+   observer=new MutationObserver(changes=>{
+     if(changes.every(change=>{
+       const e=change.target.nodeType===1?change.target:change.target.parentElement;
+       return e?.closest?.('.mlg-site-lang');
+     }))return;
+     schedule();
+   });
    refresh();
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
