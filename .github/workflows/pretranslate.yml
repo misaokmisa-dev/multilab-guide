@@ -32,7 +32,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: pip
       - name: Install offline translation engine
         run: python -m pip install --disable-pip-version-check argostranslate==1.11.0
       - name: Generate English Korean Chinese static dictionaries
