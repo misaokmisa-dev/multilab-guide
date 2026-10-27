@@ -4,6 +4,7 @@ on:
     paths:
       - '.github/workflows/pretranslate.yml'
       - 'scripts/pretranslate.py'
+      - 'i18n/overrides.json'
       - '*.html'
       - 'devices/**.html'
       - 'minecraft/**.html'
