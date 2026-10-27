@@ -16,7 +16,7 @@ const searchClear = document.getElementById("md-search-clear");
 const anchor = document.getElementById("ranking");
 if (!snapshot || !list || !search) return;
 const source = snapshot.lists;
-const labels = {all:"総合",utility:"便利・軽量化",play:"遊ぶ・冒険"};
+const labels = {all:"総合",utility:"便利・軽量化MOD",play:"遊ぶ・冒険MOD"};
 const descriptions = {
  all:"全種類を対象に、前提ライブラリを含めた総合ダウンロード順",
  utility:"軽量化・操作改善・整理など、日常的に役立つMODを中心に選定",
