@@ -1,14 +1,18 @@
-/* MULTI LAB GUIDE | Site-wide language selector and progressive translations.
- * Original Japanese DOM stays authoritative. No navigation or page reload is needed.
+/* MULTI LAB GUIDE – PRETRANSLATED site language switcher.
+ * Translations are generated at build time and loaded as static JS.
+ * Switching languages performs zero translation requests and requires no reload.
  */
 (() => {
  'use strict';
- if (window.__mlgLanguageLoaded) return;
- window.__mlgLanguageLoaded = true;
- const LANGS = { ja:'日本語', en:'English', ko:'한국어', zh:'简体中文' };
- const CODES = { ja:'JA', en:'EN', ko:'KO', zh:'中文' };
- const STORAGE_KEY = 'mlg-language-v1';
- const CACHE_PREFIX = 'mlg-translation-v1-';
+ if(window.__mlgLanguageLoaded)return;
+ window.__mlgLanguageLoaded=true;
+ const LANGS={ja:'日本語',en:'English',ko:'한국어',zh:'简体中文'};
+ const CODES={ja:'JA',en:'EN',ko:'KO',zh:'中文'};
+ const STORE='mlg-language-v1';
+ const valid=l=>Object.hasOwn(LANGS,l)?l:'ja';
+ let lang='ja';
+ try{lang=valid(localStorage.getItem(STORE));}catch(_){}
+ document.documentElement.lang=lang==='zh'?'zh-CN':lang;
  const UI = [
   ['ホーム','Home','홈','首页'], ['記事一覧','Articles','기사 목록','文章列表'],
   ['デバイス','Devices','기기','设备'], ['マイクラTOP','Minecraft Home','마인크래프트 홈','我的世界首页'],
@@ -64,244 +68,164 @@
   ['韓国語','Korean','한국어','韩语'], ['中国語','Chinese','중국어','中文'],
   ['言語','Language','언어','语言']
  ];
- const indexes = {ja:0,en:1,ko:2,zh:3};
- const dict = {};
- Object.keys(indexes).forEach(lang => {
-   dict[lang] = new Map(UI.map(row=>[row[0], row[indexes[lang]]]));
- });
- const valid = value => Object.hasOwn(LANGS,value) ? value : 'ja';
- let lang='ja';
- try { lang=valid(localStorage.getItem(STORAGE_KEY)); } catch (_) {}
- document.documentElement.lang=lang==='zh'?'zh-CN':lang;
- const records = new WeakMap();
- let observer, scheduled=false, generation=0, translating=false, root, trigger, list, status;
- let stored=new Map();
- const attempted={en:new Set(),ko:new Set(),zh:new Set()};
- function readCache(l) {
-   try {
-     const raw=JSON.parse(localStorage.getItem(CACHE_PREFIX+l)||'[]');
-     return new Map(Array.isArray(raw)?raw.filter(pair=>Array.isArray(pair)&&pair.length===2):[]);
-   } catch (_) { return new Map(); }
- }
- function saveCache(l,map) {
-   try {
-     const arr=Array.from(map.entries()).slice(-800);
-     localStorage.setItem(CACHE_PREFIX+l,JSON.stringify(arr));
-   } catch (_) {}
- }
- stored=readCache(lang);
- const canTranslate = text => /[\u3040-\u30ff\u3400-\u9fff]/.test(text) && !/^[\d\s,.%+\-*/:¥$€]+$/.test(text);
- const isSkipped = node => {
-   let p=node.nodeType===1?node:node.parentElement;
-   return !p || !!p.closest('[data-i18n-ignore],script,style,noscript,code,pre,kbd,samp,svg,math,textarea,[contenteditable="true"],.mlg-site-brand-name');
- };
- function entryFor(node,kind,value) {
-   let rec=records.get(node);
-   if(!rec){rec=Object.create(null);records.set(node,rec);}
-   let state=rec[kind];
-   if(!state){ state={source:value,last:value};rec[kind]=state; }
-   else if(value!==state.last && value!==state.source) {
-      state.source=value;state.last=value;
+ const idx={ja:0,en:1,ko:2,zh:3};
+ const standard={};
+ for(const l of Object.keys(idx))standard[l]=new Map(UI.map(row=>[row[0],row[idx[l]]]));
+ const pretranslated={en:new Map(),ko:new Map(),zh:new Map()};
+ let root,trigger,menu,observer,scheduled=false;
+ const records=new WeakMap();
+ let originalTitle=document.title;
+ function hydrateCatalog(){
+   const d=window.MLG_I18N_CATALOG||{};
+   for(const l of ['en','ko','zh']) {
+     const items=d[l]&&typeof d[l]==='object'?d[l]:{};
+     pretranslated[l]=new Map(Object.entries(items));
    }
-   return state;
+   repaint();
  }
- const pieces = text => {
-   if(text.length<=230)return [text];
-   const res=[];
-   let current='';
-   for(const part of text.split(/(?<=[。！？!?])/u)) {
-     if(current.length+part.length>230&&current){res.push(current);current='';}
-     if(part.length>230){
-       if(current){res.push(current);current='';}
-       for(let i=0;i<part.length;i+=225)res.push(part.slice(i,i+225));
-     } else current+=part;
+ function preloadCatalog(){
+   if(window.MLG_I18N_CATALOG){hydrateCatalog();return;}
+   const s=document.createElement('script');
+   s.async=true;s.src='/i18n/catalog.js?v=20261027pre2';
+   s.onload=hydrateCatalog;
+   s.onerror=()=>{console.warn('Pretranslated language catalog was not available.');};
+   document.head.appendChild(s);
+ }
+ const japanese=s=>/[\u3040-\u30ff\u3400-\u9fff]/.test(s);
+ function skipped(node){
+   const el=node.nodeType===1?node:node.parentElement;
+   return !el||!!el.closest('[data-i18n-ignore],script,style,noscript,svg,math,textarea,code,pre,kbd,samp,[contenteditable="true"],.mlg-site-brand-name');
+ }
+ function sourceOf(node,field,current) {
+   let r=records.get(node);
+   if(!r){r={};records.set(node,r);}
+   if(!r[field])r[field]={origin:current,last:current};
+   else if(current!==r[field].last&&current!==r[field].origin)r[field]={origin:current,last:current};
+   return r[field];
+ }
+ function segment(s){
+   if(s.length<=230)return [s];
+   const a=[];let b='';
+   for(let p of s.split(/(?<=[。！？!?])/u)){
+     if(b&&b.length+p.length>230){a.push(b);b='';}
+     while(p.length>230){a.push(p.slice(0,225));p=p.slice(225);}
+     b+=p;
    }
-   if(current)res.push(current);
-   return res;
- };
- function translateString(str,needed) {
-   if(lang==='ja'||!canTranslate(str))return str;
-   const m=str.match(/^(\s*)([\s\S]*?)(\s*)$/);
-   const lead=m?m[1]:'', text=m?m[2]:str, tail=m?m[3]:'';
-   if(!text)return str;
-   const exact=dict[lang].get(text);
-   if(exact)return lead+exact+tail;
-   const chunks=pieces(text);
-   const translated=chunks.map(chunk=>{
-     if(!canTranslate(chunk))return chunk;
-     const direct=dict[lang].get(chunk)||stored.get(chunk);
-     if(direct)return direct;
-     if(needed)needed.add(chunk);
-     return chunk;
-   });
-   return lead+translated.join('')+tail;
+   if(b)a.push(b);
+   return a;
  }
- function processNode(node,needed) {
-   if(node.nodeType===3) {
-     if(isSkipped(node))return;
-     const val=node.nodeValue||'';
-     const rec=entryFor(node,'text',val);
-     const next=translateString(rec.source,needed);
-     if(node.nodeValue!==next)node.nodeValue=next;
-     rec.last=next;
-   } else if(node.nodeType===1&&!isSkipped(node)) {
-     for(const a of ['placeholder','title','aria-label','alt','value']) {
-       if(!node.hasAttribute(a))continue;
-       if(a==='value'&&node.tagName!=='INPUT')continue;
-       const val=node.getAttribute(a);
-       const rec=entryFor(node,a,val);
-       const next=translateString(rec.source,needed);
-       if(val!==next)node.setAttribute(a,next);
-       rec.last=next;
-     }
+ function translate(source){
+   if(lang==='ja'||!japanese(source))return source;
+   const match=source.match(/^(\s*)([\s\S]*?)(\s*)$/);
+   if(!match)return source;
+   const text=match[2];if(!text)return source;
+   const map=pretranslated[lang];
+   const exact=standard[lang].get(text)||map.get(text);
+   if(exact)return match[1]+exact+match[3];
+   const pieces=segment(text);
+   let changed=false;
+   const result=pieces.map(s=>{
+     const found=standard[lang].get(s)||map.get(s);
+     if(found){changed=true;return found;}
+     return s;
+   }).join('');
+   return changed?match[1]+result+match[3]:source;
+ }
+ function updateNode(node){
+   if(skipped(node))return;
+   if(node.nodeType===3){
+      const current=node.nodeValue||'';
+      const record=sourceOf(node,'text',current);
+      const result=translate(record.origin);
+      if(current!==result)node.nodeValue=result;
+      record.last=result;
+   }else if(node.nodeType===1){
+      for(const field of ['title','placeholder','aria-label','alt','value']){
+        if(!node.hasAttribute(field))continue;
+        if(field==='value'&&node.tagName!=='INPUT')continue;
+        const current=node.getAttribute(field);
+        const record=sourceOf(node,field,current);
+        const result=translate(record.origin);
+        if(current!==result)node.setAttribute(field,result);
+        record.last=result;
+      }
    }
  }
- function scan() {
-   if(!document.body)return new Set();
-   const needed=new Set();
+ function scan(){
+   if(!document.body)return;
    observer?.disconnect();
-   try {
-     const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);
-     let node,count=0;
-     while((node=walker.nextNode())&&count++<14000)processNode(node,needed);
-   } finally { observe(); }
-   return needed;
+   try{
+      const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);
+      let node,n=0;
+      while((node=walker.nextNode())&&n++<25000)updateNode(node);
+      const title=translate(originalTitle);
+      if(document.title!==title)document.title=title;
+   }finally{if(observer)observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['title','placeholder','aria-label','alt']});}
  }
- function observe() {
-   if(!observer||!document.body)return;
-   observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['placeholder','title','aria-label','alt']});
- }
- function schedule() {
+ function repaint(){if(!document.body)return;scan();}
+ function schedule(){
    if(scheduled)return;
    scheduled=true;
-   setTimeout(()=>{scheduled=false; refresh();},100);
+   requestAnimationFrame(()=>{scheduled=false;repaint();});
  }
- function updateButton() {
-   if(!trigger)return;
-   trigger.querySelector('.mlg-lang-value').textContent=window.matchMedia('(max-width:760px)').matches?CODES[lang]:LANGS[lang];
-   trigger.setAttribute('aria-label','Language / 言語: '+LANGS[lang]);
-   list.querySelectorAll('button[data-lang]').forEach(btn=>{
-     const active=btn.dataset.lang===lang;
-     btn.classList.toggle('is-current',active);
-     btn.setAttribute('aria-selected',active?'true':'false');
-   });
+ function updateUI(){
+    if(!root)return;
+    trigger.querySelector('.mlg-lang-value').textContent=window.matchMedia('(max-width:760px)').matches?CODES[lang]:LANGS[lang];
+    trigger.setAttribute('aria-label','Language / 言語: '+LANGS[lang]);
+    menu.querySelectorAll('button[data-lang]').forEach(button=>{
+       const selected=button.dataset.lang===lang;
+       button.classList.toggle('is-current',selected);
+       button.setAttribute('aria-selected',String(selected));
+    });
  }
- function markBusy(busy) {
-   if(!status)return;
-   status.textContent=busy ? {en:'Translating…',ko:'번역 중…',zh:'翻译中…'}[lang]||'' : '';
+ function open(open){
+    root.classList.toggle('is-open',open);
+    trigger.setAttribute('aria-expanded',String(open));
+    menu.hidden=!open;
  }
- function openMenu(open) {
-   if(!root)return;
-   root.classList.toggle('is-open',open);
-   trigger.setAttribute('aria-expanded',String(open));
-   list.hidden=!open;
- }
- function setLang(next) {
-   next=valid(next);
-   if(next===lang){openMenu(false);return;}
-   lang=next;generation++;translating=false;
+ function select(next){
+   const newLang=valid(next);
+   open(false);
+   if(newLang===lang)return;
+   lang=newLang;
    document.documentElement.lang=lang==='zh'?'zh-CN':lang;
-   try{localStorage.setItem(STORAGE_KEY,lang);}catch(_){}
-   stored=readCache(lang);
-   openMenu(false);
-   updateButton();
-   markBusy(false);
-   refresh();
+   try{localStorage.setItem(STORE,lang);}catch(_){}
+   updateUI();repaint();
    document.dispatchEvent(new CustomEvent('mlg:languagechange',{detail:{lang}}));
  }
- function createControl() {
+ function mount(){
    const nav=document.querySelector('.mlg-site-header .mlg-site-primary');
    if(!nav||document.querySelector('.mlg-site-lang'))return;
-   root=document.createElement('div');root.className='mlg-site-lang';root.dataset.i18nIgnore='';
-   root.innerHTML='<button type="button" class="mlg-lang-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / 言語"><span class="mlg-lang-icon" aria-hidden="true">◎</span><span class="mlg-lang-value"></span><span class="mlg-lang-caret" aria-hidden="true">⌄</span></button><div class="mlg-lang-menu" role="listbox" aria-label="Language" hidden></div><span class="mlg-lang-status" role="status" aria-live="polite"></span>';
-   list=root.querySelector('.mlg-lang-menu');trigger=root.querySelector('.mlg-lang-trigger');status=root.querySelector('.mlg-lang-status');
-   Object.entries(LANGS).forEach(([id,title])=>{
-      const b=document.createElement('button');
-      b.type='button';b.dataset.lang=id;b.setAttribute('role','option');b.textContent=title;
-      b.addEventListener('click',()=>setLang(id));
-      list.appendChild(b);
-   });
-   nav.insertAdjacentElement('afterend',root);
-   trigger.addEventListener('click',()=>openMenu(!root.classList.contains('is-open')));
-   document.addEventListener('click',e=>{if(root&&!root.contains(e.target))openMenu(false);});
-   document.addEventListener('keydown',e=>{
-     if(e.key==='Escape')openMenu(false);
-   });
-   window.addEventListener('resize',updateButton,{passive:true});
-   updateButton();
- }
- async function requestTranslations(texts,selected,token) {
-   try {
-      const controller=new AbortController();
-      const timeout=setTimeout(()=>controller.abort(),18000);
-      let res;
-      try {
-       res=await fetch('/api/site-translate',{
-        method:'POST',headers:{'content-type':'application/json'},
-        body:JSON.stringify({lang:selected,texts}),signal:controller.signal,
-        credentials:'same-origin'
-       });
-      } finally {clearTimeout(timeout);}
-      if(!res.ok)return;
-      const data=await res.json();
-      if(!data||!Array.isArray(data.results))return;
-      const cache=selected===lang?stored:readCache(selected);
-      let changes=0;
-      data.results.forEach((t,i)=>{
-        if(typeof t==='string'&&t.trim()&&t!==texts[i]){
-          cache.delete(texts[i]);cache.set(texts[i],t);changes++;
-        }
-      });
-      if(changes)saveCache(selected,cache);
-      if(token===generation&&changes)schedule();
-      return changes;
-   } catch (_) {return 0;}
- }
- async function fillPending(missing,selected,token) {
-   if(!missing.size||selected==='ja')return;
-   translating=true;markBusy(true);
-   const chunks=[];
-   const all=Array.from(missing).filter(t=>!attempted[selected].has(t)).slice(0,600);
-   all.forEach(t=>attempted[selected].add(t));
-   for(let i=0;i<all.length;i+=12)chunks.push(all.slice(i,i+12));
-   let index=0,completed=0;
-   const runners=Array.from({length:Math.min(3,chunks.length)},async()=>{
-      while(index<chunks.length&&token===generation){
-        const batch=chunks[index++];
-        completed+=await requestTranslations(batch,selected,token)||0;
-      }
-   });
-   await Promise.all(runners);
-   if(token===generation){translating=false;markBusy(false);if(completed>0)schedule();}
- }
- let filling=false;
- async function refresh() {
-   if(!document.body)return;
-   const missing=scan();
-   if(lang==='ja'||!missing.size){markBusy(false);return;}
-   if(filling)return;
-   filling=true;
-   const selected=lang,token=generation;
-   try{await fillPending(missing,selected,token);}
-   finally{
-     filling=false;
-     if(token!==generation)schedule();
-   }
- }
- function init() {
-   if(!document.querySelector('.mlg-site-header'))return;
    const style=document.createElement('link');
    style.rel='stylesheet';style.href='/site-language.css?v=20261027a';document.head.appendChild(style);
-   createControl();
+   root=document.createElement('div');
+   root.className='mlg-site-lang';root.dataset.i18nIgnore='';
+   root.innerHTML='<button type="button" class="mlg-lang-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / 言語"><span class="mlg-lang-icon" aria-hidden="true">◎</span><span class="mlg-lang-value"></span><span class="mlg-lang-caret" aria-hidden="true">⌄</span></button><div class="mlg-lang-menu" role="listbox" aria-label="Language" hidden></div>';
+   trigger=root.querySelector('.mlg-lang-trigger');
+   menu=root.querySelector('.mlg-lang-menu');
+   for(const [code,label] of Object.entries(LANGS)){
+     const btn=document.createElement('button');
+     btn.type='button';btn.dataset.lang=code;
+     btn.setAttribute('role','option');btn.textContent=label;
+     btn.addEventListener('click',()=>select(code));
+     menu.appendChild(btn);
+   }
+   nav.insertAdjacentElement('afterend',root);
+   trigger.addEventListener('click',()=>open(!root.classList.contains('is-open')));
+   document.addEventListener('click',e=>{if(!root.contains(e.target))open(false)});
+   document.addEventListener('keydown',e=>{if(e.key==='Escape')open(false)});
+   window.addEventListener('resize',updateUI,{passive:true});
+   updateUI();
    observer=new MutationObserver(changes=>{
      if(changes.every(change=>{
-       const e=change.target.nodeType===1?change.target:change.target.parentElement;
-       return e?.closest?.('.mlg-site-lang');
+       const el=change.target.nodeType===1?change.target:change.target.parentElement;
+       return el?.closest?.('.mlg-site-lang');
      }))return;
      schedule();
    });
-   refresh();
+   repaint();
+   preloadCatalog();
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
- else init();
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});
+ else mount();
 })();
