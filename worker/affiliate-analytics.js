@@ -17,52 +17,6 @@ async function auth(request,env) {
 export default {
  async fetch(request,env,ctx) {
   const url=new URL(request.url);
-  // Same-origin, cache-first translations for public page text. No user data is sent.
-  if(url.pathname==='/api/site-translate') {
-   if(request.method!=='POST')return json({error:'Method not allowed'},405);
-   if(request.headers.get('origin')!==url.origin)return json({error:'Forbidden'},403);
-   if(Number(request.headers.get('content-length')||0)>7000)return json({error:'Request too large'},413);
-   let body;
-   try{body=await request.json()}catch{return json({error:'Invalid JSON'},400)}
-   const lang=body?.lang;
-   const texts=body?.texts;
-   if(!['en','ko','zh'].includes(lang)||!Array.isArray(texts)||texts.length<1||texts.length>12
-    ||texts.some(t=>typeof t!=='string'||t.length>240||t.length===0)
-    ||new TextEncoder().encode(JSON.stringify(body)).length>7000)
-    return json({error:'Invalid translation request'},400);
-   if(!env.AI)return json({error:'Translation model not available'},503);
-   const cache=caches.default;
-   const target=lang==='zh'?'zh':lang;
-   async function translate(text) {
-    // Stable cache keys deduplicate text across pages, countries, and visitors.
-    const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
-    const key=Array.from(new Uint8Array(digest)).map(n=>n.toString(16).padStart(2,'0')).join('');
-    const cacheRequest=new Request(url.origin+'/__mlg_translations/v1/'+target+'/'+key);
-    const cached=await cache.match(cacheRequest);
-    if(cached) {
-     try{const v=await cached.json();if(typeof v.translation==='string')return v.translation;}catch(_){}
-    }
-    try{
-     const response=await env.AI.run('@cf/meta/m2m100-1.2b',{
-      text,source_lang:'ja',target_lang:target
-     });
-     const translated=typeof response?.translated_text==='string'?response.translated_text.trim():'';
-     if(!translated)return null;
-     const value=new Response(JSON.stringify({translation:translated}),{
-      headers:{'content-type':'application/json','cache-control':'public, max-age=2592000'}
-     });
-     ctx.waitUntil(cache.put(cacheRequest,value));
-     return translated;
-    }catch(_){return null}
-   }
-   const results=new Array(texts.length).fill(null);
-   // Small bounded groups prevent a burst of inference requests.
-   for(let i=0;i<texts.length;i+=3){
-     const translated=await Promise.all(texts.slice(i,i+3).map(translate));
-     translated.forEach((value,n)=>results[i+n]=value);
-   }
-   return json({lang,results});
-  }
   if(url.pathname==='/api/roblox-icon') {
    if(request.method!=='GET')return json({error:'Method not allowed'},405);
    const uid=url.searchParams.get('universeId')||'';
