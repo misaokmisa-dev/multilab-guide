@@ -86,7 +86,11 @@
     "ランキングの種類": "Ranking category",
     "総合 TOP100": "Overall Top 100",
     "便利・軽量化 TOP100": "Utility & Optimization Top 100",
-    "遊ぶ・冒険 TOP100": "Play & Adventure Top 100"
+    "遊ぶ・冒険 TOP100": "Play & Adventure Top 100",
+    "遊ぶ・冒険MOD": "Play & Adventure Mods",
+    "便利・軽量化MOD": "Utility & Optimization Mods",
+    "遊ぶ・冒険MOD TOP100": "Play & Adventure Mods Top 100",
+    "便利・軽量化MOD TOP100": "Utility & Optimization Mods Top 100"
   },
   "ko": {
     "今週": "이번 주",
@@ -175,7 +179,11 @@
     "ランキングの種類": "순위 카테고리",
     "総合 TOP100": "종합 TOP100",
     "便利・軽量化 TOP100": "편의·최적화 TOP100",
-    "遊ぶ・冒険 TOP100": "플레이·모험 TOP100"
+    "遊ぶ・冒険 TOP100": "플레이·모험 TOP100",
+    "遊ぶ・冒険MOD": "플레이·모험 MOD",
+    "便利・軽量化MOD": "편의·최적화 MOD",
+    "遊ぶ・冒険MOD TOP100": "플레이·모험 MOD TOP100",
+    "便利・軽量化MOD TOP100": "편의·최적화 MOD TOP100"
   },
   "zh": {
     "今週": "本周",
@@ -264,6 +272,10 @@
     "ランキングの種類": "排行榜分类",
     "総合 TOP100": "综合 TOP100",
     "便利・軽量化 TOP100": "实用与性能优化 TOP100",
-    "遊ぶ・冒険 TOP100": "玩法与冒险 TOP100"
+    "遊ぶ・冒険 TOP100": "玩法与冒险 TOP100",
+    "遊ぶ・冒険MOD": "玩法与冒险 MOD",
+    "便利・軽量化MOD": "实用与性能优化 MOD",
+    "遊ぶ・冒険MOD TOP100": "玩法与冒险 MOD TOP100",
+    "便利・軽量化MOD TOP100": "实用与性能优化 MOD TOP100"
   }
 }
