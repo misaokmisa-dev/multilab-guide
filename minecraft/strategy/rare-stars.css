@@ -508,3 +508,20 @@ body.st-body .st-hero-highlight strong{
  -webkit-text-fill-color:transparent!important;color:transparent!important;
  filter:drop-shadow(0 0 3px #ebb78277)!important;
 }
+
+/* Match Minecraft guide action buttons to the updated, restrained green.
+   Only interactive elements are changed; rarity stars, image overlays and surfaces stay intact. */
+body.st-body a.st-back,
+body.rare-body a.rare-back,
+body.rare-body .rare-feature strong{
+  background:#30814f!important;
+  border-color:#30814f!important;
+  color:#ffffff!important;
+}
+body.st-body a.st-back:hover,
+body.rare-body a.rare-back:hover,
+body.rare-body .rare-feature:hover strong{
+  background:#286b43!important;
+  border-color:#286b43!important;
+  color:#ffffff!important;
+}
