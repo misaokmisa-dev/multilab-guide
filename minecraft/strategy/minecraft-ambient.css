@@ -1,3 +1,4 @@
+/* Minecraft action green: restrained slightly brighter shade, white text contrast 4.8:1. */
 /* Minecraft guide shared contrast theme — 2026-10-28.
    Explicit dark heroes, white content surfaces, and legible control states.
    Replaces conflicting dark-glass and white-surface overrides. */
@@ -113,8 +114,8 @@ body.mc-ambient .ml-hero .ml-actions a.ml-btn:not(.ml-btn-alt),
 body.mc-ambient a.md-mod-link,body.mc-ambient .md-mod-item a.md-mod-link,
 body.mc-ambient .md-next,body.mc-ambient .button-primary,
 body.mc-ambient .md-reset,body.mc-ambient .md-rec-card a.md-mod-link{
-  background:#226b40!important;color:#fff!important;
-  border:1px solid #226b40!important;opacity:1!important;text-shadow:none!important;
+  background:#30814f!important;color:#fff!important;
+  border:1px solid #30814f!important;opacity:1!important;text-shadow:none!important;
 }
 body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt,
 body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt:visited{
@@ -125,13 +126,13 @@ body.mc-ambient .md-primary{
   background:#f2ce76!important;color:#29351e!important;border-color:#e8c265!important;
 }
 body.mc-ambient .md-secondary{
-  background:#245f40!important;color:#fff!important;border:1px solid #9dcaa9!important;
+  background:#30814f!important;color:#fff!important;border:1px solid #9dcaa9!important;
 }
 body.mc-ambient :is(.md-prev,.button-secondary){
   background:#f7faf7!important;color:#245637!important;border:1px solid #adcab5!important;
 }
 body.mc-ambient .md-mod-link:hover,body.mc-ambient .md-next:hover,
-body.mc-ambient .button-primary:hover{background:#15502d!important;color:#fff!important}
+body.mc-ambient .button-primary:hover{background:#286b43!important;color:#fff!important}
 
 /* Ranking tabs: green active tab/white text; white inactive tab/dark text. */
 body.mc-ambient .md-rank-switcher{background:#fff!important;padding:10px!important}
@@ -140,7 +141,7 @@ body.mc-ambient .md-rank-switcher .md-tab:not([aria-selected="true"]){
 }
 body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"],
 body.mc-ambient .md-tabs>.md-tab[aria-selected="true"]{
-  background:#226b41!important;color:#fff!important;border-color:#226b41!important;
+  background:#30814f!important;color:#fff!important;border-color:#30814f!important;
 }
 body.mc-ambient .md-rank-switcher .md-tab:not([aria-selected="true"])
  :is(.md-tab-title,.md-tab-top100,span,strong){color:#234832!important}
@@ -166,7 +167,7 @@ body.mc-ambient :is(.md-page-prev,.md-page-next,.md-page-number){
   background:#fff!important;color:#235338!important;border-color:#abc9b3!important;
 }
 body.mc-ambient .md-page-number.is-active{
-  background:#226b40!important;color:#fff!important;border-color:#226b40!important;
+  background:#30814f!important;color:#fff!important;border-color:#30814f!important;
 }
 body.mc-ambient .md-page-number.is-active .md-page-range{color:#fff!important}
 body.mc-ambient .md-page-number:not(.is-active) .md-page-range{color:#55705a!important}
@@ -179,7 +180,7 @@ body.mc-ambient .md-choice input:checked+.md-choice-inner{
   background:#e7f5e9!important;color:#1c5e38!important;border-color:#318e51!important;
 }
 body.mc-ambient .md-rec-position{
-  background:#286d44!important;color:#fff!important;
+  background:#30814f!important;color:#fff!important;
 }
 body.mc-ambient .md-rec-card.is-first .md-rec-position{
   background:#b28028!important;color:#fff!important;
@@ -237,25 +238,25 @@ body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn,
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt,
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt:visited{
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  background:#226b40!important;color:#ffffff!important;
-  border:1px solid #226b40!important;border-radius:9px!important;
+  background:#30814f!important;color:#ffffff!important;
+  border:1px solid #30814f!important;border-radius:9px!important;
   opacity:1!important;text-decoration:none!important;text-shadow:none!important;
   font-weight:850!important;
 }
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn:hover,
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn:focus-visible{
-  background:#164d2d!important;color:#ffffff!important;border-color:#164d2d!important;
+  background:#286b43!important;color:#ffffff!important;border-color:#286b43!important;
 }
 body.ml-body.mc-ambient .ml-card > .ml-arrow{
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
   width:max-content!important;max-width:100%!important;align-self:flex-start!important;
   margin-top:auto!important;padding:10px 16px!important;min-height:42px!important;
-  background:#226b40!important;color:#ffffff!important;
-  border:1px solid #226b40!important;border-radius:9px!important;
+  background:#30814f!important;color:#ffffff!important;
+  border:1px solid #30814f!important;border-radius:9px!important;
   line-height:1.35!important;text-shadow:none!important;text-decoration:none!important;
   font-size:14px!important;font-weight:850!important;
 }
 body.ml-body.mc-ambient .ml-card:hover > .ml-arrow,
 body.ml-body.mc-ambient .ml-card:focus-visible > .ml-arrow{
-  background:#164d2d!important;color:#ffffff!important;border-color:#164d2d!important;
+  background:#286b43!important;color:#ffffff!important;border-color:#286b43!important;
 }
