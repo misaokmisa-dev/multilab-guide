@@ -140,3 +140,74 @@ body.mc-ambient .mc-background-credit a{color:#ffdda3!important}
  body.mc-ambient .md-rank-switcher .md-tab{min-width:0}
 }
 @media(max-width:420px){body.mc-ambient .ml-grid{grid-template-columns:1fr}}
+
+/* 2026-10-28: White reading surfaces for every Minecraft guide page.
+   Keep the game-world page backdrop, but never use dark text containers. */
+body.mc-ambient{--mc-glass:#fff;--mc-fg:#1a2821;color:#15231c!important}
+body.mc-ambient :is(.ml-hero,.md-hero,.hero,.ml-section,.md-section,.ml-article,.article-wrap,.wrap.article-wrap,
+ .ml-card,.ml-mini,.md-tile,.md-mod-item,.md-quiz-card,.md-note,.md-rank-switcher,
+ .md-ranking-panel,.md-category-desc,.md-summary,.md-rec-card,.ml-note,.ml-guide-nav,
+ .article-card,.feature-card,.quiz-card,.result,.reading,.explain,.faq,.faq-list,.offer-card,
+ .ml-band,.ml-table-wrap,.ml-crumb,.md-crumb,.mc-crumb,.breadcrumb){
+ background:#fff!important;color:#1a2821!important;border-color:#dce5dc!important;
+ box-shadow:0 7px 24px rgba(20,41,29,.09)!important;
+}
+body.mc-ambient :is(.ml-hero h1,.md-hero h1,.hero h1,.ml-card b,.ml-mini b,.md-tile h3,
+ .md-mod-title,.md-rank-caption,.md-quiz-card h2,.md-section h2,.ml-section h2,
+ .ml-article h1,.ml-article h2,.ml-article h3,.article-wrap h1,.article-wrap h2,.article-wrap h3,
+ .section-title,.md-quiz-title,.md-quiz-card strong,.ml-card strong,.article-card h2,.feature-card h2){
+ color:#13251a!important;text-shadow:none!important;
+}
+body.mc-ambient :is(.ml-hero p,.md-hero p,.hero p,.ml-lead,.md-section-lead,.hero-description,
+ .ml-card p,.ml-mini span,.md-mod-desc,.md-tile p,.md-note p,.ml-note p,
+ .md-section p,.ml-section p,.md-ranking-panel p,.ml-article p,.ml-article li,.article-wrap p,
+ .article-wrap li,.article-wrap small,.article-card p,.feature-card p,.quiz-card p,.faq p){
+ color:#34453a!important;text-shadow:none!important;
+}
+body.mc-ambient :is(.ml-eyebrow,.md-eyebrow,.eyebrow,.ml-card .ml-arrow,.ml-crumb a,.md-crumb a,
+ .mc-crumb a,.breadcrumb a,.ml-card a,.ml-mini a,.md-tile a,.md-mod-item a,
+ .ml-table a,.ml-article a:not(.ml-btn),.article-wrap a){
+ color:#205c39!important;text-shadow:none!important;
+}
+body.mc-ambient .ml-card .ml-chip{
+ background:#eaf4eb!important;color:#235a39!important;border:1px solid #c9ddce!important;
+}
+body.mc-ambient .md-rank-switcher,.mc-ambient .md-ranking-panel{background:#fff!important}
+body.mc-ambient .md-rank-switcher .md-tab:not([aria-selected="true"]){
+ background:#fff!important;color:#24372b!important;border-color:#dce6dd!important;
+}
+body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"]{
+ background:#e9f5e9!important;color:#164c2f!important;border-color:#8dbda0!important;
+ box-shadow:inset 0 0 0 1px #8dbda0!important;
+}
+body.mc-ambient .md-rank-switcher .md-tab-title,
+body.mc-ambient :is(.md-mod-list,.md-pagination,.md-rank-toolbar,.md-quiz-meta,.md-results){
+ color:#1c3023!important;
+}
+body.mc-ambient .ml-table :is(th,td),body.mc-ambient .article-wrap :is(th,td){
+ color:#1a2b20!important;border-color:#dce5dc!important;background:#fff!important;
+}
+body.mc-ambient .ml-table th{background:#f1f6f1!important}
+body.mc-ambient .ml-table tr:nth-child(odd){background:#f8faf8!important}
+body.mc-ambient :is(.ml-article blockquote,.article-wrap blockquote){
+ background:#f2f8f2!important;color:#1d3023!important;border-left:4px solid #317b50!important;
+}
+body.mc-ambient :is(.quiz-card,.feature-card,.article-card,.faq,.reading,.explain) :is(h2,h3,b,strong,label){
+ color:#193522!important;
+}
+body.mc-ambient :is(.quiz-card,.feature-card,.article-card,.reading,.explain) :is(p,span,li){
+ color:#33473a!important;
+}
+body.mc-ambient :is(.ml-note,.md-note,.md-category-desc,.md-summary,.md-rec-card,.hero-facts,.hero-caution) :is(p,span,strong){
+ color:#253b2c!important;
+}
+body.mc-ambient .hero :is(.hero-facts,.hero-caution,.eyebrow,.hero-copy){color:#223f2c!important}
+body.mc-ambient :is(.md-search,.md-quiz-options button,input,select,textarea){
+ background:#fff!important;color:#172b1e!important;border-color:#cbdace!important;
+}
+body.mc-ambient .ml-hero h1{
+ font-size:clamp(46px,7vw,88px)!important;line-height:1.13!important;letter-spacing:-.055em!important;
+ font-weight:950!important;
+}
+body.mc-ambient .ml-hero{padding-top:clamp(48px,6vw,84px)!important;padding-bottom:clamp(46px,6vw,68px)!important}
+@media(max-width:640px){body.mc-ambient .ml-hero h1{font-size:clamp(40px,9vw,61px)!important}}
