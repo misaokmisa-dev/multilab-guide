@@ -341,7 +341,7 @@ body.st-body .rare-sort-toolbar select{
  flex:1;min-width:170px;max-width:350px;height:40px;
  padding:0 34px 0 12px;
  color:#21372c;background:#fff9e8;border:1px solid #deb96b;border-radius:8px;
- font:800 13px/1.4 inherit;cursor:pointer
+ font-size:13px;font-weight:800;line-height:1.4;font-family:inherit;cursor:pointer
 }
 body.st-body .rare-sort-counter{font-size:12px;color:#e9e3ce;font-weight:700}
 body.st-body .st-content[hidden]{display:none!important}
@@ -350,4 +350,22 @@ body.st-body .st-grid>.st-card[hidden]{display:none!important}
  body.st-body .st-card-odds{min-height:74px!important}
  body.st-body .st-card-odds .rare-rank-stars{font-size:13px!important}
  body.st-body .rare-sort-toolbar select{min-width:140px;max-width:none}
+}
+
+/* Also color the decorative five stars on legendary Mob artwork. */
+body.st-body .st-card[data-rarity="5"] .st-picture::after{
+ color:transparent!important;-webkit-text-fill-color:transparent!important;
+ background:linear-gradient(95deg,#ff718a,#ffce68,#fff4ad,#67efbb,#72caff,#b18bff,#ff74b6)!important;
+ background-size:220% 100%!important;
+ -webkit-background-clip:text!important;background-clip:text!important;
+ text-shadow:none!important;
+ filter:drop-shadow(0 0 5px #e5baff);
+ animation:rare-rainbow-shine 3s linear infinite!important;
+}
+body.rare-body .rare-top-explainer{
+ margin:7px 0 0;font-size:11px;line-height:1.7;
+ color:#e9e8d6!important;max-width:40ch;
+}
+@media(prefers-reduced-motion:reduce){
+ body.st-body .st-card[data-rarity="5"] .st-picture::after{animation:none!important}
 }
