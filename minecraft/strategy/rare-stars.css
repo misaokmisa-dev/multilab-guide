@@ -509,33 +509,15 @@ body.st-body .st-hero-highlight strong{
  filter:drop-shadow(0 0 3px #ebb78277)!important;
 }
 
-/* Match Minecraft guide action buttons to the updated, restrained green.
-   Only interactive elements are changed; rarity stars, image overlays and surfaces stay intact. */
+
+/* Minecraft controls: restrained green at rest, #01E427 on hover/focus. */
 body.st-body a.st-back,
 body.rare-body a.rare-back,
 body.rare-body .rare-feature strong{
-  background:#01e427!important;
-  border-color:#01e427!important;
-  color:#ffffff!important;
+ background:#30814f!important;border-color:#30814f!important;color:#fff!important;
 }
-body.st-body a.st-back:hover,
-body.rare-body a.rare-back:hover,
-body.rare-body .rare-feature:hover strong{
-  background:#00bd21!important;
-  border-color:#00bd21!important;
-  color:#ffffff!important;
-}
-
-/* User-selected Minecraft action green #01E427. */
-body.st-body a.st-back,
-body.rare-body a.rare-back,
-body.rare-body .rare-feature strong {
- background:#01e427!important;border-color:#01e427!important;
- color:#0b2714!important;
-}
-body.st-body a.st-back:hover,
-body.rare-body a.rare-back:hover,
-body.rare-body .rare-feature:hover strong {
- background:#00bd21!important;border-color:#00bd21!important;
- color:#0b2714!important;
+body.st-body a.st-back:is(:hover,:focus-visible),
+body.rare-body a.rare-back:is(:hover,:focus-visible),
+body.rare-body .rare-feature:is(:hover,:focus-visible) strong{
+ background:#01e427!important;border-color:#01e427!important;color:#0b2714!important;
 }
