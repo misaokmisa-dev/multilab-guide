@@ -369,3 +369,106 @@ body.rare-body .rare-top-explainer{
 @media(prefers-reduced-motion:reduce){
  body.st-body .st-card[data-rarity="5"] .st-picture::after{animation:none!important}
 }
+
+/* 2026-10-28 — White panels and dark ink across the strategy/rare Mob guide.
+   Five-star rainbow and consistent brightness for tiers 1-4 are preserved. */
+body.st-body,body.rare-body{color:#192b20!important}
+body.st-body :is(.st-hero,.st-crumb,.st-notice,.st-card,.st-card-body,.st-card-odds,
+ .st-feature,.st-detail-head,.st-detail-image,.st-hero-odds,.st-facts>div,.st-steps li),
+body.rare-body :is(.rare-hero,.rare-crumb,.rare-caveat,.rare-feature,.rare-detail-top,
+ .rare-figure,.rare-panel,.rare-stat>div,.rare-highlight){
+ background:#fff!important;color:#1a2b20!important;
+ border-color:#dce4db!important;box-shadow:0 7px 23px rgba(16,35,23,.10)!important;
+ text-shadow:none!important;
+}
+body.st-body :is(.st-hero h1,.st-content>h2,.st-card-body>strong,.st-feature strong,
+ .st-detail-intro h1,.st-facts strong,.st-hero-odds strong),
+body.rare-body :is(.rare-hero h1,.rare-section>h2,.rare-detail-top h2,.rare-wrap>h1,
+ .rare-panel h2,.rare-feature h2,.rare-stat strong){
+ color:#15291d!important;text-shadow:none!important;
+}
+body.st-body :is(.st-hero p,.st-notice,.st-feature p,.st-detail-intro p,.st-content>p,
+ .st-odds-note,.st-card-body>small,.st-facts small,.st-odds-label,.st-odds-value,
+ .st-odds-value.is-unknown),
+body.rare-body :is(.rare-hero p,.rare-caveat,.rare-feature p,.rare-panel p,.rare-panel li,
+ .rare-stat small,.rare-figure figcaption){
+ color:#354b3c!important;text-shadow:none!important;
+}
+body.st-body :is(.st-hero>span,.st-crumb a,.st-card-body>small,.st-card-body>small::after),
+body.rare-body :is(.rare-eyebrow,.rare-crumb a,.rare-sources a){
+ color:#226343!important;text-shadow:none!important;
+}
+body.st-body .st-tag{background:#eaf3ea!important;color:#265638!important;border-color:#dae7db!important}
+body.st-body .st-card{overflow:hidden!important}
+body.st-body .st-picture{background:#fff!important;border-bottom:1px solid #e3eae3!important}
+body.st-body .st-picture::before{border-color:#e4ebe5!important;background-image:none!important}
+body.st-body .st-picture img{filter:drop-shadow(0 5px 6px #19331b28)!important}
+body.st-body .st-odds-label{color:#2c4735!important}
+body.st-body .st-card-odds{min-height:75px!important;overflow:visible!important}
+body.st-body .st-card-odds .rare-rank-label,body.rare-body .rare-rank-label{color:#414d43!important}
+body.st-body .st-card-odds .rare-rank[data-stars="5"] .rare-rank-label,
+body.rare-body .rare-rank[data-stars="5"] .rare-rank-label{color:#38453e!important;text-shadow:none!important}
+body.st-body .st-hero-odds::after,body.rare-body .rare-stat>div:first-child::after{
+ color:#536357!important;
+}
+body.st-body .rare-rank-legend{
+ background:#fff!important;color:#294231!important;border:1px solid #cfdfd1!important;
+ backdrop-filter:none!important;
+}
+body.st-body .rare-rank-legend b{color:#1a4d30!important}
+body.st-body .st-steps b{background:#eaf3e9!important;color:#24593b!important}
+body.rare-body .rare-top-explainer{color:#405748!important}
+body.rare-body .rare-figure img{
+ display:block!important;max-width:min(100% - 28px,430px)!important;max-height:310px!important;
+ width:auto!important;height:auto!important;object-fit:contain!important;margin:auto!important;
+}
+body.rare-body .rare-figure figcaption{color:#415b48!important}
+body.rare-body .rare-highlight{color:#254f32!important;border-left:4px solid #348550!important}
+body.st-body .st-card[data-rarity="5"] .st-picture::after{content:none!important;display:none!important}
+/* Compact sort control inside a unified search panel, to the left of the input. */
+body.st-body .rare-search-row{
+ background:#fff!important;color:#193126!important;border:1px solid #dce6dd!important;
+ border-radius:13px;padding:14px 16px;margin:18px 0 20px;
+ box-shadow:0 6px 22px #122d1810;
+}
+body.st-body .rare-search-title{
+ font-size:13px;line-height:1.5;font-weight:850;display:flex;
+ align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+ color:#203b29!important;margin:0 0 8px;
+}
+body.st-body .rare-search-controls{display:flex;align-items:center;gap:10px;min-width:0}
+body.st-body .rare-sort-toolbar{
+ flex:0 0 auto;min-width:0;display:block;margin:0!important;padding:0!important;
+ border:0!important;background:transparent!important;box-shadow:none!important;
+ backdrop-filter:none!important;color:#203b29!important;
+}
+body.st-body .rare-sort-toolbar select{
+ display:block;min-width:0!important;max-width:none!important;width:clamp(146px,20vw,200px);
+ height:42px;padding:0 26px 0 10px;background:#f7faf7!important;
+ color:#20382a!important;border:1px solid #cbdccc!important;border-radius:8px;
+ font-size:12px!important;font-weight:700!important;
+}
+body.st-body .st-search{
+ flex:1 1 auto;display:block!important;min-width:0!important;
+ border:0!important;background:transparent!important;color:#253d2d!important;
+ box-shadow:none!important;backdrop-filter:none!important;
+ padding:0!important;margin:0!important;
+}
+body.st-body .st-search input{
+ display:block;width:100%!important;min-width:0!important;height:42px!important;
+ margin:0!important;background:#fff!important;color:#1d3324!important;
+ border:1px solid #cbdccc!important;border-radius:8px!important;padding:0 12px!important;
+ font:inherit!important;font-size:14px!important;
+}
+body.st-body .rare-sort-counter{color:#596d5f!important;font-size:11px!important;font-weight:650!important}
+body.st-body .rare-visually-hidden{
+ position:absolute!important;width:1px!important;height:1px!important;padding:0!important;
+ margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;
+ white-space:nowrap!important;border:0!important;
+}
+@media(max-width:500px){
+ body.st-body .rare-search-row{padding:12px}
+ body.st-body .rare-search-controls{gap:7px}
+ body.st-body .rare-sort-toolbar select{width:133px;font-size:11px!important;padding-left:7px!important}
+ body.st-body .st-search input{font-size:12px!important;padding-left:9px!important}
+}
