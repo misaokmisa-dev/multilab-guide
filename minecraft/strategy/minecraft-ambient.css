@@ -114,8 +114,8 @@ body.mc-ambient .ml-hero .ml-actions a.ml-btn:not(.ml-btn-alt),
 body.mc-ambient a.md-mod-link,body.mc-ambient .md-mod-item a.md-mod-link,
 body.mc-ambient .md-next,body.mc-ambient .button-primary,
 body.mc-ambient .md-reset,body.mc-ambient .md-rec-card a.md-mod-link{
-  background:#30814f!important;color:#fff!important;
-  border:1px solid #30814f!important;opacity:1!important;text-shadow:none!important;
+  background:#00bd21!important;color:#fff!important;
+  border:1px solid #00bd21!important;opacity:1!important;text-shadow:none!important;
 }
 body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt,
 body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt:visited{
@@ -126,13 +126,13 @@ body.mc-ambient .md-primary{
   background:#f2ce76!important;color:#29351e!important;border-color:#e8c265!important;
 }
 body.mc-ambient .md-secondary{
-  background:#30814f!important;color:#fff!important;border:1px solid #9dcaa9!important;
+  background:#00bd21!important;color:#fff!important;border:1px solid #9dcaa9!important;
 }
 body.mc-ambient :is(.md-prev,.button-secondary){
   background:#f7faf7!important;color:#245637!important;border:1px solid #adcab5!important;
 }
 body.mc-ambient .md-mod-link:hover,body.mc-ambient .md-next:hover,
-body.mc-ambient .button-primary:hover{background:#01e427!important;color:#fff!important}
+body.mc-ambient .button-primary:hover{background:#00bd21!important;color:#fff!important}
 
 /* Ranking tabs: green active tab/white text; white inactive tab/dark text. */
 body.mc-ambient .md-rank-switcher{background:#fff!important;padding:10px!important}
@@ -141,7 +141,7 @@ body.mc-ambient .md-rank-switcher .md-tab:not([aria-selected="true"]){
 }
 body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"],
 body.mc-ambient .md-tabs>.md-tab[aria-selected="true"]{
-  background:#30814f!important;color:#fff!important;border-color:#30814f!important;
+  background:#00bd21!important;color:#fff!important;border-color:#00bd21!important;
 }
 body.mc-ambient .md-rank-switcher .md-tab:not([aria-selected="true"])
  :is(.md-tab-title,.md-tab-top100,span,strong){color:#234832!important}
@@ -167,7 +167,7 @@ body.mc-ambient :is(.md-page-prev,.md-page-next,.md-page-number){
   background:#fff!important;color:#235338!important;border-color:#abc9b3!important;
 }
 body.mc-ambient .md-page-number.is-active{
-  background:#30814f!important;color:#fff!important;border-color:#30814f!important;
+  background:#00bd21!important;color:#fff!important;border-color:#00bd21!important;
 }
 body.mc-ambient .md-page-number.is-active .md-page-range{color:#fff!important}
 body.mc-ambient .md-page-number:not(.is-active) .md-page-range{color:#55705a!important}
@@ -180,7 +180,7 @@ body.mc-ambient .md-choice input:checked+.md-choice-inner{
   background:#e7f5e9!important;color:#1c5e38!important;border-color:#318e51!important;
 }
 body.mc-ambient .md-rec-position{
-  background:#30814f!important;color:#fff!important;
+  background:#00bd21!important;color:#fff!important;
 }
 body.mc-ambient .md-rec-card.is-first .md-rec-position{
   background:#b28028!important;color:#fff!important;
@@ -238,39 +238,34 @@ body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn,
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt,
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt:visited{
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  background:#30814f!important;color:#ffffff!important;
-  border:1px solid #30814f!important;border-radius:9px!important;
+  background:#00bd21!important;color:#ffffff!important;
+  border:1px solid #00bd21!important;border-radius:9px!important;
   opacity:1!important;text-decoration:none!important;text-shadow:none!important;
   font-weight:850!important;
 }
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn:hover,
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn:focus-visible{
-  background:#01e427!important;color:#ffffff!important;border-color:#01e427!important;
+  background:#00bd21!important;color:#ffffff!important;border-color:#00bd21!important;
 }
 body.ml-body.mc-ambient .ml-card > .ml-arrow{
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
   width:max-content!important;max-width:100%!important;align-self:flex-start!important;
   margin-top:auto!important;padding:10px 16px!important;min-height:42px!important;
-  background:#30814f!important;color:#ffffff!important;
-  border:1px solid #30814f!important;border-radius:9px!important;
+  background:#00bd21!important;color:#ffffff!important;
+  border:1px solid #00bd21!important;border-radius:9px!important;
   line-height:1.35!important;text-shadow:none!important;text-decoration:none!important;
   font-size:14px!important;font-weight:850!important;
 }
 body.ml-body.mc-ambient .ml-card:hover > .ml-arrow,
 body.ml-body.mc-ambient .ml-card:focus-visible > .ml-arrow{
-  background:#01e427!important;color:#ffffff!important;border-color:#01e427!important;
+  background:#00bd21!important;color:#ffffff!important;border-color:#00bd21!important;
 }
 
 
-/* Interaction palette: medium green at rest; #01E427 only on hover/focus.
-   White at rest has readable contrast; dark text is reserved for the bright hover. */
-body.mc-ambient{
- --mc-action-normal:#30814f;
- --mc-action-hover:#01e427;
- --mc-action-text:#ffffff;
- --mc-action-hover-text:#0b2714;
-}
-/* Normal state for all green switches and CTA controls */
+
+/* Unified Minecraft action color, requested: old hover shade #00BD21.
+   All action states share the same specified green; dark text remains legible. */
+body.mc-ambient{--mc-action-normal:#00bd21;--mc-action-hover:#00bd21;--mc-action-ink:#0b2714}
 body.mc-ambient .ml-hero .ml-actions a.ml-btn,
 body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt,
 body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt:visited,
@@ -281,31 +276,27 @@ body.mc-ambient :is(.md-next,.md-reset,.md-secondary,.button-primary),
 body.mc-ambient .md-page-number.is-active,
 body.mc-ambient .md-rec-position,
 body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"],
-body.mc-ambient .md-tabs > .md-tab[aria-selected="true"],
-body.ml-body.mc-ambient .ml-card > .ml-arrow,
+body.mc-ambient .md-tabs>.md-tab[aria-selected="true"],
+body.ml-body.mc-ambient .ml-card>.ml-arrow,
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn,
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt,
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt:visited{
- background:var(--mc-action-normal)!important;
- border-color:var(--mc-action-normal)!important;
- color:var(--mc-action-text)!important;
- text-shadow:none!important;
+ background:#00bd21!important;border-color:#00bd21!important;
+ color:#0b2714!important;text-shadow:none!important;
 }
 body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"] :is(.md-tab-title,.md-tab-top100,span,strong),
 body.mc-ambient .md-page-number.is-active .md-page-range,
 body.mc-ambient .md-rec-position :is(span,strong){
- color:var(--mc-action-text)!important;
+ color:#0b2714!important;
 }
-/* Icon tile remains white and the SVG dark regardless of selection. */
-body.mc-ambient .md-rank-switcher .md-tab > .md-tab-symbol{
- background:#fff!important;
- color:var(--md-tab-dark,#215537)!important;
+body.mc-ambient .md-rank-switcher .md-tab>.md-tab-symbol,
+body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"]>.md-tab-symbol{
+ background:#fff!important;color:var(--md-tab-dark,#215537)!important;
 }
-body.mc-ambient .md-rank-switcher .md-tab > .md-tab-symbol svg{
- color:var(--md-tab-dark,#215537)!important;
- stroke:currentColor!important;fill:none!important;
+body.mc-ambient .md-rank-switcher .md-tab>.md-tab-symbol svg{
+ color:var(--md-tab-dark,#215537)!important;stroke:currentColor!important;fill:none!important;
 }
-/* Hover and keyboard-focus interaction share the exact requested bright green. */
+/* Keep the specified shade even while hovering/focusing. */
 body.mc-ambient .ml-hero .ml-actions a.ml-btn:is(:hover,:focus-visible),
 body.mc-ambient a.md-mod-link:is(:hover,:focus-visible),
 body.mc-ambient .md-mod-item a.md-mod-link:is(:hover,:focus-visible),
@@ -313,22 +304,19 @@ body.mc-ambient .md-rec-card a.md-mod-link:is(:hover,:focus-visible),
 body.mc-ambient :is(.md-next,.md-reset,.md-secondary,.button-primary):is(:hover,:focus-visible),
 body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible),
 body.mc-ambient .md-page-number:is(:hover,:focus-visible),
-body.mc-ambient .md-page-next:not(:disabled):is(:hover,:focus-visible),
-body.mc-ambient .md-page-prev:not(:disabled):is(:hover,:focus-visible),
+body.mc-ambient :is(.md-page-next,.md-page-prev):not(:disabled):is(:hover,:focus-visible),
 body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn:is(:hover,:focus-visible),
-body.ml-body.mc-ambient .ml-card:is(:hover,:focus-visible) > .ml-arrow{
- background:var(--mc-action-hover)!important;
- border-color:var(--mc-action-hover)!important;
- color:var(--mc-action-hover-text)!important;
- text-shadow:none!important;
+body.ml-body.mc-ambient .ml-card:is(:hover,:focus-visible)>.ml-arrow{
+ background:#00bd21!important;border-color:#00bd21!important;
+ color:#0b2714!important;text-shadow:none!important;
 }
 body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible) :is(.md-tab-title,.md-tab-top100,span,strong),
 body.mc-ambient .md-page-number:is(:hover,:focus-visible) .md-page-range{
- color:var(--mc-action-hover-text)!important;
+ color:#0b2714!important;
 }
-body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible) > .md-tab-symbol{
+body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible)>.md-tab-symbol{
  background:#fff!important;color:var(--md-tab-dark,#215537)!important;
 }
-body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible) > .md-tab-symbol svg{
+body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible)>.md-tab-symbol svg{
  color:var(--md-tab-dark,#215537)!important;
 }
