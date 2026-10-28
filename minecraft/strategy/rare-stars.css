@@ -499,3 +499,12 @@ body.rare-body .rare-section>h2,body.rare-body .rare-wrap>h1{
 body.rare-body .rare-figure.image-missing{
  background:#f4f8f3!important;
 }
+
+/* Rainbow five-star hero mark (not just the rating badges). */
+body.st-body .st-hero-highlight strong{
+ display:inline-block!important;
+ background:linear-gradient(90deg,#e74373,#fa9b37,#f6cb32,#2ba867,#258dd6,#9f57d0)!important;
+ -webkit-background-clip:text!important;background-clip:text!important;
+ -webkit-text-fill-color:transparent!important;color:transparent!important;
+ filter:drop-shadow(0 0 3px #ebb78277)!important;
+}
