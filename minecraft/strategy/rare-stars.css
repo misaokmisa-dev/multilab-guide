@@ -286,3 +286,14 @@ body.rare-body .rare-stat>div:first-child .rare-rank-stars{font-size:clamp(20px,
  body.st-body .st-card-body>strong{font-size:13px!important}
 }
 @media(prefers-reduced-motion:reduce){.rare-rank[data-stars="5"] .filled{animation:none}}
+
+/* Explain the distinction between editorial stars and original numeric odds,
+   on both existing detail-page templates without replacing old copy. */
+body.st-body .st-hero-odds::after,
+body.rare-body .rare-stat>div:first-child::after{
+ content:"★は当サイト独自の希少度目安。数値は上記の条件下での確率・目安です。";
+ display:block;font-size:10px;line-height:1.6;
+ letter-spacing:0;font-weight:650;color:#ebeadb;
+ margin-top:7px;opacity:.9;
+}
+body.st-body .st-hero-odds::after{max-width:40ch}
