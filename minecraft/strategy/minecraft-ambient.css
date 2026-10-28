@@ -228,3 +228,34 @@ body.mc-ambient .mc-background-credit a{color:#21603b!important}
  body.mc-ambient .md-rank-switcher .md-tab{min-width:0}
 }
 @media(max-width:420px){body.mc-ambient .ml-grid{grid-template-columns:1fr}}
+
+
+/* Minecraft TOP navigation actions — green filled button with white lettering.
+   This targets the two action groups only; the background art and all other
+   sections retain the previously approved contrast theme. */
+body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn,
+body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt,
+body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn-alt:visited{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  background:#226b40!important;color:#ffffff!important;
+  border:1px solid #226b40!important;border-radius:9px!important;
+  opacity:1!important;text-decoration:none!important;text-shadow:none!important;
+  font-weight:850!important;
+}
+body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn:hover,
+body.ml-body.mc-ambient .ml-hero .ml-actions a.ml-btn:focus-visible{
+  background:#164d2d!important;color:#ffffff!important;border-color:#164d2d!important;
+}
+body.ml-body.mc-ambient .ml-card > .ml-arrow{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:max-content!important;max-width:100%!important;align-self:flex-start!important;
+  margin-top:auto!important;padding:10px 16px!important;min-height:42px!important;
+  background:#226b40!important;color:#ffffff!important;
+  border:1px solid #226b40!important;border-radius:9px!important;
+  line-height:1.35!important;text-shadow:none!important;text-decoration:none!important;
+  font-size:14px!important;font-weight:850!important;
+}
+body.ml-body.mc-ambient .ml-card:hover > .ml-arrow,
+body.ml-body.mc-ambient .ml-card:focus-visible > .ml-arrow{
+  background:#164d2d!important;color:#ffffff!important;border-color:#164d2d!important;
+}
