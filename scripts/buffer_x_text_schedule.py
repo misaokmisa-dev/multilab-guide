@@ -67,6 +67,29 @@ def main():
     if latest:
         for p in latest:
             print("BUFFER_SLOT",p["dueAt"],p["id"])
+    # Independently check the Buffer-sent history for recent X publications.
+    # Publication is not claimed from a queued/scheduled state.
+    try:
+        sent_query = """query {
+          posts(first: 100, input: {
+            organizationId: %s
+            filter: {status: [sent], channelIds: [%s]}
+            sort: [{field: createdAt, direction: desc}]
+          }) {
+            edges { node {id status sentAt externalLink} }
+            pageInfo {hasNextPage}
+          }
+        }""" % (b.q(org), b.q(channel))
+        history=b.gql(sent_query).get("posts") or {}
+        cutoff=(datetime.now(timezone.utc)-timedelta(days=7)).strftime("%Y-%m-%dT%H:%M")
+        recent=[x["node"] for x in (history.get("edges") or [])
+                if x.get("node") and (x["node"].get("sentAt") or "")[:16]>=cutoff]
+        print("BUFFER_SENT_CHECK_OK",len(recent),
+              "HISTORY_MORE",bool((history.get("pageInfo") or {}).get("hasNextPage")))
+        for p in recent[:35]:
+            print("BUFFER_SENT_POST",p.get("id"),p.get("sentAt"),p.get("externalLink") or "")
+    except Exception as error:
+        print("BUFFER_SENT_CHECK_ERROR",repr(error))
 if __name__=="__main__":
     try:main()
     except Exception as ex:
