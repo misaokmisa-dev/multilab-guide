@@ -3,10 +3,22 @@
    Replaces conflicting dark-glass and white-surface overrides. */
 body.mc-ambient{
   --mc-ink:#192e21;--mc-copy:#354b3d;--mc-edge:#d5e4d7;
-  background:#edf4ee!important;color:#192e21!important;
+  background:transparent!important;color:#192e21!important;
   min-height:100vh;position:relative;isolation:isolate;
 }
-body.mc-ambient::before,body.mc-ambient::after{content:none!important;display:none!important}
+/* Restore the original official Minecraft screenshot as the full-page backdrop. */
+body.mc-ambient::before{
+  content:"";display:block!important;position:fixed;inset:0;z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(115deg,rgba(6,17,23,.54),rgba(7,24,31,.5)),
+    url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/1-20-0_header.png")
+    center/cover no-repeat;
+}
+body.mc-ambient::after{
+  content:"";display:block!important;position:fixed;inset:0;z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(0deg,rgba(5,15,21,.3),transparent 48%,rgba(7,21,30,.18));
+}
 
 /* Dark artwork heroes: never apply black text to a dark graphic. */
 body.mc-ambient :is(.ml-hero,.md-hero,.hero){
@@ -32,7 +44,9 @@ body.mc-ambient .ml-hero h1{
   font-weight:950!important;letter-spacing:-.055em!important;
 }
 body.mc-ambient .ml-hero{padding-block:clamp(49px,6vw,78px)!important}
-body.mc-ambient .ml-hero-screens,body.mc-ambient .ml-hero-credit{display:none!important}
+/* Restore the original Minecraft gameplay screenshot in the top hero as well. */
+body.mc-ambient .ml-hero-screens{display:grid!important}
+body.mc-ambient .ml-hero-credit{display:block!important}
 
 /* Every content card/section uses a consistent white canvas. */
 body.mc-ambient :is(.ml-section,.md-section,.ml-card,.ml-mini,.ml-article,.ml-note,
@@ -134,6 +148,18 @@ body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"]
  :is(.md-tab-title,.md-tab-top100,span,strong){color:#fff!important}
 body.mc-ambient .md-rank-switcher .md-tab-symbol{
   background:#fff!important;color:#27623e!important;
+}
+
+/* Active ranking tab: keep the trophy/compass/lightning icon dark against its white tile.
+   The generic selected-span rule above turns every span white, including the icon. */
+body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"] > .md-tab-symbol,
+body.mc-ambient .md-rank-switcher .md-tab[aria-selected="false"] > .md-tab-symbol{
+  background:#fff!important;color:var(--md-tab-dark,#215537)!important;
+  border-color:var(--md-tab-dark,#215537)!important;
+}
+body.mc-ambient .md-rank-switcher .md-tab > .md-tab-symbol svg{
+  color:var(--md-tab-dark,#215537)!important;
+  stroke:currentColor!important;fill:none!important;
 }
 body.mc-ambient .md-rank-switcher .md-tab-top100{background:transparent!important}
 body.mc-ambient :is(.md-page-prev,.md-page-next,.md-page-number){
