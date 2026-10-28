@@ -472,3 +472,30 @@ body.st-body .rare-visually-hidden{
  body.st-body .rare-sort-toolbar select{width:133px;font-size:11px!important;padding-left:7px!important}
  body.st-body .st-search input{font-size:12px!important;padding-left:9px!important}
 }
+
+/* Keep headings and descriptive text on actual white reading canvases. */
+body.st-body .st-content{
+ background:#fff!important;color:#21372a!important;
+ border:1px solid #e0e7df!important;border-radius:14px!important;
+ padding:clamp(13px,2.4vw,24px)!important;
+ box-shadow:0 7px 24px #0b291b18!important;
+}
+body.st-body .st-content>h2,body.st-body .st-content>p{
+ color:#193122!important;text-shadow:none!important;
+}
+body.st-body .st-hero-highlight :is(strong,span){color:#265639!important;text-shadow:none!important}
+body.rare-body main>.rare-wrap{
+ background:#fff!important;color:#1d3325!important;
+ border:1px solid #dee8df!important;border-radius:15px!important;
+ padding:clamp(14px,2.5vw,25px)!important;
+ box-shadow:0 9px 26px #0e2b1a22!important;
+}
+body.rare-body main>.rare-wrap :is(h1,h2,h3,p,li,small){
+ text-shadow:none!important;
+}
+body.rare-body .rare-section>h2,body.rare-body .rare-wrap>h1{
+ color:#1a3524!important;
+}
+body.rare-body .rare-figure.image-missing{
+ background:#f4f8f3!important;
+}
