@@ -1,0 +1,142 @@
+/* Minecraft guide ambient UI — same visual language as rare Mob pages.
+ * Shared fixed official Minecraft game screenshot + readable dark glass surfaces.
+ * Applies to all Minecraft categories, rankings, diagnostics and articles.
+ */
+body.mc-ambient{
+ background:transparent!important;min-height:100vh;isolation:isolate;position:relative;
+ --mc-gold:#f7d996;--mc-fg:#f4f7ec;--mc-glass:rgba(10,28,36,.92);
+}
+body.mc-ambient::before{
+ content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:linear-gradient(115deg,rgba(6,17,23,.54),rgba(7,24,31,.5)),
+ url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/1-20-0_header.png") center/cover no-repeat;
+}
+body.mc-ambient::after{
+ content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:linear-gradient(0deg,rgba(5,15,21,.3),transparent 48%,rgba(7,21,30,.18));
+}
+body.mc-ambient :is(.ml-hero,.md-hero,.hero){
+ background:linear-gradient(115deg,rgba(11,26,33,.94),rgba(22,44,48,.91))!important;
+ color:#f8f5e9!important;border:1px solid #f0cc818c!important;
+ border-radius:17px;box-shadow:0 14px 38px #0007;backdrop-filter:blur(13px);
+ overflow:hidden;
+}
+body.mc-ambient :is(.ml-hero h1,.md-hero h1,.hero h1){color:#fff5df!important;text-shadow:0 3px 15px #0008}
+body.mc-ambient :is(.ml-hero p,.md-hero p,.hero p,.ml-lead,.md-section-lead,.hero-description){color:#e7eee5!important}
+body.mc-ambient :is(.ml-eyebrow,.md-eyebrow,.eyebrow){color:#ffe0a2!important}
+body.mc-ambient .ml-hero-screens,body.mc-ambient .ml-hero-credit{display:none!important}
+body.mc-ambient :is(.ml-card,.ml-mini,.md-tile,.md-mod-item,.md-quiz-card,.md-note,
+  .md-rank-switcher,.md-ranking-panel,.md-category-desc,.md-summary,.md-rec-card,
+  .ml-note,.ml-article,.ml-guide-nav,.article-card,.feature-card,.quiz-card,.result,
+  .reading,.explain,.faq,.faq-list,.offer-card,.ml-band,.ml-table-wrap){
+ background:var(--mc-glass)!important;
+ border:1px solid #dcc78c87!important;
+ color:#f6f4e9!important;
+ border-radius:13px!important;box-shadow:0 8px 24px #0005!important;
+ backdrop-filter:blur(11px);
+}
+body.mc-ambient :is(.ml-card:hover,.ml-mini:hover,.md-tile:hover,.md-mod-item:hover,
+ .article-card:hover,.feature-card:hover){border-color:#f4dc94!important;box-shadow:0 14px 30px #0009,0 0 12px #ffdc7330!important}
+body.mc-ambient :is(.ml-card b,.ml-mini b,.md-tile h3,.md-mod-title,.md-rank-caption,
+  .md-quiz-card h2,.md-section h2,.ml-section h2,.ml-article h1,.ml-article h2,
+  .ml-article h3,.article-wrap h1,.article-wrap h2,.article-wrap h3,.section-title,
+  .md-quiz-title,.md-quiz-card strong,.ml-card strong){
+ color:#ffebbf!important;text-shadow:none!important;
+}
+body.mc-ambient :is(.ml-card p,.ml-mini span,.md-mod-desc,.md-tile p,.md-note p,
+ .ml-note p,.ml-card .ml-arrow,.md-section p,.md-ranking-panel p,
+ .ml-article p,.ml-article li,.article-wrap p,.article-wrap li,.article-wrap small,
+ .feature-card p,.article-card p,.quiz-card p,.faq p){
+ color:#e8f0e7!important;
+}
+body.mc-ambient :is(.ml-card,.ml-mini,.md-tile,.md-mod-item) a{color:#b9f4d0!important}
+body.mc-ambient .ml-card :is(.ml-chip,.ml-arrow),
+body.mc-ambient .md-tile-icon,
+body.mc-ambient .md-mod-rank{
+ color:#ffe2a4!important;
+}
+body.mc-ambient :is(.ml-section,.md-section,.ml-article,.article-wrap){
+ background:rgba(9,28,35,.85);color:#f0f4e9!important;
+ border:1px solid #dcc78580;border-radius:15px;
+ box-shadow:0 10px 28px #0006;
+ backdrop-filter:blur(12px);
+ padding:clamp(16px,2.5vw,30px)!important;
+ margin-block:20px!important;
+}
+body.mc-ambient .ml-band{padding:12px 0!important}
+body.mc-ambient .ml-band .ml-section{margin:0 auto!important}
+body.mc-ambient :is(.ml-crumb,.md-crumb,.mc-crumb,.breadcrumb){
+ display:flex;gap:8px;flex-wrap:wrap;
+ padding:9px 12px;background:rgba(6,23,32,.86);
+ border:1px solid #ffffff45;border-radius:9px;
+ color:#e5f0e6!important;width:fit-content;max-width:100%;
+}
+body.mc-ambient :is(.ml-crumb,.md-crumb,.mc-crumb,.breadcrumb) a{color:#b6f6ce!important}
+body.mc-ambient :is(.ml-hero,.md-hero,.hero) a:not(.button):not(.ml-btn):not(.md-primary):not(.md-secondary){color:#d8f7df}
+body.mc-ambient .md-rank-switcher{background:rgba(12,32,41,.94)!important;padding:10px!important}
+body.mc-ambient .md-rank-switcher .md-tab:not([aria-selected="true"]){
+ background:rgba(19,38,45,.96)!important;color:#fff8e9!important;
+ border-color:#dfc58c!important;
+}
+body.mc-ambient .md-rank-switcher .md-tab-title{color:inherit!important}
+body.mc-ambient .md-rank-switcher .md-tab-top100{background:#fff1cc!important;color:#193729!important}
+body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"]{
+ border-color:#ffe5a8!important;box-shadow:0 0 14px #fedb8a55!important;
+}
+body.mc-ambient .md-rank-switcher .md-tab-symbol{background:#fff8ed!important}
+body.mc-ambient .md-search,body.mc-ambient .md-quiz-options button,
+body.mc-ambient input,body.mc-ambient select,body.mc-ambient textarea{
+ color:#1b3028!important;background:#fbf8ed!important;
+}
+body.mc-ambient :is(.md-mod-list,.md-pagination,.md-rank-toolbar,.md-quiz-meta,.md-results){
+ color:#eff5e9!important;
+}
+body.mc-ambient :is(.md-mod-item,.ml-article) button{max-width:100%}
+body.mc-ambient .ml-table :is(th,td),
+body.mc-ambient .article-wrap :is(th,td){
+ color:#f7f4e8!important;border-color:#ffffff40!important;
+}
+body.mc-ambient .ml-table tr:nth-child(odd){background:#ffffff0f}
+body.mc-ambient .ml-table a,body.mc-ambient .ml-article a:not(.ml-btn){color:#b9f3d1!important}
+body.mc-ambient .ml-article blockquote,
+body.mc-ambient .article-wrap blockquote{
+ background:#294234!important;color:#fff5df!important;
+ border-left:4px solid #f1ce7d!important;
+}
+body.mc-ambient .article-wrap,
+body.mc-ambient .wrap.article-wrap{
+ background:rgba(11,29,37,.9)!important;color:#f1f6e9!important;
+ padding:clamp(17px,3vw,36px)!important;border:1px solid #dbc48586;
+ border-radius:15px;backdrop-filter:blur(12px);
+}
+body.mc-ambient .article-wrap :is(h1,h2,h3){color:#ffe4a5!important}
+body.mc-ambient .article-wrap :is(p,li){color:#ecf1e8!important}
+body.mc-ambient .article-wrap a{color:#acf0c8!important}
+body.mc-ambient .hero :is(.hero-facts,.hero-caution,.eyebrow,.hero-copy){color:#fff5df!important}
+body.mc-ambient :is(.quiz-card,.feature-card,.article-card,.faq,.reading,.explain) :is(h2,h3,b,strong,label){color:#ffdf9f!important}
+body.mc-ambient :is(.quiz-card,.feature-card,.article-card,.reading,.explain) :is(p,span,li){color:#e9f3e6}
+body.mc-ambient .feature-grid,body.mc-ambient .article-grid{gap:13px}
+body.mc-ambient :is(.bottom-banner,.footer,.ml-footer){
+ position:relative;background:rgba(10,24,30,.96)!important;color:#e5f2e9!important
+}
+body.mc-ambient :is(.ml-footer,.footer) a{color:#c4f0d6!important}
+body.mc-ambient .as-slot,body.mc-ambient .as-mosaic{color:inherit}
+body.mc-ambient .ml-actions .ml-btn{background:#1e6948!important;color:white!important}
+body.mc-ambient .ml-actions .ml-btn-alt{background:rgba(15,43,43,.92)!important;color:#fff5df!important;border:1px solid #e0c285}
+body.mc-ambient .ml-grid{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+body.mc-ambient .mc-background-credit{
+ width:fit-content;max-width:calc(100% - 36px);
+ margin:20px auto;padding:7px 12px;
+ border:1px solid #ffffff30;border-radius:9px;
+ background:rgba(10,26,33,.8);backdrop-filter:blur(10px);
+ font-size:10px;line-height:1.7;color:#e3ede3;text-align:center;
+}
+body.mc-ambient .mc-background-credit a{color:#ffdda3!important}
+@media(max-width:750px){
+ body.mc-ambient :is(.ml-hero,.md-hero,.hero){border-radius:11px}
+ body.mc-ambient :is(.ml-section,.md-section,.ml-article){padding:15px!important}
+ body.mc-ambient .ml-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ body.mc-ambient .ml-card{min-width:0}
+ body.mc-ambient .md-rank-switcher .md-tab{min-width:0}
+}
+@media(max-width:420px){body.mc-ambient .ml-grid{grid-template-columns:1fr}}
