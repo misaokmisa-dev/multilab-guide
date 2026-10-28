@@ -12,7 +12,7 @@ body.st-body,body.rare-body{
 body.st-body::before,body.rare-body::before{
  content:"";position:fixed;inset:0;
  z-index:-1;pointer-events:none;
- background-image:linear-gradient(120deg,rgba(8,17,17,.55),rgba(9,22,26,.48)),url("https://images.ctfassets.net/8y6ykjruobr4/4TbGiwmx9qMD6gzC3z6Wc/a6bde24f3614bdba062ba080ed09431c/1_20_cherry1.jpg");
+ background-image:linear-gradient(120deg,rgba(8,17,17,.55),rgba(9,22,26,.48)),url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/1-20-0_header.png");
  background-position:center center;background-size:cover;background-repeat:no-repeat;
 }
 body.st-body::after,body.rare-body::after{
@@ -297,3 +297,57 @@ body.rare-body .rare-stat>div:first-child::after{
  margin-top:7px;opacity:.9;
 }
 body.st-body .st-hero-odds::after{max-width:40ch}
+
+/* Shared rarity scale: 1–4 stars have identical hue, brightness and glow. */
+.rare-rank,.rare-rank[data-stars="2"],.rare-rank[data-stars="3"],.rare-rank[data-stars="4"]{--rank-gold:#ffdf81!important}
+.rare-rank:not([data-stars="5"]) .filled{
+ color:#ffdf81!important;
+ -webkit-text-fill-color:#ffdf81!important;
+ -webkit-text-stroke:.45px #fff1bd!important;
+ text-shadow:0 0 7px #ffd77a78,0 0 12px #ffcc6745!important;
+ animation:none!important;filter:none!important;
+}
+.rare-rank[data-stars="5"]{
+ background:linear-gradient(105deg,#b72ec244,#ff8d1d3d,#e1e6353d,#29d8ab35,#507cff35,#cb43cc33)!important;
+ border:1px solid #ffe7bf9c!important;
+ box-shadow:0 0 14px #ffcf6a70,0 0 25px #c657ff36!important;
+}
+.rare-rank[data-stars="5"] .filled{
+ background:linear-gradient(100deg,#ff6487,#ffac55,#fff3a6,#78f8a1,#64d6ff,#bb87ff,#ff70b6,#ffac55)!important;
+ background-size:250% 100%!important;
+ -webkit-background-clip:text!important;background-clip:text!important;
+ color:transparent!important;-webkit-text-fill-color:transparent!important;
+ -webkit-text-stroke:.25px #fff1dd!important;
+ text-shadow:none!important;
+ filter:drop-shadow(0 0 3px #ffdc87) drop-shadow(0 0 7px #ef8fdf)!important;
+ animation:rare-rainbow-shine 3s linear infinite!important;
+}
+.rare-rank[data-stars="5"] .rare-rank-label{color:#fff2cb!important;text-shadow:0 0 8px #e8aaff}
+@keyframes rare-rainbow-shine{from{background-position:0% center}to{background-position:250% center}}
+@media(prefers-reduced-motion:reduce){.rare-rank[data-stars="5"] .filled{animation:none!important}}
+/* Directory has no numeric odds; the whole dark mini-panel belongs to stars. */
+body.st-body .st-card-odds{min-height:75px!important;gap:6px!important;align-items:flex-start}
+body.st-body .st-card-odds>.rare-rank{margin:6px 0 0!important}
+body.st-body .st-odds-label{color:#eee8ca!important;font-size:10px!important}
+body.st-body .rare-sort-toolbar{
+ display:flex;align-items:center;flex-wrap:wrap;gap:10px;
+ margin:18px 0 12px;padding:12px 14px;
+ color:#ffefca;background:rgba(9,27,33,.9);
+ border:1px solid #d7b96f9c;border-radius:12px;
+ backdrop-filter:blur(10px);box-shadow:0 6px 22px #0005;
+}
+body.st-body .rare-sort-toolbar label{font-size:13px;font-weight:850;white-space:nowrap}
+body.st-body .rare-sort-toolbar select{
+ flex:1;min-width:170px;max-width:350px;height:40px;
+ padding:0 34px 0 12px;
+ color:#21372c;background:#fff9e8;border:1px solid #deb96b;border-radius:8px;
+ font:800 13px/1.4 inherit;cursor:pointer
+}
+body.st-body .rare-sort-counter{font-size:12px;color:#e9e3ce;font-weight:700}
+body.st-body .st-content[hidden]{display:none!important}
+body.st-body .st-grid>.st-card[hidden]{display:none!important}
+@media(max-width:470px){
+ body.st-body .st-card-odds{min-height:74px!important}
+ body.st-body .st-card-odds .rare-rank-stars{font-size:13px!important}
+ body.st-body .rare-sort-toolbar select{min-width:140px;max-width:none}
+}
