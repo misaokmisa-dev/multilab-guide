@@ -520,3 +520,22 @@ body.rare-body a.rare-back:is(:hover,:focus-visible),
 body.rare-body .rare-feature:is(:hover,:focus-visible) strong{
  background:#00bd21!important;border-color:#00bd21!important;color:#0b2714!important;
 }
+
+/* 2026-10-28: Minecraft rare-Mob sort and selector controls use #00BD21. */
+body.st-body .rare-sort-toolbar select,
+body.st-body .rare-sort-toolbar select:is(:hover,:focus-visible),
+body.rare-body .rare-options a,
+body.rare-body .rare-options a:is(:hover,:focus-visible){
+ background:#00bd21!important;
+ border:1px solid #00bd21!important;
+ color:#0b2714!important;
+ text-shadow:none!important;
+ cursor:pointer;
+}
+body.st-body .rare-sort-toolbar select option{
+ background:#00bd21;color:#0b2714;
+}
+body.st-body .rare-sort-toolbar select:focus-visible,
+body.rare-body .rare-options a:focus-visible{
+ outline:3px solid #124825!important;outline-offset:2px!important;
+}
