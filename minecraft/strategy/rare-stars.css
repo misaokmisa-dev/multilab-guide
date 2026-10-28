@@ -510,14 +510,13 @@ body.st-body .st-hero-highlight strong{
 }
 
 
-/* Minecraft controls: restrained green at rest, #01E427 on hover/focus. */
+
+/* Minecraft rare Mob CTAs: same former darker hover green #00BD21 throughout. */
 body.st-body a.st-back,
 body.rare-body a.rare-back,
-body.rare-body .rare-feature strong{
- background:#30814f!important;border-color:#30814f!important;color:#fff!important;
-}
+body.rare-body .rare-feature strong,
 body.st-body a.st-back:is(:hover,:focus-visible),
 body.rare-body a.rare-back:is(:hover,:focus-visible),
 body.rare-body .rare-feature:is(:hover,:focus-visible) strong{
- background:#01e427!important;border-color:#01e427!important;color:#0b2714!important;
+ background:#00bd21!important;border-color:#00bd21!important;color:#0b2714!important;
 }
