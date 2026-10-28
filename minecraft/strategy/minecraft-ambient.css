@@ -320,3 +320,77 @@ body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible)>.md-tab-symb
 body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible)>.md-tab-symbol svg{
  color:var(--md-tab-dark,#215537)!important;
 }
+
+/* 2026-10-28: Every Minecraft switch / selector uses #00BD21 with dark ink.
+   Scope: Minecraft-only actions, tabs, pagination, radio choices and menus.
+   Preserve white search inputs, white article cards, and official image backdrop. */
+body.mc-ambient{--mc-switch:#00bd21;--mc-switch-ink:#0b2714}
+body.mc-ambient .md-rank-switcher .md-tab[aria-selected],
+body.mc-ambient .md-rank-switcher .md-tab:not([aria-selected="true"]),
+body.mc-ambient .md-tabs > .md-tab[aria-selected],
+body.mc-ambient .md-tabs > .md-tab:not([aria-selected="true"]),
+body.mc-ambient :is(.md-page-prev,.md-page-next,.md-page-number),
+body.mc-ambient :is(.md-prev,.md-next,.md-reset,.md-search-clear,.md-primary,.md-secondary),
+body.mc-ambient :is(.button-primary,.button-secondary,.button-white,.result-reset),
+body.mc-ambient :is(.md-choice-inner,.choice-body),
+body.mc-ambient .ml-guide-nav a,
+body.mc-ambient .mlg-site-header[data-section="minecraft"] .mlg-site-context-link{
+ background:var(--mc-switch)!important;
+ color:var(--mc-switch-ink)!important;
+ border-color:var(--mc-switch)!important;
+ text-shadow:none!important;
+}
+body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible),
+body.mc-ambient .md-tabs > .md-tab:is(:hover,:focus-visible),
+body.mc-ambient :is(.md-page-prev,.md-page-next,.md-page-number):not(:disabled):is(:hover,:focus-visible),
+body.mc-ambient :is(.md-prev,.md-next,.md-reset,.md-search-clear,.md-primary,.md-secondary):not(:disabled):is(:hover,:focus-visible),
+body.mc-ambient :is(.button-primary,.button-secondary,.button-white,.result-reset):not(:disabled):is(:hover,:focus-visible),
+body.mc-ambient :is(.md-choice-inner,.choice-body):is(:hover,:focus-visible),
+body.mc-ambient .ml-guide-nav a:is(:hover,:focus-visible),
+body.mc-ambient .mlg-site-header[data-section="minecraft"] .mlg-site-context-link:is(:hover,:focus-visible){
+ background:var(--mc-switch)!important;
+ border-color:var(--mc-switch)!important;
+ color:var(--mc-switch-ink)!important;
+}
+body.mc-ambient .md-rank-switcher .md-tab[aria-selected] :is(.md-tab-title,.md-tab-top100,.md-tab-top100 strong),
+body.mc-ambient .md-rank-switcher .md-tab:not([aria-selected="true"]) :is(.md-tab-title,.md-tab-top100,.md-tab-top100 strong),
+body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible) :is(.md-tab-title,.md-tab-top100,.md-tab-top100 strong),
+body.mc-ambient .md-page-number.is-active .md-page-range,
+body.mc-ambient .md-page-number:not(.is-active) .md-page-range,
+body.mc-ambient .choice-body :is(b,small),
+body.mc-ambient .mlg-site-header[data-section="minecraft"] .mlg-site-context-link[aria-current]{
+ color:var(--mc-switch-ink)!important;
+}
+/* White icon tiles with dark, visible SVGs, including the active MOD tab. */
+body.mc-ambient .md-rank-switcher .md-tab[aria-selected] > .md-tab-symbol{
+ background:#fff!important;color:#17512e!important;border-color:#17512e!important;
+}
+body.mc-ambient .md-rank-switcher .md-tab > .md-tab-symbol svg{
+ color:#17512e!important;stroke:currentColor!important;fill:none!important;
+}
+/* Radio selections remain conspicuously selected without changing the green hue. */
+body.mc-ambient .md-choice input:checked + .md-choice-inner,
+body.mc-ambient .choice input:checked + .choice-body{
+ background:var(--mc-switch)!important;color:var(--mc-switch-ink)!important;
+ border:2px solid #0b2714!important;
+ box-shadow:inset 0 0 0 2px #ffffff,0 0 0 2px #0b2714!important;
+}
+body.mc-ambient .md-choice input:focus-visible + .md-choice-inner,
+body.mc-ambient .choice input:focus-visible + .choice-body{
+ outline:3px solid #173e24!important;outline-offset:3px!important;
+}
+body.mc-ambient .choice-body .choice-dot{border-color:#0b2714!important}
+body.mc-ambient .choice input:checked + .choice-body .choice-dot{
+ background:#0b2714!important;border-color:#0b2714!important;
+}
+body.mc-ambient .md-control:disabled,
+body.mc-ambient .button:disabled,
+body.mc-ambient :is(.md-page-prev,.md-page-next):disabled{
+ opacity:.43!important;cursor:not-allowed!important;
+}
+/* Restore the Minecraft scoped nav's active-state distinction. */
+body.mc-ambient .mlg-site-header[data-section="minecraft"] .mlg-site-context-link[aria-current]{
+ background:var(--mc-switch)!important;
+ border:2px solid #083b16!important;box-shadow:inset 0 -3px 0 #083b16!important;
+ font-weight:850!important;opacity:1!important;
+}
