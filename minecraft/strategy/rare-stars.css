@@ -514,14 +514,28 @@ body.st-body .st-hero-highlight strong{
 body.st-body a.st-back,
 body.rare-body a.rare-back,
 body.rare-body .rare-feature strong{
-  background:#30814f!important;
-  border-color:#30814f!important;
+  background:#01e427!important;
+  border-color:#01e427!important;
   color:#ffffff!important;
 }
 body.st-body a.st-back:hover,
 body.rare-body a.rare-back:hover,
 body.rare-body .rare-feature:hover strong{
-  background:#286b43!important;
-  border-color:#286b43!important;
+  background:#00bd21!important;
+  border-color:#00bd21!important;
   color:#ffffff!important;
+}
+
+/* User-selected Minecraft action green #01E427. */
+body.st-body a.st-back,
+body.rare-body a.rare-back,
+body.rare-body .rare-feature strong {
+ background:#01e427!important;border-color:#01e427!important;
+ color:#0b2714!important;
+}
+body.st-body a.st-back:hover,
+body.rare-body a.rare-back:hover,
+body.rare-body .rare-feature:hover strong {
+ background:#00bd21!important;border-color:#00bd21!important;
+ color:#0b2714!important;
 }
