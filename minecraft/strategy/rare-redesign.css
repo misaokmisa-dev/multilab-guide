@@ -240,3 +240,8 @@
  .st-body .st-card{transition:none}
  .st-body .st-card:hover{transform:none}
 }
+
+/* If an external render fails, show the name fallback rather than a broken image. */
+.st-body .st-detail-image.st-failed img,
+.rare-body .rare-figure.image-missing img{display:none!important}
+.st-body .st-detail-image.st-failed .st-fallback{display:flex;align-items:center;justify-content:center;min-height:220px;color:#fff}
