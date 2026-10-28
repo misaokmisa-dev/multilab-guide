@@ -1,0 +1,288 @@
+/* MULTI LAB GUIDE Rare Mob — Starfield Edition, 2026-10-28
+ * Five-star editorial encounter-difficulty scale, NOT an in-game probability.
+ * Fixed official Minecraft editorial screenshot with translucent floating panels.
+ * Source: Minecraft.net, Trails & Tales update (image served by its CMS).
+ */
+:root{--rare-star:#ffe79b;--rare-ink:#f5fff2}
+body.st-body,body.rare-body{
+ background:transparent!important;
+ color:#f5f8ee!important;
+ min-height:100vh;position:relative;isolation:isolate;
+}
+body.st-body::before,body.rare-body::before{
+ content:"";position:fixed;inset:0;
+ z-index:-1;pointer-events:none;
+ background-image:linear-gradient(120deg,rgba(8,17,17,.55),rgba(9,22,26,.48)),url("https://images.ctfassets.net/8y6ykjruobr4/4TbGiwmx9qMD6gzC3z6Wc/a6bde24f3614bdba062ba080ed09431c/1_20_cherry1.jpg");
+ background-position:center center;background-size:cover;background-repeat:no-repeat;
+}
+body.st-body::after,body.rare-body::after{
+ content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:linear-gradient(90deg,rgba(3,15,19,.16),transparent 20%,transparent 80%,rgba(3,15,19,.15)),
+ linear-gradient(to bottom,rgba(3,18,19,.16),transparent 30%,rgba(3,14,20,.25));
+}
+body.st-body :is(.st-main,.st-content,.st-grid,.st-card,.st-card-body,.st-card-odds),
+body.rare-body :is(.rare-wrap,.rare-detail-top,.rare-panel){min-width:0}
+body.st-body .st-crumb,body.rare-body .rare-crumb{
+ display:flex;flex-wrap:wrap;align-items:center;gap:7px;
+ padding:9px 14px;width:max-content;max-width:100%;
+ border:1px solid rgba(241,246,255,.25);border-radius:10px;
+ background:rgba(11,27,37,.81);backdrop-filter:blur(10px);
+ color:#dce7e4!important;
+ font-weight:760;text-shadow:0 1px 2px #0006;
+}
+body.st-body .st-crumb a,body.rare-body .rare-crumb a{color:#c8f2d6!important}
+body.st-body .st-hero,body.rare-body .rare-hero{
+ background:linear-gradient(112deg,rgba(13,26,33,.93),rgba(20,37,42,.87))!important;
+ border:1px solid rgba(232,198,116,.65)!important;
+ box-shadow:0 20px 55px rgba(0,0,0,.32),inset 0 1px rgba(255,243,187,.13)!important;
+ backdrop-filter:blur(13px);
+}
+body.st-body .st-hero::after{opacity:.065}
+body.st-body .st-hero h1,body.rare-body .rare-hero h1{
+ color:#fff8e6!important;text-shadow:0 3px 18px #020b12a3;
+}
+body.st-body .st-hero>span,body.rare-body .rare-eyebrow{color:#ffe39d!important}
+body.st-body .st-hero p,body.rare-body .rare-hero p{color:#e7f4e9!important}
+body.st-body .st-content>h2,body.rare-body .rare-section>h2{
+ color:#fff9eb!important;text-shadow:0 3px 15px rgba(0,0,0,.7);
+}
+body.st-body .st-notice,body.rare-body .rare-caveat{
+ background:rgba(12,29,35,.85)!important;
+ color:#e7f0e9!important;border:1px solid rgba(255,238,185,.2)!important;
+ border-left:3px solid #edcc75!important;
+ border-radius:12px;backdrop-filter:blur(11px);
+ box-shadow:0 8px 24px #09141933;
+}
+body.st-body .st-search{
+ color:#f8f2e6!important;
+ background:rgba(15,31,38,.82);border:1px solid #ffffff37;
+ border-radius:12px;padding:10px 13px;backdrop-filter:blur(10px);
+}
+body.st-body .st-search input{
+ background:#eef4e9!important;color:#20392c!important;
+}
+body.st-body .st-card{
+ border:1px solid rgba(233,211,149,.58)!important;
+ border-radius:15px!important;
+ background:linear-gradient(170deg,rgba(16,32,39,.94),rgba(13,30,35,.96))!important;
+ box-shadow:0 9px 25px #0006,0 0 0 1px #fff1 inset!important;
+}
+body.st-body .st-card:hover{
+ transform:translateY(-4px)!important;border-color:#ffdc75!important;
+ box-shadow:0 18px 33px #001418ab,0 0 20px #ffcb6333!important;
+}
+body.st-body .st-picture{
+ height:145px!important;
+ background:radial-gradient(ellipse at 50% 72%,#426b67,#162d34 75%)!important;
+ border-bottom:1px solid rgba(234,213,160,.36)!important;
+}
+body.st-body .st-picture::before{
+ border:1px solid rgba(255,228,159,.16)!important;
+ background-image:linear-gradient(90deg,#d4bc7730 1px,transparent 1px),linear-gradient(#d4bc7730 1px,transparent 1px);
+ background-size:26px 26px;opacity:.4;
+}
+body.st-body .st-picture img{filter:drop-shadow(0 7px 11px #0007)!important}
+body.st-body .st-card-body{
+ background:transparent!important;color:#fff!important;
+ padding:11px!important;
+}
+body.st-body .st-card-body>strong{
+ color:#fff8ea!important;
+ font-weight:920;min-height:43px!important;
+}
+body.st-body .st-tag{
+ background:#ffffff1d!important;color:#dbf1e7!important;
+ border:1px solid #ffffff21;
+}
+body.st-body .st-card-odds{
+ position:relative;overflow:hidden;
+ background:linear-gradient(120deg,#1a2734,#362d37 53%,#293d36)!important;
+ border:1px solid #e7bb67a3!important;min-height:102px!important;
+ padding:10px 10px 12px!important;
+ box-shadow:inset 0 1px 1px #ffffff22,0 2px 12px #090f1730;
+}
+body.st-body .st-odds-label{font-size:9px!important;color:#e9deb9!important}
+body.st-body .st-odds-value{
+ color:#ffe4a0!important;font-size:clamp(15px,1.7vw,21px)!important;
+ line-height:1.25!important;font-variant-numeric:tabular-nums;
+}
+body.st-body .st-odds-value.is-unknown{
+ font-size:13px!important;color:#f0eedb!important;
+}
+body.st-body .st-odds-note{color:#dfdeda!important}
+body.st-body .st-card-body>small{color:#d2efdd!important}
+body.st-body .st-card-body>small::after{color:#ffd47f}
+body.st-body .st-feature,body.rare-body .rare-feature{
+ background:linear-gradient(120deg,rgba(20,36,46,.93),rgba(29,43,42,.92))!important;
+ border:1px solid #e5c07099!important;
+ box-shadow:0 16px 35px #00151d75!important;
+ color:#fff!important;backdrop-filter:blur(14px);
+}
+body.st-body .st-feature strong,body.rare-body .rare-feature h2{
+ color:#ffe4a0!important;
+}
+body.rare-body .rare-feature p,body.st-body .st-feature p{color:#e4eee5!important}
+body.st-body .st-detail-head{
+ background:linear-gradient(115deg,rgba(13,28,35,.94),rgba(23,47,49,.91))!important;
+ border:1px solid #edcd8399;backdrop-filter:blur(12px);
+}
+body.st-body .st-detail-image{
+ background:radial-gradient(ellipse at 50% 72%,rgba(90,145,117,.75),rgba(15,35,40,.85))!important;
+}
+body.st-body .st-detail-intro h1{color:#fff9e9!important}
+body.st-body .st-detail-intro p{color:#e4f0e5!important}
+body.st-body .st-hero-odds{
+ background:linear-gradient(125deg,#182733,#382e37)!important;
+ border:1px solid #efd181a8!important;
+ box-shadow:0 0 18px #ffdc6940,inset 0 1px #ffffff29;
+}
+body.st-body .st-hero-odds strong{color:#ffe49b!important}
+body.st-body .st-facts>div,body.rare-body .rare-panel,
+body.rare-body .rare-stat>div{
+ color:#fffaf0!important;
+ background:rgba(13,29,39,.9)!important;
+ border:1px solid #e4c17963!important;
+ box-shadow:0 8px 25px #0004!important;
+ backdrop-filter:blur(13px);
+}
+body.st-body .st-facts small,body.rare-body .rare-stat small{
+ color:#d8e7dc!important;
+}
+body.st-body .st-facts strong,body.rare-body .rare-stat strong{
+ color:#fff5de!important;
+}
+body.st-body .st-facts>div:first-child,body.rare-body .rare-stat>div:first-child{
+ background:linear-gradient(120deg,rgba(32,33,42,.96),rgba(55,42,41,.94))!important;
+ border:1px solid #e4b955!important;
+}
+body.st-body .st-facts>div:first-child strong,body.rare-body .rare-stat>div:first-child strong{
+ color:#ffdc86!important;
+}
+body.st-body .st-steps li{
+ background:rgba(12,28,38,.89)!important;
+ border:1px solid #ffffff38!important;
+ color:#fff!important;backdrop-filter:blur(10px);
+}
+body.st-body .st-steps b{background:#edc572!important;color:#172a2d!important}
+body.st-body .st-content>p{color:#e9f5ec;text-shadow:0 2px 5px #0006}
+body.rare-body .rare-detail-top{background:rgba(11,27,35,.88);border-radius:17px;padding:15px;box-shadow:0 15px 35px #0007}
+body.rare-body .rare-figure{
+ background:radial-gradient(ellipse at 50% 72%,#467b70,#182c3c 82%)!important;
+ border:1px solid #e0c17b78!important;
+}
+body.rare-body .rare-detail-top h2,body.rare-body .rare-wrap>h1{
+ color:#fff8e9!important;text-shadow:0 3px 12px #000a;
+}
+body.rare-body .rare-panel h2{color:#ffe4ae!important}
+body.rare-body .rare-panel p,body.rare-body .rare-panel li{color:#ebf1ea!important}
+body.rare-body .rare-sources a{color:#bdedcb!important}
+body.rare-body .rare-highlight{
+ background:rgba(82,59,31,.75)!important;
+ border:1px solid #f3ce7d!important;
+ color:#ffecad!important;
+}
+body.st-body .st-footer,body.rare-body .ml-footer{
+ background:#10242a!important;position:relative;
+}
+body.st-body .st-footer a,body.rare-body .ml-footer a{color:#def5e5!important}
+
+/* Card-game star tiers: editorial visual only, NOT game-defined rarities. */
+.rare-rank{
+ --rank-gold:#d8e2db;
+ position:relative;display:flex;flex-wrap:wrap;align-items:center;
+ gap:5px 9px;max-width:100%;min-width:0;
+ padding:1px 0 3px;
+}
+.rare-rank[data-stars="2"]{--rank-gold:#bde8c6}
+.rare-rank[data-stars="3"]{--rank-gold:#ffe28e}
+.rare-rank[data-stars="4"]{--rank-gold:#ffce70}
+.rare-rank[data-stars="5"]{--rank-gold:#fff3b3}
+.rare-rank-stars{
+ font-family:system-ui,"Segoe UI Symbol",sans-serif;
+ display:inline-flex;align-items:center;gap:1px;
+ font-size:clamp(15px,1.8vw,22px);line-height:1.15;
+ letter-spacing:1px;white-space:nowrap;
+}
+.rare-rank-stars .filled{
+ display:inline-block;color:var(--rank-gold);
+ text-shadow:0 0 4px #ffd78477,0 0 14px #ffcb7060,0 2px #996922;
+ -webkit-text-stroke:.45px #ffeec1;
+}
+.rare-rank-stars .empty{color:#7f8c91;-webkit-text-stroke:.4px #a6b1b4;opacity:.75}
+.rare-rank-label{
+ color:#f2ecd8;font-size:9px;line-height:1.3;
+ font-weight:950;letter-spacing:.085em;white-space:nowrap;
+}
+.rare-rank[data-stars="5"]{
+ padding:3px 5px 4px;border-radius:7px;
+ background:linear-gradient(100deg,#5c3c2929,#e7b95b2e,#5833243d);
+ box-shadow:0 0 17px #ffdd7350;
+}
+.rare-rank[data-stars="5"] .filled{
+ color:#fff0a1;
+ text-shadow:0 0 5px #fff6b6,0 0 13px #ffe577,0 0 26px #eb9958;
+ animation:rare-gold-pulse 2.8s ease-in-out infinite;
+}
+.rare-rank[data-stars="4"] .rare-rank-label,
+.rare-rank[data-stars="5"] .rare-rank-label{color:#ffde8a}
+body.st-body .st-card-odds>.rare-rank{margin:3px 0 7px}
+body.st-body .st-card-odds .rare-rank-stars{font-size:clamp(14px,1.45vw,19px)}
+body.st-body .st-card-odds .rare-rank-label{font-size:8px}
+body.st-body .st-card[data-rarity="5"]{
+ border-color:#e4bd6c!important;
+ box-shadow:0 6px 25px #0008,0 0 13px #ffa94e50!important;
+}
+body.st-body .st-card[data-rarity="5"] .st-picture::after{
+ content:"★★★★★";position:absolute;left:8px;top:9px;
+ color:#ffe8a3;letter-spacing:1px;font-size:10px;
+ text-shadow:0 0 8px #ffcc6f;
+}
+body.st-body .st-hero-odds>.rare-rank{margin:5px 0 12px}
+body.st-body .st-hero-odds .rare-rank-stars{font-size:clamp(22px,3vw,30px)}
+body.rare-body .rare-stat>div:first-child .rare-rank{margin:9px 0 10px}
+body.rare-body .rare-stat>div:first-child .rare-rank-stars{font-size:clamp(20px,2.7vw,29px)}
+.rare-rank-legend{
+ display:block;width:fit-content;max-width:100%;
+ margin:12px 0 18px;padding:9px 12px;
+ background:rgba(10,28,35,.85);border:1px solid #e3c78370;
+ border-radius:10px;color:#e8ebdf!important;
+ font-size:11px;font-weight:650;line-height:1.75;
+ backdrop-filter:blur(10px);
+}
+.rare-rank-legend b{color:#ffe498}
+.rare-background-credit{
+ display:block;padding:9px 12px;
+ font-size:10px;color:#e7edde!important;
+ background:rgba(8,24,31,.75);width:max-content;max-width:100%;
+ border-radius:8px;margin:16px auto!important;line-height:1.6;
+}
+.rare-background-credit a{color:#ffe2a2!important}
+@keyframes rare-gold-pulse{
+ 0%,100%{filter:brightness(1);transform:scale(1)}
+ 50%{filter:brightness(1.21);transform:scale(1.045)}
+}
+@media(min-width:1300px){
+ body.st-body .st-main{width:min(1140px,calc(100% - 220px))}
+}
+@media(max-width:760px){
+ body.st-body .st-picture{height:123px!important}
+ body.st-body .st-card-body{padding:9px!important}
+ body.st-body .st-card-odds{padding:9px 7px!important;min-height:118px!important}
+ body.st-body .st-card-odds .rare-rank-stars{font-size:15px}
+ body.st-body .st-card-odds .rare-rank-label{font-size:7px}
+ body.st-body .st-odds-value{font-size:15px!important}
+ body.st-body .st-odds-note{font-size:10px}
+ body.st-body .st-hero-odds .rare-rank-stars{font-size:24px}
+ body.rare-body .rare-detail-top{padding:12px}
+ body.rare-body .rare-figure{min-height:260px}
+ body.rare-body .rare-stat{grid-template-columns:1fr 1fr}
+ body.st-body .st-hero,body.rare-body .rare-hero{border-radius:12px}
+}
+@media(max-width:400px){
+ body.st-body .st-picture{height:110px!important}
+ body.st-body .st-card-odds .rare-rank-stars{font-size:13px;letter-spacing:0}
+ body.st-body .st-card-odds .rare-rank-label{font-size:7px}
+ body.st-body .st-odds-value{font-size:14px!important}
+ body.st-body .st-card-body>strong{font-size:13px!important}
+}
+@media(prefers-reduced-motion:reduce){.rare-rank[data-stars="5"] .filled{animation:none}}
