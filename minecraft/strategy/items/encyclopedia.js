@@ -313,6 +313,157 @@ const typeSuggestions={
  building:"ブロックの採掘・加工、または作業台・石切台・製錬などによって入手します。",
  other:"種類によって入手方法が異なります。ゲーム内のレシピブックや下記の詳細情報も確認してください。"
 };
+
+/* Exact acquisition paths for registry items without a crafting-table recipe.
+   Keep crafting-table items recipe-only; do not invent a 3x3 recipe for smelting,
+   smithing, mob drops, brewing, world generation, or creative-only items. */
+function acquisitionSteps(item){
+ const n=item.name;
+ if(specificHow[n])return specificHow[n];
+ const worldOnly=new Set(["bedrock","barrier","light","structure_block","structure_void",
+  "jigsaw","command_block","chain_command_block","repeating_command_block",
+  "end_portal_frame","reinforced_deepslate","knowledge_book","debug_stick",
+  "test_block","test_instance_block","spawner"]);
+ if(worldOnly.has(n))return [
+  "通常のサバイバルではアイテムとして入手・回収できません。",
+  "クリエイティブインベントリや、権限がある環境ではコマンドなどで扱います。"
+ ];
+ if(n.endsWith("_spawn_egg"))return [
+  "スポーンエッグは通常のサバイバルでは入手できません。",
+  "クリエイティブインベントリで「"+item.jp+"」を探すか、権限があるワールドでコマンドから入手します。"
+ ];
+ if(n==="trial_spawner"||n==="vault")return [
+  "トライアルチャンバー（試練の間）で自然生成されているものを探します。",
+  "通常のサバイバルではアイテムとして持ち帰れません。クリエイティブなどで設置できます。"
+ ];
+ const specials={
+  heavy_core:["試練の間で不吉な試練を攻略し、不吉な宝物庫を開けます。","不吉な宝物庫から得られる報酬の一つです。"],
+  trial_key:["試練の間で試練のスポナーのウェーブを攻略します。","報酬として試練の鍵が出る場合があります。"],
+  ominous_trial_key:["不吉な試練を攻略して、不吉な試練のスポナーからの報酬を調べます。","不吉な試練の鍵を入手できる場合があります。"],
+  ominous_bottle:["襲撃隊の大将や試練の間の宝物庫など、対応する入手源を探します。","入手した瓶を飲むと不吉な予感の効果を得られます。"],
+  trident:["海や川に出現するドラウンドを探します。","トライデントを持つドラウンドなど、対象のドロップ条件を確認して入手します。"],
+  dragon_egg:["エンドでエンダードラゴンを初めて倒すと中央の出口ポータル上に出現します。","直接壊すとテレポートするため、ピストンや松明などで回収します。"],
+  turtle_egg:["砂浜で繁殖させたカメが砂の上に産卵するのを待ちます。","シルクタッチ付きの道具を使って卵を回収します。"],
+  sniffer_egg:["暖かい海の海底遺跡の怪しげな砂をブラシで調べるか、スニッファーを繁殖させます。","卵を壊さないように回収します。"],
+  heart_of_the_sea:["沈没船などで宝の地図を探し、地図に記された埋もれた宝を発見します。","埋もれた宝のチェストから入手します。"],
+  echo_shard:["古代都市を探索してチェストを探します。","チェストの戦利品からエコーの欠片を入手できます。"],
+  nether_star:["ソウルサンドなどでウィザーを召喚し、倒します。","ウィザーがドロップするネザースターを回収します。"],
+  amethyst_shard:["地下のアメジストジオードを探します。","成長したアメジストの塊を適切な道具で採掘し、欠片を回収します。"],
+  disc_fragment_5:["古代都市のチェストを調べてレコードの破片を探します。","9個集めると音楽ディスク「5」のクラフト材料になります。"],
+  dragon_breath:["エンドでエンダードラゴンが吐く紫色のブレスの雲を探します。","空のガラス瓶でブレスを回収します。"],
+  experience_bottle:["聖職者の村人との取引や、構造物のチェストなどを調べます。","経験値の瓶を戦利品・取引で入手できます。"],
+  name_tag:["釣り・村人との取引・一部構造物のチェストなどで入手できます。","利用するバージョンによってレシピや入手条件が変わる場合があります。"],
+  elytra:["エンド外周のエンドシティを探索します。","エンドシップの額縁から入手します。"],
+  filled_map:["空っぽの地図を手に持ち、地図を使用して周囲を記録します。","作成された地図を持ち歩いて探索に使えます。"],
+  enchanted_golden_apple:["古代都市・ダンジョンなどの生成チェストを探します。","クラフトでは作成できず、戦利品として入手します。"],
+  charcoal:["原木・木などの製錬可能な木材をかまどで焼きます。","木炭が完成したら取り出します。"],
+  smooth_stone:["石をかまどで製錬します。","完成した滑らかな石を回収します。"],
+  smooth_sandstone:["砂岩をかまどで製錬します。","完成した滑らかな砂岩を回収します。"],
+  smooth_red_sandstone:["赤い砂岩をかまどで製錬します。","完成した滑らかな赤い砂岩を回収します。"],
+  glass:["砂を集めてかまどに入れ、燃料で製錬します。","完成したガラスを取り出します。"],
+  green_dye:["サボテンをかまどで製錬します。","できた緑色の染料を回収します。"],
+  sponge:["海底神殿にいるエルダーガーディアンやスポンジ部屋を探します。","濡れたスポンジはかまどなどで乾燥させて使います。"],
+  netherite_horse_armor:["ネザライト強化用の素材と、必要な馬鎧・鍛冶台を確認します。","鍛冶台で対応するアップグレードを行います。"]
+ };
+ if(specials[n])return specials[n];
+ if(n.startsWith("music_disc_"))return [
+  "この音楽ディスクは種類ごとに入手条件が異なります。生成チェスト・Mobの特殊なドロップ・特定イベントなどを探します。",
+  "右下のMinecraft Wikiリンクで「"+item.jp+"」固有の入手場所と条件を確認してください。"
+ ];
+ if(n==="potion"||n==="splash_potion"||n==="lingering_potion")return [
+  "醸造台・燃料・材料を揃え、対応するポーションを醸造します。",
+  "スプラッシュ化には火薬、残留化にはドラゴンブレスなど、ポーションの種類に応じて素材が必要です。"
+ ];
+ if(n==="tipped_arrow")return [
+  "残留ポーションと矢を使ってクラフトする方法のほか、取引・戦利品などを確認します。",
+  "矢の効果によって材料や入手条件が異なります。"
+ ];
+ if(/^netherite_(sword|pickaxe|axe|shovel|hoe|helmet|chestplate|leggings|boots|spear)$/.test(n))return [
+  "対応するダイヤモンドの装備、ネザライトインゴット、ネザライト強化用の鍛冶型を用意します。",
+  "鍛冶台でネザライト装備へアップグレードします。作業台の3×3クラフトでは作れません。"
+ ];
+ if(/^chainmail_(helmet|chestplate|leggings|boots)$/.test(n)||/^(iron|golden|diamond)_horse_armor$/.test(n))return [
+  "村人との取引、生成されたチェスト、Mobのドロップなど、装備ごとの入手先を探します。",
+  "通常の作業台レシピはありません。"
+ ];
+ if(n.endsWith("_ore")||n==="ancient_debris")return [
+  "地下・山岳・ネザーなど、「"+item.jp+"」が生成される場所を探します。",
+  "鉱石ブロックをそのまま回収するには、適切なツルハシとシルクタッチが必要な場合があります。"
+ ];
+ if(n.startsWith("infested_"))return [
+  "自然生成される虫食いブロックがある場所を探索します。",
+  "通常のサバイバルでは採掘しても虫食いブロック自体を回収できず、シルバーフィッシュが出現する場合があります。"
+ ];
+ if(n.endsWith("_bucket")&&n!=="bucket"){
+  if(/^(water|lava|powder_snow)_bucket$/.test(n))return [
+   "空のバケツを用意します。","対応する水源・溶岩源・粉雪にバケツを使用します。"
+  ];
+  if(n==="milk_bucket")return ["空のバケツを用意します。","ウシ・ヤギ・ムーシュルームなどに使用してミルクを回収します。"];
+  return ["空のバケツと水を用意します。","水中にいる対応する魚・ウーパールーパー・オタマジャクシなどにバケツを使用して回収します。"];
+ }
+ if(n.startsWith("cooked_")||n==="baked_potato")return [
+  "対応する生の食材を採集・収穫・釣り・Mobのドロップなどで用意します。",
+  "かまど・燻製器・焚き火などで調理して完成品を回収します。"
+ ];
+ if(/^(stripped_)/.test(n))return [
+  "元になる原木・木・幹などを設置します。",
+  "斧を持って表面の樹皮を剥ぎ、できたブロックを壊して回収します。"
+ ];
+ if(/(_log|_stem|_wood|_hyphae)$/.test(n))return [
+  "対応する樹種の木・巨大キノコなどがあるバイオームを探します。",
+  "幹・原木のブロックを壊して回収します。"
+ ];
+ if(n.endsWith("_leaves"))return [
+  "対応する木を探して葉のブロックを見つけます。",
+  "ハサミやシルクタッチ付きの道具を使うと葉ブロックとして回収できます。"
+ ];
+ if(n.endsWith("_sapling")||n==="mangrove_propagule")return [
+  "対応する樹種を探して葉や成長した木を調べます。",
+  "苗木のドロップや、木に付く芽などから回収します。"
+ ];
+ if(/^.*_(mushroom|fungus)$/.test(n)||n==="crimson_fungus"||n==="warped_fungus")return [
+  "対応するバイオームで自然生成されたキノコや菌類を探します。",
+  "植物を採取して回収します。"
+ ];
+ if(n.endsWith("_head")||n.endsWith("_skull"))return [
+  "頭の種類に応じて、特定Mobのドロップ・帯電クリーパーの爆発・生成された構造物などを調べます。",
+  "プレイヤーヘッドなどは通常のサバイバルでは入手方法が限られます。"
+ ];
+ if(/^(exposed|weathered|oxidized)_copper/.test(n))return [
+  "対応する銅のブロック・部品を作成または入手します。",
+  "設置して時間経過による酸化を待ちます。必要に応じて適切な道具で回収します。"
+ ];
+ if(n.startsWith("waxed_"))return [
+  "元になる銅ブロックや銅製の部品を用意します。",
+  "ハニカムで錆止めを行い、対応するブロックを回収します。"
+ ];
+ if(n==="grass_block"||n==="podzol"||n==="mycelium")return [
+  "対応する地面やバイオームでブロックを探します。",
+  "シルクタッチ付きの道具で採掘すると、そのブロックとして回収できます。"
+ ];
+ if(n==="stone"||n==="deepslate")return [
+  "地下の自然生成ブロックを探します。",
+  "シルクタッチ付きのツルハシで回収するか、対応する素材をかまどで製錬して入手します。"
+ ];
+ if(n==="sculk_sensor")return [
+  "ディープダークや古代都市の周辺でスカルクセンサーを探します。",
+  "シルクタッチ付きの適切な道具で回収します。"
+ ];
+ if(["apple","sweet_berries","glow_berries","sugar_cane","carrot","potato","beetroot","wheat_seeds","melon_slice","cocoa_beans"].includes(n))return [
+  "対応する樹木・植物・農地や、生成されたチェスト・村などの入手場所を探します。",
+  "成長した植物・作物から採集や収穫を行います。"
+ ];
+ if(["porkchop","beef","chicken","mutton","rabbit","feather","leather","bone","string","gunpowder","spider_eye","ghast_tear","blaze_rod"].includes(n))return [
+  "このアイテムをドロップする動物や敵Mobを探します。",
+  "対象Mobを倒した時などのドロップを回収します。"
+ ];
+ if(["cod","salmon","pufferfish","tropical_fish"].includes(n))return [
+  "川や海などの水域で釣りをするか、対応する魚Mobを探します。",
+  "釣りの成果や魚Mobからドロップを回収します。"
+ ];
+ return [typeSuggestions[item.cat]||typeSuggestions.other];
+}
+
 function initDetail(){
  const slug=document.body.dataset.item;
  const item=bySlug.get(slug);const root=document.querySelector("#ency-detail");
@@ -346,8 +497,7 @@ function initDetail(){
  // Only items without a crafting recipe need an acquisition section.
  if(!recipes.length){
   const obtain=q("section","ency-panel");obtain.append(q("h2","","入手方法・手順"));
-  let steps=specificHow[item.name];
-  if(!steps){steps=[typeSuggestions[item.cat]||typeSuggestions.other,"参照先やゲーム内レシピブックを確認して、利用中のエディション・バージョンでの条件を調べてください。"];}
+  const steps=acquisitionSteps(item);
   const ol=q("ol","ency-steps");steps.forEach(s=>ol.append(step(s)));obtain.append(ol);
   const ref=q("p","ency-muted");ref.append(document.createTextNode("参考："));
   const a=q("a");a.href="https://minecraft.wiki/w/"+encodeURIComponent(item.name);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Minecraft Wiki（"+item.jp+"）";ref.append(a);obtain.append(ref);root.append(obtain);
