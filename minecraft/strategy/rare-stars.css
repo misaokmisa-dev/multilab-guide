@@ -656,3 +656,34 @@ body.ml-body.st-body .st-hero .st-hero-highlight .st-rainbow-jewel .st-jewel-sta
   body.ml-body.st-body .st-hero .st-hero-highlight{padding:10px 12px!important;gap:8px!important}
   body.ml-body.st-body .st-hero .st-hero-highlight .st-rainbow-jewel{font-size:clamp(26px,7vw,36px)!important}
 }
+
+/* Minecraft strategy and rare-Mob button color harmonization:
+   match latest update CTA #00BD21 with white lettering. */
+body:is(.rare-body,.st-body) :is(
+  .mlg-site-header[data-section="minecraft"] .mlg-site-context-link,
+  a.rare-back,a.st-back,
+  .rare-feature>strong,
+  .rare-feature .rare-update-link,
+  .rare-options a,
+  .rare-sort-toolbar select
+){
+  background:#00bd21!important;
+  color:#fff!important;
+  border-color:#00bd21!important;
+  text-shadow:none!important;
+}
+body:is(.rare-body,.st-body) :is(
+  .mlg-site-header[data-section="minecraft"] .mlg-site-context-link,
+  a.rare-back,a.st-back,
+  .rare-feature>strong,
+  .rare-options a,
+  .rare-sort-toolbar select
+):is(:hover,:focus-visible){color:#fff!important;}
+body:is(.rare-body,.st-body) .mlg-site-header[data-section="minecraft"] .mlg-site-context-link[aria-current]{
+  color:#fff!important;border:2px solid #083b16!important;box-shadow:inset 0 -3px 0 #083b16!important;
+}
+body.st-body .rare-sort-toolbar select option{background:#00bd21!important;color:#fff!important;}
+/* Rich-content links inside the update feature are rendered as a green CTA span. */
+body.rare-body a.rare-feature.rare-update-feature .rare-update-link{
+  background:#00bd21!important;color:#fff!important;border-color:#00bd21!important;
+}
