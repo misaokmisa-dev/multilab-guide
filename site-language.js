@@ -131,7 +131,7 @@
   let m;
   // Item detail static HTML is generated for 1,500+ items; translate its
   // structured metadata and description without thousands of duplicate entries.
-  if((m=source.match(/^(.+?)はMinecraft Java ([\\d.]+)の(.+?)カテゴリにあるアイテム・ブロックです。1スロットに最大(\\d+)個持てます。(.*)$/))){
+  if((m=source.match(/^(.+?)はMinecraft Java ([\d.]+)の(.+?)カテゴリにあるアイテム・ブロックです。1スロットに最大(\d+)個持てます。(.*)$/))){
     const item=word(m[1]),category=word(m[3]),version=m[2],stack=m[4];
     if(lang==='en')return item+' is a '+category+' item/block in Minecraft Java '+version+'. Max stack size: '+stack+'. See this page for crafting, obtaining methods and related items.';
     if(lang==='ko')return item+'은(는) Minecraft Java '+version+'의 '+category+' 아이템/블록입니다. 최대 중첩 수: '+stack+'개. 이 페이지에서 제작법, 획득 방법 및 관련 아이템을 확인하세요.';
@@ -141,11 +141,11 @@
     const item=word(m[1]);
     return lang==='en'?item+' in-game Minecraft texture':lang==='ko'?item+' 마인크래프트 게임 내 텍스처':item+'的 Minecraft 游戏内纹理';
   }
-  if((m=source.match(/^(.+?)の入手方法・作り方・使い道 \\| MULTI LAB GUIDE$/))){
+  if((m=source.match(/^(.+?)の入手方法・作り方・使い道 \| MULTI LAB GUIDE$/))){
     const item=word(m[1]);
     return lang==='en'?item+' — How to get, craft and use | MULTI LAB GUIDE':lang==='ko'?item+' — 획득·제작·사용법 | MULTI LAB GUIDE':item+'——获取、合成与用途 | MULTI LAB GUIDE';
   }
-  if((m=source.match(/^MINECRAFT \\/ (.+)$/)))return 'MINECRAFT / '+word(m[1]);
+  if((m=source.match(/^MINECRAFT \/ (.+)$/)))return 'MINECRAFT / '+word(m[1]);
   if((m=source.match(/^(.+?)の一覧$/))){
     const category=word(m[1]);
     return lang==='en'?category+' items':lang==='ko'?category+' 목록':category+'列表';
