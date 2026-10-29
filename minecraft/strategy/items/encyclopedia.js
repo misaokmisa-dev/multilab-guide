@@ -648,6 +648,34 @@ function acquisitionSteps(item){
  return [typeSuggestions[item.cat]||typeSuggestions.other];
 }
 
+
+function newItemAcquisition(item){
+ const n=item.name;
+ const wiki="入手条件が変わる可能性があるため、正式版・開発版の更新内容も確認してください。";
+ if(n.endsWith("_spawn_egg"))return ["スポーンエッグは通常のサバイバルでは入手できません。","対応するバージョンのクリエイティブインベントリ、または権限のあるワールドで入手します。"];
+ if(n.endsWith("_map"))return ["対応する構造物や村人の取引などで、探索用の地図を探します。","地図の種類によって入手場所が異なり、一部は廃キャンプのチェストで見つかります。"];
+ if(n==="music_disc_bounce")return ["硫黄の洞窟に生成される廃坑を探します。","その廃坑にあるチェスト付きトロッコから、音楽ディスク「Bounce」が見つかることがあります。"];
+ if(n==="sulfur_cube_bucket")return ["硫黄の洞窟で大きいサルファーキューブを探します。","空のバケツを持って大きいサルファーキューブに使用して捕まえます。"];
+ if(n==="ice_ball")return ["26.4 Snapshotの氷の洞窟や寒冷地でフロストバイトを探します。","フロストバイトを倒すとドロップする氷の球を回収します。"+wiki];
+ if(n==="ice_crystal")return ["26.4 Snapshotの氷の洞窟で、地面などに生成される氷の結晶を探します。","支えを失うと壊れるため、設置・採取時の条件を確認します。"+wiki];
+ if(n==="icicle")return ["26.4 Snapshotの氷の洞窟で天井に生成されるつららを探します。","つららは落下すると危険です。採取方法は開発版の仕様を確認してください。"];
+ if(n==="brittle_ice")return ["26.4 Snapshotの氷の洞窟でクレバスに生成される脆い氷を探します。","シルクタッチ付きの道具で回収できます。青氷に水を流すと生成する方法もあります。"];
+ if(n==="sulfur_spike")return ["地下の硫黄の洞窟で硫黄の尖った鍾乳石を探します。","設置された硫黄の尖った鍾乳石を壊して回収します。"];
+ if(n==="sulfur"||n==="cinnabar")return ["地下に生成される硫黄の洞窟を探索します。","硫黄または辰砂のブロックを採掘して回収します。"];
+ if(n==="poplar_log"||n==="poplar_wood")return ["寒冷地に近い木漏れ日の森でポプラの木を探します。","ポプラの幹を伐採して回収します。"];
+ if(n.startsWith("stripped_poplar"))return ["ポプラの原木や木を見つけて設置します。","斧で樹皮を剥いでから回収します。"];
+ if(n==="poplar_leaves"||n.endsWith("_poplar_leaves"))return ["木漏れ日の森でポプラの葉を探します。","ハサミ、またはシルクタッチ付きの道具で回収します。"];
+ if(n==="poplar_sapling")return ["木漏れ日の森のポプラの葉から苗木のドロップを探します。","行商人との取引でも苗木を手に入れられます。"];
+ if(n==="red_shrub")return ["木漏れ日の森に生える赤い低木を探します。","壊して回収します。骨粉を使用すると増やせます。"];
+ if(n==="shelf_mushroom")return ["木漏れ日の森にある立ち木や倒木に生える棚キノコを探します。","キノコを壊して回収します。行商人の取引でも手に入る場合があります。"];
+ if(n==="straw_bed")return ["わらのベッドは干草の俵3個からクラフトできます。","廃キャンプに設置されたものを探すこともできます。"];
+ if(n==="poplar_shelf")return ["ポプラの木材を使うクラフトレシピを確認します。","対応する木材を集めて作業台で作成します。"];
+ if(n==="potent_sulfur")return ["硫黄の洞窟にある硫黄の池で見つかります。","硫黄ブロック9個のクラフトでも入手できます。"];
+ if(n==="golden_dandelion")return ["タンポポと金塊を用意します。","作業台で囲むように金塊を配置して作ります。"];
+ if(n==="poplar_boat"||n==="poplar_chest_boat")return ["ポプラの板材を集めてボートをクラフトします。","チェスト付きボートには、ボートとチェストを用意します。"];
+ return ["Minecraft Java "+item.release+"で追加された「"+item.jp+"」の入手先を確認します。","利用する版のゲーム内レシピブック、Minecraft公式の変更履歴、またはMinecraft Wikiで対象の入手方法を確認してください。"];
+}
+
 function initDetail(){
  const slug=document.body.dataset.item||new URLSearchParams(location.search).get("item");
  const item=bySlug.get(slug);const root=document.querySelector("#ency-detail");
