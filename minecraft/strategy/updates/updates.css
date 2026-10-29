@@ -73,3 +73,18 @@ body.upd-body{--up-navy:#132a35;--up-ink:#173225;--up-muted:#4b6254;--up-green:#
 .upd-details{background:#146945;color:white!important;padding:10px 14px;text-decoration:none!important;border-radius:7px;font-weight:850;font-size:13px}
 .upd-archive-note{font-size:13px!important;color:#e3f7e8!important;line-height:1.8}
 @media(max-width:760px){.upd-hero{grid-template-columns:1fr}.upd-hero-visual{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px}.upd-hero-visual .upd-snow-c{grid-column:auto}.upd-hero-visual img{width:70px;height:70px;padding:8px}.upd-hero-visual small{grid-column:1/-1}.upd-feature-grid{grid-template-columns:1fr}.upd-feature{padding:18px}.upd-shell{width:min(100% - 20px,1120px)}}
+
+/* Update detail: continuous content instead of separate tabs/cards. */
+body.upd-detail-page .upd-panel{border:0!important;border-radius:0!important;box-shadow:none!important;margin:0!important;padding:clamp(20px,3.3vw,34px)!important}
+body.upd-detail-page .upd-hero + .upd-panel{margin-top:20px!important;border-radius:18px 18px 0 0!important}
+body.upd-detail-page .upd-panel + .upd-panel{padding-top:25px!important}
+body.upd-detail-page .upd-panel:last-of-type{border-radius:0 0 18px 18px!important}
+body.upd-detail-page .upd-feature-grid{grid-template-columns:minmax(0,1fr)!important;gap:0!important}
+body.upd-detail-page .upd-feature{border:0!important;border-radius:0!important;background:#fff!important;box-shadow:none!important;padding:21px 4px!important}
+body.upd-detail-page .upd-feature + .upd-feature{border-top:1px solid #dcebe2!important}
+body.upd-detail-page .upd-feature-lead{box-shadow:none!important}
+body.upd-detail-page .upd-feature-figure{min-height:auto}
+body.upd-detail-page .upd-feature h3{margin:6px 0!important}
+.upd-version-link{color:inherit!important;text-decoration:none!important;display:inline-block}
+.upd-version-link:hover,.upd-version-link:focus-visible{text-decoration:underline!important;text-underline-offset:4px;color:#147b51!important}
+.upd-history-card:focus-within{outline:2px solid #3b9e7b;outline-offset:3px}
