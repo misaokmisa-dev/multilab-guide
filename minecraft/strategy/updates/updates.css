@@ -1,0 +1,75 @@
+/* Minecraft Update guide / 2026-10-29 */
+body.upd-body{--up-navy:#132a35;--up-ink:#173225;--up-muted:#4b6254;--up-green:#127a4b;--up-cyan:#bfeef6;font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;color:var(--up-ink)!important}
+.upd-body *{box-sizing:border-box}
+.upd-shell{width:min(1120px,calc(100% - 30px));margin:0 auto;padding:20px 0 66px}
+.upd-crumb{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:2px 0 18px;color:#f1fff9;font-weight:730;font-size:13px;text-shadow:0 1px 8px #031c24}
+.upd-crumb a{color:#e2fff6!important}
+.upd-hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,.7fr);gap:24px;align-items:center;background:linear-gradient(115deg,#071c30,#13465e 65%,#247a83)!important;color:white;border:1px solid #648d9c;border-radius:24px;padding:clamp(25px,4.4vw,53px);position:relative;overflow:hidden;box-shadow:0 18px 44px #051c2785}
+.upd-archive-hero{background:linear-gradient(115deg,#0b291b,#1f5439 68%,#386f70)!important}
+.upd-hero::before{content:"";position:absolute;inset:0;opacity:.13;background:radial-gradient(circle at 83% 20%,#b6faff 0,transparent 55%);pointer-events:none}
+.upd-hero-copy,.upd-hero-visual{position:relative;z-index:1}
+.upd-eyebrow,.upd-kicker{letter-spacing:.15em;font-size:12px;font-weight:850;color:#bbf0fb!important}
+.upd-status{display:inline-block;border:1px solid #a2d5de;border-radius:100px;padding:7px 12px;background:#123b51;color:#e8ffff!important;font-weight:850;font-size:12px!important;margin:18px 0 10px}
+.upd-hero h1{font-size:clamp(28px,4.8vw,51px)!important;line-height:1.25;color:#fff!important;margin:12px 0 20px!important;font-weight:950;letter-spacing:-.03em}
+.upd-hero h1 em{display:block;color:#c5f6ff!important;font-size:1.13em;font-style:normal}
+.upd-hero .upd-hero-sub{font-size:clamp(16px,2.1vw,20px)!important;line-height:1.85;color:#e8faff!important}
+.upd-hero .upd-hero-sub strong{color:#fff!important;font-weight:950}
+.upd-facts{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+.upd-facts span{border-radius:8px;border:1px solid #7babb7;background:#0b2b3c;padding:8px 10px;font-size:12px;font-weight:750;color:#ecfaff}
+.upd-hero-link{display:inline-flex;align-items:center;justify-content:center;gap:13px;border-radius:9px;padding:12px 20px;background:#e9faff!important;color:#114053!important;font-weight:900;text-decoration:none!important;margin-top:4px}
+.upd-hero-visual{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;justify-items:center;padding:22px;border:1px solid #84bfd0;background:linear-gradient(135deg,#8fdae42f,#e2fbf31b);border-radius:20px}
+.upd-hero-visual img{max-width:100%;width:90px;height:90px;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(6px 8px 3px #03182166);background:#e4f7ff17;padding:12px;border:1px solid #c2f3ff48;border-radius:13px}
+.upd-snow-c{grid-column:1/-1}
+.upd-hero-visual small{grid-column:1/-1;color:#c9e4ea;font-size:10px;text-align:center}
+.upd-panel{margin:22px 0;padding:clamp(21px,3.6vw,35px);background:#fff!important;border:1px solid #d6e6e0;border-radius:19px;box-shadow:0 10px 28px #03231227}
+.upd-section-head{margin-bottom:20px}
+.upd-section-head .upd-kicker{color:#13805d!important}
+.upd-section-head h2{color:#153827!important;font-size:clamp(23px,3.4vw,33px)!important;margin:8px 0 5px!important;font-weight:920}
+.upd-panel p{line-height:1.95;color:#345046!important;margin:12px 0!important;font-size:15px}
+.upd-panel strong{font-weight:900;color:#113b29!important}
+.upd-mark{padding:2px 5px;border-radius:4px;background:#dcf1f4;font-weight:850;color:#064c62}
+.upd-feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.upd-feature{padding:22px;background:#f5faf8;border:1px solid #d5e6df;border-radius:15px;min-width:0}
+.upd-feature-lead{background:#eaf7f4;border:2px solid #56a88c;box-shadow:inset 0 0 0 2px #ffffffb5}
+.upd-feature-head{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.upd-feature-count{color:#387364;font-size:11px;font-weight:900;letter-spacing:.12em}
+.upd-hot{background:#ffe4b4;border:1px solid #b87a14;color:#734500;font-size:11px;letter-spacing:.1em;border-radius:6px;padding:5px 10px;font-weight:900}
+.upd-feature-figure{display:flex;gap:8px;padding:8px 0;min-height:112px;align-items:center}
+.upd-feature-figure img{width:82px;height:82px;object-fit:contain;image-rendering:pixelated;background:#e5f1ef;padding:11px;border-radius:13px;border:1px solid #d0ded8}
+.upd-feature h3{font-size:clamp(18px,2.2vw,22px);line-height:1.48;margin:5px 0 12px;color:#133f2d;font-weight:950}
+.upd-feature p{font-size:14px;line-height:1.9!important;margin:5px 0!important}
+.upd-feature .upd-feature-meta{color:#557566!important;font-size:12px;margin-top:13px!important;font-weight:770}
+.upd-list-rows{display:grid;gap:11px}
+.upd-list-rows>div{border-left:4px solid #2eaa7a;padding:10px 15px;background:#f1f8f4;border-radius:7px}
+.upd-list-rows p{margin:4px 0 0!important}
+.upd-source-list{display:grid;gap:9px}
+.upd-official{color:#176b50!important;text-decoration:underline;text-underline-offset:3px;font-weight:750;font-size:13px;overflow-wrap:anywhere}
+.upd-source-list a{display:block;background:#f0f7f4;padding:12px 14px;border-radius:9px}
+.upd-history-tab{display:flex;justify-content:space-between;align-items:center;gap:22px;text-decoration:none!important;padding:clamp(20px,3vw,32px);margin:24px 0 0;background:linear-gradient(105deg,#124932,#267758)!important;border:1px solid #7fbc96;border-radius:17px;color:#fff!important;box-shadow:0 10px 30px #102d1b88}
+.upd-history-tab>span:first-child{display:grid;gap:8px}
+.upd-history-tab small{font-size:11px;letter-spacing:.12em;color:#c1ffda}
+.upd-history-tab strong{font-size:clamp(18px,3vw,25px);font-weight:920;color:#fff}
+.upd-history-tab>span:first-child>span{color:#e0f4e8;font-size:13px}
+.upd-history-arrow{font-size:32px;font-weight:900;color:white}
+.upd-credits{font-size:11px;color:#effff4;line-height:1.9;margin:20px 6px;text-shadow:0 1px 8px #07130b}
+.upd-jump{background:#fff;border-radius:16px;padding:20px;margin:23px 0;border:1px solid #deebe2}
+.upd-jump strong{display:block;font-size:16px;margin-bottom:11px;color:#18422e}
+.upd-jump>div{display:flex;flex-wrap:wrap;gap:7px}
+.upd-jump a{display:inline-block;background:#eaf6ec;padding:8px 11px;border-radius:7px;color:#175b38!important;text-decoration:none!important;font-size:13px;font-weight:850}
+.upd-history-list{display:grid;gap:15px}
+.upd-history-card{background:white;border:1px solid #dce6dc;padding:clamp(20px,3vw,29px);border-radius:16px;box-shadow:0 8px 24px #04191228}
+.upd-history-card.is-upcoming{border:2px solid #45a2ac;background:#effdff}
+.upd-history-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.upd-number{font-size:12px;color:#688675;font-weight:900;letter-spacing:.2em}
+.upd-status-tag{font-size:11px;font-weight:850;color:#266244;background:#e5f2e9;padding:5px 9px;border-radius:6px}
+.upd-status-tag.upcoming{background:#d4f0f8;color:#17627b}
+.upd-history-card h2{font-size:clamp(21px,3.3vw,28px);font-weight:940;color:#153e2a;margin:8px 0!important}
+.upd-history-card h2 .upd-date{font-size:.6em;color:#50675d;display:inline-block;font-weight:800;margin-left:4px}
+.upd-history-card h3{font-size:17px;color:#24583b;font-weight:840;margin:5px 0 10px}
+.upd-history-card p{font-size:14px;color:#3b594a;line-height:1.86;margin:10px 0}
+.upd-tags{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
+.upd-tags span{background:#ecf5ed;border:1px solid #d8e8d8;color:#2b6c49;border-radius:5px;padding:5px 8px;font-size:12px;font-weight:700}
+.upd-card-actions{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:18px}
+.upd-details{background:#146945;color:white!important;padding:10px 14px;text-decoration:none!important;border-radius:7px;font-weight:850;font-size:13px}
+.upd-archive-note{font-size:13px!important;color:#e3f7e8!important;line-height:1.8}
+@media(max-width:760px){.upd-hero{grid-template-columns:1fr}.upd-hero-visual{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px}.upd-hero-visual .upd-snow-c{grid-column:auto}.upd-hero-visual img{width:70px;height:70px;padding:8px}.upd-hero-visual small{grid-column:1/-1}.upd-feature-grid{grid-template-columns:1fr}.upd-feature{padding:18px}.upd-shell{width:min(100% - 20px,1120px)}}
