@@ -162,6 +162,7 @@ function renderCategories(el,active){
  for(const c of groups){
   const a=document.createElement("a");a.className="ency-category"+(c.id===active?" is-current":"");
   a.href=B+"category/"+c.id+".html";
+  a.setAttribute("aria-label",c.title+"のアイテム一覧を見る");
   const sample=bySlug.get(categoryRepresentative[c.id]);
   if(sample){
    const picture=icon(sample,52);
@@ -170,20 +171,26 @@ function renderCategories(el,active){
   }
   const copy=document.createElement("span");copy.className="ency-category-copy";
   const b=document.createElement("b");b.textContent=c.title;
-  const sm=document.createElement("small");sm.textContent=items.filter(i=>i.cat===c.id).length+"種類";
+  const sm=document.createElement("small");sm.textContent=items.filter(i=>i.cat===c.id).length+"種類の一覧を見る ›";
   copy.append(b,sm);a.append(copy);el.append(a);
  }
 }
 function initListings(){
  const input=document.querySelector("#ency-search"),result=document.querySelector("#ency-results");
  const count=document.querySelector("#ency-count"),more=document.querySelector("#ency-more");
- const category=document.body.dataset.category||"",mode=document.body.dataset.mode||"";
+ const category=document.body.dataset.category||"";
+ const categoryArea=document.querySelector("#ency-categories")?.closest(".ency-section");
+ const resultsHeading=result?.closest(".ency-section")?.querySelector("h2");
+ const originalResultsHeading=resultsHeading?.textContent||"アイテム一覧";
  renderCategories(document.querySelector("#ency-categories"),category);
  if(!result||!input)return;
  const q=new URLSearchParams(location.search).get("q")||"";input.value=q;
  let found=[],limit=60;
  function draw(){
   let query=input.value.trim(),base=category&&!query?items.filter(i=>i.cat===category):items;
+  // During a search, only matching item results remain beneath the search field.
+  if(categoryArea)categoryArea.hidden=Boolean(query);
+  if(resultsHeading)resultsHeading.textContent=query?"検索結果":originalResultsHeading;
   found=base.map(i=>({i,s:score(i,query)})).filter(a=>a.s>0);
   found.sort((a,b)=>(b.s-a.s)||(a.i.jp.localeCompare(b.i.jp,"ja")));
   if(category&&query)found.sort((a,b)=>(a.i.cat===category? -1:1)-(b.i.cat===category?-1:1)||(b.s-a.s)||(a.i.jp.localeCompare(b.i.jp,"ja")));
@@ -289,13 +296,17 @@ function initDetail(){
   steps.append(step("完成した「"+item.jp+"」×"+(first.c||1)+"を取り出します。"));craft.append(steps);
   root.append(craft);
  }
- const obtain=q("section","ency-panel");obtain.append(q("h2","","入手方法・手順"));
- let steps=specificHow[item.name];
- if(!steps&&recipes.length){steps=["上のクラフトレシピに記載された材料を集めます。","インベントリまたは作業台で材料を配置し、完成品を取り出します。","材料の詳しい集め方は、各材料名のリンク先で確認できます。"];}
- if(!steps){steps=[typeSuggestions[item.cat]||typeSuggestions.other,"参照先やゲーム内レシピブックを確認して、利用中のエディション・バージョンでの条件を調べてください。"];}
- const ol=q("ol","ency-steps");steps.forEach(s=>ol.append(step(s)));obtain.append(ol);
- const ref=q("p","ency-muted");ref.append(document.createTextNode("参考："));
- const a=q("a");a.href="https://minecraft.wiki/w/"+encodeURIComponent(item.name);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Minecraft Wiki（"+item.jp+"）";ref.append(a);obtain.append(ref);root.append(obtain);
+ // Only items without a crafting recipe need an acquisition section.
+ if(!recipes.length){
+  const obtain=q("section","ency-panel");obtain.append(q("h2","","入手方法・手順"));
+  let steps=specificHow[item.name];
+  if(!steps&&recipes.length){steps=["上のクラフトレシピに記載された材料を集めます。","インベントリまたは作業台で材料を配置し、完成品を取り出します。","材料の詳しい集め方は、各材料名のリンク先で確認できます。"];}
+  if(!steps){steps=[typeSuggestions[item.cat]||typeSuggestions.other,"参照先やゲーム内レシピブックを確認して、利用中のエディション・バージョンでの条件を調べてください。"];}
+  const ol=q("ol","ency-steps");steps.forEach(s=>ol.append(step(s)));obtain.append(ol);
+  const ref=q("p","ency-muted");ref.append(document.createTextNode("参考："));
+  const a=q("a");a.href="https://minecraft.wiki/w/"+encodeURIComponent(item.name);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Minecraft Wiki（"+item.jp+"）";ref.append(a);obtain.append(ref);root.append(obtain);
+ }
+
  const use=q("section","ency-panel");use.append(q("h2","","使い道・関連アイテム"));
  const useSet=new Set();
  for(const [output,rs] of Object.entries(RECIPES)){
