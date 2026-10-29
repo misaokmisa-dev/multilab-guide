@@ -1,0 +1,85 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>マイクラ スタック計算ツール｜チェスト・シュルカー必要数も計算 | MULTI LAB GUIDE</title>
+<meta name="description" content="Minecraftのアイテム個数をスタック数・余り・チェスト必要数へ無料で自動変換。64・16・1個スタックに対応。シュルカーボックス、ラージチェストや逆算にも対応。">
+<link rel="canonical" href="https://mlabg.com/minecraft/tools/stack-calculator.html">
+<meta property="og:type" content="website"><meta property="og:title" content="マイクラ スタック計算ツール｜チェスト・シュルカー必要数も計算"><meta property="og:description" content="Minecraftのアイテム個数をスタック数・余り・チェスト必要数へ無料で自動変換。64・16・1個スタックに対応。シュルカーボックス、ラージチェストや逆算にも対応。"><meta property="og:url" content="https://mlabg.com/minecraft/tools/stack-calculator.html">
+<meta name="theme-color" content="#113621"><link rel="icon" href="/favicon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"マイクラ スタック・収納個数計算ツール","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/tools/stack-calculator.html","description":"Minecraftのアイテム個数をスタック数・余り・チェスト必要数へ無料で自動変換。64・16・1個スタックに対応。シュルカーボックス、ラージチェストや逆算にも対応。","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4384918189756650" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/minecraft/portal.css"><link rel="stylesheet" href="/site-unified.css">
+<link rel="stylesheet" href="/ad-system.css"><link rel="stylesheet" href="/global-site-header.css?v=20261027a">
+<link rel="stylesheet" href="/minecraft/strategy/minecraft-ambient.css?v=20261028allcontrols9">
+<link rel="stylesheet" href="/minecraft/tools/tools.css?v=20261029tools1">
+<script defer src="/ad-config.js"></script><script defer src="/ad-system.js"></script>
+<script defer src="/affiliate-tracker.js?v=20261029revenueclick01"></script>
+<script defer src="/site-language.js?v=20261028full"></script>
+<script defer src="/minecraft/tools/tools.js?v=20261029tools1"></script>
+</head><body class="ml-body mc-ambient" data-calculator="stack">
+<header class="mlg-site-header" data-section="minecraft"><div class="mlg-site-topline"><a class="mlg-site-brand" href="/" aria-label="MULTI LAB GUIDE 総合トップへ戻る"><img class="mlg-site-brand-icon" src="/favicon.png?v=20261026" alt="" width="36" height="36" aria-hidden="true"><span class="mlg-site-brand-name"><span class="mlg-site-brand-main">MULTI <strong>LAB</strong></span><span class="mlg-site-brand-guide">GUIDE</span></span></a><nav class="mlg-site-primary" aria-label="サイト共通ナビゲーション"><a class="mlg-site-link" data-nav="home" href="/">ホーム</a><a class="mlg-site-link" data-nav="roblox" href="/roblox/">ROBLOX</a><a class="mlg-site-link" data-nav="minecraft" href="/minecraft/" aria-current="page">Minecraft</a><a class="mlg-site-link" data-nav="devices" href="/devices/">デバイス</a><a class="mlg-site-link" data-nav="articles" href="/sitemap.html">記事一覧</a></nav></div><div class="mlg-site-context"><nav class="mlg-site-context-inner" aria-label="Minecraft内のメニュー"><span class="mlg-site-context-label">Minecraft</span><a class="mlg-site-context-link" href="/minecraft/">マイクラTOP</a><a class="mlg-site-context-link" href="/minecraft/strategy/" aria-current="page">攻略情報</a><a class="mlg-site-context-link" href="/minecraft/mod-ranking.html">人気MOD</a><a class="mlg-site-context-link" href="/minecraft/mod-diagnosis.html">MOD診断</a><a class="mlg-site-context-link" href="/minecraft/server.html">サーバー診断</a><a class="mlg-site-context-link" href="/minecraft/mods/">MODガイド</a><a class="mlg-site-context-link" href="/minecraft/server.html#articles">解説記事</a></nav></div></header>
+
+<main class="tool-page" id="main">
+<nav class="tool-breadcrumb" aria-label="パンくず"><a href="/minecraft/">マイクラTOP</a> › <a href="/minecraft/tools/">便利ツール</a> › スタック計算</nav>
+<section class="tool-hero"><span class="tool-eyebrow">MINECRAFT / INVENTORY CALCULATOR</span><h1>スタック・チェスト計算ツール</h1>
+<p>ブロックやアイテムの個数から、必要なスタック数・チェスト・シュルカーボックスの数をすぐに算出。64個・16個・1個の上限を切り替えられます。</p></section>
+<aside class="as-slot as-top tool-ad" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/top-ad-loader.js"></script></div></aside>
+<div class="tool-layout">
+<section class="tool-panel" aria-labelledby="calc-heading"><h2 id="calc-heading">アイテムの必要収納数を計算</h2><p class="tool-intro">例：石を10,000個集めたとき、何スタック・何チェスト必要かを計算します。</p>
+<span class="tool-field"><span>1スタックの上限を選択</span></span>
+<div class="tool-switches" role="group" aria-label="スタック上限">
+<button type="button" class="tool-switch" data-capacity="64" aria-pressed="true">64個</button>
+<button type="button" class="tool-switch" data-capacity="16" aria-pressed="false">16個</button>
+<button type="button" class="tool-switch" data-capacity="1" aria-pressed="false">1個（重ねられない）</button>
+</div>
+<label class="tool-field"><span>アイテムの個数</span><input class="tool-input" id="item-count" inputmode="numeric" type="number" min="0" max="1000000000000" step="1" value="10000" aria-label="アイテムの個数"></label>
+<p class="tool-status" id="stack-capacity-note">現在の1スタック上限：64個</p>
+<div class="tool-results" aria-live="polite" aria-atomic="true">
+<span class="tool-caption">必要なスタック数と余り</span>
+<div class="tool-big"><span id="out-stacks">156</span>スタック ＋ <span id="out-items">16</span>個</div>
+<div class="tool-secondary">収納に必要なスロット：<b id="out-slots">157</b>枠</div>
+<div class="tool-secondary" id="stack-result-note">1スタック64個の場合。チェスト・シュルカーボックスは各27枠、ラージチェストは54枠。</div>
+</div>
+<h2 style="margin-top:23px">容器はいくつ必要？</h2>
+<div class="tool-fields two">
+<div class="tool-results"><span class="tool-caption">チェスト（27枠）</span><div class="tool-big" id="out-chests">6</div></div>
+<div class="tool-results"><span class="tool-caption">ラージチェスト（54枠）</span><div class="tool-big" id="out-double">3</div></div>
+<div class="tool-results"><span class="tool-caption">シュルカーボックス（27枠）</span><div class="tool-big" id="out-shulkers">6</div></div>
+<div class="tool-results"><span class="tool-caption">持ち物欄（36枠）</span><div class="tool-big" id="out-inventories">5</div></div>
+</div>
+<div class="tool-inline-actions"><button class="tool-action" id="copy-stacks" type="button">結果をコピー</button></div><p class="tool-status" id="tool-status" role="status" aria-live="polite"></p>
+</section>
+<aside class="tool-panel"><h2>スタック数から個数を逆算</h2>
+<p class="tool-intro">「7スタックと32個」のような表記から合計数を求められます。</p>
+<div class="tool-fields two">
+<label class="tool-field"><span>スタック数</span><input class="tool-input" id="reverse-stacks" type="number" min="0" max="1000000000000" step="1" value="7" inputmode="numeric"></label>
+<label class="tool-field"><span>余り（個）</span><input class="tool-input" id="reverse-items" type="number" min="0" step="1" value="32" inputmode="numeric"></label></div>
+<div class="tool-results"><span class="tool-caption">合計個数</span><div class="tool-big" id="reverse-total">480 個</div></div>
+<p class="tool-intro">上限16個や1個のアイテムの場合も、左の「スタック上限」を切り替えると逆算結果が更新されます。</p>
+<h2 style="margin-top:24px">他の便利ツール</h2>
+<div class="tool-links"><a class="tool-link" href="/minecraft/tools/nether-coordinates.html">ネザー座標を8倍・8分の1に計算 <span aria-hidden="true">→</span></a>
+<a class="tool-link" href="/minecraft/strategy/rare-mobs/">レアMobをレア度で探す <span aria-hidden="true">→</span></a>
+<a class="tool-link" href="/minecraft/mod-ranking.html">人気MOD TOP100を見る <span aria-hidden="true">→</span></a></div>
+</aside>
+</div>
+<section class="tool-article"><h2>マイクラの1スタックは何個？</h2>
+<p>石・土・丸石など、一般的なブロックは最大64個を1スタックとして重ねられます。一方、エンダーパールや雪玉など、一部のアイテムは16個までです。剣や防具など、同じスロットに重ねられないアイテムは1個として計算します。</p>
+<h2>スタック数の計算例</h2>
+<p>丸石10,000個なら、10,000 ÷ 64 = 156スタックと16個。全部を収納するには157枠必要です。チェストは1個27枠なので、157 ÷ 27を切り上げて<b>チェスト6個</b>が必要となります。ラージチェストなら54枠なので3個分です。</p>
+<h2>チェスト・ラージチェスト・シュルカーボックスの容量</h2>
+<ul>
+<li><b>チェスト・樽・シュルカーボックス：</b>27スロット。1スタック64個なら最大1,728個。</li>
+<li><b>ラージチェスト：</b>54スロット。1スタック64個なら最大3,456個。</li>
+<li><b>通常の持ち物欄：</b>防具欄・オフハンドを除いた36スロット。1スタック64個なら最大2,304個。</li>
+</ul>
+<p>シュルカーボックス自体にはシュルカーボックスを入れられません。このツールは<b>1種類のアイテム</b>を収納するときの容器数の目安を表示します。アイテムごとにスタック上限が違う混合収納や、入れ子状の容器を使う特殊な構成は別計算です。</p>
+<h2>よくある質問</h2>
+<details><summary>1ラージチェストには何スタック入る？</summary><p>54スロットなので最大54スタック入ります。64個まで重ねられるアイテムなら合計3,456個です。</p></details>
+<details><summary>エンダーパールは64個で1スタック？</summary><p>いいえ。エンダーパールは16個まで重ねられるため、「16個」を選んで計算してください。</p></details>
+<details><summary>自動仕分け機用に計算できる？</summary><p>同じアイテムの必要スロット数の概算に使えます。ただし、仕分け機の回路やホッパーの構造によって必要な追加スペースは異なります。</p></details>
+<p class="tool-smallprint">参照：<a href="https://minecraft.wiki/w/Chest" target="_blank" rel="noopener noreferrer">Minecraft Wiki「チェストの容量」</a>、<a href="https://minecraft.wiki/w/Shulker_Box" target="_blank" rel="noopener noreferrer">「シュルカーボックス」</a>。本サイトはMinecraft非公式の独立した無料計算ツールです。</p>
+</section>
+<section class="tool-article"><h2>関連コンテンツ</h2><div class="tool-links"><a class="tool-link" href="/minecraft/tools/">便利ツール一覧 →</a><a class="tool-link" href="/minecraft/tools/nether-coordinates.html">ネザー座標計算 →</a><a class="tool-link" href="/minecraft/mods/">MOD導入・設定ガイド →</a></div></section>
+<p class="mc-background-credit">背景：<a href="https://www.minecraft.net/en-us/article/trails---tales-update-now-available-bedrock" target="_blank" rel="noopener noreferrer">Minecraft公式ゲーム画像</a> ／ 非公式ガイド</p>
+</main><footer class="ml-footer"><div class="ml-shell"><div class="ml-links"><a href="/">総合トップ</a><a href="/minecraft/">マイクラTOP</a><a href="/minecraft/strategy/">攻略情報</a><a href="/privacy.html">プライバシー</a></div><p>MULTI LAB GUIDE © 2026　Minecraft非公式攻略サイト</p><p>Amazonのアソシエイトとして、MULTI LAB GUIDEは適格販売により収入を得ています。</p></div></footer>
+<script src="/interstitial-loader.js"></script>
+</body></html>
