@@ -394,3 +394,66 @@ body.mc-ambient .mlg-site-header[data-section="minecraft"] .mlg-site-context-lin
  border:2px solid #083b16!important;box-shadow:inset 0 -3px 0 #083b16!important;
  font-weight:850!important;opacity:1!important;
 }
+
+/* Minecraft green-button palette unification (2026-10-29).
+   Match the latest-update CTA: vivid green #00BD21, white button text.
+   Scope only to Minecraft actions, not ordinary links or informational chips. */
+body.mc-ambient :is(
+  .mlg-site-header[data-section="minecraft"] .mlg-site-context-link,
+  a.ml-btn:not(.ml-btn-alt),
+  a.md-mod-link,
+  .md-next,.md-prev,.md-reset,.md-search-clear,.md-primary,.md-secondary,
+  .button-primary,.button-secondary,.button-white,.result-reset,
+  .ml-guide-nav a,
+  .md-choice-inner,.choice-body,
+  button.ency-button,
+  button.tool-action,
+  a.hard-rank-cta,a.hard-rank-hero-button,
+  .hard-rank-footer-panel a,
+  .md-rank-switcher .md-tab[aria-selected="true"],
+  .md-tabs>.md-tab[aria-selected="true"],
+  .md-rank-switcher .md-tab:is(:hover,:focus-visible),
+  .md-tabs>.md-tab:is(:hover,:focus-visible),
+  .md-page-number.is-active,
+  .md-page-number:is(:hover,:focus-visible),
+  .md-page-prev:is(:hover,:focus-visible),
+  .md-page-next:is(:hover,:focus-visible),
+  .ency-category:is(:hover,:focus-visible,.is-current),
+  .ml-card>.ml-arrow
+){
+  background:#00bd21!important;
+  color:#fff!important;
+  border-color:#00bd21!important;
+  text-shadow:none!important;
+}
+/* The Minecraft landing-page buttons are also green when marked "alt". */
+body.ml-body.mc-ambient .ml-hero .ml-actions a:is(.ml-btn,.ml-btn-alt),
+body.ml-body.mc-ambient .ml-hero .ml-actions a:is(.ml-btn,.ml-btn-alt):is(:hover,:focus-visible){
+  background:#00bd21!important;border-color:#00bd21!important;color:#fff!important;
+}
+/* Descendant text formerly received an independent dark-color override. */
+body.mc-ambient .md-rank-switcher .md-tab[aria-selected="true"] :is(.md-tab-title,.md-tab-top100,.md-tab-top100 strong),
+body.mc-ambient .md-rank-switcher .md-tab:is(:hover,:focus-visible) :is(.md-tab-title,.md-tab-top100,.md-tab-top100 strong),
+body.mc-ambient .md-tabs>.md-tab[aria-selected="true"] :is(span,b,strong),
+body.mc-ambient .md-page-number.is-active .md-page-range,
+body.mc-ambient .md-page-number:is(:hover,:focus-visible) .md-page-range,
+body.mc-ambient .choice-body :is(b,small),
+body.mc-ambient .mlg-site-header[data-section="minecraft"] .mlg-site-context-link[aria-current],
+body.mc-ambient .ency-category:is(:hover,:focus-visible,.is-current) :is(b,small){
+  color:#fff!important;
+}
+/* The icon-only white squares should stay dark for visibility. */
+body.mc-ambient .md-rank-switcher .md-tab>.md-tab-symbol,
+body.mc-ambient .md-rank-switcher .md-tab>.md-tab-symbol svg{
+  color:#17512e!important;
+}
+/* Ordinary non-active pagination stays white with dark text. */
+body.mc-ambient .md-page-number:not(.is-active):not(:hover):not(:focus-visible) .md-page-range{
+  color:#235338!important;
+}
+/* Keep the current section recognizable even with standardized white text. */
+body.mc-ambient .mlg-site-header[data-section="minecraft"] .mlg-site-context-link[aria-current]{
+  border:2px solid #083b16!important;box-shadow:inset 0 -3px 0 #083b16!important;
+}
+/* Disabled actions remain visibly unavailable. */
+body.mc-ambient :is(button,.button,.md-control):disabled{opacity:.43!important;cursor:not-allowed!important}
