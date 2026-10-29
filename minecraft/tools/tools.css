@@ -56,3 +56,11 @@ body.mc-ambient .tool-ad .as-slot-label{font-size:11px;}
 @media(max-width:780px){body.mc-ambient .tool-layout{grid-template-columns:minmax(0,1fr)}body.mc-ambient .tool-index-grid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:460px){body.mc-ambient .tool-fields{grid-template-columns:repeat(2,minmax(0,1fr))}body.mc-ambient .tool-fields .tool-field:last-child:nth-child(odd){grid-column:1/-1}body.mc-ambient .tool-hero{padding:25px 20px!important}body.mc-ambient .tool-panel{padding:18px}}
 @media(prefers-reduced-motion:reduce){body.mc-ambient .tool-switch{transition:none}}
+
+
+/* Tools: align actions and button lettering to the Minecraft green CTA. */
+body.mc-ambient button.tool-action,
+body.mc-ambient button.tool-action:is(:hover,:focus-visible){
+ background:#00bd21!important;border-color:#00bd21!important;color:#fff!important;
+ text-shadow:none!important;
+}
