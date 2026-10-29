@@ -74,12 +74,13 @@
  const pretranslated={en:new Map(),ko:new Map(),zh:new Map()};
  let root,trigger,menu,observer,scheduled=false;
  const records=new WeakMap();
- let originalTitle=document.title;
+ let originalTitle=document.title,lastTitle=originalTitle;
  function hydrateCatalog(){
    const d=window.MLG_I18N_CATALOG||{};
+   const encyclopedia=location.pathname.startsWith('/minecraft/strategy/items/')?(window.MLG_ENCYCLOPEDIA_I18N||{}):{};
    for(const l of ['en','ko','zh']) {
      const items=d[l]&&typeof d[l]==='object'?d[l]:{};
-     pretranslated[l]=new Map(Object.entries(items));
+     pretranslated[l]=new Map([...Object.entries(items),...Object.entries(encyclopedia[l]||{})]);
    }
    repaint();
  }
@@ -90,6 +91,15 @@
    s.async=true;s.src='/i18n/catalog.js?v='+Math.floor(Date.now()/300000);
    s.onload=hydrateCatalog;
    s.onerror=()=>{console.warn('Pretranslated language catalog was not available.');};
+   document.head.appendChild(s);
+ }
+ function preloadEncyclopediaCatalog(){
+   if(!location.pathname.startsWith('/minecraft/strategy/items/'))return;
+   if(window.MLG_ENCYCLOPEDIA_I18N){hydrateCatalog();return;}
+   const s=document.createElement('script');s.async=true;
+   s.src='/i18n/encyclopedia-locale.js?v=20261029locale01';
+   s.onload=hydrateCatalog;
+   s.onerror=()=>console.warn('Item language dictionary was not available.');
    document.head.appendChild(s);
  }
  const japanese=s=>/[\u3040-\u30ff\u3400-\u9fff]/.test(s);
@@ -115,6 +125,22 @@
    if(b)a.push(b);
    return a;
  }
+ function translateEncyclopediaDynamic(source){
+  if(!location.pathname.startsWith('/minecraft/strategy/items/')||lang==='ja')return '';
+  const dict=pretranslated[lang];const word=s=>dict.get(s)||s;
+  let m;
+  if((m=source.match(/^([^（）]+)（英語名：(.+?)）は、Minecraftの「(.+?)」に分類されるアイテム・ブロックです。追加バージョン：(.+?)。1スロットに持てる上限は(\\d+)個です。$/))){
+   const item=word(m[1]),category=word(m[3]),release=m[4],max=m[5];
+   if(lang==='en')return item+' ('+m[2]+') is a Minecraft '+category+' item/block. Added in '+release+'. Stack size: '+max+'.';
+   if(lang==='ko')return item+' ('+m[2]+')은(는) 마인크래프트의 '+category+' 아이템/블록입니다. 추가 버전: '+release+'. 최대 중첩: '+max+'개.';
+   return item+'（'+m[2]+'）属于 Minecraft 的'+category+'。加入版本：'+release+'。最大堆叠：'+max+'。';
+  }
+  if((m=source.match(/^掲載アイテム：([\\d,]+)件$/)))return lang==='en'?'Listed items: '+m[1]:lang==='ko'?'등록 아이템: '+m[1]+'개':'已收录物品：'+m[1]+' 件';
+  if((m=source.match(/^「(.+)」の検索結果：([\\d,]+)件$/)))return lang==='en'?m[1]+': '+m[2]+' results':lang==='ko'?'「'+m[1]+'」 검색 결과: '+m[2]+'개':'“'+m[1]+'”搜索结果：'+m[2]+' 条';
+  if((m=source.match(/^もっと表示（残り([\\d,]+)件）$/)))return lang==='en'?'Show more ('+m[1]+' left)':lang==='ko'?'더 보기 (남은 '+m[1]+'개)':'显示更多（剩余 '+m[1]+' 件）';
+  if((m=source.match(/^([\\d,]+)種類の一覧を見る ›$/)))return lang==='en'?'Browse '+m[1]+' items ›':lang==='ko'?m[1]+'종 보기 ›':'查看 '+m[1]+' 种物品 ›';
+  return '';
+ }
  function translate(source){
    if(lang==='ja'||!japanese(source))return source;
    const match=source.match(/^(\s*)([\s\S]*?)(\s*)$/);
@@ -123,6 +149,8 @@
    const map=pretranslated[lang];
    const exact=standard[lang].get(text)||map.get(text);
    if(exact)return match[1]+exact+match[3];
+   const dynamic=translateEncyclopediaDynamic(text);
+   if(dynamic)return match[1]+dynamic+match[3];
    const pieces=segment(text);
    let changed=false;
    const result=pieces.map(s=>{
@@ -159,8 +187,10 @@
       const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);
       let node,n=0;
       while((node=walker.nextNode())&&n++<25000)updateNode(node);
+      if(document.title!==lastTitle && document.title!==originalTitle)originalTitle=document.title;
       const title=translate(originalTitle);
       if(document.title!==title)document.title=title;
+      lastTitle=title;
    }finally{if(observer)observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['title','placeholder','aria-label','alt']});}
  }
  function repaint(){if(!document.body)return;scan();}
@@ -226,6 +256,7 @@
    });
    repaint();
    preloadCatalog();
+   preloadEncyclopediaCatalog();
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});
  else mount();
