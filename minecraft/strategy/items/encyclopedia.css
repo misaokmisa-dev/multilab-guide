@@ -19,7 +19,7 @@ body.mc-ambient .ency-section{background:#fff!important;border:1px solid #d5e6d9
 body.mc-ambient .ency-section h2,body.mc-ambient .ency-panel h2{font-size:clamp(19px,2.5vw,25px);color:#173d23!important;margin:0 0 14px!important;line-height:1.45;text-shadow:none!important}
 body.mc-ambient .ency-section .ency-desc{color:#425846!important;font-size:13px;line-height:1.75;margin:0 0 15px}
 body.mc-ambient .ency-categories{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0}
-body.mc-ambient .ency-category{background:#eef9f0!important;color:#194d29!important;text-decoration:none!important;border:1.5px solid #c0e0c9;border-radius:11px;padding:13px 14px;display:flex;flex-direction:column;gap:3px;min-width:0}
+body.mc-ambient .ency-category{background:#eef9f0!important;color:#194d29!important;text-decoration:none!important;border:1.5px solid #c0e0c9;border-radius:11px;padding:13px 14px;display:flex;flex-direction:row;align-items:center;gap:11px;min-height:82px;min-width:0}
 body.mc-ambient .ency-category b{font-size:13px;color:#174329!important;overflow-wrap:anywhere}
 body.mc-ambient .ency-category small{font-size:11px;color:#486b4e!important}
 body.mc-ambient .ency-category:hover,body.mc-ambient .ency-category:focus-visible,body.mc-ambient .ency-category.is-current{background:#00bd21!important;border-color:#0b5121!important;color:#0b2714!important;box-shadow:inset 0 -2px 0 #0b5121}
@@ -69,3 +69,20 @@ body.mc-ambient .ency-attribution{background:#fff!important;color:#455d4b!import
 body.mc-ambient .ency-attribution a{color:#175b32!important}
 @media(max-width:900px){body.mc-ambient .ency-categories{grid-template-columns:repeat(3,minmax(0,1fr))}body.mc-ambient .ency-grid,body.mc-ambient .ency-uses{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){body.mc-ambient .ency-shell{width:calc(100% - 20px)}body.mc-ambient .ency-categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}body.mc-ambient .ency-grid,body.mc-ambient .ency-uses{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}body.mc-ambient a.ency-item-link{flex-direction:column;justify-content:center;text-align:center;padding:11px 7px;gap:6px}body.mc-ambient .ency-item-link strong{font-size:12px}body.mc-ambient .ency-item-link small{font-size:9px}body.mc-ambient .ency-detail-hero{gap:12px}body.mc-ambient .ency-detail-hero .ency-icon{--icon-size:74px!important}body.mc-ambient .ency-craft-grid{grid-template-columns:repeat(3,49px);grid-template-rows:repeat(3,49px);gap:2px}body.mc-ambient .ency-craft-row{gap:8px}body.mc-ambient .ency-craft-cell .ency-icon{width:39px;height:39px}body.mc-ambient .ency-hero{padding:25px 20px}}
+
+
+/* Each category uses an official Minecraft item/block texture (not emoji). */
+body.mc-ambient .ency-category .ency-icon{
+  flex:0 0 52px!important;width:52px!important;height:52px!important;
+  border-radius:10px!important;background:#e3f0e1!important;border:1px solid #cbdcc9!important;
+}
+body.mc-ambient .ency-category .ency-icon img{width:85%;height:85%;image-rendering:pixelated}
+body.mc-ambient .ency-category-copy{display:flex;flex-direction:column;gap:4px;min-width:0;text-align:left}
+body.mc-ambient .ency-category-copy b{font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+body.mc-ambient .ency-category-copy small{font-size:11px;line-height:1.35}
+@media(max-width:560px){
+ body.mc-ambient .ency-category{gap:7px;padding:10px 8px;min-height:78px}
+ body.mc-ambient .ency-category .ency-icon{flex:0 0 43px!important;width:43px!important;height:43px!important}
+ body.mc-ambient .ency-category-copy b{font-size:12px}
+ body.mc-ambient .ency-category-copy small{font-size:10px}
+}
