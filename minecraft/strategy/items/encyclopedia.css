@@ -123,3 +123,19 @@ body.mc-ambient #ency-detail .ency-detail-joined > .ency-panel + .ency-panel{
 body.mc-ambient #ency-detail .ency-detail-joined > .ency-panel > h2{
  margin-top:0!important;
 }
+
+
+/* Official Minecraft green CTA palette: white text on #00BD21. */
+body.mc-ambient button.ency-button,
+body.mc-ambient button.ency-button:is(:hover,:focus-visible){
+ background:#00bd21!important;border-color:#00bd21!important;color:#fff!important;
+ text-shadow:none!important;
+}
+body.mc-ambient .ency-category:is(:hover,:focus-visible,.is-current){
+ background:#00bd21!important;border-color:#00bd21!important;color:#fff!important;
+}
+body.mc-ambient .ency-category:is(:hover,:focus-visible,.is-current) :is(b,small){
+ color:#fff!important;
+}
+/* Preserve dark readable glyphs in the separate pale item-icon tile. */
+body.mc-ambient .ency-category:is(:hover,:focus-visible,.is-current) .ency-icon-alt{color:#306442!important}
