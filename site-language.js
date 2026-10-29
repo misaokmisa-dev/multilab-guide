@@ -97,7 +97,7 @@
    if(!location.pathname.startsWith('/minecraft/strategy/items/'))return;
    if(window.MLG_ENCYCLOPEDIA_I18N){hydrateCatalog();return;}
    const s=document.createElement('script');s.async=true;
-   s.src='/i18n/encyclopedia-locale.js?v=20261029locale01';
+   s.src='/i18n/encyclopedia-locale.js?v=20261029locale02';
    s.onload=hydrateCatalog;
    s.onerror=()=>console.warn('Item language dictionary was not available.');
    document.head.appendChild(s);
