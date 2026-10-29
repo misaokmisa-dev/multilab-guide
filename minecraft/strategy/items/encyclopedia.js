@@ -181,11 +181,9 @@ function initListings(){
  const category=document.body.dataset.category||"";
  const categoryArea=document.querySelector("#ency-categories")?.closest(".ency-section");
  const resultsArea=result?.closest(".ency-section");
- // On a type-specific page, show its item list first and the type navigation at the page bottom.
+ // On a type-specific page, show its item list first, followed by type navigation and then the guide.
  if(category && categoryArea && resultsArea){
-  const credit=document.querySelector("main.ency-shell > .mc-background-credit");
-  if(credit)credit.before(categoryArea);
-  else resultsArea.after(categoryArea);
+  resultsArea.after(categoryArea);
  }
  const resultsHeading=resultsArea?.querySelector("h2");
  const originalResultsHeading=resultsHeading?.textContent||"アイテム一覧";
