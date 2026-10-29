@@ -300,7 +300,6 @@ function initDetail(){
  if(!recipes.length){
   const obtain=q("section","ency-panel");obtain.append(q("h2","","入手方法・手順"));
   let steps=specificHow[item.name];
-  if(!steps&&recipes.length){steps=["上のクラフトレシピに記載された材料を集めます。","インベントリまたは作業台で材料を配置し、完成品を取り出します。","材料の詳しい集め方は、各材料名のリンク先で確認できます。"];}
   if(!steps){steps=[typeSuggestions[item.cat]||typeSuggestions.other,"参照先やゲーム内レシピブックを確認して、利用中のエディション・バージョンでの条件を調べてください。"];}
   const ol=q("ol","ency-steps");steps.forEach(s=>ol.append(step(s)));obtain.append(ol);
   const ref=q("p","ency-muted");ref.append(document.createTextNode("参考："));
