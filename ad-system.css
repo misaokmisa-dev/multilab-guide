@@ -225,3 +225,14 @@
   .as-fixed-bottom-content{max-width:100%;overflow-x:clip;}
   .as-fixed-bottom-close{right:4px;top:-23px;}
 }
+
+
+/* Auto-inserted inventory/guide advertising: no blank space if unfilled. */
+.mlg-auto-ninja[hidden],.mlg-auto-ninja.as-empty{display:none!important}
+.mlg-auto-ninja-frame{display:block;border:0;max-width:100%;background:transparent}
+.as-slot.mlg-auto-ninja{width:max-content;max-width:100%;margin-block:14px 24px}
+.as-slot.mlg-auto-ninja .as-ad-content{max-width:100%;overflow:hidden}
+.as-rail-right.mlg-auto-ninja .as-ad-content{height:600px;min-height:0}
+.as-fixed-bottom.mlg-auto-ninja{pointer-events:none}
+.as-fixed-bottom.mlg-auto-ninja .as-fixed-bottom-content{width:auto;max-width:100%}
+@media(max-width:760px){.as-slot.as-top.mlg-auto-ninja{width:100%}.mlg-auto-ninja .mlg-auto-ninja-frame{max-width:100%}}
