@@ -39,7 +39,20 @@
    if(!platform)return;
    monitored.add(a);
    if(io)io.observe(a);
-   a.addEventListener('click',()=>send('click',platform,label(a)),{capture:true});
+   a.addEventListener('click',()=>{
+     const item=label(a);
+     send('click',platform,item);
+     // A separate GA4 event allows daily link-click comparisons even if
+     // Cloudflare's private affiliate-summary token has not been configured.
+     // No URL query, visitor ID, or personal information is transmitted.
+     if(typeof window.gtag==='function'){
+       window.gtag('event','mlg_affiliate_click',{
+         link_platform:platform,
+         page_path:location.pathname,
+         link_label:item
+       });
+     }
+   },{capture:true});
   });
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',add,{once:true});else add();
