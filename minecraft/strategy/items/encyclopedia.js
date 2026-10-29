@@ -612,6 +612,28 @@ function acquisitionSteps(item){
   "地下に自然生成されるアメジストジオード内の芽生えたアメジストを探します。",
   "育ったアメジストの芽・塊をシルクタッチ付きのツルハシで壊し、ブロックとして回収します。"
  ];
+ // Each of the 23 pottery sherds comes from a specific archaeological site.
+ const sherdSites={
+  desert_pyramid:["archer","miner","prize","skull"],
+  desert_well:["arms_up","brewer"],
+  warm_ocean_ruins:["angler","shelter","snort"],
+  cold_ocean_ruins:["blade","explorer","mourner","plenty"],
+  trail_ruins:["burn","danger","friend","heart","heartbreak","howl","sheaf"],
+  trial_chambers:["flow","guster","scrape"]
+ };
+ if(n.endsWith("_pottery_sherd")){
+  const variant=n.slice(0,-"_pottery_sherd".length);
+  const place=Object.entries(sherdSites).find(([key,values])=>values.includes(variant))?.[0];
+  const siteText={
+   desert_pyramid:["砂漠のピラミッドを探し、隠れた部屋の怪しげな砂を見つけます。","怪しげな砂をブラシで発掘します。"],
+   desert_well:["砂漠の井戸の周囲にある怪しげな砂を探します。","怪しげな砂をブラシで発掘します。"],
+   warm_ocean_ruins:["暖かい海の海底遺跡にある怪しげな砂を探します。","怪しげな砂をブラシで発掘します。"],
+   cold_ocean_ruins:["冷たい海の海底遺跡にある怪しげな砂利を探します。","怪しげな砂利をブラシで発掘します。"],
+   trail_ruins:["地中に埋まったトレイル遺跡を探し、怪しげな砂利を見つけます。","怪しげな砂利をブラシで発掘します。"],
+   trial_chambers:["試練の間（トライアルチャンバー）にある模様付きの飾り壺を探します。","対象模様の壺をシルクタッチなしの道具で壊すと、その模様の壺の欠片を回収できます。"]
+  };
+  if(place)return [...siteText[place],"この模様は対象の場所で見つかる戦利品の一つです。"];
+ }
  return [typeSuggestions[item.cat]||typeSuggestions.other];
 }
 
