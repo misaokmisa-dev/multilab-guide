@@ -691,9 +691,12 @@ function initDetail(){
  part.append(tag,name,en);
  if(item.release==="26.4-snapshot-6"){part.append(q("p","ency-preview-status","26.4 開発版の発表済み要素・正式実装前。仕様と入手方法は変更される可能性があります。"));}
  hero.append(part);root.append(hero);
+ // Keep all explanatory sections in one continuous card. Only the
+ // separate "他のアイテムも調べる" navigation panel remains independent.
+ const joined=q("div","ency-detail-joined");root.append(joined);
  const summary=q("section","ency-panel");summary.append(q("h2","","概要"));
  summary.append(q("p","",item.jp+"（英語名："+item.en+"）は、Minecraftの「"+groupMap.get(item.cat)?.title+"」に分類されるアイテム・ブロックです。追加バージョン："+item.release+"。1スロットに持てる上限は"+item.stack+"個です。"));
- root.append(summary);
+ joined.append(summary);
  const recipes=RECIPES[String(item.id)]||[];
  // Items without a crafting-table recipe have no crafting section.
  if(recipes.length){
@@ -709,7 +712,7 @@ function initDetail(){
   steps.append(step(first.s&& (first.s.length>2||first.s.some(row=>row.length>2))?"作業台を置いて、3×3のクラフト画面を開きます。":"インベントリのクラフト欄、または作業台のクラフト画面を開きます。"));
   steps.append(step(first.s?"上の3×3配置図の位置に材料を並べます。空白のマスには何も入れません。":"上に示した材料をクラフト欄に入れます。配置の順番は問いません。"));
   steps.append(step("完成した「"+item.jp+"」×"+(first.c||1)+"を取り出します。"));craft.append(steps);
-  root.append(craft);
+  joined.append(craft);
  }
  // Only items without a crafting recipe need an acquisition section.
  if(!recipes.length){
@@ -717,7 +720,7 @@ function initDetail(){
   const steps=item.id>1504?newItemAcquisition(item):acquisitionSteps(item);
   const ol=q("ol","ency-steps");steps.forEach(s=>ol.append(step(s)));obtain.append(ol);
   const ref=q("p","ency-muted");ref.append(document.createTextNode("参考："));
-  const a=q("a");a.href="https://minecraft.wiki/w/"+encodeURIComponent(item.name);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Minecraft Wiki（"+item.jp+"）";ref.append(a);obtain.append(ref);root.append(obtain);
+  const a=q("a");a.href="https://minecraft.wiki/w/"+encodeURIComponent(item.name);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Minecraft Wiki（"+item.jp+"）";ref.append(a);obtain.append(ref);joined.append(obtain);
  }
 
  const use=q("section","ency-panel");use.append(q("h2","","使い道・関連アイテム"));
@@ -738,7 +741,11 @@ function initDetail(){
   const pa=a.name.split("_")[0]===item.name.split("_")[0]?1:0,pb=b.name.split("_")[0]===item.name.split("_")[0]?1:0;return pb-pa||a.id-b.id;
  }).slice(0,8);
  if(related.length){use.append(q("h3","","同じカテゴリのアイテム"));const list=q("div","ency-uses");related.forEach(i=>list.append(itemAnchor(i)));use.append(list);}
- root.append(use);
+ joined.append(use);
+ // Rewrite the old server-rendered heading without changing its links.
+ document.querySelectorAll('main .ency-panel h2').forEach(el=>{
+  if(el.textContent.trim()==="ほかのアイテムも調べる")el.textContent="他のアイテムも調べる";
+ });
  document.querySelectorAll("[data-category-name]").forEach(el=>{el.textContent=groupMap.get(item.cat)?.title||"";if(el.tagName==="A")el.href=B+"category/"+item.cat+".html";});
  document.querySelector("#ency-hero-name")?.replaceChildren(document.createTextNode(item.jp));
 }
