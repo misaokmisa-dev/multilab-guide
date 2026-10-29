@@ -60,6 +60,10 @@ def extract_site_strings():
     pages=0
     for path in sorted(ROOT.rglob("*.html")):
         if "admin" in path.parts or "i18n" in path.parts:continue
+        # Item details share a server template. Their unique names come from
+        # encyclopedia-locale.js, and descriptions/titles use live patterns.
+        # Avoid re-translating thousands of copies of the same structure.
+        if path.parent == ROOT/"minecraft/strategy/items/detail" and path.name!="new.html":continue
         reader=Extractor()
         reader.feed(path.read_text(encoding="utf-8"))
         strings.update(reader.texts)
@@ -67,6 +71,12 @@ def extract_site_strings():
     literal=re.compile(r"""(?:'([^'\\\r\n]{2,230})'|"([^"\\\r\n]{2,230})")""")
     for path in sorted(ROOT.rglob("*.js")):
         if {"i18n","admin","worker"}.intersection(path.parts) or path.name in ("site-language.js","site-language-data.js"):continue
+        # Data files contain item names, not translatable UI sentences.
+        # Minecraft's 1,672 names are already in encyclopedia-locale.js.
+        if path.parent == ROOT/"minecraft/strategy/items" and path.name in (
+            "items-data.js","items-2026-data.js","recipes-data.js",
+            "recipes-2026-data.js","texture-index.js","texture-index-2026.js"
+        ):continue
         for found in literal.finditer(path.read_text(encoding="utf-8")):
             raw=(found.group(1) or found.group(2) or "").strip()
             if CJK.search(raw) and "$"+"{" not in raw and not any(c in raw for c in "<>{}"):
