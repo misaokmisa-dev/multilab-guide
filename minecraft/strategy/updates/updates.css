@@ -128,3 +128,20 @@ body.upd-detail-page .upd-hero .upd-hero-sub{font-size:clamp(18px,2vw,21px)!impo
  body.upd-body .upd-archive-date{display:inline}
  body.upd-detail-page .upd-panel p,body.upd-detail-page .upd-feature p,body.upd-detail-page .upd-list-rows p{font-size:16.5px!important}
 }
+
+/* Editorial update hero: full-width official Minecraft screenshot, no illustration tiles */
+body.upd-body .upd-hero{display:block!important;position:relative!important;isolation:isolate;background-color:#183746!important;background-image:linear-gradient(90deg,rgba(4,18,29,.94),rgba(5,25,33,.8) 43%,rgba(6,22,27,.13)),var(--upd-art)!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;min-height:325px!important;padding:clamp(27px,4vw,50px)!important}
+body.upd-body .upd-hero::before{display:none!important}
+body.upd-body .upd-hero-copy{max-width:min(660px,100%)!important}
+body.upd-body .upd-hero-visual{display:none!important}
+body.upd-body .upd-feature-grid{grid-template-columns:minmax(0,1fr)!important}
+body.upd-body .upd-hot{display:none!important}
+body.upd-body .upd-section-head h2{font-size:clamp(31px,4vw,41px)!important;line-height:1.3!important;font-weight:950!important;letter-spacing:-.04em!important;border-left:6px solid #178c59!important;padding-left:18px!important;margin-bottom:20px!important;color:#123e29!important}
+body.upd-body .upd-feature h3{font-size:clamp(19px,2.3vw,24px)!important;line-height:1.55!important;font-weight:850!important;border-left:3px solid #b2d7c1!important;padding-left:14px!important;margin:8px 0 13px!important;color:#1a5337!important}
+body.upd-body .upd-feature h3 strong{font:inherit!important;color:inherit!important}
+body.upd-body .upd-feature-count{font-size:12px!important;color:#467967!important}
+body.upd-detail-page .upd-feature{border-top:1px solid #e0eae3!important}
+body.upd-detail-page .upd-feature:first-child{border-top:0!important}
+body.upd-detail-page .upd-archive-heading h2{border:0!important;padding-left:0!important;font-size:clamp(22px,3vw,28px)!important;color:#fff!important;margin:0!important}
+body.upd-detail-page .upd-panel p,body.upd-detail-page .upd-feature p{font-size:18px!important}
+@media(max-width:760px){body.upd-body .upd-hero{background-image:linear-gradient(90deg,rgba(4,18,29,.91),rgba(4,21,29,.7)),var(--upd-art)!important;min-height:290px!important}body.upd-body .upd-section-head h2{font-size:30px!important}}
