@@ -28,10 +28,20 @@ for lang in ("en","ko","zh"):
     print(f"{lang}: {count}/{source_count} original phrases + reviewed terms")
 public_pages=[p for p in ROOT.rglob("*.html") if "admin" not in p.parts]
 assert len(public_pages)>=25, "Unexpectedly few public pages"
-missing=[str(p.relative_to(ROOT)) for p in public_pages if "/site-language.js?" not in p.read_text(encoding="utf-8")]
+# A noindex meta-refresh redirect has no navigable content and immediately
+# sends the visitor to the translated destination. It needs no selector.
+def requires_language_switch(path: Path) -> bool:
+    page = path.read_text(encoding="utf-8")
+    is_redirect = bool(re.search(r'<meta\\s+http-equiv=["\\\']refresh["\\\']', page, re.I)) and bool(
+        re.search(r'<meta\\s+name=["\\\']robots["\\\']\\s+content=["\\\'][^"\\\']*noindex', page, re.I)
+    )
+    return not is_redirect
+
+pages_to_check=[p for p in public_pages if requires_language_switch(p)]
+missing=[str(p.relative_to(ROOT)) for p in pages_to_check if "/site-language.js?" not in p.read_text(encoding="utf-8")]
 assert not missing, "No language switch on public page(s): "+",".join(missing)
 js=(ROOT/"site-language.js").read_text(encoding="utf-8")
 assert "/api/site-translate" not in js, "Runtime translation must never be reintroduced"
 assert "MLG_I18N_CATALOG" in js and "localStorage" in js, "Static switcher missing"
 assert all(x in js for x in ("ja:","en:","ko:","zh:")), "Missing supported languages"
-print(f"PASS: {len(public_pages)} public pages include language selector; all locales have pretranslated bundles")
+print(f"PASS: {len(pages_to_check)} public content pages include language selector ({len(public_pages)-len(pages_to_check)} redirect(s) excluded); all locales have pretranslated bundles")
