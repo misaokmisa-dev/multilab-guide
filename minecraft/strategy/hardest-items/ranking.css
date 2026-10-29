@@ -99,3 +99,13 @@ body.mc-ambient .hard-rank-image img{width:64px;height:64px}
 body.mc-ambient .hard-rank-copy h3{font-size:15px}
 }
 @media(prefers-reduced-motion:reduce){body.mc-ambient .hard-rank-card,body.mc-ambient a.hard-rank-cta,body.mc-ambient a.hard-rank-hero-button{transition:none;transform:none!important}}
+
+
+/* Keep every difficulty-ranking action consistent with the latest-update green CTA. */
+body.mc-ambient .hard-rank-shell a:is(.hard-rank-hero-button,.hard-rank-cta),
+body.mc-ambient .hard-rank-shell .hard-rank-footer-panel a,
+body.mc-ambient .hard-rank-shell a:is(.hard-rank-hero-button,.hard-rank-cta):is(:hover,:focus-visible),
+body.mc-ambient .hard-rank-shell .hard-rank-footer-panel a:is(:hover,:focus-visible){
+ background:#00bd21!important;border-color:#00bd21!important;color:#fff!important;
+ text-shadow:none!important;
+}
