@@ -151,14 +151,27 @@ function itemAnchor(i,cls="ency-item-link"){
  const t=document.createElement("span");const b=document.createElement("strong");b.textContent=i.jp;const small=document.createElement("small");small.textContent=i.name;
  t.append(b,small);a.append(t);return a;
 }
+const categoryRepresentative={
+ building:"oak_planks",nature:"oak_sapling",materials:"diamond",
+ weapons:"diamond_sword",tools:"diamond_pickaxe",armor:"diamond_chestplate",
+ redstone:"redstone",food:"apple",travel:"minecart",
+ decoration:"painting",magic:"ender_pearl",mobs:"zombie_spawn_egg",other:"barrier"
+};
 function renderCategories(el,active){
  if(!el)return;
  for(const c of groups){
   const a=document.createElement("a");a.className="ency-category"+(c.id===active?" is-current":"");
   a.href=B+"category/"+c.id+".html";
+  const sample=bySlug.get(categoryRepresentative[c.id]);
+  if(sample){
+   const picture=icon(sample,52);
+   picture.setAttribute("aria-hidden","true");
+   a.append(picture);
+  }
+  const copy=document.createElement("span");copy.className="ency-category-copy";
   const b=document.createElement("b");b.textContent=c.title;
   const sm=document.createElement("small");sm.textContent=items.filter(i=>i.cat===c.id).length+"種類";
-  a.append(b,sm);el.append(a);
+  copy.append(b,sm);a.append(copy);el.append(a);
  }
 }
 function initListings(){
@@ -198,7 +211,7 @@ function renderRecipe(container,r){
  else{ingredients.slice(0,9).forEach((v,i)=>cells[i]=v);}
  cells.forEach(id=>{
   const cell=document.createElement("span");cell.className="ency-craft-cell";
-  if(id!==null&&byId.has(id)){const item=byId.get(id);const a=crossLink(item);a.className="ency-craft-link";a.append(icon(item,41));a.title=item.jp;cell.append(a);}
+  if(id!==null&&byId.has(id)){const item=byId.get(id);const a=document.createElement("a");a.href=itemUrl(item);a.className="ency-craft-link";a.setAttribute("aria-label",item.jp+"の詳細を見る");a.append(icon(item,41));cell.append(a);}
   grid.append(cell);
  });
  const row=document.createElement("div");row.className="ency-craft-row";row.append(grid);
@@ -259,9 +272,10 @@ function initDetail(){
  const summary=q("section","ency-panel");summary.append(q("h2","","概要"));
  summary.append(q("p","",item.jp+"（英語名："+item.en+"）は、Minecraftの「"+groupMap.get(item.cat)?.title+"」に分類されるアイテム・ブロックです。1スロットに持てる上限は"+item.stack+"個です。"));
  root.append(summary);
- const craft=q("section","ency-panel");craft.append(q("h2","","作り方・クラフトレシピ（3×3）"));
  const recipes=RECIPES[String(item.id)]||[];
+ // Items without a crafting-table recipe have no crafting section.
  if(recipes.length){
+  const craft=q("section","ency-panel");craft.append(q("h2","","作り方・クラフトレシピ（3×3）"));
   const intro=q("p","","主な作業台レシピをゲーム内アイテムの画像で表示しています。材料の名前をクリックすると、そのアイテムの詳細ページへ移動できます。");
   craft.append(intro);
   recipes.slice(0,3).forEach(r=>renderRecipe(craft,r));
@@ -273,10 +287,8 @@ function initDetail(){
   steps.append(step(first.s&& (first.s.length>2||first.s.some(row=>row.length>2))?"作業台を置いて、3×3のクラフト画面を開きます。":"インベントリのクラフト欄、または作業台のクラフト画面を開きます。"));
   steps.append(step(first.s?"上の3×3配置図の位置に材料を並べます。空白のマスには何も入れません。":"上に示した材料をクラフト欄に入れます。配置の順番は問いません。"));
   steps.append(step("完成した「"+item.jp+"」×"+(first.c||1)+"を取り出します。"));craft.append(steps);
- }else{
-  craft.append(q("p","","このアイテムには、参照データに登録された作業台のクラフトレシピがありません。採掘・製錬・鍛冶台・石切台・取引・探索・Mobのドロップなど、別の方法で入手する種類もあります。"));
+  root.append(craft);
  }
- root.append(craft);
  const obtain=q("section","ency-panel");obtain.append(q("h2","","入手方法・手順"));
  let steps=specificHow[item.name];
  if(!steps&&recipes.length){steps=["上のクラフトレシピに記載された材料を集めます。","インベントリまたは作業台で材料を配置し、完成品を取り出します。","材料の詳しい集め方は、各材料名のリンク先で確認できます。"];}
