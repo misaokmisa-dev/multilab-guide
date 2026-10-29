@@ -139,6 +139,14 @@
   if((m=source.match(/^「(.+)」の検索結果：([\d,]+)件$/)))return lang==='en'?m[1]+': '+m[2]+' results':lang==='ko'?'「'+m[1]+'」 검색 결과: '+m[2]+'개':'“'+m[1]+'”搜索结果：'+m[2]+' 条';
   if((m=source.match(/^もっと表示（残り([\d,]+)件）$/)))return lang==='en'?'Show more ('+m[1]+' left)':lang==='ko'?'더 보기 (남은 '+m[1]+'개)':'显示更多（剩余 '+m[1]+' 件）';
   if((m=source.match(/^([\d,]+)種類の一覧を見る ›$/)))return lang==='en'?'Browse '+m[1]+' items ›':lang==='ko'?m[1]+'종 보기 ›':'查看 '+m[1]+' 种物品 ›';
+
+  if((m=source.match(/^(.+?)の入手方法・作り方・使い道(?: \| MULTI LAB GUIDE)?$/)))return lang==='en'?word(m[1])+' — Obtaining, crafting and uses':lang==='ko'?word(m[1])+' — 획득 방법·제작법·사용처':word(m[1])+'——获取、合成与用途';
+  if((m=source.match(/^(.+?)の作り方・入手方法 \| Minecraft (.+?) \| MULTI LAB GUIDE$/)))return lang==='en'?word(m[1])+' — Crafting & obtaining | Minecraft '+m[2]+' | MULTI LAB GUIDE':lang==='ko'?word(m[1])+' 제작·획득 방법 | Minecraft '+m[2]+' | MULTI LAB GUIDE':word(m[1])+' 合成与获取 | Minecraft '+m[2]+' | MULTI LAB GUIDE';
+  if((m=source.match(/^(.+?)のアイテム一覧(?:｜マイクラ全アイテム図鑑)?$/)))return lang==='en'?word(m[1])+' — Item list':lang==='ko'?word(m[1])+' — 아이템 목록':word(m[1])+'——物品列表';
+  if((m=source.match(/^(.+?) \/ Java (.+?)$/)))return word(m[1])+' / Java '+m[2];
+  if((m=source.match(/^完成した「(.+?)」×(\d+)を取り出します。$/)))return lang==='en'?'Collect '+m[2]+' × '+word(m[1])+'.':lang==='ko'?word(m[1])+' '+m[2]+'개를 회수합니다.':'取出 '+m[2]+' 个'+word(m[1])+'。';
+  if((m=source.match(/^このほかにも([\d,]+)種類のクラフトレシピで材料として使われます。$/)))return lang==='en'?'Used in '+m[1]+' additional recipes.':lang==='ko'?'다른 제작법 '+m[1]+'개에도 사용됩니다.':'还用于其他 '+m[1]+' 种合成配方。';
+  if((m=source.match(/^Minecraft Wiki（(.+?)）$/)))return 'Minecraft Wiki ('+word(m[1])+')';
   return '';
  }
  function translate(source){
