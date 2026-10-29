@@ -1,0 +1,65 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>マイクラ ネザー座標計算ツール｜8分の1・ポータル座標変換 | MULTI LAB GUIDE</title>
+<meta name="description" content="マイクラのネザー座標を一瞬で計算。オーバーワールドとネザーのX・Z座標を8分の1・8倍で相互変換。負の座標にも対応し、ポータル接続時の注意点も解説。">
+<link rel="canonical" href="https://mlabg.com/minecraft/tools/nether-coordinates.html">
+<meta property="og:type" content="website"><meta property="og:title" content="マイクラ ネザー座標計算ツール｜8分の1・ポータル座標変換"><meta property="og:description" content="マイクラのネザー座標を一瞬で計算。オーバーワールドとネザーのX・Z座標を8分の1・8倍で相互変換。負の座標にも対応し、ポータル接続時の注意点も解説。"><meta property="og:url" content="https://mlabg.com/minecraft/tools/nether-coordinates.html">
+<meta name="theme-color" content="#113621"><link rel="icon" href="/favicon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"マイクラ ネザー座標変換ツール","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/tools/nether-coordinates.html","description":"マイクラのネザー座標を一瞬で計算。オーバーワールドとネザーのX・Z座標を8分の1・8倍で相互変換。負の座標にも対応し、ポータル接続時の注意点も解説。","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4384918189756650" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/minecraft/portal.css"><link rel="stylesheet" href="/site-unified.css">
+<link rel="stylesheet" href="/ad-system.css"><link rel="stylesheet" href="/global-site-header.css?v=20261027a">
+<link rel="stylesheet" href="/minecraft/strategy/minecraft-ambient.css?v=20261028allcontrols9">
+<link rel="stylesheet" href="/minecraft/tools/tools.css?v=20261029tools1">
+<script defer src="/ad-config.js"></script><script defer src="/ad-system.js"></script>
+<script defer src="/affiliate-tracker.js?v=20261029revenueclick01"></script>
+<script defer src="/site-language.js?v=20261028full"></script>
+<script defer src="/minecraft/tools/tools.js?v=20261029tools1"></script>
+</head><body class="ml-body mc-ambient" data-calculator="nether">
+<header class="mlg-site-header" data-section="minecraft"><div class="mlg-site-topline"><a class="mlg-site-brand" href="/" aria-label="MULTI LAB GUIDE 総合トップへ戻る"><img class="mlg-site-brand-icon" src="/favicon.png?v=20261026" alt="" width="36" height="36" aria-hidden="true"><span class="mlg-site-brand-name"><span class="mlg-site-brand-main">MULTI <strong>LAB</strong></span><span class="mlg-site-brand-guide">GUIDE</span></span></a><nav class="mlg-site-primary" aria-label="サイト共通ナビゲーション"><a class="mlg-site-link" data-nav="home" href="/">ホーム</a><a class="mlg-site-link" data-nav="roblox" href="/roblox/">ROBLOX</a><a class="mlg-site-link" data-nav="minecraft" href="/minecraft/" aria-current="page">Minecraft</a><a class="mlg-site-link" data-nav="devices" href="/devices/">デバイス</a><a class="mlg-site-link" data-nav="articles" href="/sitemap.html">記事一覧</a></nav></div><div class="mlg-site-context"><nav class="mlg-site-context-inner" aria-label="Minecraft内のメニュー"><span class="mlg-site-context-label">Minecraft</span><a class="mlg-site-context-link" href="/minecraft/">マイクラTOP</a><a class="mlg-site-context-link" href="/minecraft/strategy/" aria-current="page">攻略情報</a><a class="mlg-site-context-link" href="/minecraft/mod-ranking.html">人気MOD</a><a class="mlg-site-context-link" href="/minecraft/mod-diagnosis.html">MOD診断</a><a class="mlg-site-context-link" href="/minecraft/server.html">サーバー診断</a><a class="mlg-site-context-link" href="/minecraft/mods/">MODガイド</a><a class="mlg-site-context-link" href="/minecraft/server.html#articles">解説記事</a></nav></div></header>
+<main class="tool-page" id="main">
+<nav class="tool-breadcrumb" aria-label="パンくず"><a href="/minecraft/">マイクラTOP</a> › <a href="/minecraft/tools/">便利ツール</a> › ネザー座標計算</nav>
+<section class="tool-hero"><span class="tool-eyebrow">MINECRAFT / NETHER PORTAL</span><h1>ネザー座標計算ツール</h1>
+<p>ネザーとオーバーワールドの座標をかんたん変換。X・Zを入力するだけで、ポータルを作る位置の目安がすぐにわかります。負の座標にも対応しています。</p></section>
+<aside class="as-slot as-top tool-ad" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/top-ad-loader.js"></script></div></aside>
+<div class="tool-layout">
+<section class="tool-panel" aria-labelledby="calculator-title">
+<h2 id="calculator-title">座標を変換する</h2><p class="tool-intro">現在いる世界を選択して、ゲーム内のX・Z座標を入力してください。Yは省略できます。</p>
+<div class="tool-switches" role="group" aria-label="変換する方向">
+<button type="button" class="tool-switch" data-direction="overworld" aria-pressed="true">通常世界 → ネザー</button>
+<button type="button" class="tool-switch" data-direction="nether" aria-pressed="false">ネザー → 通常世界</button>
+</div>
+<div class="tool-fields">
+<label class="tool-field"><span>X座標</span><input id="coord-x" class="tool-input" inputmode="decimal" type="number" step="any" value="800" aria-label="X座標"></label>
+<label class="tool-field"><span>Y座標（任意）</span><input id="coord-y" class="tool-input" inputmode="decimal" type="number" step="any" value="64" aria-label="Y座標"></label>
+<label class="tool-field"><span>Z座標</span><input id="coord-z" class="tool-input" inputmode="decimal" type="number" step="any" value="-400" aria-label="Z座標"></label>
+</div>
+<div class="tool-results" aria-live="polite" aria-atomic="true"><span class="tool-caption" id="result-dimension">ネザーの座標（目安）</span>
+<div class="tool-big" id="result-coords">X 100 / Y 64 / Z -50</div>
+<div class="tool-secondary" id="result-desc">X・Zを8で割って切り捨て。Yは8分の1にしません。</div></div>
+<div class="tool-inline-actions"><button class="tool-action" id="copy-coords" type="button">計算結果をコピー</button><button class="tool-action" id="swap-coords" type="button">変換方向を入れ替える</button></div>
+<p class="tool-status" id="tool-status" role="status" aria-live="polite"></p>
+</section>
+<aside class="tool-panel"><h2>使い方・関連ツール</h2><div class="tool-links">
+<a class="tool-link" href="/minecraft/tools/stack-calculator.html">スタック・チェスト必要数を計算 <span aria-hidden="true">→</span></a>
+<a class="tool-link" href="/minecraft/server.html">マイクラのサーバー容量を診断 <span aria-hidden="true">→</span></a>
+<a class="tool-link" href="/minecraft/mods/multiplayer.html">MODマルチの始め方 <span aria-hidden="true">→</span></a></div>
+<p class="tool-note">この計算は理論上の対応座標です。実際には既存のポータルや地形・安全な設置場所によって、出口が異なる場合があります。</p></aside></div>
+<section class="tool-article"><h2>ネザー座標はなぜ8分の1？</h2>
+<p>Minecraftでは、ネザーの水平方向1ブロックが、オーバーワールドの水平方向8ブロックに相当します。長距離移動のためにネザー経由の通路を作るときに活用できる仕組みです。</p>
+<h2>計算方法：X・Zだけを変換する</h2>
+<ol><li><b>通常世界 → ネザー：</b> XとZをそれぞれ8で割り、ブロック座標にするなら小数点以下を切り捨てます。例：X=800、Z=-400 → ネザー X=100、Z=-50。</li>
+<li><b>ネザー → 通常世界：</b> XとZをそれぞれ8倍します。例：ネザー X=100、Z=-50 → 通常世界 X=800、Z=-400。</li>
+<li><b>Y（高さ）：</b> 8で割ったり掛けたりしません。ポータル同士が接続するかには高さも影響するため、可能なら近い高さに設置しましょう。</li></ol>
+<h2>マイナス座標で間違えないコツ</h2><p>マイナスの座標を8で割って整数にする際も、<b>小さい整数側に切り捨てます</b>。たとえば、X=-1の換算位置は-1です（0ではありません）。このツールは負の座標にも対応しています。</p>
+<h2>ポータルの接続がずれる原因</h2><p>座標だけ正しくても、近くに別のネザーポータルがあると、そちらへ接続されることがあります。また、対応地点にポータルを置ける場所がないと、別の場所に生成される場合があります。安全な場所で両側の座標を確認し、周囲のポータルとの位置関係も確認してください。</p>
+<h2>よくある質問</h2>
+<details><summary>ネザーのY座標も8分の1にする？</summary><p>いいえ。8倍・8分の1になるのは水平方向のX・Zだけです。Yは同じ値の目安を利用できますが、実際の出口は地形や既存ポータルに影響されます。</p></details>
+<details><summary>統合版とJava版で計算方法は違う？</summary><p>基本となる水平方向8:1の座標換算は共通です。ただし、既存ポータルの探索範囲など接続の詳細はエディションによって異なる場合があります。</p></details>
+<details><summary>座標が合っているのに別の場所に出たら？</summary><p>既存ポータルの場所、Y座標、周辺の地形を確認してください。この計算は実際の転送先を保証するものではありません。</p></details>
+<p class="tool-smallprint">計算の参考：<a href="https://minecraft.wiki/w/Nether_Portal#Portal_linkage_between_Overworld_and_Nether" target="_blank" rel="noopener noreferrer">Minecraft Wiki「ネザーポータルの座標変換」</a>。本サイトは非公式の攻略ツールです。</p></section>
+<section class="tool-article"><h2>ほかのMinecraft便利ツール</h2><div class="tool-links"><a class="tool-link" href="/minecraft/tools/">便利ツール一覧 →</a><a class="tool-link" href="/minecraft/tools/stack-calculator.html">スタック計算・収納個数を調べる →</a></div></section>
+<p class="mc-background-credit">背景：<a href="https://www.minecraft.net/en-us/article/trails---tales-update-now-available-bedrock" target="_blank" rel="noopener noreferrer">Minecraft公式ゲーム画像</a> ／ 非公式ガイド</p>
+</main><footer class="ml-footer"><div class="ml-shell"><div class="ml-links"><a href="/">総合トップ</a><a href="/minecraft/">マイクラTOP</a><a href="/minecraft/strategy/">攻略情報</a><a href="/privacy.html">プライバシー</a></div><p>MULTI LAB GUIDE © 2026　Minecraft非公式攻略サイト</p><p>Amazonのアソシエイトとして、MULTI LAB GUIDEは適格販売により収入を得ています。</p></div></footer>
+<script src="/interstitial-loader.js"></script>
+</body></html>
