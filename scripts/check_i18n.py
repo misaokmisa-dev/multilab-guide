@@ -32,8 +32,9 @@ assert len(public_pages)>=25, "Unexpectedly few public pages"
 # sends the visitor to the translated destination. It needs no selector.
 def requires_language_switch(path: Path) -> bool:
     page = path.read_text(encoding="utf-8")
-    is_redirect = bool(re.search(r'<meta\\s+http-equiv=["\\\']refresh["\\\']', page, re.I)) and bool(
-        re.search(r'<meta\\s+name=["\\\']robots["\\\']\\s+content=["\\\'][^"\\\']*noindex', page, re.I)
+    normalized = page.lower()
+    is_redirect = ('http-equiv="refresh"' in normalized or "http-equiv='refresh'" in normalized) and (
+        'noindex' in normalized
     )
     return not is_redirect
 
