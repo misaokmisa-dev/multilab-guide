@@ -330,7 +330,8 @@ function acquisitionSteps(item){
  const worldOnly=new Set(["bedrock","barrier","light","structure_block","structure_void",
   "jigsaw","command_block","chain_command_block","repeating_command_block",
   "end_portal_frame","reinforced_deepslate","knowledge_book","debug_stick",
-  "test_block","test_instance_block","spawner"]);
+  "test_block","test_instance_block","spawner","petrified_oak_slab",
+  "command_block_minecart"]);
  if(worldOnly.has(n))return [
   "通常のサバイバルではアイテムとして入手・回収できません。",
   "クリエイティブインベントリや、権限がある環境ではコマンドなどで扱います。"
@@ -338,6 +339,10 @@ function acquisitionSteps(item){
  if(n.endsWith("_spawn_egg"))return [
   "スポーンエッグは通常のサバイバルでは入手できません。",
   "クリエイティブインベントリで「"+item.jp+"」を探すか、権限があるワールドでコマンドから入手します。"
+ ];
+ if(/(?:^|_)copper_golem_statue$/.test(n) && !n.startsWith("waxed_"))return [
+  "カッパーゴーレムを作り、時間経過で酸化が進んで像になるのを待ちます。",
+  "生成されたカッパーゴーレムの像を壊して回収します。酸化段階に応じて種類が変わります。"
  ];
  if(n==="trial_spawner"||n==="vault")return [
   "トライアルチャンバー（試練の間）で自然生成されているものを探します。",
@@ -370,7 +375,10 @@ function acquisitionSteps(item){
   glass:["砂を集めてかまどに入れ、燃料で製錬します。","完成したガラスを取り出します。"],
   green_dye:["サボテンをかまどで製錬します。","できた緑色の染料を回収します。"],
   sponge:["海底神殿にいるエルダーガーディアンやスポンジ部屋を探します。","濡れたスポンジはかまどなどで乾燥させて使います。"],
-  netherite_horse_armor:["ネザライト強化用の素材と、必要な馬鎧・鍛冶台を確認します。","鍛冶台で対応するアップグレードを行います。"]
+  netherite_horse_armor:["ダイヤモンドの馬鎧とネザライト強化用の素材を揃えます。","鍛冶台でネザライトの馬鎧に強化します。"],
+  netherite_nautilus_armor:["ダイヤモンドのオウムガイ防具とネザライト強化用の素材を揃えます。","鍛冶台でネザライトのオウムガイ防具に強化します。"],
+  copper_horse_armor:["ダンジョン・砂漠のピラミッド・要塞などの生成構造物のチェストを探します。","銅の馬鎧は作業台でクラフトできません。チェストの戦利品から入手します。"],
+  wet_sponge:["海底神殿のスポンジ部屋を探すか、エルダーガーディアンを倒します。","濡れたスポンジを回収します。かまどで乾燥させると通常のスポンジになります。"]
  };
  if(specials[n])return specials[n];
  if(n.startsWith("music_disc_"))return [
