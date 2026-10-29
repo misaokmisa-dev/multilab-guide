@@ -129,16 +129,16 @@
   if(!location.pathname.startsWith('/minecraft/strategy/items/')||lang==='ja')return '';
   const dict=pretranslated[lang];const word=s=>dict.get(s)||s;
   let m;
-  if((m=source.match(/^([^（）]+)（英語名：(.+?)）は、Minecraftの「(.+?)」に分類されるアイテム・ブロックです。追加バージョン：(.+?)。1スロットに持てる上限は(\\d+)個です。$/))){
+  if((m=source.match(/^([^（）]+)（英語名：(.+?)）は、Minecraftの「(.+?)」に分類されるアイテム・ブロックです。追加バージョン：(.+?)。1スロットに持てる上限は(\d+)個です。$/))){
    const item=word(m[1]),category=word(m[3]),release=m[4],max=m[5];
    if(lang==='en')return item+' ('+m[2]+') is a Minecraft '+category+' item/block. Added in '+release+'. Stack size: '+max+'.';
    if(lang==='ko')return item+' ('+m[2]+')은(는) 마인크래프트의 '+category+' 아이템/블록입니다. 추가 버전: '+release+'. 최대 중첩: '+max+'개.';
    return item+'（'+m[2]+'）属于 Minecraft 的'+category+'。加入版本：'+release+'。最大堆叠：'+max+'。';
   }
-  if((m=source.match(/^掲載アイテム：([\\d,]+)件$/)))return lang==='en'?'Listed items: '+m[1]:lang==='ko'?'등록 아이템: '+m[1]+'개':'已收录物品：'+m[1]+' 件';
-  if((m=source.match(/^「(.+)」の検索結果：([\\d,]+)件$/)))return lang==='en'?m[1]+': '+m[2]+' results':lang==='ko'?'「'+m[1]+'」 검색 결과: '+m[2]+'개':'“'+m[1]+'”搜索结果：'+m[2]+' 条';
-  if((m=source.match(/^もっと表示（残り([\\d,]+)件）$/)))return lang==='en'?'Show more ('+m[1]+' left)':lang==='ko'?'더 보기 (남은 '+m[1]+'개)':'显示更多（剩余 '+m[1]+' 件）';
-  if((m=source.match(/^([\\d,]+)種類の一覧を見る ›$/)))return lang==='en'?'Browse '+m[1]+' items ›':lang==='ko'?m[1]+'종 보기 ›':'查看 '+m[1]+' 种物品 ›';
+  if((m=source.match(/^掲載アイテム：([\d,]+)件$/)))return lang==='en'?'Listed items: '+m[1]:lang==='ko'?'등록 아이템: '+m[1]+'개':'已收录物品：'+m[1]+' 件';
+  if((m=source.match(/^「(.+)」の検索結果：([\d,]+)件$/)))return lang==='en'?m[1]+': '+m[2]+' results':lang==='ko'?'「'+m[1]+'」 검색 결과: '+m[2]+'개':'“'+m[1]+'”搜索结果：'+m[2]+' 条';
+  if((m=source.match(/^もっと表示（残り([\d,]+)件）$/)))return lang==='en'?'Show more ('+m[1]+' left)':lang==='ko'?'더 보기 (남은 '+m[1]+'개)':'显示更多（剩余 '+m[1]+' 件）';
+  if((m=source.match(/^([\d,]+)種類の一覧を見る ›$/)))return lang==='en'?'Browse '+m[1]+' items ›':lang==='ko'?m[1]+'종 보기 ›':'查看 '+m[1]+' 种物品 ›';
   return '';
  }
  function translate(source){
