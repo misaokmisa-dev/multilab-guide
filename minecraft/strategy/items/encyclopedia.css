@@ -89,3 +89,8 @@ body.mc-ambient .ency-category-copy small{font-size:11px;line-height:1.35}
 
 /* Hide the category picker completely while filtering items by search. */
 body.mc-ambient .ency-section[hidden]{display:none!important}
+
+/* Minecraft 2026 game-drop items: clearly distinguish experimental content. */
+body.mc-ambient .ency-preview-badge{display:inline-block!important;width:max-content;max-width:100%;margin-top:5px;padding:3px 8px!important;border:1px solid #a9c2f3!important;border-radius:6px!important;background:#e9f0ff!important;color:#1c4b8d!important;font-size:11px!important;font-weight:850!important}
+body.mc-ambient .ency-preview-status{background:#eef4ff!important;color:#174d92!important;border:1px solid #abc9fc;border-radius:10px;padding:12px 16px;font-weight:750;line-height:1.65;font-size:15px}
+body.mc-ambient .ency-version-note{background:#f3fbf5!important;color:#1b5535!important;border-left:4px solid #2a9463;padding:14px 17px;margin:13px 0 20px!important;font-size:15px;line-height:1.8;border-radius:7px}
