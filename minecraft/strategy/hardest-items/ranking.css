@@ -1,0 +1,101 @@
+/* MULTI LAB GUIDE — Minecraft hardest-to-obtain item ranking */
+body.mc-ambient.hard-rank-body{color:#143320}
+body.mc-ambient .hard-rank-shell{box-sizing:border-box;width:min(1160px,calc(100% - 28px));margin:0 auto 64px;position:relative}
+body.mc-ambient .hard-rank-crumb{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:16px 2px;color:#efffee;font-size:13px;font-weight:750;text-shadow:0 2px 7px #001d0dbd}
+body.mc-ambient .hard-rank-crumb a{color:#edfff0;text-decoration:none}
+body.mc-ambient .hard-rank-crumb a:hover{text-decoration:underline}
+body.mc-ambient .hard-rank-hero{isolation:isolate;position:relative;display:flex;align-items:center;justify-content:space-between;gap:28px;min-height:360px;overflow:hidden;padding:clamp(30px,5vw,58px);border:1px solid #519363;border-radius:22px;background:linear-gradient(90deg,rgba(4,24,18,.94),rgba(4,23,20,.82) 52%,rgba(9,26,19,.34)),url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/dragonegg-header.jpg") center 50%/cover no-repeat #123021;box-shadow:0 15px 40px #031d126d}
+body.mc-ambient .hard-rank-hero:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(0deg,#0b241870,transparent 46%),radial-gradient(ellipse at 75% 75%,#9d70d233,transparent 52%)}
+body.mc-ambient .hard-rank-hero-copy{position:relative;z-index:2;flex:1;max-width:720px}
+body.mc-ambient .hard-rank-kicker{color:#a9ffc0;font-size:12px;font-weight:900;letter-spacing:.16em}
+body.mc-ambient .hard-rank-hero h1{color:#fff!important;margin:10px 0 17px;font-size:clamp(31px,4.3vw,55px);font-weight:950;line-height:1.28;letter-spacing:-.035em;text-shadow:0 3px 14px #031308b3}
+body.mc-ambient .hard-rank-hero h1 em{display:inline-block;margin-left:.15em;color:#e1ff76;font-style:normal;text-shadow:0 2px 13px #112511}
+body.mc-ambient .hard-rank-hero p{margin:0;max-width:640px;font-size:clamp(13px,1.5vw,16px);line-height:1.95;font-weight:650;color:#f4fff0!important;text-shadow:0 2px 9px #031408}
+body.mc-ambient a.hard-rank-hero-button{display:inline-flex;gap:14px;align-items:center;justify-content:center;margin-top:23px;padding:12px 24px;border-radius:10px;border:1px solid #9dffc0;background:#d8ffb7;color:#113c20!important;text-decoration:none;font-size:14px;font-weight:900;box-shadow:0 4px 16px #03140a70}
+body.mc-ambient a.hard-rank-hero-button:hover{background:#f2ffd9;transform:translateY(-1px)}
+body.mc-ambient .hard-rank-hero-icon{flex:0 0 clamp(140px,21vw,230px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:clamp(140px,21vw,230px);aspect-ratio:1;border-radius:30px;background:linear-gradient(135deg,#03150abd,#172613bb);border:1px solid #d1e7cb61;box-shadow:0 22px 46px #0009;backdrop-filter:blur(5px)}
+body.mc-ambient .hard-rank-hero-icon img{width:75%;height:75%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 10px 14px #000c)}
+body.mc-ambient .hard-rank-hero-icon span{margin-top:-12px;font-size:12px;color:#e4f7c3;font-weight:950;letter-spacing:.2em}
+body.mc-ambient .hard-rank-credit{margin:8px 4px 18px;color:#e5f8e9!important;font-size:11px;text-shadow:0 1px 5px #001a0d}
+body.mc-ambient .hard-rank-credit a{color:#ddffcf!important;text-decoration:underline}
+body.mc-ambient .hard-rank-intro{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:18px;padding:20px 24px;margin:20px 0 30px;border-radius:14px;border:1px solid #c4dfcb;background:#fff;box-shadow:0 6px 19px #041d1021}
+body.mc-ambient .hard-rank-intro-mark{font-size:12px;font-weight:950;color:#165b31;padding:8px 12px;background:#e5f8e8;border-radius:7px;white-space:nowrap}
+body.mc-ambient .hard-rank-intro p{margin:0;font-size:13px;line-height:1.85;color:#274935!important}
+body.mc-ambient .hard-rank-section-header{margin:32px 0 22px;padding:0 3px}
+body.mc-ambient .hard-rank-section-header>span{display:block;font-size:12px;letter-spacing:.14em;font-weight:900;color:#e1fae7;text-shadow:0 2px 7px #041e14}
+body.mc-ambient .hard-rank-section-header h2{margin:8px 0!important;color:#fff!important;font-size:clamp(23px,3vw,32px);line-height:1.4;font-weight:950;text-shadow:0 2px 10px #001e0c}
+body.mc-ambient .hard-rank-section-header p{font-size:13px;color:#ebf9e9!important;margin:0;text-shadow:0 1px 8px #031b0f}
+body.mc-ambient .hard-rank-list{list-style:none;margin:0;padding:0;display:grid;gap:15px}
+body.mc-ambient .hard-rank-entry{margin:0;padding:0;min-width:0}
+body.mc-ambient .hard-rank-card{display:grid;grid-template-columns:86px 154px minmax(0,1fr);gap:16px;align-items:center;min-height:172px;padding:19px 23px;border:1px solid #d4e4d5;border-radius:18px;background:#fff;box-shadow:0 9px 25px #03180c24;transition:transform .18s ease,box-shadow .18s ease}
+body.mc-ambient .hard-rank-card:hover{transform:translateY(-2px);box-shadow:0 12px 29px #03180c37}
+body.mc-ambient .hard-rank-top .hard-rank-card{border-color:#b4cda5;background:linear-gradient(105deg,#fffdf2,#fff 45%);box-shadow:0 10px 27px #0b260e3b}
+body.mc-ambient .hard-rank-1 .hard-rank-card{border:2px solid #f0d77a}
+body.mc-ambient .hard-rank-position{display:flex;flex-direction:column;gap:0;align-items:center;justify-content:center;width:76px;height:84px;border-radius:13px;background:#e9f5ec;color:#2d583d}
+body.mc-ambient .hard-rank-position small{font-size:10px;font-weight:950;letter-spacing:.16em}
+body.mc-ambient .hard-rank-position strong{font-size:35px;font-weight:1000;line-height:1.2;font-variant-numeric:tabular-nums}
+body.mc-ambient .hard-rank-1 .hard-rank-position{background:linear-gradient(145deg,#ffeb96,#efba3a);color:#493002}
+body.mc-ambient .hard-rank-2 .hard-rank-position{background:linear-gradient(145deg,#f4faff,#b9cad7);color:#324357}
+body.mc-ambient .hard-rank-3 .hard-rank-position{background:linear-gradient(145deg,#f2c5a3,#c88e66);color:#57321a}
+body.mc-ambient .hard-rank-image{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:145px;max-width:154px;margin:0;padding:12px;box-sizing:border-box;border:1px solid #deebe2;border-radius:14px;background:radial-gradient(circle at 40% 20%,#eaffec,#dfece4 78%);overflow:hidden}
+body.mc-ambient .hard-rank-image img{display:block;width:108px;height:108px;max-width:100%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 7px 7px #112f1852)}
+body.mc-ambient .hard-rank-image figcaption{font-size:10px;font-weight:750;color:#244632;text-align:center;line-height:1.45}
+body.mc-ambient .hard-rank-glint:before{content:"";position:absolute;inset:-60%;pointer-events:none;background:linear-gradient(110deg,transparent 45%,#ab69ff40 50%,transparent 55%);transform:rotate(-18deg)}
+body.mc-ambient .hard-rank-copy{min-width:0}
+body.mc-ambient .hard-rank-source{display:inline-flex;padding:4px 8px;margin-bottom:5px;border:1px solid #bddabe;border-radius:5px;background:#edf8ed;color:#306344;font-size:10px;font-weight:900}
+body.mc-ambient .hard-rank-copy h3{margin:3px 0 0!important;color:#193e26!important;font-size:clamp(17px,2vw,22px);font-weight:950;line-height:1.42}
+body.mc-ambient .hard-rank-english{display:block;color:#617867;font-size:11px;letter-spacing:.04em}
+body.mc-ambient .hard-rank-copy p{color:#3e5846!important;font-size:13px;line-height:1.8;max-width:750px;margin:8px 0 12px}
+body.mc-ambient a.hard-rank-cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:42px;max-width:100%;padding:9px 19px;box-sizing:border-box;border-radius:10px;border:1px solid #258a38;background:#18a337!important;color:#fff!important;font-weight:900;font-size:13px;text-decoration:none!important;box-shadow:0 4px 8px #0b5e2e2a}
+body.mc-ambient a.hard-rank-cta:hover,body.mc-ambient a.hard-rank-cta:focus-visible{background:#116e2b!important;transform:translateY(-1px);box-shadow:0 6px 12px #0b5e2e3e}
+body.mc-ambient a.hard-rank-cta span{font-size:17px}
+body.mc-ambient .hard-rank-footer-panel{padding:26px;margin:30px 0 14px;border:1px solid #cbe3cf;border-radius:17px;background:linear-gradient(115deg,#e6f4e7,#fff);box-shadow:0 5px 23px #031d111a}
+body.mc-ambient .hard-rank-footer-panel h2{font-size:21px;margin:0 0 8px;color:#20492a!important}
+body.mc-ambient .hard-rank-footer-panel p{font-size:13px;color:#3d6046!important;line-height:1.85}
+body.mc-ambient .hard-rank-footer-panel a{display:inline-flex;align-items:center;gap:14px;padding:11px 17px;border-radius:9px;background:#1a8738;color:#fff!important;font-weight:850;font-size:13px;text-decoration:none}
+body.mc-ambient .hard-rank-footer-panel a:hover{background:#0f6829}
+body.mc-ambient .hard-rank-disclaimer{margin:18px 6px;font-size:11px;color:#e3f4e4!important;line-height:1.85;text-shadow:0 1px 7px #00170b}
+body.mc-ambient .hard-rank-missing{background:#e2eee4}
+body.mc-ambient .hard-rank-missing:before{content:"Minecraft";font-size:11px;font-weight:850;color:#376047;position:absolute;top:38%}
+@media(max-width:800px){
+body.mc-ambient .hard-rank-hero{min-height:320px;padding:28px}
+body.mc-ambient .hard-rank-hero-icon{flex-basis:155px;width:155px}
+body.mc-ambient .hard-rank-card{grid-template-columns:65px 115px minmax(0,1fr);gap:12px;padding:15px}
+body.mc-ambient .hard-rank-position{width:60px;height:70px}
+body.mc-ambient .hard-rank-position strong{font-size:29px}
+body.mc-ambient .hard-rank-image{min-height:122px}
+body.mc-ambient .hard-rank-image img{width:85px;height:85px}
+}
+@media(max-width:570px){
+body.mc-ambient .hard-rank-shell{width:min(100% - 18px,1160px)}
+body.mc-ambient .hard-rank-hero{min-height:310px;padding:27px 21px;align-items:flex-end}
+body.mc-ambient .hard-rank-hero h1{font-size:clamp(28px,7vw,37px)}
+body.mc-ambient .hard-rank-hero-icon{position:absolute;right:8px;top:5px;width:88px;min-width:88px;height:92px;aspect-ratio:auto;opacity:.82;border-radius:15px}
+body.mc-ambient .hard-rank-hero-icon span{margin-top:-8px;font-size:8px}
+body.mc-ambient .hard-rank-hero-icon img{width:80%;height:80%}
+body.mc-ambient .hard-rank-hero-copy{max-width:100%}
+body.mc-ambient .hard-rank-kicker{font-size:10px}
+body.mc-ambient .hard-rank-intro{grid-template-columns:1fr;gap:8px;padding:15px}
+body.mc-ambient .hard-rank-intro-mark{justify-self:start}
+body.mc-ambient .hard-rank-card{grid-template-columns:54px 94px minmax(0,1fr);gap:8px;align-items:start;padding:13px;border-radius:14px}
+body.mc-ambient .hard-rank-position{width:50px;height:60px;border-radius:8px}
+body.mc-ambient .hard-rank-position strong{font-size:25px}
+body.mc-ambient .hard-rank-position small{font-size:8px}
+body.mc-ambient .hard-rank-image{padding:7px;min-height:104px;width:94px;border-radius:10px}
+body.mc-ambient .hard-rank-image img{width:77px;height:77px}
+body.mc-ambient .hard-rank-image figcaption{font-size:9px}
+body.mc-ambient .hard-rank-source{font-size:9px;margin:0}
+body.mc-ambient .hard-rank-copy h3{font-size:16px}
+body.mc-ambient .hard-rank-english{font-size:10px;line-height:1.3}
+body.mc-ambient .hard-rank-copy p{font-size:12px;line-height:1.7}
+body.mc-ambient a.hard-rank-cta{width:100%;padding:9px 6px;font-size:11px;min-height:39px;gap:6px}
+body.mc-ambient .hard-rank-footer-panel{padding:20px}
+}
+@media(max-width:380px){
+body.mc-ambient .hard-rank-card{grid-template-columns:47px 75px minmax(0,1fr);gap:7px;padding:10px}
+body.mc-ambient .hard-rank-position{width:44px}
+body.mc-ambient .hard-rank-image{width:75px}
+body.mc-ambient .hard-rank-image img{width:64px;height:64px}
+body.mc-ambient .hard-rank-copy h3{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){body.mc-ambient .hard-rank-card,body.mc-ambient a.hard-rank-cta,body.mc-ambient a.hard-rank-hero-button{transition:none;transform:none!important}}
