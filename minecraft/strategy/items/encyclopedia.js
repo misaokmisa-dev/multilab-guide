@@ -4,11 +4,14 @@
 "use strict";
 const B="/minecraft/strategy/items/";
 const ASSET="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.11/assets/minecraft/textures/";
-const DATA=window.MLG_ITEMS, RECIPES=window.MLG_RECIPES||{}, TEX=window.MLG_TEXTURE_INDEX||{item:[],block:[]};
+const ASSET_NEW="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/26.4-snapshot-6/assets/minecraft/textures/";
+const DATA=window.MLG_ITEMS, RECIPES=Object.assign({},window.MLG_RECIPES||{},window.MLG_RECIPES_2026||{}), TEX=window.MLG_TEXTURE_INDEX||{item:[],block:[]};
+const EXTRAS=window.MLG_ITEM_ADDITIONS?.items||[], TEX_NEW=window.MLG_TEXTURE_INDEX_2026||{item:[],block:[]};
 if(!DATA){document.querySelector("#ency-root")?.replaceChildren(document.createTextNode("図鑑データを読み込めませんでした。ページを再読み込みしてください。"));return;}
-const items=DATA.items.map(a=>({id:a[0],name:a[1],jp:a[2],en:a[3],cat:a[4],stack:a[5]}));
+const items=[...DATA.items,...EXTRAS].map(a=>({id:a[0],name:a[1],jp:a[2],en:a[3],cat:a[4],stack:a[5],release:a[6]||"1.21.11"}));
 const byId=new Map(items.map(i=>[i.id,i])),bySlug=new Map(items.map(i=>[i.name,i]));
 const textureItem=new Set(TEX.item||[]),textureBlock=new Set(TEX.block||[]);
+const newItemTextures=new Set(TEX_NEW.item||[]),newBlockTextures=new Set(TEX_NEW.block||[]);
 const groups=DATA.categories.map(a=>({id:a[0],title:a[1],intro:a[2]})), groupMap=new Map(groups.map(g=>[g.id,g]));
 const altNames={
  "diamond":["ダイヤ","ダイヤ石","宝石"],
@@ -55,7 +58,7 @@ function norm(v){return String(v||"").normalize("NFKC").toLowerCase().replace(/[
 function extraTags(i){
  const en=i.name.replace(/_/g," "),english=i.en||"";
  const jp=i.jp;
- return [jp,en,english,i.name,...(altNames[i.name]||[]),groupMap.get(i.cat)?.title||"",aliasCategory[i.cat]||"",jp.replace(/の/g,"")].map(norm);
+ return [jp,en,english,i.name,i.release,...(altNames[i.name]||[]),groupMap.get(i.cat)?.title||"",aliasCategory[i.cat]||"",jp.replace(/の/g,"")].map(norm);
 }
 const searchable=new Map(items.map(i=>[i.id,extraTags(i)]));
 function fuzzy(a,b){
@@ -98,7 +101,7 @@ function score(i,query){
  }
  return total;
 }
-function itemUrl(i){return B+"detail/"+encodeURIComponent(i.name)+".html";}
+function itemUrl(i){return i.id>1504 ? B+"detail/new.html?item="+encodeURIComponent(i.name) : B+"detail/"+encodeURIComponent(i.name)+".html";}
 function chooseImage(name){
  const ns=[name];
  // Some game items share the genuine texture of their base block (stairs/slabs, waxed variants).
@@ -116,6 +119,8 @@ function chooseImage(name){
  ];
  for(const a of replace)if(a!==name&&!ns.includes(a))ns.push(a);
  const fallback={
+   sulfur_spike:"sulfur_spike_up_tip",icicle:"icicle_down_tip",poplar_leaves:"red_poplar_leaves",
+   straw_bed:"straw_bed",brittle_ice:"ice",red_shrub:"red_shrub",shelf_mushroom:"shelf_mushroom_stage0",
    chest:"oak_planks",trapped_chest:"oak_planks",ender_chest:"obsidian",
    snow_block:"snow",decorated_pot:"decorated_pot_side",
    purpur_stairs:"purpur_block",smooth_quartz:"quartz_block_bottom",
@@ -184,8 +189,12 @@ function chooseImage(name){
   }
  }
  ns.push(name+"_side",name+"_front",name+"_top");
+ const newer=bySlug.get(name)?.id>1504;
+ if(newer){for(const n of ns)if(newItemTextures.has(n))return ASSET_NEW+"item/"+encodeURIComponent(n)+".png";for(const n of ns)if(newBlockTextures.has(n))return ASSET_NEW+"block/"+encodeURIComponent(n)+".png";}
  for(const n of ns)if(textureItem.has(n))return ASSET+"item/"+encodeURIComponent(n)+".png";
  for(const n of ns)if(textureBlock.has(n))return ASSET+"block/"+encodeURIComponent(n)+".png";
+ for(const n of ns)if(newItemTextures.has(n))return ASSET_NEW+"item/"+encodeURIComponent(n)+".png";
+ for(const n of ns)if(newBlockTextures.has(n))return ASSET_NEW+"block/"+encodeURIComponent(n)+".png";
  return null; // never show broken-image icons for assets not supplied as standalone textures.
 }
 function icon(i,size=54){
@@ -198,7 +207,9 @@ function icon(i,size=54){
 function itemAnchor(i,cls="ency-item-link"){
  const a=document.createElement("a");a.href=itemUrl(i);a.className=cls;a.append(icon(i));
  const t=document.createElement("span");const b=document.createElement("strong");b.textContent=i.jp;const small=document.createElement("small");small.textContent=i.name;
- t.append(b,small);a.append(t);return a;
+ t.append(b,small);
+ if(i.release==="26.4-snapshot-6"){const badge=document.createElement("small");badge.className="ency-preview-badge";badge.textContent="26.4 開発版";t.append(badge);}
+ a.append(t);return a;
 }
 const categoryRepresentative={
  building:"oak_planks",nature:"oak_sapling",materials:"diamond",
@@ -638,17 +649,22 @@ function acquisitionSteps(item){
 }
 
 function initDetail(){
- const slug=document.body.dataset.item;
+ const slug=document.body.dataset.item||new URLSearchParams(location.search).get("item");
  const item=bySlug.get(slug);const root=document.querySelector("#ency-detail");
  if(!item||!root){if(root)root.textContent="アイテムが見つかりませんでした。";return;}
  const q=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;};
  root.replaceChildren();
  const hero=q("section","ency-detail-hero");hero.append(icon(item,105));
- const part=q("div");const tag=q("span","ency-kicker",groupMap.get(item.cat)?.title+" / Java "+DATA.version);
+ const part=q("div");const tag=q("span","ency-kicker",groupMap.get(item.cat)?.title+" / Java "+(item.release==="26.4-snapshot-6"?"26.4 Snapshot 6（開発版）":item.release));
+ if(item.id>1504){document.title=item.jp+"の作り方・入手方法 | Minecraft "+item.release+" | MULTI LAB GUIDE";
+ document.querySelector('link[rel="canonical"]')?.setAttribute("href",location.origin+itemUrl(item));
+ document.querySelector('meta[name="description"]')?.setAttribute("content",item.jp+"（"+item.en+"）のレシピと入手方法。Minecraft Java "+item.release+"の追加アイテムを解説。");}
  const name=q("h1","",item.jp);const en=q("p","ency-en",item.name);
- part.append(tag,name,en);hero.append(part);root.append(hero);
+ part.append(tag,name,en);
+ if(item.release==="26.4-snapshot-6"){part.append(q("p","ency-preview-status","26.4 開発版の発表済み要素・正式実装前。仕様と入手方法は変更される可能性があります。"));}
+ hero.append(part);root.append(hero);
  const summary=q("section","ency-panel");summary.append(q("h2","","概要"));
- summary.append(q("p","",item.jp+"（英語名："+item.en+"）は、Minecraftの「"+groupMap.get(item.cat)?.title+"」に分類されるアイテム・ブロックです。1スロットに持てる上限は"+item.stack+"個です。"));
+ summary.append(q("p","",item.jp+"（英語名："+item.en+"）は、Minecraftの「"+groupMap.get(item.cat)?.title+"」に分類されるアイテム・ブロックです。追加バージョン："+item.release+"。1スロットに持てる上限は"+item.stack+"個です。"));
  root.append(summary);
  const recipes=RECIPES[String(item.id)]||[];
  // Items without a crafting-table recipe have no crafting section.
@@ -670,7 +686,7 @@ function initDetail(){
  // Only items without a crafting recipe need an acquisition section.
  if(!recipes.length){
   const obtain=q("section","ency-panel");obtain.append(q("h2","","入手方法・手順"));
-  const steps=acquisitionSteps(item);
+  const steps=item.id>1504?newItemAcquisition(item):acquisitionSteps(item);
   const ol=q("ol","ency-steps");steps.forEach(s=>ol.append(step(s)));obtain.append(ol);
   const ref=q("p","ency-muted");ref.append(document.createTextNode("参考："));
   const a=q("a");a.href="https://minecraft.wiki/w/"+encodeURIComponent(item.name);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Minecraft Wiki（"+item.jp+"）";ref.append(a);obtain.append(ref);root.append(obtain);
