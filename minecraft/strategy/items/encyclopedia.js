@@ -134,6 +134,48 @@ function chooseImage(name){
  // Some game items use another texture name.
  const map={grass_block:"grass_block_side",podzol:"podzol_side",mycelium:"mycelium_side",tnt:"tnt_side",crafting_table:"crafting_table_front",furnace:"furnace_front",blast_furnace:"blast_furnace_front",smoker:"smoker_front",piston:"piston_side",oak_log:"oak_log",diamond_ore:"diamond_ore",chest:"chest_front",ender_chest:"ender_chest_front"};
  if(map[name])ns.push(map[name]);
+ // Game item icons sometimes use a different model filename than their registry ID.
+ // Prefer exact Mojang textures; use their own material textures for render-only models.
+ const visualAliases={
+  magma_block:"magma",decorated_pot:"flower_pot",dried_kelp_block:"dried_kelp_side",
+  dried_ghast:"dried_ghast_hydration_0_north",test_block:"test_block_start",
+  enchanted_golden_apple:"golden_apple",sticky_piston:"piston_top_sticky",
+  clock:"clock_00",compass:"compass_00",recovery_compass:"recovery_compass_00",
+  netherite_nautilus_armor:"netherite_ingot",netherite_spear:"netherite_spear_in_hand",
+  dried_ghast_hydration_0:"dried_ghast_hydration_0_north",
+  light_weighted_pressure_plate:"iron_block",heavy_weighted_pressure_plate:"gold_block",
+  petrified_oak_slab:"oak_planks",smooth_stone_slab:"smooth_stone",
+  purpur_slab:"purpur_block",deepslate_tile_wall:"deepslate_tiles"
+ };
+ if(visualAliases[name])ns.push(visualAliases[name]);
+ const colors="white orange magenta light_blue yellow lime pink gray light_gray cyan purple blue brown green red black".split(" ");
+ const color=colors.find(c=>name.startsWith(c+"_"));
+ if(color && /_(bed|banner|carpet)$/.test(name))ns.push(color+"_wool");
+ // The original registry uses an item ID for button / slab / stair / wall models;
+ // only the underlying block texture exists in the texture atlas.
+ const roots=[...ns.slice(0,14)];
+ for(const root of roots){
+  const candidates=[
+   root.replace(/^waxed_/,""),root.replace(/^infested_/,""),
+   root.replace(/_(stairs|slab|wall|button|pressure_plate)$/,""),
+   root.replace(/_(stairs|slab|wall)$/,"s"),
+   root.replace(/_(button|pressure_plate)$/,"_planks"),
+   root.replace(/_tile$/,"_tiles"),
+   root.replace(/^smooth_(?=sandstone|red_sandstone|quartz)/,""),
+   root.replace(/_concrete_powder$/,"_concrete"),
+   root.replace(/_brick$/,"_bricks"),
+   root.replace(/_stairs$/,"_planks"),
+   root.replace(/_spear$/,"_spear_in_hand")
+  ];
+  for(const v of candidates)if(v && v!==root && !ns.includes(v))ns.push(v);
+ }
+ // Combined variants: waxed copper stairs, cut sandstone slabs, wooden buttons, etc.
+ for(const root of [...ns.slice(0,32)]){
+  const stem=root.replace(/^waxed_/,"").replace(/^infested_/,"").replace(/_(stairs|slab|wall|button|pressure_plate)$/,"");
+  for(const v of [stem,stem+"_planks",stem+"_tiles",stem+"_bricks",stem+"_side",stem+"_top"]){
+   if(v&&!ns.includes(v))ns.push(v);
+  }
+ }
  ns.push(name+"_side",name+"_front",name+"_top");
  for(const n of ns)if(textureItem.has(n))return ASSET+"item/"+encodeURIComponent(n)+".png";
  for(const n of ns)if(textureBlock.has(n))return ASSET+"block/"+encodeURIComponent(n)+".png";
