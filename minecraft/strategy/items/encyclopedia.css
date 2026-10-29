@@ -86,3 +86,6 @@ body.mc-ambient .ency-category-copy small{font-size:11px;line-height:1.35}
  body.mc-ambient .ency-category-copy b{font-size:12px}
  body.mc-ambient .ency-category-copy small{font-size:10px}
 }
+
+/* Hide the category picker completely while filtering items by search. */
+body.mc-ambient .ency-section[hidden]{display:none!important}
