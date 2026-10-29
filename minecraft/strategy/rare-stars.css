@@ -662,7 +662,7 @@ body.ml-body.st-body .st-hero .st-hero-highlight .st-rainbow-jewel .st-jewel-sta
 body:is(.rare-body,.st-body) :is(
   .mlg-site-header[data-section="minecraft"] .mlg-site-context-link,
   a.rare-back,a.st-back,
-  .rare-feature>strong,
+  .rare-feature strong,
   .rare-feature .rare-update-link,
   .rare-options a,
   .rare-sort-toolbar select
@@ -675,7 +675,7 @@ body:is(.rare-body,.st-body) :is(
 body:is(.rare-body,.st-body) :is(
   .mlg-site-header[data-section="minecraft"] .mlg-site-context-link,
   a.rare-back,a.st-back,
-  .rare-feature>strong,
+  .rare-feature strong,
   .rare-options a,
   .rare-sort-toolbar select
 ):is(:hover,:focus-visible){color:#fff!important;}
