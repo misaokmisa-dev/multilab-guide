@@ -101,6 +101,36 @@ function score(i,query){
 function itemUrl(i){return B+"detail/"+encodeURIComponent(i.name)+".html";}
 function chooseImage(name){
  const ns=[name];
+ // Some game items share the genuine texture of their base block (stairs/slabs, waxed variants).
+ const replace=[
+   name.replace(/^waxed_/,""),
+   name.replace(/^stripped_/,""),
+   name.replace(/_(slab|stairs|wall|fence|fence_gate)$/,""),
+   name.replace(/_(slab|stairs|wall|fence|fence_gate)$/,"_planks"),
+   name.replace(/_wood$/,"_log").replace(/_hyphae$/,"_stem"),
+   name.replace(/^suspicious_/,""),
+   name.replace(/_brick_(slab|stairs|wall)$/,"_bricks"),
+   name.replace(/^(brick|nether_brick|mud_brick|stone_brick)_(slab|stairs|wall)$/,"$1s"),
+   name.replace(/_copper_(slab|stairs)$/,"_copper"),
+   name.replace(/_concrete_powder$/,"_concrete")
+ ];
+ for(const a of replace)if(a!==name&&!ns.includes(a))ns.push(a);
+ const fallback={
+   chest:"oak_planks",trapped_chest:"oak_planks",ender_chest:"obsidian",
+   snow_block:"snow",decorated_pot:"decorated_pot_side",
+   purpur_stairs:"purpur_block",smooth_quartz:"quartz_block_bottom",
+   smooth_sandstone:"sandstone_bottom",smooth_red_sandstone:"red_sandstone_bottom",
+   moss_carpet:"moss_block",white_candle:"white_candle",
+   petrified_oak_slab:"oak_planks",oak_fence:"oak_planks"
+ };
+ if(fallback[name])ns.push(fallback[name]);
+ // Some blocks only offer side/top texture, never a direct filename.
+ for(const v of [...ns])for(const suf of ["_side","_front","_top","_bottom","_end","_all","_still"])ns.push(v+suf);
+ // Some textures share plurals, and a few resource names are irregular.
+ for(const v of [...ns]){
+   if(v.includes("brick")&&!v.includes("bricks"))ns.push(v.replace("brick","bricks"));
+   if(v.includes("tuff_bricks"))ns.push(v.replace("tuff_bricks","tuff_bricks"));
+ }
  // Some game items use another texture name.
  const map={grass_block:"grass_block_side",podzol:"podzol_side",mycelium:"mycelium_side",tnt:"tnt_side",crafting_table:"crafting_table_front",furnace:"furnace_front",blast_furnace:"blast_furnace_front",smoker:"smoker_front",piston:"piston_side",oak_log:"oak_log",diamond_ore:"diamond_ore",chest:"chest_front",ender_chest:"ender_chest_front"};
  if(map[name])ns.push(map[name]);
