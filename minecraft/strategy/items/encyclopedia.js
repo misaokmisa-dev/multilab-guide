@@ -145,9 +145,16 @@ function chooseImage(name){
   dried_ghast_hydration_0:"dried_ghast_hydration_0_north",
   light_weighted_pressure_plate:"iron_block",heavy_weighted_pressure_plate:"gold_block",
   petrified_oak_slab:"oak_planks",smooth_stone_slab:"smooth_stone",
-  purpur_slab:"purpur_block",deepslate_tile_wall:"deepslate_tiles"
+  purpur_slab:"purpur_block",deepslate_tile_wall:"deepslate_tiles",
+  tipped_arrow:"tipped_arrow_base",crossbow:"crossbow_standby",debug_stick:"stick"
  };
  if(visualAliases[name])ns.push(visualAliases[name]);
+ // 3D copper chests and golem statues do not have flat item sprites.
+ // Display the correct copper oxidation texture as a representative material.
+ if(/_copper_(chest|golem_statue)$/.test(name)||/^copper_(chest|golem_statue)$/.test(name)){
+  const part=name.replace(/^waxed_/,"").replace(/_(chest|golem_statue)$/,"");
+  ns.push(part==="copper"?"copper_block":part);
+ }
  const colors="white orange magenta light_blue yellow lime pink gray light_gray cyan purple blue brown green red black".split(" ");
  const color=colors.find(c=>name.startsWith(c+"_"));
  if(color && /_(bed|banner|carpet)$/.test(name))ns.push(color+"_wool");
@@ -183,7 +190,7 @@ function chooseImage(name){
 }
 function icon(i,size=54){
  const w=document.createElement("span");w.className="ency-icon";w.style.setProperty("--icon-size",size+"px");
- const url=chooseImage(i.name);const label=document.createElement("span");label.className="ency-icon-alt";label.textContent="?";
+ const url=chooseImage(i.name);const label=document.createElement("span");label.className="ency-icon-alt";label.textContent=/(?:_head|_skull)$/.test(i.name)?"頭":i.name==="shield"?"盾":"画像なし";
  if(url){const img=document.createElement("img");img.src=url;img.alt="";img.loading="lazy";img.decoding="async";img.width=size;img.height=size;
  img.addEventListener("load",()=>w.classList.add("has-image"));img.addEventListener("error",()=>img.remove());w.append(img);}
  w.append(label);return w;
