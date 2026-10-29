@@ -180,7 +180,14 @@ function initListings(){
  const count=document.querySelector("#ency-count"),more=document.querySelector("#ency-more");
  const category=document.body.dataset.category||"";
  const categoryArea=document.querySelector("#ency-categories")?.closest(".ency-section");
- const resultsHeading=result?.closest(".ency-section")?.querySelector("h2");
+ const resultsArea=result?.closest(".ency-section");
+ // On a type-specific page, show its item list first and the type navigation at the page bottom.
+ if(category && categoryArea && resultsArea){
+  const credit=document.querySelector("main.ency-shell > .mc-background-credit");
+  if(credit)credit.before(categoryArea);
+  else resultsArea.after(categoryArea);
+ }
+ const resultsHeading=resultsArea?.querySelector("h2");
  const originalResultsHeading=resultsHeading?.textContent||"アイテム一覧";
  renderCategories(document.querySelector("#ency-categories"),category);
  if(!result||!input)return;
