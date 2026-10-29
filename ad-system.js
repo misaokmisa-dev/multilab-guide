@@ -140,10 +140,12 @@ if(!legal&&!client&&(campaigns.length||video)){
     document.addEventListener("DOMContentLoaded", setup, { once: true });
   } else setup();
   function setup() {
+    if (document.documentElement.dataset.mlgNinjaFallback === "1") return;
     const main = document.querySelector("main");
     if (!main || /\/(?:about|privacy|sitemap)\.html$/.test(location.pathname) ||
       /^\/admin\//.test(location.pathname) ||
       new URLSearchParams(location.search).has("ads-preview")) return;
+    document.documentElement.dataset.mlgNinjaFallback = "1";
     const mobile = matchMedia("(max-width: 767px)").matches;
     const topId = mobile ? "8339ab59e40bba89fe75bf3969b23ef7" : "878b3c1886fe42359fb3b2718a3f1cb2";
     const slot = (name, id, width, height) => {
@@ -185,7 +187,23 @@ if(!legal&&!client&&(campaigns.length||video)){
         } else if (!filled) { outer.hidden = true; outer.classList.add("as-empty"); }
       }
       window.addEventListener("message",onMessage);
-      window.setTimeout(() => { if (!filled) { outer.hidden = true; outer.classList.add("as-empty"); } }, 8500);
+      const collapse = () => {
+        if (!filled) { outer.hidden = true; outer.classList.add("as-empty"); }
+      };
+      // A lazy iframe may stay unloaded until scrolling into view. Do not
+      // prematurely hide an unvisited placement.
+      frame.addEventListener("load", () => window.setTimeout(collapse, 8500), {once:true});
+      if ("IntersectionObserver" in window) {
+        const watcher = new IntersectionObserver(entries => {
+          if (entries.some(e => e.isIntersecting)) {
+            watcher.disconnect();
+            window.setTimeout(collapse, 12000);
+          }
+        });
+        watcher.observe(outer);
+      } else {
+        window.setTimeout(collapse, 12000);
+      }
       outer.addEventListener("DOMNodeRemoved", () => window.removeEventListener("message",onMessage), {once:true});
       return outer;
     };
