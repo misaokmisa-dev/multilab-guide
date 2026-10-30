@@ -158,6 +158,13 @@
   if(!location.pathname.startsWith('/minecraft/strategy/items/')||lang==='ja')return '';
   const dict=pretranslated[lang];const word=s=>dict.get(s)||s;
   let m;
+  // Search-result titles for both pre-rendered and dynamic Minecraft items.
+  if((m=source.match(/^【マイクラ】 (.+?)の(入手方法|作り方と使い方)$/))){
+    const name=word(m[1]),crafted=m[2]==='作り方と使い方';
+    if(lang==='en')return '【Minecraft】 '+name+(crafted?' — Crafting and Uses':' — How to Obtain');
+    if(lang==='ko')return '【마인크래프트】 '+name+(crafted?' 제작법과 사용법':' 획득 방법');
+    return '【Minecraft】 '+name+(crafted?'——合成方法与用途':'——获取方法');
+  }
   // Item detail static HTML is generated for 1,500+ items; translate its
   // structured metadata and description without thousands of duplicate entries.
   if((m=source.match(/^(.+?)はMinecraft Java ([\d.]+)の(.+?)カテゴリにあるアイテム・ブロックです。1スロットに最大(\d+)個持てます。(.*)$/))){
