@@ -55,9 +55,30 @@
    },{capture:true});
   });
  };
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',add,{once:true});else add();
+ // Track only explicitly marked, contextual guide-to-comparison CTAs.
+ // This is an internal navigation event, not an affiliate conversion or an ad impression.
+ const trackedFunnel=new WeakSet();
+ const addFunnel=()=>{
+  document.querySelectorAll('a[data-mlg-funnel]').forEach(a=>{
+   if(trackedFunnel.has(a))return;
+   const key=a.dataset.mlgFunnel;
+   if(!/^[a-z0-9-]{1,60}$/.test(key||''))return;
+   let target;try{target=new URL(a.href,location.href)}catch{return}
+   if(target.origin!==location.origin)return;
+   trackedFunnel.add(a);
+   a.addEventListener('click',()=>{
+    send('click','site','funnel:'+key);
+    if(typeof window.gtag==='function')window.gtag('event','mlg_funnel_click',{
+     funnel_name:key,page_path:location.pathname
+    });
+   },{capture:true});
+  });
+ };
+ const originalAdd=add;
+ const addAll=()=>{originalAdd();addFunnel()};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addAll,{once:true});else addAll();
  if('MutationObserver'in window){
-   const ob=new MutationObserver(()=>{if(document.readyState==='loading')return;add()});
+   const ob=new MutationObserver(()=>{if(document.readyState==='loading')return;addAll()});
    ob.observe(document.documentElement,{subtree:true,childList:true});
  }
 })();
