@@ -1,4 +1,4 @@
-name: Update Minecraft Item SEO Titles
+name: Update Minecraft Item SEO Titles and Sitemap
 
 on:
   workflow_dispatch:
@@ -35,12 +35,12 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             python scripts/update_item_seo_titles.py
-            git add -A -- minecraft/strategy/items/detail
+            git add -A -- minecraft/strategy/items/detail sitemap.xml
             if git diff --cached --quiet; then
-              echo "All 1,504 static item titles already match the recipes"
+              echo "All 1,672 item pages, titles and sitemap entries match the recipes"
               exit 0
             fi
-            git commit -m "Sync 1,504 Minecraft item SEO titles with crafting recipes"
+            git commit -m "Sync all 1,672 Minecraft item SEO titles and static URLs"
             if git push origin HEAD:main; then
               echo "Updated item titles published"
               exit 0
