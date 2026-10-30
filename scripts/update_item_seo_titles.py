@@ -155,11 +155,13 @@ def main() -> None:
         slug = item[1]
         old_url = f"https://mlabg.com/minecraft/strategy/items/detail/new.html?item={slug}"
         new_url = f"https://mlabg.com/minecraft/strategy/items/detail/{slug}.html"
-        if sitemap.count(old_url) != 1:
-            if sitemap.count(new_url) != 1:
+        old_loc = f"<loc>{old_url}</loc>"
+        new_loc = f"<loc>{new_url}</loc>"
+        if sitemap.count(old_loc) != 1:
+            if sitemap.count(new_loc) != 1:
                 raise ValueError(f"Sitemap item URL missing or duplicated: {slug}")
         else:
-            sitemap = sitemap.replace(old_url, new_url, 1)
+            sitemap = sitemap.replace(old_loc, new_loc, 1)
     sitemap_path.write_text(sitemap, encoding="utf-8")
 
     # Preserve the generic query-based template for incoming older links.
