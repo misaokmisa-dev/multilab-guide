@@ -1,0 +1,51 @@
+name: Update Minecraft Item SEO Titles
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/update-item-seo-titles.yml'
+      - 'scripts/update_item_seo_titles.py'
+      - 'minecraft/strategy/items/items-data.js'
+      - 'minecraft/strategy/items/items-2026-data.js'
+      - 'minecraft/strategy/items/recipes-data.js'
+      - 'minecraft/strategy/items/recipes-2026-data.js'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: minecraft-item-seo-titles
+  cancel-in-progress: true
+
+jobs:
+  titles:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Regenerate all pre-rendered item titles and publish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/update_item_seo_titles.py
+            git add -A -- minecraft/strategy/items/detail
+            if git diff --cached --quiet; then
+              echo "All 1,504 static item titles already match the recipes"
+              exit 0
+            fi
+            git commit -m "Sync 1,504 Minecraft item SEO titles with crafting recipes"
+            if git push origin HEAD:main; then
+              echo "Updated item titles published"
+              exit 0
+            fi
+            echo "Concurrent push detected; rebuild against latest main"
+          done
+          echo "Failed to publish title updates after retries"
+          exit 1
