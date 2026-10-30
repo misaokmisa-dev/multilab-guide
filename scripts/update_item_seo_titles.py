@@ -75,7 +75,7 @@ def build_new_item_page(template: str, item, category_names: dict[str, str], rec
                    f"Minecraft Java {version}の情報を掲載。")
     for attr in ('name="description"', 'property="og:description"'):
         source, count = re.subn(
-            r'(<meta\\s+' + re.escape(attr) + r'\\s+content=")[^"]*(")',
+            r'(<meta\s+' + re.escape(attr) + r'\s+content=")[^"]*(")',
             lambda m: m[1] + html.escape(description, quote=True) + m[2],
             source,
             count=1,
