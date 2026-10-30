@@ -101,7 +101,7 @@ function score(i,query){
  }
  return total;
 }
-function itemUrl(i){return i.id>1504 ? B+"detail/new.html?item="+encodeURIComponent(i.name) : B+"detail/"+encodeURIComponent(i.name)+".html";}
+function itemUrl(i){return B+"detail/"+encodeURIComponent(i.name)+".html";}
 function chooseImage(name){
  const ns=[name];
  // Some game items share the genuine texture of their base block (stairs/slabs, waxed variants).
