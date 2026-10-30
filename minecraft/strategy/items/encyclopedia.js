@@ -684,9 +684,9 @@ function initDetail(){
  root.replaceChildren();
  const hero=q("section","ency-detail-hero");hero.append(icon(item,105));
  const part=q("div");const tag=q("span","ency-kicker",groupMap.get(item.cat)?.title+" / Java "+(item.release==="26.4-snapshot-6"?"26.4 Snapshot 6（開発版）":item.release));
- if(item.id>1504){document.title=item.jp+"の作り方・入手方法 | Minecraft "+item.release+" | MULTI LAB GUIDE";
+ if(item.id>1504){
  document.querySelector('link[rel="canonical"]')?.setAttribute("href",location.origin+itemUrl(item));
- document.querySelector('meta[name="description"]')?.setAttribute("content",item.jp+"（"+item.en+"）のレシピと入手方法。Minecraft Java "+item.release+"の追加アイテムを解説。");}
+ document.querySelector('meta[name="description"]')?.setAttribute("content",item.jp+"（"+item.en+"）の"+(RECIPES[String(item.id)]?.length?"作り方と使い方":"入手方法")+"。Minecraft Java "+item.release+"の追加アイテムを解説。");}
  const name=q("h1","",item.jp);const en=q("p","ency-en",item.name);
  part.append(tag,name,en);
  if(item.release==="26.4-snapshot-6"){part.append(q("p","ency-preview-status","26.4 開発版の発表済み要素・正式実装前。仕様と入手方法は変更される可能性があります。"));}
@@ -698,6 +698,10 @@ function initDetail(){
  summary.append(q("p","",item.jp+"（英語名："+item.en+"）は、Minecraftの「"+groupMap.get(item.cat)?.title+"」に分類されるアイテム・ブロックです。追加バージョン："+item.release+"。1スロットに持てる上限は"+item.stack+"個です。"));
  joined.append(summary);
  const recipes=RECIPES[String(item.id)]||[];
+ // Use the same search-facing title for both prebuilt pages and 2026 additions.
+ const seoTitle="【マイクラ】 "+item.jp+(recipes.length?"の作り方と使い方":"の入手方法");
+ document.title=seoTitle;
+ document.querySelector('meta[property="og:title"]')?.setAttribute("content",seoTitle);
  // Items without a crafting-table recipe have no crafting section.
  if(recipes.length){
   const craft=q("section","ency-panel");craft.append(q("h2","","作り方・クラフトレシピ（3×3）"));
