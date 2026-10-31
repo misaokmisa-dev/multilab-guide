@@ -58,6 +58,22 @@
  // Track only explicitly marked, contextual guide-to-comparison CTAs.
  // This is an internal navigation event, not an affiliate conversion or an ad impression.
  const trackedFunnel=new WeakSet();
+ // Count a guide CTA only after at least half of it becomes visible.
+ // These are internal link views, not paid-ad impressions or unique visitors.
+ const funnelSeen=new WeakSet();
+ const funnelObserver='IntersectionObserver'in window?new IntersectionObserver(entries=>{
+  for(const entry of entries){
+   if(!entry.isIntersecting||funnelSeen.has(entry.target))continue;
+   const a=entry.target,key=a.dataset.mlgFunnel;
+   if(!/^[a-z0-9-]{1,60}$/.test(key||''))continue;
+   funnelSeen.add(a);
+   send('impression','site','funnel:'+key);
+   if(typeof window.gtag==='function')window.gtag('event','mlg_funnel_view',{
+    funnel_name:key,page_path:location.pathname
+   });
+   funnelObserver.unobserve(a);
+  }
+ },{threshold:0.5}):null;
  const addFunnel=()=>{
   document.querySelectorAll('a[data-mlg-funnel]').forEach(a=>{
    if(trackedFunnel.has(a))return;
@@ -66,6 +82,7 @@
    let target;try{target=new URL(a.href,location.href)}catch{return}
    if(target.origin!==location.origin)return;
    trackedFunnel.add(a);
+   if(funnelObserver)funnelObserver.observe(a);
    a.addEventListener('click',()=>{
     send('click','site','funnel:'+key);
     if(typeof window.gtag==='function')window.gtag('event','mlg_funnel_click',{
