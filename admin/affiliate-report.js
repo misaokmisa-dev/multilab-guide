@@ -77,6 +77,33 @@ function render(){
  el('kpi-ctr').textContent=state.events&&imp>0?(100*click/imp).toFixed(2)+'%':'—';
  const tbody=el('provider-rows');tbody.replaceChildren();
  for(const g of groups){const tr=document.createElement('tr');addCell(tr,g.title);addCell(tr,none(g.impressions),true);addCell(tr,none(g.clicks),true);addCell(tr,g.ctr===null?'—':g.ctr.toFixed(2)+'%',true);addCell(tr,money(g.gross),true);addCell(tr,money(g.confirmed),true);tbody.appendChild(tr);}
+ // Internal guide-to-comparison funnel: visible CTA views and clicks, by day.
+ // These are not ad impressions, unique visitors, purchases, or ASP conversions.
+ const funnelBody=el('funnel-rows');funnelBody.replaceChildren();
+ const funnelMap=new Map();
+ for(const e of events){
+  if(e.platform!=='site'||!['impression','click'].includes(e.event)||
+     typeof e.item!=='string'||!e.item.startsWith('funnel:'))continue;
+  const name=e.item.slice(7),day=e.day||'',page=e.page||'';
+  const key=[day,page,name].join('|');
+  if(!funnelMap.has(key))funnelMap.set(key,{day,page,name,views:0,clicks:0});
+  const item=funnelMap.get(key);
+  item[e.event==='impression'?'views':'clicks']+=Number(e.hits)||0;
+ }
+ const funnelData=[...funnelMap.values()].sort((a,b)=>b.day.localeCompare(a.day)||b.clicks-a.clicks);
+ for(const f of funnelData){
+  const tr=document.createElement('tr');
+  addCell(tr,f.day);addCell(tr,f.name);addCell(tr,f.page);
+  addCell(tr,fmt(f.views),true);addCell(tr,fmt(f.clicks),true);
+  addCell(tr,f.views>0?(100*f.clicks/f.views).toFixed(2)+'%':'—',true);
+  funnelBody.appendChild(tr);
+ }
+ if(!funnelData.length){
+  const tr=document.createElement('tr'),td=document.createElement('td');
+  td.colSpan=6;
+  td.textContent=state.events?'選択期間の導線計測データはありません。':'計測APIの認証後に日別の導線CTRを表示します。';
+  tr.appendChild(td);funnelBody.appendChild(tr);
+ }
  const linkRows=el('link-rows');linkRows.replaceChildren();
  const linkMap=new Map();
  for(const e of events.filter(x=>['impression','click'].includes(x.event))){
