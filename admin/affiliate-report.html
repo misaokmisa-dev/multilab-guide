@@ -25,6 +25,9 @@
 <div class="split">
 <section class="panel"><h2>媒体別の実績</h2><p class="muted">リンク表示・サイト内クリック・収益を比較。クリック数がない欄を0として扱いません。</p><div class="scroll"><table><thead><tr><th>広告媒体</th><th>リンク表示</th><th>クリック</th><th>CTR</th><th>発生報酬</th><th>確定報酬</th></tr></thead><tbody id="provider-rows"></tbody></table></div></section>
 <section class="panel"><h2>発生報酬の推移</h2><div id="chart" class="chart"><p class="muted">レポートを読み込むと日別の報酬を表示します。</p></div></section></div>
+<section class="panel"><h2>ガイドから商品比較への導線（日別）</h2>
+<p class="muted">リンクの50%以上が画面内に表示された回数とクリック数を、日付・導線別に確認します。CTR＝クリック数÷表示回数。ユニーク人数・広告の有効表示・購入件数ではありません。同じ人の複数クリックで100%を超える場合があります。</p>
+<div class="scroll"><table><thead><tr><th>日付</th><th>導線</th><th>掲載ページ</th><th>リンク表示</th><th>クリック</th><th>CTR</th></tr></thead><tbody id="funnel-rows"></tbody></table></div></section>
 <section class="panel"><h2>商品・リンク別のクリック実績</h2><p class="muted">どの記事の、どのAmazon・A8.netリンクが見られ、クリックされたかを確認できます。※ 計測API有効化後に表示</p><div class="scroll"><table><thead><tr><th>媒体</th><th>ページ</th><th>リンク</th><th>表示</th><th>クリック</th><th>CTR</th></tr></thead><tbody id="link-rows"></tbody></table></div></section><section class="panel"><div class="panel-title"><div><h2>各社の公式レポートを集約</h2><p class="muted">CSV / TSV / TXTファイルを選択するとブラウザで集計します。データはサーバーに送信しません。</p></div><button id="export" class="secondary" type="button">集計CSVを書き出す</button></div>
 <div class="import-grid"><label class="field">レポートの媒体<select id="provider"><option value="amazon">Amazonアソシエイト</option><option value="a8">A8.net</option><option value="adsterra">Adsterra</option><option value="ninja">忍者AdMax</option><option value="other">その他</option></select></label>
 <label class="field">CSVファイル<input type="file" id="file" accept=".csv,.tsv,.txt,text/csv,text/plain" multiple></label></div>
