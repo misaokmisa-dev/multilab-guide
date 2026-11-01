@@ -155,3 +155,31 @@ body.fs-page #fs-copy-materials[hidden]{display:none!important}
  .fs-build-controls .fs-button{min-width:0;flex:1}
  .fs-build-detail{padding:12px}
 }
+
+/* Authentic Minecraft game-texture viewer: the primary construction visual. */
+.fs-block-viewer[hidden]{display:none!important}
+.fs-block-viewer{padding:12px;background:#ecf8ef;border:1px solid #c5e2ce;border-radius:14px;margin:14px 0 16px}
+.fs-block-toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:11px}
+.fs-block-cameras{display:flex;flex-wrap:wrap;gap:6px}
+.fs-block-camera{border:1px solid #b0d1b8;background:#fff;color:#1f5633;font-size:12px;font-weight:850;border-radius:8px;padding:10px 12px;cursor:pointer;min-height:42px}
+.fs-block-camera.is-active{background:#01e427;border-color:#00ab2e;color:#11371b}
+.fs-block-camera:hover,.fs-block-camera:focus-visible{outline:2px solid #3ee66a;outline-offset:1px}
+.fs-block-select,.fs-block-toggle{display:inline-flex;gap:7px;align-items:center;font-size:12px;font-weight:800;color:#275636}
+.fs-block-select select{padding:8px 9px;background:#fff;color:#183b28;border:1px solid #b4d1ba;border-radius:8px;font-weight:800;font-size:13px}
+.fs-block-toggle input{width:18px;height:18px;accent-color:#03bd39}
+.fs-block-scroller{max-width:100%;width:100%;overflow-x:auto;overscroll-behavior-x:contain;background:#102825;border:1px solid #143a2b;border-radius:12px;box-shadow:inset 0 2px 10px #0004}
+#fs-block-canvas{display:block;width:100%;min-width:650px;height:auto;aspect-ratio:980/520;background:#132625;touch-action:pan-x;image-rendering:auto}
+.fs-block-legend{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 7px}
+.fs-block-legend span{display:inline-flex;align-items:center;gap:6px;border:1px solid #c8dfcf;background:#fff;border-radius:6px;font-size:11px;font-weight:760;color:#235335;padding:4px 7px}
+.fs-block-legend img{width:24px;height:24px;object-fit:contain;image-rendering:pixelated}
+.fs-block-viewer>.fs-caption{margin:9px 0;font-size:11px}
+.fs-legacy-diagram{margin:14px 0;background:#f8fcf9;border:1px solid #d0e5d5;border-radius:10px}
+.fs-legacy-diagram summary{cursor:pointer;padding:12px 14px;color:#285b37;font-size:13px;font-weight:820}
+.fs-legacy-diagram .fs-layer-scroll{padding:0 12px 12px}
+@media(max-width:700px){
+ .fs-block-viewer{padding:9px}
+ .fs-block-toolbar{gap:9px}
+ .fs-block-cameras{width:100%}
+ .fs-block-camera{flex:1;padding:9px 5px}
+ .fs-block-select,.fs-block-toggle{font-size:11px}
+}
