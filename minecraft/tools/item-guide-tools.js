@@ -50,7 +50,25 @@ function buttonCopy(text,label){const b=el("button","ml-i-button ml-i-copy",labe
 function count(n){return Number(n).toLocaleString("ja-JP");}
 const input=$("ml-item-search"),matches=$("ml-item-results"),current=$("ml-current"),quantity=$("ml-amount");
 let chosen=null, selectedRecipe=0;
-function select(i,scroll){chosen=i;selectedRecipe=0;if(input)input.value=i.jp;if(matches)matches.hidden=true;render();if(scroll!==false){record("item_selected");if(current)current.scrollIntoView({behavior:"smooth",block:"nearest"});}}
+const basket=[];
+const MAX_ENTRIES=24;
+function select(i,scroll){
+ if(tool==="planner"){
+  const q=Math.min(10000,Math.max(1,Math.floor(Number(quantity?.value)||1)));
+  const found=basket.find(x=>x.slug===i.slug);
+  if(found)found.qty=Math.min(10000,found.qty+q);
+  else if(basket.length<MAX_ENTRIES)basket.push({slug:i.slug,qty:q,variant:0});
+  else{alert("一度に登録できるアイテムは"+MAX_ENTRIES+"種類です。");return;}
+  if(input){input.value="";input.placeholder="続けて次のアイテムを検索…";}
+  if(quantity)quantity.value="1";
+  if(matches)matches.hidden=true;
+  renderBasket();
+  if(scroll!==false)record("item_added");
+  return;
+ }
+ chosen=i;selectedRecipe=0;if(input)input.value=i.jp;if(matches)matches.hidden=true;render();
+ if(scroll!==false){record("item_selected");if(current)current.scrollIntoView({behavior:"smooth",block:"nearest"});}
+}
 function list(){if(!input||!matches)return;matches.replaceChildren();const found=lookup(input.value);if(!found.length){matches.append(el("p","ml-i-muted","一致するアイテムがありません。日本語・英語名・IDで検索できます。"));}else{for(const i of found){const b=el("button","ml-i-option");b.type="button";b.append(picture(i,36));const span=el("span");span.append(el("strong","",i.jp),el("small","",i.en+" · minecraft:"+i.slug));b.append(span);b.addEventListener("click",()=>select(i));matches.append(b);}}matches.hidden=false;}
 function selectedHeader(i){const h=el("div","ml-i-selected");h.append(picture(i,72));const right=el("div");right.append(el("h2","",i.jp),el("p","ml-i-english",i.en));const id=el("div","ml-i-idline");id.append(el("code","", "minecraft:"+i.slug),buttonCopy("minecraft:"+i.slug,"IDをコピー"));right.append(id);h.append(right);return h;}
 function commandView(i){
@@ -65,7 +83,7 @@ function commandView(i){
 function recipeIds(r){return (r.s?r.s.flat():r.i||[]).filter(x=>x!==null&&x!==undefined).map(Number);}
 function optionsFor(i){return (rec[String(i.id)]||[]).filter(r=>(r.s||r.i)&&recipeIds(r).length&&Number.isInteger(r.c||1)&&(r.c||1)>0);}
 function recipeDescription(r,product){const needs=new Map();for(const id of recipeIds(r)){const actual=(product?.slug==="chest"&&idMap.get(id)?.slug.endsWith("_planks"))?slugMap.get("oak_planks").id:id;needs.set(actual,(needs.get(actual)||0)+1);}return [...needs].map(([id,n])=>(idMap.get(id)?.jp||"不明")+"×"+n).join("、")+" → "+(r.c||1)+"個";}
-function expandPlan(item,amount,rootVariant){const raw=new Map(),steps=new Map(),left=new Map(),alerts=new Set(),cycles=new Set();
+function expandPlan(item,amount,rootVariant,carry){const raw=new Map(),steps=new Map(),left=new Map(carry||[]),alerts=new Set(),cycles=new Set();
  function addTo(m,id,n){m.set(id,(m.get(id)||0)+n);}
  function requireItem(i,needed,path,depth){
   if(!i||!Number.isFinite(needed)||depth>22){if(i)addTo(raw,i.id,needed);alerts.add("複雑な依存・不明なデータは素材として数えています。");return;}
@@ -109,19 +127,113 @@ function plannerView(i){
  panel.append(buttonCopy(i.jp+" ×"+qty+"\n【必要な素材】\n"+textItems,"素材リストをコピー"));
  return panel;
 }
+
+function expandBasket(entries){
+ const totals=new Map(),steps=[],warnings=new Set();
+ let leftover=new Map();
+ for(const row of entries){
+  const item=slugMap.get(row.slug);if(!item)continue;
+  const qty=Math.min(10000,Math.max(1,Math.floor(Number(row.qty)||1)));
+  const result=expandPlan(item,qty,row.variant||0,leftover);
+  leftover=new Map(result.left);
+  for(const [id,n] of result.raw)totals.set(id,(totals.get(id)||0)+n);
+  for(const st of result.steps)steps.push(st);
+  for(const w of result.warnings)warnings.add(w);
+ }
+ return {raw:[...totals].filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]),steps,left:[...leftover].filter(x=>x[1]>0),warnings:[...warnings]};
+}
+function renderBasket(){
+ const area=$("ml-plan-list");if(!area||!current)return;
+ area.replaceChildren();current.replaceChildren();
+ const heading=el("h2","", "追加したアイテム（"+basket.length+"/"+MAX_ENTRIES+"種類）");area.append(heading);
+ if(!basket.length){
+  area.append(el("p","ml-i-muted","作りたいアイテムを検索して選択すると、ここに追加されます。選択を残したまま次のアイテムを検索できます。"));
+  current.append(el("h2","","必要素材の合計"),el("p","ml-i-muted","アイテムを1つ以上追加すると、必要な材料をまとめて計算します。"));
+  return;
+ }
+ const rows=el("div","ml-i-basket-rows");area.append(rows);
+ for(const row of basket){
+  const item=slugMap.get(row.slug);if(!item)continue;
+  const card=el("div","ml-i-basket-row");card.append(picture(item,47));
+  const title=el("div","ml-i-basket-meta");title.append(linked(item),el("small","",item.en));
+  card.append(title);
+  const label=el("label","ml-i-basket-qty");label.append(el("span","","作る数"));
+  const n=el("input");n.type="number";n.min="1";n.max="10000";n.step="1";n.inputMode="numeric";n.value=String(row.qty);n.setAttribute("aria-label",item.jp+"を作る数");
+  n.addEventListener("change",()=>{row.qty=Math.min(10000,Math.max(1,Math.floor(Number(n.value)||1)));renderBasket();record("quantity_updated");});
+  label.append(n);card.append(label);
+  const del=el("button","ml-i-remove","削除");del.type="button";del.setAttribute("aria-label",item.jp+"をリストから削除");
+  del.addEventListener("click",()=>{basket.splice(basket.indexOf(row),1);renderBasket();record("item_removed");});
+  card.append(del);
+  const variants=optionsFor(item);
+  if(variants.length>1){const rowVariant=el("label","ml-i-basket-variant");rowVariant.append(el("small","","作り方を選ぶ"));
+   const sel=el("select");variants.forEach((r,index)=>{const opt=el("option","",String(index+1)+". "+recipeDescription(r,item));opt.value=String(index);sel.append(opt);});
+   sel.value=String(row.variant||0);sel.addEventListener("change",()=>{row.variant=Number(sel.value)||0;renderBasket();record("recipe_variant");});rowVariant.append(sel);card.append(rowVariant);
+  }
+  rows.append(card);
+ }
+ const controls=el("div","ml-i-basket-actions");
+ const next=el("button","ml-i-button ml-i-add-again","＋ 別のアイテムも追加");next.type="button";next.addEventListener("click",()=>{input?.focus();input?.scrollIntoView({behavior:"smooth",block:"center"});});
+ const clear=el("button","ml-i-clear-all","すべて削除");clear.type="button";clear.addEventListener("click",()=>{basket.length=0;renderBasket();record("basket_cleared");});
+ controls.append(next,clear);area.append(controls);
+ const p=expandBasket(basket);
+ current.append(el("h2","","必要素材の合計"),el("p","ml-i-summary",basket.length+"種類の完成品を作るために集める素材を合算しました。"));
+ const cardGrid=el("div","ml-i-materials");
+ for(const [id,num] of p.raw){
+  const obj=idMap.get(id);if(!obj)continue;
+  const card=el("div","ml-i-material");card.append(picture(obj,40));
+  const meta=el("div");meta.append(linked(obj),el("strong","ml-i-count",count(num)+" 個"));
+  const stacks=Math.floor(num/obj.stack),rem=num%obj.stack;
+  meta.append(el("small","",obj.stack>1?(stacks?count(stacks)+" スタック":"")+(rem?" ＋"+rem+"個":""):"スタック不可"));
+  card.append(meta);cardGrid.append(card);
+ }
+ current.append(cardGrid);
+ if(p.steps.length){
+  const sec=el("section","ml-i-result-section");sec.append(el("h3","","まとめたクラフト工程"));
+  const grouped=new Map();
+  for(const step of p.steps){
+   const record=grouped.get(step.i.id)||{i:step.i,batches:0,qty:0,r:step.r};
+   record.batches+=step.batches;record.qty+=step.qty;grouped.set(step.i.id,record);
+  }
+  const ol=el("ol","ml-i-steps");
+  for(const st of [...grouped.values()].reverse()){
+   const li=el("li");li.append(el("strong","",st.i.jp+" ×"+count(st.qty)+"（"+count(st.batches)+"回）"));
+   li.append(el("p","",recipeDescription(st.r,st.i)),linked(st.i,"作り方を見る"));ol.append(li);
+  }sec.append(ol);current.append(sec);
+ }
+ if(p.left.length)current.append(el("p","ml-i-muted","クラフト後の余り："+p.left.map(([id,n])=>(idMap.get(id)?.jp||id)+" ×"+count(n)).join("、")));
+ for(const w of p.warnings)current.append(el("p","ml-i-warning",w));
+ current.append(el("p","ml-i-muted","※ Java版の登録済み作業台レシピを使用。鉄インゴットや板材などは基本素材として計算します。チェストはオークの板材8個の例です。精錬・鍛冶・石切・取引は自動計算対象外です。端数の余りはリスト内で共通利用します。"));
+ const summary=basket.map(row=>slugMap.get(row.slug)?.jp+" ×"+row.qty).join("\n");
+ const listText=p.raw.map(([id,n])=>(idMap.get(id)?.jp||id)+"："+count(n)+"個").join("\n");
+ current.append(buttonCopy("【作りたいもの】\n"+summary+"\n\n【必要素材の合計】\n"+listText,"合計素材リストをコピー"));
+ try{
+  const url=new URL(location.href);
+  url.searchParams.delete("item");url.searchParams.delete("qty");
+  url.searchParams.set("plan",basket.map(x=>x.slug+":"+x.qty+(x.variant?":"+x.variant:"")).join(","));
+  history.replaceState(null,"",url);
+ }catch(_){}
+}
 function render(){if(!current||!chosen)return;current.replaceChildren();current.append(selectedHeader(chosen));
  current.append(el("p","ml-i-muted",chosen.release==="26.4-snapshot-6"?"未実装の開発版追加アイテム。正式版とは異なる場合があります。":"Java "+chosen.release+"以降の収録情報。"));
  if(tool==="command")current.append(commandView(chosen));else current.append(plannerView(chosen));
  const next=el("div","ml-i-next");next.append(linked(chosen,"図鑑で作り方・入手方法を見る →"));next.append(document.createTextNode("　|　"));const other=el("a","",tool==="command"?"材料を逆算する →":"アイテムID・コマンドを見る →");other.href="/minecraft/tools/"+(tool==="command"?"material-planner":"item-command-search")+".html?item="+encodeURIComponent(chosen.slug);next.append(other);current.append(next);
  const u=new URL(location.href);u.searchParams.set("item",chosen.slug);if(tool==="planner")u.searchParams.set("qty",quantity?.value||"1");history.replaceState(null,"",u);
 }
-if(input){input.addEventListener("input",()=>list());input.addEventListener("focus",()=>{if(!chosen||input.value!==chosen.jp)list();});}
-if(quantity){quantity.addEventListener("input",()=>{if(chosen)render();});quantity.addEventListener("blur",()=>{quantity.value=String(Math.min(tool==="command"?2304:10000,Math.max(1,Math.floor(Number(quantity.value)||1))));if(chosen)render();});}
+if(input){input.addEventListener("input",()=>list());input.addEventListener("focus",()=>{if(tool==="planner"||!chosen||input.value!==chosen.jp)list();});}
+if(quantity){quantity.addEventListener("input",()=>{if(tool==="command"&&chosen)render();});quantity.addEventListener("blur",()=>{quantity.value=String(Math.min(tool==="command"?2304:10000,Math.max(1,Math.floor(Number(quantity.value)||1))));if(tool==="command"&&chosen)render();});}
 $("ml-preview")?.addEventListener("change",()=>{list();if(chosen&&!valid(chosen)){chosen=null;current?.replaceChildren();}});
 $("ml-samples")?.addEventListener("click",e=>{const v=e.target.closest("[data-sample]");if(v){const i=slugMap.get(v.dataset.sample);if(i)select(i);}});
 const qs=new URLSearchParams(location.search),q=qs.get("item");
 if(quantity&&qs.has("qty"))quantity.value=String(Math.min(10000,Math.max(1,Math.floor(Number(qs.get("qty"))||1))));
-const initial=slugMap.get(q)||slugMap.get(tool==="planner"?"hopper":"diamond");
-if(initial)select(initial,false);
-window.MLG_ITEM_TOOL_TEST={expandPlan,lookup,items,optionsFor};
+if(tool==="planner"){
+ const plan=qs.get("plan");
+ if(plan){for(const segment of plan.split(",").slice(0,MAX_ENTRIES)){const [slug,qty,variant]=segment.split(":");if(slugMap.has(slug)&&!basket.some(x=>x.slug===slug)){basket.push({slug,qty:Math.min(10000,Math.max(1,Math.floor(Number(qty)||1))),variant:Math.max(0,Math.floor(Number(variant)||0))});}}}
+ else if(slugMap.has(q))basket.push({slug:q,qty:Math.min(10000,Math.max(1,Math.floor(Number(qs.get("qty"))||1))),variant:0});
+ if(quantity)quantity.value="1";
+ renderBasket();
+}else{
+ const initial=slugMap.get(q)||slugMap.get("diamond");
+ if(initial)select(initial,false);
+}
+window.MLG_ITEM_TOOL_TEST={expandPlan,expandBasket,lookup,items,optionsFor,basket};
 })();
