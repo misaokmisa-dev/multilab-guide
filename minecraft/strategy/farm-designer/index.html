@@ -15,14 +15,15 @@
 <link rel="stylesheet" href="/global-site-header.css?v=20261027a">
 <link rel="stylesheet" href="/ad-system.css">
 <link rel="stylesheet" href="/minecraft/strategy/minecraft-ambient.css?v=20261028allcontrols9">
-<link rel="stylesheet" href="/minecraft/strategy/farm-designer/farm-studio.css?v=20261101buildguide01">
+<link rel="stylesheet" href="/minecraft/strategy/farm-designer/farm-studio.css?v=20261101blockviewer01">
 <script defer src="/ad-config.js"></script><script defer src="/ad-system.js"></script>
 <script defer src="/affiliate-tracker.js?v=20261031funnelviews"></script>
 <script defer src="/site-language.js?v=20261028full"></script>
 <script defer src="/minecraft/strategy/items/items-data.js?v=20261029a"></script>
 <script defer src="/minecraft/strategy/items/items-2026-data.js?v=20261029plus1"></script>
 <script defer src="/minecraft/strategy/farm-designer/farm-data.js?v=20261101a"></script>
-<script defer src="/minecraft/strategy/farm-designer/farm-studio.js?v=20261101buildguide01"></script>
+<script defer src="/minecraft/strategy/farm-designer/farm-studio.js?v=20261101blockviewer01"></script>
+<script defer src="/minecraft/strategy/farm-designer/farm-block-viewer.js?v=20261101blockviewer01"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"マイクラ自動装置・トラップ設計室","description":"Minecraft自動装置の版別条件・材料目安・建築進捗・動作診断を扱う無料ワークスペース","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/strategy/farm-designer/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
 </head>
 <body class="ml-body mc-ambient fs-page">
@@ -72,7 +73,22 @@
 <h3>1株の建築工程図（工程を選んで確認）</h3>
 <p class="fs-caption">工程ボタンを押すと、今置くブロックが強調されます。左から回収側・作物・機械・背面配線の順で表示します。</p>
 <nav class="fs-build-tabs" id="fs-layer-steps" aria-label="建築工程を切り替える"></nav>
+<section id="fs-block-viewer" class="fs-block-viewer" aria-label="Minecraftブロック画像の立体建築図">
+<div class="fs-block-toolbar">
+<div class="fs-block-cameras" role="group" aria-label="建築図の視点"><button type="button" class="fs-block-camera is-active" data-fs-camera="iso" aria-pressed="true">立体図（3D）</button><button type="button" class="fs-block-camera" data-fs-camera="top" aria-pressed="false">上から</button><button type="button" class="fs-block-camera" data-fs-camera="side" aria-pressed="false">横から</button></div>
+<label class="fs-block-select">見本の株数 <select id="fs-block-preview"><option value="1">1株</option><option value="3" selected>3株</option><option value="6">6株</option></select></label>
+<label class="fs-block-toggle"><input type="checkbox" id="fs-block-future" checked> 後の工程も薄く表示</label>
+</div>
+<div class="fs-block-scroller"><canvas id="fs-block-canvas" width="980" height="520" role="img" aria-label="Minecraft本物のブロックテクスチャを使った配置図。緑の輪郭は現在の工程、薄いブロックは今後置く場所です。">Minecraftブロックの立体図。上の5工程と下の配置表をご利用ください。</canvas></div>
+<div class="fs-block-legend" aria-label="画像中のブロック一覧">
+<span><img data-fs-block-icon="sand" alt="" width="24" height="24" loading="lazy">砂・土</span><span><img data-fs-block-icon="sugar" alt="" width="24" height="24" loading="lazy">栽培物</span><span><img data-fs-block-icon="piston" alt="" width="24" height="24" loading="lazy">ピストン</span><span><img data-fs-block-icon="observer" alt="" width="24" height="24" loading="lazy">観察者</span><span><img data-fs-block-icon="redstone" alt="" width="24" height="24" loading="lazy">配線</span><span><img data-fs-block-icon="water" alt="" width="24" height="24" loading="lazy">水</span><span><img data-fs-block-icon="hopper" alt="" width="24" height="24" loading="lazy">回収（別途）</span>
+</div>
+<p class="fs-caption" id="fs-block-status" aria-live="polite">Minecraftの実際のブロックテクスチャを読み込んでいます。</p>
+<p class="fs-caption">図の株数は見本用で、材料計算に使う「栽培ユニット数」とは独立しています。回収経路は例示です。実際のゲームを撮影したスクリーンショットではありません。</p>
+</section>
+<details class="fs-legacy-diagram"><summary>文字付きの高さ・位置関係も確認</summary>
 <div class="fs-layer-scroll"><div id="fs-layer-grid" class="fs-layer-grid" role="group" aria-label="選択した工程の、1株の高さ別配置図"></div></div>
+</details>
 <div class="fs-build-detail" id="fs-layer-detail" aria-live="polite"></div>
 <div class="fs-build-toolbar"><span class="fs-build-progress" id="fs-layer-progress" aria-live="polite">建築確認 0 / 5 工程</span><button class="fs-button fs-secondary" id="fs-layer-check" type="button">この工程を確認済みにする</button></div>
 <div class="fs-build-controls"><button class="fs-button fs-secondary" id="fs-layer-prev" type="button">← 前の工程</button><button class="fs-button" id="fs-layer-next" type="button">次の工程 →</button></div>
