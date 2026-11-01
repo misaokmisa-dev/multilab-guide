@@ -91,3 +91,34 @@ body.fs-page .fs-shell *{box-sizing:border-box}
 
 /* Always hide optional material-copy control on farms without a validated bill of materials. */
 body.fs-page #fs-copy-materials[hidden]{display:none!important}
+
+/* Side-view reference for one crop unit, clearly separated from finished build diagrams. */
+.fs-layer-guide[hidden]{display:none!important}
+.fs-layer-guide{margin-top:22px;padding:18px;border:1px solid #cee6d3;background:#f9fefa;border-radius:13px}
+.fs-layer-guide h3{margin:0 0 6px;color:#194a2b}
+.fs-layer-scroll{width:100%;overflow-x:auto;overscroll-behavior-x:contain;padding:9px 0}
+.fs-layer-grid{display:grid;grid-template-columns:78px repeat(4,minmax(115px,1fr));gap:5px;min-width:555px;align-items:stretch}
+.fs-layer-head,.fs-layer-level,.fs-layer-cell{display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 7px;border-radius:8px;line-height:1.5}
+.fs-layer-head{background:#e3f0e7;border:1px solid #c5dbc9;font-size:11px;color:#386246;font-weight:900}
+.fs-layer-level{background:#eaf1eb;border:1px solid #d6e2d8;font-size:12px;color:#42644b;font-weight:850}
+.fs-layer-cell{min-height:57px;border:1px solid #dbe8de;background:#fff;font-size:12px;font-weight:780;color:#36553f}
+.fs-layer-cell.is-crop{background:#e4fbe6;border-color:#9cdda9;color:#165b2c}
+.fs-layer-cell.is-sensor{background:#e5edf9;border-color:#a9c5ee;color:#234e80}
+.fs-layer-cell.is-machine{background:#fff0d8;border-color:#ecc58f;color:#75501c}
+.fs-layer-cell.is-base{background:#efece5;border-color:#d2c7b4;color:#615039}
+.fs-layer-cell.is-water{background:#e0f3ff;border-color:#90c7e8;color:#215c87}
+.fs-layer-cell.is-wire{background:#f8eaf0;border-color:#e5b9c6;color:#863b52}
+.fs-layer-cell.is-empty{color:#789082;background:#f8fbf8;border-style:dashed}
+.fs-layer-guide .fs-caption{margin:10px 0}
+.fs-layer-guide .fs-notice{margin-top:12px}
+.fs-diagnosis-row{margin:5px 0!important;list-style:none}
+.fs-diagnosis-check{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid #dbe9dd;background:#fbfefc;border-radius:9px;cursor:pointer}
+.fs-diagnosis-check:hover,.fs-diagnosis-check:focus-within{background:#eefaf1;border-color:#98d5a8}
+.fs-diagnosis-checkbox{width:20px;height:20px;flex:0 0 20px;accent-color:#00bf2f;margin:1px 0 0}
+.fs-diagnosis-check span{flex:1;color:#375940}
+.fs-diagnosis-checkbox:checked+span{color:#5b7962}
+.fs-trouble .fs-diagnosis{list-style:none;padding:0;margin:6px 0 0}
+.fs-diagnosis-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:12px 0}
+.fs-diagnosis-actions .fs-caption{font-weight:850;color:#1c6531;margin:0}
+.fs-diagnosis-actions .fs-button{font-size:12px;min-height:40px}
+@media(max-width:650px){.fs-layer-guide{padding:12px}.fs-diagnosis-actions .fs-button{width:100%}}
