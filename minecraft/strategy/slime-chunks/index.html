@@ -47,7 +47,16 @@
   <button id="sc-submit" type="button" class="sc-search-btn">近くのスライムチャンクを探す <span aria-hidden="true">→</span></button>
  </div>
  <div id="sc-message" class="sc-message" role="alert" hidden></div>
- <p class="sc-privacy">入力値はブラウザ内で計算します。通常の計算時にシード値や座標を外部送信しません。</p>
+ <p class="sc-privacy">入力値はブラウザ内で計算します。通常の計算時にシード値や座標を外部送信しません。初期座標は(0, 0)です。自分の座標に書き換えてください。</p>
+ <details id="sc-saved-details" class="sc-saved">
+   <summary><strong>よく遊ぶワールドを保存・再利用</strong><span>この端末だけに保存・削除可能</span></summary>
+   <div class="sc-saved-inner">
+     <p>次回すぐに検索できるように、版・座標とJava版のシード値を<strong>自分で選んで保存</strong>できます。自動保存はしません。</p>
+     <div class="sc-saved-form"><label for="sc-save-name">保存するワールド名 <input id="sc-save-name" maxlength="30" type="text" placeholder="例：サバイバル拠点" autocomplete="off"></label><button type="button" id="sc-save">この条件を保存</button></div>
+     <div id="sc-saved-list" class="sc-saved-list"></div>
+     <p id="sc-save-message" class="sc-saved-message" role="status" aria-live="polite"></p>
+   </div>
+ </details>
 </section>
 <section id="sc-outcome" class="sc-outcome" aria-labelledby="sc-answer-title">
  <div class="sc-panel-heading"><div><span class="sc-step">2</span><h2 id="sc-answer-title">ここへ向かえばOK！</h2></div><span class="sc-positive" id="sc-result-kind">近くのスライムチャンク</span></div>
