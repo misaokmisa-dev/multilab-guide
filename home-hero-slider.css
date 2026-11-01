@@ -234,3 +234,66 @@
   .mlg-home-rotator.portal-hero #mlg-home-slide-devices .mlg-home-slide-name{font-size:25px!important}
   .mlg-home-rotator.portal-hero .mlg-home-slide p{font-size:11.5px!important}
 }
+
+/* 2026-11-01: prominent, faster homepage auto-guide rotation. */
+.mlg-home-slide-minecraft-art{
+ display:block!important;
+ left:26%!important;
+ right:0!important;
+ background:#203d34!important;
+}
+.mlg-home-slide-minecraft-art img{
+ display:block!important;
+ width:100%!important;
+ height:100%!important;
+ object-fit:cover!important;
+ object-position:55% center!important;
+}
+.mlg-home-slide-status{
+ gap:11px!important;
+ padding:9px 13px!important;
+ background:rgba(5,17,37,.86)!important;
+ border-color:rgba(255,255,255,.4)!important;
+ box-shadow:0 6px 23px rgba(0,0,0,.23);
+}
+.mlg-home-autoplay-indicator{
+ display:inline-flex;gap:6px;align-items:center;
+ color:#e5f5ea;font-size:11px;font-weight:850;
+ letter-spacing:.035em;white-space:nowrap;
+}
+.mlg-home-autoplay-pulse{
+ display:inline-block;flex:none;width:7px;height:7px;border-radius:50%;
+ background:#51ed86;box-shadow:0 0 0 3px rgba(81,237,134,.2);
+ animation:mlg-home-live-pulse 1.1s ease-in-out infinite;
+}
+@keyframes mlg-home-live-pulse{
+ 0%,100%{opacity:1;box-shadow:0 0 0 2px rgba(81,237,134,.14)}
+ 50%{opacity:.65;box-shadow:0 0 0 6px rgba(81,237,134,0)}
+}
+.mlg-home-slide-step{
+ width:43px!important;
+}
+.mlg-home-step-track{
+ height:3px!important;
+ background:rgba(255,255,255,.48)!important;
+}
+.mlg-home-step-fill{
+ background:#51ed86!important;
+}
+.mlg-home-rotator.is-playing .mlg-home-slide-step.is-active .mlg-home-step-fill{
+ animation:mlg-fill-line var(--mlg-cycle,2600ms) linear both;
+}
+.mlg-home-rotator.is-paused .mlg-home-autoplay-pulse{
+ animation:none;opacity:.45;box-shadow:none;background:#bed0df;
+}
+@media(max-width:760px){
+ .mlg-home-slide-minecraft-art{left:9%!important;}
+ .mlg-home-slide-minecraft-art img{object-position:59% center!important;}
+ .mlg-home-slide-status{gap:8px!important;padding:7px 9px!important;right:11px!important;bottom:10px!important;}
+ .mlg-home-autoplay-indicator{font-size:10px;gap:5px;}
+ .mlg-home-autoplay-pulse{width:6px;height:6px;}
+ .mlg-home-slide-step{width:29px!important;}
+}
+@media(prefers-reduced-motion:reduce){
+ .mlg-home-autoplay-pulse{animation:none!important}
+}
