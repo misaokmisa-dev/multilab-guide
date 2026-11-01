@@ -262,8 +262,7 @@
     map.style.setProperty("--sc-count",String(state.zoom));
     map.style.setProperty("--sc-cell",level.cell+"px");
     map.replaceChildren(frag);
-    put("sc-zoom-level",state.zoom+"×"+state.zoom+" マス");
-    put("sc-zoom-sub","1マス="+level.cell+"px");
+    // +/− only: no center zoom readout to update.
     $("sc-zoom-plus").disabled=state.zoomIndex===0;
     $("sc-zoom-minus").disabled=state.zoomIndex===ZOOM_LEVELS.length-1;
     const viewLabel="表示範囲：X "+(minX*16)+" ～ "+((minX+state.zoom)*16-1)+" / Z "+(minZ*16)+" ～ "+((minZ+state.zoom)*16-1);
