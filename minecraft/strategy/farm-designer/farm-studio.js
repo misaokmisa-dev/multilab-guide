@@ -34,7 +34,10 @@ function checkData(){const v=safeStorage.get(storageKey());return {steps:v.steps
 function saveChecked(checks){safeStorage.set(storageKey(),checks);}
 function notify(event,action){try{if(typeof window.gtag==="function")window.gtag("event","mlg_farm_studio",{action,project:selectedId,edition,page_path:location.pathname});}catch(_){}}
 function encodeRoute(){try{const url=new URL(location.href);url.searchParams.set("farm",selectedId);url.searchParams.set("edition",edition);url.searchParams.set("goal",priority);const f=project();if(f.modules)url.searchParams.set("units",String(amount));else url.searchParams.delete("units");history.replaceState(null,"",url);}catch(_){}}
-function setState(id,ed){if(!farmMap.has(id))return;selectedId=id;if(ed)edition=ed;
+function setState(id,ed){if(!farmMap.has(id))return;
+ const changed=id!==selectedId||(ed&&ed!==edition);
+ selectedId=id;if(ed)edition=ed;
+ if(changed){buildStageByKey.clear();buildDrawerOpenByKey.clear();}
  const f=project();if(f.modules){const remembered=safeStorage.get("mlg-farm-units:"+id);amount=Math.max(1,Math.min(f.modules.max,Math.floor(remembered.units||amount||f.modules.default)));}render();notify("change","farm_selected");}
 function renderFarmCards(){const host=$("fs-farm-list");if(!host)return;host.replaceChildren();for(const f of farms){
  const card=element("button","fs-card"+(selectedId===f.id?" is-active":""));
@@ -183,8 +186,8 @@ function renderLayerGuide(f,animateDrawer=false){
   }
  ];
  const id=f.id+":"+edition,storeKey="mlg-farm-build:v1:"+id;
- const saved=safeStorage.get(storeKey);
- const current=Math.max(0,Math.min(steps.length-1,buildStageByKey.has(id)?buildStageByKey.get(id):(Number(saved.step)||0)));
+ // Construction previews always start on step 1. Saved checklist progress is unaffected.
+ const current=Math.max(0,Math.min(steps.length-1,buildStageByKey.get(id)??0));
  buildStageByKey.set(id,current);
  if(!buildDrawerOpenByKey.has(id))buildDrawerOpenByKey.set(id,true);
  const open=buildDrawerOpenByKey.get(id);
@@ -309,7 +312,7 @@ function render(){
  const f=project();
  renderFarmCards();renderHeadline(f);renderMaterials(f);renderDiagram(f);renderLayerGuide(f);renderSteps(f);renderTrouble(f);renderRefs(f);encodeRoute();
 }
-on($("fs-edition"),"change",e=>{edition=e.target.value==="bedrock"?"bedrock":"java";render();notify("change","edition_changed");});
+on($("fs-edition"),"change",e=>{edition=e.target.value==="bedrock"?"bedrock":"java";buildStageByKey.clear();buildDrawerOpenByKey.clear();render();notify("change","edition_changed");});
 on($("fs-priority"),"change",e=>{priority=e.target.value;render();notify("change","goal_changed");});
 on($("fs-unit-value"),"change",e=>{const max=project().modules?.max||16;amount=Math.max(1,Math.min(max,Math.floor(Number(e.target.value)||1)));safeStorage.set("mlg-farm-units:"+selectedId,{units:amount});render();notify("change","modules_changed");});
 on($("fs-symptom"),"change",e=>{const f=project();const c=f.checks.find(c=>c.issue===e.target.value)||f.checks[0];renderDiagnostic(c);notify("diagnosis","symptom_selected");});
