@@ -152,3 +152,6 @@ body.ml-item-tool .ml-i-step-cell .ml-i-icon img{
  body.ml-item-tool .ml-i-step-cell{width:42px;height:42px}
  body.ml-item-tool .ml-i-step-cell .ml-i-icon{width:37px!important;height:37px!important}
 }
+
+/* Do not display unrelated substitute images if an inventory sprite is unavailable. */
+body.ml-item-tool .ml-i-icon.ml-i-icon-missing{font-size:10px!important;line-height:1.3;text-align:center;font-weight:750;color:#63796a;padding:3px;word-break:keep-all;}
