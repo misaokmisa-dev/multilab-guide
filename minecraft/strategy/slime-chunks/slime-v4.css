@@ -45,3 +45,86 @@ body.slime-body #sc-search-feedback{font-size:12px!important;line-height:1.65!im
 /* The 1280×356 source is pre-cropped to the actual wide hero ratio; cover crops instead of stretching. */
 body.slime-body .sc-hero{background-size:cover!important;background-repeat:no-repeat!important;background-position:center 48%!important;}
 @media(max-width:600px){body.slime-body .sc-hero{background-position:63% center!important;}}
+
+/* v4: bottom-right thumb-zone zoom. Overlay stays put while the actual map scrolls. */
+body.slime-body .sc-map-viewport-wrap{
+  position:relative;
+  width:100%;
+  min-width:0;
+  isolation:isolate;
+}
+body.slime-body .sc-map-viewport-wrap .sc-map-scroll{
+  width:100%;
+}
+body.slime-body .sc-map-controls{
+  justify-content:flex-end;
+}
+body.slime-body .sc-zoom-control.sc-zoom-floating{
+  position:absolute!important;
+  right:12px;
+  bottom:12px;
+  z-index:12;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:82px;
+  max-width:calc(100% - 20px);
+  margin:0!important;
+  padding:6px!important;
+  gap:5px!important;
+  border:1px solid #a8cdb3!important;
+  border-radius:14px!important;
+  background:rgba(250,255,251,.96)!important;
+  box-shadow:0 5px 18px #092b1b5c!important;
+  -webkit-backdrop-filter:blur(7px);
+  backdrop-filter:blur(7px);
+}
+body.slime-body .sc-zoom-control.sc-zoom-floating button{
+  width:62px!important;
+  min-width:62px!important;
+  height:46px!important;
+  min-height:46px!important;
+  flex:none;
+  border-radius:10px!important;
+}
+body.slime-body .sc-zoom-floating .sc-zoom-current{
+  min-width:0!important;
+  width:100%;
+  gap:2px;
+  padding:2px 0!important;
+}
+body.slime-body .sc-zoom-floating .sc-zoom-current strong{
+  font-size:11px!important;
+}
+body.slime-body .sc-zoom-floating .sc-zoom-current small{
+  font-size:9px!important;
+}
+body.slime-body .sc-map-panel.is-expanded .sc-map-viewport-wrap{
+  flex:1 1 auto;
+  min-height:180px;
+  display:flex;
+}
+body.slime-body .sc-map-panel.is-expanded .sc-map-viewport-wrap .sc-map-scroll{
+  flex:1 1 auto!important;
+  height:100%!important;
+  min-height:180px!important;
+  max-height:none!important;
+}
+@media(max-width:600px){
+ body.slime-body .sc-zoom-control.sc-zoom-floating{
+   right:10px;
+   bottom:10px;
+   width:74px;
+   padding:5px!important;
+ }
+ body.slime-body .sc-zoom-control.sc-zoom-floating button{
+   width:60px!important;
+   min-width:60px!important;
+   height:46px!important;
+   min-height:46px!important;
+ }
+ body.slime-body .sc-zoom-floating .sc-zoom-current{
+   min-width:0!important;
+ }
+}
