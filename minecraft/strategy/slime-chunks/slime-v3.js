@@ -385,6 +385,63 @@
   $("sc-copy-all").addEventListener("click",()=>safeCopy("sc-copy-all","all"));
   $("sc-copy-tp").addEventListener("click",()=>safeCopy("sc-copy-tp","tp"));
   $("sc-share").addEventListener("click",share);
+
+  // Returning visitors can *choose* to save their world locally. No automatic storage.
+  const SAVE_KEY="mlg-slime-saved-worlds-v1";
+  function savedWorlds(){
+    try{
+      const value=JSON.parse(localStorage.getItem(SAVE_KEY)||"[]");
+      return Array.isArray(value)?value.filter(v=>v&&typeof v.name==="string"&&(v.edition==="java"||v.edition==="bedrock")).slice(0,8):[];
+    }catch(_){return [];}
+  }
+  function persistSaved(list){
+    try{localStorage.setItem(SAVE_KEY,JSON.stringify(list.slice(0,8)));return true;}
+    catch(_){put("sc-save-message","このブラウザでは保存が利用できません。共有リンクをご利用ください。");return false;}
+  }
+  function renderSavedWorlds(){
+    const list=savedWorlds(),frag=document.createDocumentFragment();
+    if(!list.length){frag.append(make("p","sc-no-saved","保存したワールドはまだありません。"));}else{
+      list.forEach((v,index)=>{
+        const item=make("div","sc-saved-item");
+        const label=make("span");
+        label.append(make("strong",null,v.name),make("span",null,(v.edition==="java"?"Java版":"統合版")+" · X "+v.x+" / Z "+v.z));
+        const open=make("button",null,"読み込む");open.type="button";open.dataset.action="load";open.dataset.index=String(index);
+        const remove=make("button",null,"削除");remove.type="button";remove.dataset.action="remove";remove.dataset.index=String(index);
+        item.append(label,open,remove);frag.append(item);
+      });
+    }
+    $("sc-saved-list").replaceChildren(frag);
+  }
+  $("sc-save").addEventListener("click",()=>{
+    const v=currentInput();
+    if(v.error){put("sc-save-message","入力値を確認してください。"+v.error);return;}
+    const name=$("sc-save-name").value.trim().slice(0,30)||"保存した拠点";
+    const list=savedWorlds();
+    const entry={name,edition:state.edition,x:v.x,z:v.z,seed:v.seed===null?null:String(v.seed)};
+    const i=list.findIndex(q=>q.name===name&&q.edition===state.edition);
+    if(i>=0)list.splice(i,1);
+    list.unshift(entry);
+    if(persistSaved(list)){
+      renderSavedWorlds();
+      put("sc-save-message","「"+name+"」をこの端末に保存しました。次回は「読み込む」で復元できます。");
+    }
+  });
+  $("sc-saved-list").addEventListener("click",e=>{
+    const b=e.target.closest("button[data-action]");if(!b)return;
+    const list=savedWorlds(),i=Number(b.dataset.index);if(!Number.isInteger(i)||!list[i])return;
+    if(b.dataset.action==="remove"){
+      const label=list[i].name;list.splice(i,1);
+      if(persistSaved(list)){renderSavedWorlds();put("sc-save-message","「"+label+"」を削除しました。");}
+      return;
+    }
+    const v=list[i];
+    state.edition=v.edition;
+    $("sc-x").value=v.x;$("sc-z").value=v.z;$("sc-seed").value=v.seed||"";
+    updateEdition();updateUserFields();
+    put("sc-save-message","「"+v.name+"」を読み込みました。");
+    $("sc-outcome").scrollIntoView({block:"start",behavior:"smooth"});
+  });
+  renderSavedWorlds();
   if(params.has("x"))$("sc-x").value=params.get("x");
   if(params.has("z"))$("sc-z").value=params.get("z");
   if(params.has("seed"))$("sc-seed").value=params.get("seed");
