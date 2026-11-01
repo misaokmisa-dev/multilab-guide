@@ -24,6 +24,7 @@ const texOldItem=new Set(textureOld.item||[]),texOldBlock=new Set(textureOld.blo
 const CHEST_ICON_URLS={"chest":"https://minecraft.wiki/images/Invicon_Chest.png?1cab7","ender_chest":"https://minecraft.wiki/images/Invicon_Ender_Chest.png?b4e68","trapped_chest":"https://minecraft.wiki/images/Invicon_Trapped_Chest.png?cf2b7"};
 function itemTexture(i){
  const slug=i.slug;
+ if(slug==="shield")return "https://minecraft.wiki/images/Invicon_Shield.png?67b0b"; // genuine shield inventory icon
  // Use the actual in-game inventory render for model-based chest items.
  // Neither planks nor obsidian represent the chest's appearance.
  if(Object.prototype.hasOwnProperty.call(CHEST_ICON_URLS,slug))return CHEST_ICON_URLS[slug];
@@ -39,7 +40,7 @@ function itemTexture(i){
  snow_block:"snow",light_weighted_pressure_plate:"iron_block",heavy_weighted_pressure_plate:"gold_block",
  dried_ghast:"dried_ghast_hydration_0_north",dried_kelp_block:"dried_kelp_side",test_block:"test_block_start",
  skeleton_skull:"bone",wither_skeleton_skull:"wither_rose",player_head:"oak_planks",zombie_head:"rotten_flesh",creeper_head:"gunpowder",dragon_head:"dragon_egg",piglin_head:"gold_ingot",
- shield:"oak_planks",debug_stick:"stick",copper_chest:"copper_block",waxed_copper_chest:"copper_block",copper_golem_statue:"copper_block",waxed_copper_golem_statue:"copper_block",
+ debug_stick:"stick",copper_chest:"copper_block",waxed_copper_chest:"copper_block",copper_golem_statue:"copper_block",waxed_copper_golem_statue:"copper_block",
  poplar_leaves:"red_poplar_leaves",shelf_mushroom:"shelf_mushroom_stage0",brittle_ice:"ice",
  crimson_hyphae:"crimson_stem",warped_hyphae:"warped_stem",stripped_crimson_hyphae:"stripped_crimson_stem",stripped_warped_hyphae:"stripped_warped_stem"
  };
