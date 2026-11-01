@@ -107,6 +107,51 @@ function commandView(i){
 function recipeIds(r){return (r.s?r.s.flat():r.i||[]).filter(x=>x!==null&&x!==undefined).map(Number);}
 function optionsFor(i){return (rec[String(i.id)]||[]).filter(r=>(r.s||r.i)&&recipeIds(r).length&&Number.isInteger(r.c||1)&&(r.c||1)>0);}
 function recipeDescription(r,product){const needs=new Map();for(const id of recipeIds(r)){const actual=(["chest","piston","crafting_table","shield"].includes(product?.slug)&&idMap.get(id)?.slug.endsWith("_planks"))?slugMap.get("oak_planks").id:id;needs.set(actual,(needs.get(actual)||0)+1);}return [...needs].map(([id,n])=>(idMap.get(id)?.jp||"不明")+"×"+n).join("、")+" → "+(r.c||1)+"個";}
+// Show a single ingredient-only 3x3 layout for each crafting step.
+// Keep the row/column offsets in shaped recipes (a 2x2 recipe must not be flattened).
+function recipeGridItems(recipe,product){
+ const slots=Array(9).fill(null);
+ if(recipe.s){
+  for(let y=0;y<Math.min(3,recipe.s.length);y++){
+   const row=recipe.s[y]||[];
+   for(let x=0;x<Math.min(3,row.length);x++){
+    const raw=row[x];if(raw===null||raw===undefined)continue;
+    const original=idMap.get(Number(raw));
+    const useOak=["chest","piston","crafting_table","shield"].includes(product?.slug)&&original?.slug.endsWith("_planks");
+    slots[y*3+x]=useOak?slugMap.get("oak_planks"):original||null;
+   }
+  }
+ }else if(Array.isArray(recipe.i)){
+  for(let k=0;k<Math.min(9,recipe.i.length);k++){
+   const raw=recipe.i[k];if(raw===null||raw===undefined)continue;
+   const original=idMap.get(Number(raw));
+   const useOak=["chest","piston","crafting_table","shield"].includes(product?.slug)&&original?.slug.endsWith("_planks");
+   slots[k]=useOak?slugMap.get("oak_planks"):original||null;
+  }
+ }
+ return slots;
+}
+function craftIngredientsGrid(recipe,product){
+ const grid=el("div","ml-i-step-grid");
+ grid.setAttribute("role","group");
+ grid.setAttribute("aria-label",product.jp+"の材料配置（3×3）");
+ for(const item of recipeGridItems(recipe,product)){
+  const cell=el("span","ml-i-step-cell");
+  if(item){
+   cell.title=item.jp;
+   const link=el("a","ml-i-step-ingredient");
+   link.href=root+"detail/"+encodeURIComponent(item.slug)+".html";
+   link.setAttribute("aria-label",item.jp+"の詳細を見る");
+   link.append(picture(item,34));
+   cell.append(link);
+  }else{
+   cell.classList.add("is-empty");
+   cell.setAttribute("aria-hidden","true");
+  }
+  grid.append(cell);
+ }
+ return grid;
+}
 function expandPlan(item,amount,rootVariant,carry){const raw=new Map(),steps=new Map(),left=new Map(carry||[]),alerts=new Set(),cycles=new Set();
  function addTo(m,id,n){m.set(id,(m.get(id)||0)+n);}
  function requireItem(i,needed,path,depth){
@@ -216,14 +261,19 @@ function renderBasket(){
   const sec=el("section","ml-i-result-section");sec.append(el("h3","","まとめたクラフト工程"));
   const grouped=new Map();
   for(const step of p.steps){
-   const record=grouped.get(step.i.id)||{i:step.i,batches:0,qty:0,r:step.r};
-   record.batches+=step.batches;record.qty+=step.qty;grouped.set(step.i.id,record);
+   const key=step.i.id+":"+JSON.stringify(step.r);
+   const record=grouped.get(key)||{i:step.i,batches:0,qty:0,r:step.r};
+   record.batches+=step.batches;record.qty+=step.qty;grouped.set(key,record);
   }
   const ol=el("ol","ml-i-steps");
   for(const st of [...grouped.values()].reverse()){
-   const li=el("li");li.append(el("strong","",st.i.jp+" ×"+count(st.qty)+"（"+count(st.batches)+"回）"));
-   li.append(el("p","",recipeDescription(st.r,st.i)),linked(st.i,"作り方を見る"));ol.append(li);
-  }sec.append(ol);current.append(sec);
+   const li=el("li");
+   li.append(el("strong","",st.i.jp+" ×"+count(st.qty)+"（"+count(st.batches)+"回）"));
+   li.append(craftIngredientsGrid(st.r,st.i)); // one grid; no output/result cell
+   li.append(el("p","",recipeDescription(st.r,st.i)),linked(st.i,"作り方を見る"));
+   ol.append(li);
+  }
+  sec.append(ol);current.append(sec);
  }
  if(p.left.length)current.append(el("p","ml-i-muted","クラフト後の余り："+p.left.map(([id,n])=>(idMap.get(id)?.jp||id)+" ×"+count(n)).join("、")));
  for(const w of p.warnings)current.append(el("p","ml-i-warning",w));
@@ -260,5 +310,5 @@ if(tool==="planner"){
  const initial=slugMap.get(q)||slugMap.get("diamond");
  if(initial)select(initial,false);
 }
-window.MLG_ITEM_TOOL_TEST={expandPlan,expandBasket,lookup,items,optionsFor,basket,itemTexture};
+window.MLG_ITEM_TOOL_TEST={expandPlan,expandBasket,lookup,items,optionsFor,basket,itemTexture,recipeGridItems,craftIngredientsGrid};
 })();
