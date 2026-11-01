@@ -89,7 +89,7 @@ def main() -> None:
         path = DETAILS / (slug + ".html")
         if not path.is_file():
             raise FileNotFoundError(f"Missing search-crawlable item page: {slug}")
-        version = (item[6] if len(item) > 6 else old_registry["version"])
+        version = (item[6] if len(item) > 6 else old_registry["version"].removeprefix("Java ").strip())
         if update_page(path, item, bool(recipes.get(str(item_id))), version):
             count += 1
     print(f"Validated {len(items)} item pages with correct English names and item IDs.")
