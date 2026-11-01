@@ -139,3 +139,40 @@ body.mc-ambient .ency-category:is(:hover,:focus-visible,.is-current) :is(b,small
 }
 /* Preserve dark readable glyphs in the separate pale item-icon tile. */
 body.mc-ambient .ency-category:is(:hover,:focus-visible,.is-current) .ency-icon-alt{color:#306442!important}
+
+
+/* Search-optimized Minecraft terminology: names are explicit and scannable. */
+body.mc-ambient .ency-name-facts{
+ display:flex;flex-wrap:wrap;align-items:stretch;gap:9px 12px;
+ margin:12px 0 0;padding:0;
+}
+body.mc-ambient .ency-name-fact{
+ display:flex;align-items:center;flex-wrap:wrap;gap:7px;
+ min-height:39px;padding:7px 11px;
+ background:rgba(243,255,244,.12);border:1px solid rgba(199,238,204,.34);
+ border-radius:10px;max-width:100%;
+}
+body.mc-ambient .ency-name-fact dt{
+ font-size:11px;line-height:1.5;font-weight:800;color:#d8f6dd!important;
+ white-space:nowrap;
+}
+body.mc-ambient .ency-name-fact dd{
+ display:inline-block;max-width:100%;margin:0;color:#fff!important;
+ font-size:14px;line-height:1.5;font-weight:800;overflow-wrap:anywhere;
+}
+body.mc-ambient .ency-name-fact-id dd{font-size:12px;font-weight:650;color:#d9eee0!important}
+body.mc-ambient .ency-copy-name{
+ appearance:none;border:1px solid #9ee9b5;border-radius:7px;padding:5px 9px;
+ color:#073618!important;background:#ddf9e4!important;
+ font-size:11px;font-weight:850;cursor:pointer;line-height:1.5;
+}
+body.mc-ambient .ency-copy-name:hover,body.mc-ambient .ency-copy-name:focus-visible{
+ color:#fff!important;background:#087d31!important;border-color:#bceac8;
+}
+@media(max-width:540px){
+ body.mc-ambient .ency-name-facts{gap:6px;margin-top:9px}
+ body.mc-ambient .ency-name-fact{padding:6px 9px;gap:5px}
+ body.mc-ambient .ency-name-fact dt{font-size:10px}
+ body.mc-ambient .ency-name-fact dd{font-size:12px}
+ body.mc-ambient .ency-name-fact-id dd{font-size:11px}
+}
