@@ -78,11 +78,10 @@ function select(i,scroll){
   if(found)found.qty=Math.min(10000,found.qty+q);
   else if(basket.length<MAX_ENTRIES)basket.push({slug:i.slug,qty:q,variant:0});
   else{alert("一度に登録できるアイテムは"+MAX_ENTRIES+"種類です。");return;}
-  // Keep the typed keyword and the picture-backed results visible after adding.
-  // Users can add several related items without retyping the search term.
+  // Do not replace the search results DOM: keyword, illustrations, scroll
+  // position, and available suggestions remain exactly as they were.
   if(quantity)quantity.value="1";
   renderBasket();
-  list();
   if(scroll!==false)record("item_added");
   return;
  }
