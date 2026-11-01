@@ -1,121 +1,152 @@
 <!doctype html><html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>【マイクラ】スライムチャンク座標特定ツール｜Java・統合版対応 | MULTI LAB GUIDE</title>
-<meta name="description" content="マイクラのスライムチャンクを地図検索。X/Zのプラス・マイナス表示、四隅の座標を個別表示。Java版・統合版対応、上下左右スクロール・候補5件・コピー機能付き。">
+<title>【マイクラ】スライムチャンクの探し方と座標特定｜Java・統合版対応 | MULTI LAB GUIDE</title>
+<meta name="description" content="スライムチャンクの座標を今すぐ探せる無料マップ。Java版はシード値、統合版は座標だけ。近い場所のX・Z、行く方向、掘る範囲と四隅を日本語で表示。2連続チャンク探しも対応。">
 <link rel="canonical" href="https://mlabg.com/minecraft/strategy/slime-chunks/">
-<meta property="og:type" content="website"><meta property="og:title" content="マイクラ スライムチャンク座標特定ツール｜Java・統合版">
-<meta property="og:description" content="近くのスライムチャンクを地図で探し、座標をコピー。Java・統合版対応。"><meta property="og:url" content="https://mlabg.com/minecraft/strategy/slime-chunks/">
+<meta property="og:type" content="website"><meta property="og:title" content="スライムチャンクの座標を探す｜Java・統合版">
+<meta property="og:description" content="最寄りのX・Zと掘る範囲がすぐ分かる。初心者向け座標検索マップ。"><meta property="og:url" content="https://mlabg.com/minecraft/strategy/slime-chunks/">
 <meta name="theme-color" content="#123e27"><link rel="icon" href="/favicon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"スライムチャンク座標特定ツール","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/strategy/slime-chunks/","description":"MinecraftのJava版と統合版でスライムチャンクの座標を検索できるブラウザツール。","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"スライムチャンク座標特定・検索ツール","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/strategy/slime-chunks/","description":"Java版と統合版のMinecraftスライムチャンクの座標を探し、近い候補、移動方向、掘削範囲と四隅を表示する無料ツール。","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4384918189756650" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/minecraft/portal.css"><link rel="stylesheet" href="/site-unified.css">
 <link rel="stylesheet" href="/ad-system.css"><link rel="stylesheet" href="/global-site-header.css?v=20261027a">
 <link rel="stylesheet" href="/minecraft/strategy/minecraft-ambient.css?v=20261028allcontrols9">
 <link rel="stylesheet" href="/minecraft/tools/tools.css?v=20261029tools2">
-<link rel="stylesheet" href="/minecraft/strategy/slime-chunks/slime.css?v=20261101a"><link rel="stylesheet" href="/minecraft/strategy/slime-chunks/slime-v2.css?v=20261101v2">
+
 <script defer src="/ad-config.js"></script><script defer src="/ad-system.js"></script>
 <script defer src="/affiliate-tracker.js?v=20261029revenueclick01"></script>
 <script defer src="/site-language.js?v=20261028full"></script>
-<script defer src="/minecraft/strategy/slime-chunks/slime-v2.js?v=20261101v2"></script>
-</head><body class="ml-body mc-ambient slime-body">
+
+<link rel="stylesheet" href="/minecraft/strategy/slime-chunks/slime-v3.css?v=20261101v3"><script defer src="/minecraft/strategy/slime-chunks/slime-v3.js?v=20261101v3"></script></head><body class="ml-body mc-ambient slime-body">
 <header class="mlg-site-header" data-section="minecraft"><div class="mlg-site-topline"><a class="mlg-site-brand" href="/" aria-label="MULTI LAB GUIDE 総合トップへ戻る"><img class="mlg-site-brand-icon" src="/favicon.png?v=20261026" alt="" width="36" height="36" aria-hidden="true"><span class="mlg-site-brand-name"><span class="mlg-site-brand-main">MULTI <strong>LAB</strong></span><span class="mlg-site-brand-guide">GUIDE</span></span></a><nav class="mlg-site-primary" aria-label="サイト共通ナビゲーション"><a class="mlg-site-link" data-nav="home" href="/">ホーム</a><a class="mlg-site-link" data-nav="roblox" href="/roblox/">ROBLOX</a><a class="mlg-site-link" data-nav="minecraft" href="/minecraft/" aria-current="page">Minecraft</a><a class="mlg-site-link" data-nav="devices" href="/devices/">デバイス</a><a class="mlg-site-link" data-nav="articles" href="/sitemap.html">記事一覧</a></nav></div><div class="mlg-site-context"><nav class="mlg-site-context-inner" aria-label="Minecraft内のメニュー"><span class="mlg-site-context-label">Minecraft</span><a class="mlg-site-context-link" href="/minecraft/">マイクラTOP</a><a class="mlg-site-context-link" href="/minecraft/strategy/" aria-current="page">攻略情報</a><a class="mlg-site-context-link" href="/minecraft/mod-ranking.html">人気MOD</a><a class="mlg-site-context-link" href="/minecraft/mod-diagnosis.html">MOD診断</a><a class="mlg-site-context-link" href="/minecraft/server.html">サーバー診断</a><a class="mlg-site-context-link" href="/minecraft/mods/">MODガイド</a><a class="mlg-site-context-link" href="/minecraft/server.html#articles">解説記事</a></nav></div></header>
-<main class="tool-page slime-page" id="main">
-<nav class="tool-breadcrumb" aria-label="パンくず"><a href="/minecraft/">マイクラTOP</a> › <a href="/minecraft/strategy/">攻略情報</a> › スライムチャンク座標特定</nav>
-<section class="tool-hero slime-hero"><div class="slime-hero-copy"><span class="tool-eyebrow">MINECRAFT / SLIME CHUNK FINDER</span>
-<h1>スライムチャンク<br class="slime-mobile-only">座標特定ツール</h1>
-<p>地図でX・Z座標を探して、スライムチャンクの四隅すべてのブロック座標を確認できます。初心者でも掘る範囲がわかるツールです。</p>
-<div class="slime-hero-meta"><span>✓ Java版・統合版</span><span>✓ シード値の送信なし</span><span>✓ スマホ対応</span></div>
-</div><div class="slime-hero-art" aria-hidden="true"><div class="slime-face"><i></i><i></i><b></b></div></div></section>
-<aside class="as-slot as-top tool-ad" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/top-ad-loader.js"></script></div></aside>
-<section class="slime-workspace" aria-label="スライムチャンク検索">
- <div class="slime-controls">
-  <section class="slime-card slime-setup" aria-labelledby="slime-setup-title">
-   <div class="slime-section-head"><span class="slime-step">1</span><div><h2 id="slime-setup-title">まず、プレイしている版を選ぶ</h2><p>違う版ではチャンクの位置が変わります。</p></div></div>
-   <div class="slime-edition-switch" role="group" aria-label="Minecraftのエディション">
-    <button type="button" data-edition="bedrock" aria-pressed="true">統合版 <small>Switch・スマホ・PSなど</small></button>
-    <button type="button" data-edition="java" aria-pressed="false">Java版 <small>PC</small></button>
-   </div>
-   <p class="slime-hint" id="slime-edition-note">統合版はシード値が不要です。</p>
-   <div id="slime-seed-field" class="slime-field-group" hidden>
-    <label for="slime-seed" class="slime-label">ワールドのシード値 <em>Java版のみ必須</em></label>
-    <input id="slime-seed" class="slime-input" type="text" inputmode="text" spellcheck="false" autocomplete="off" placeholder="例：12345 / -827364...">
-    <div class="slime-field-foot"><span>ゲーム内チャットの <code>/seed</code> で確認</span><button type="button" class="slime-text-button" id="slime-example">サンプル値で試す</button></div>
-   </div>
-  </section>
-  <section class="slime-card slime-position" aria-labelledby="slime-position-title">
-   <div class="slime-section-head"><span class="slime-step">2</span><div><h2 id="slime-position-title">探したい場所の座標を入力</h2><p>ゲーム内で確認したXとZだけでOK。Yは不要です。</p></div></div>
-   <div class="slime-coordinate-inputs">
-    <label for="slime-x"><span>X座標 <small>東西</small></span><input id="slime-x" class="slime-input" type="number" step="1" inputmode="numeric" value="0" min="-30000000" max="30000000"></label>
-    <label for="slime-z"><span>Z座標 <small>南北</small></span><input id="slime-z" class="slime-input" type="number" step="1" inputmode="numeric" value="0" min="-30000000" max="30000000"></label>
-   </div>
-   <button type="button" class="slime-primary" id="slime-reset">入力座標を地図の中心に戻す <span aria-hidden="true">⌖</span></button>
-   <div class="slime-current">あなたの座標を含むチャンクは、地図の <b>● 印</b> です。</div>
-  </section>
-  </div>
- <section class="slime-card slime-map-card" aria-labelledby="slime-map-title">
-  <div class="slime-map-heading"><div><span class="slime-eyebrow">LIVE CHUNK MAP</span><h2 id="slime-map-title">近くのチャンクを地図で探す</h2></div><span id="slime-count" class="slime-map-count">—</span></div>
-  <div class="slime-legend" aria-label="地図の凡例"><span><i class="slime-legend-green"></i>スライム</span><span><i class="slime-legend-light"></i>通常</span><span><i class="slime-legend-dot"></i>入力座標</span><span><i class="slime-legend-outline"></i>選択中</span></div>
-  <p class="slime-map-help">地図の<strong>1マス＝16×16ブロック</strong>。<strong>緑のマスをタップ</strong>すると、下の「四隅の座標」が切り替わります。</p>
-  <div class="slime-axis-help" aria-label="XとZの増減方向"><span>← <strong>X−</strong>（西）</span><span><strong>X+</strong>（東）→</span><span>↑ <strong>Z−</strong>（北）</span><span><strong>Z+</strong>（南）↓</span></div>
-  <p class="slime-axis-disclaimer">横軸のXと縦軸のZは、<strong>各マスの北西（左上）のブロック座標</strong>を表示。プラスとマイナスも区別できます。</p>
-  <div class="slime-map-toolbar"><span id="slime-map-center">表示中心: チャンク (0, 0)</span><div class="slime-size-buttons" role="group" aria-label="マップの表示範囲"><button type="button" data-size="21" aria-pressed="false">21×21</button><button type="button" data-size="31" aria-pressed="true">31×31</button><button type="button" data-size="41" aria-pressed="false">41×41</button></div></div>
-  <div class="slime-map-frame"><span class="slime-north" aria-hidden="true">↑ 北：Z−方向</span>
-   <div id="slime-map-viewport" class="slime-map-viewport" tabindex="0" role="region" aria-label="Xが横、Zが縦のスクロールできるチャンクマップ">
-    <div id="slime-map" class="slime-map" role="group" aria-label="各マスの四隅を調べられる地図">座標マップを読み込んでいます。</div>
-   </div>
-   <div class="slime-scroll-hint"><span>↔ <strong>左右にスクロール：X方向</strong></span><span>↕ <strong>上下にスクロール：Z方向</strong></span><span>PCはマウスドラッグ・スマホは指で移動</span></div>
-   <div class="slime-dpad-shell"><div class="slime-dpad-caption"><strong>矢印で地図の位置を移動</strong><span>1回で3チャンク移動。⌖で入力位置に戻す</span></div>
-    <div class="slime-dpad" role="group" aria-label="地図を移動">
-     <button type="button" class="dpad-up" data-pan="0,-1" aria-label="北・Zマイナス方向">↑</button>
-     <button type="button" class="dpad-left" data-pan="-1,0" aria-label="西・Xマイナス方向">←</button>
-     <button type="button" class="dpad-home" id="slime-map-home" aria-label="入力した座標に戻す">⌖</button>
-     <button type="button" class="dpad-right" data-pan="1,0" aria-label="東・Xプラス方向">→</button>
-     <button type="button" class="dpad-down" data-pan="0,1" aria-label="南・Zプラス方向">↓</button>
-    </div></div>
-  </div>
-<section class="slime-detail-panel" id="slime-selected-result" aria-labelledby="slime-result-title">
-    <div class="slime-section-head"><span class="slime-step">3</span><div><h2 id="slime-result-title">選んだチャンクの四隅の座標</h2><p>チャンクを構成する16×16ブロックの<strong>全体の範囲</strong>を個別の座標で表示します。</p></div></div>
-    <div class="slime-selection-result"><span class="slime-result-kind" id="slime-center-kind">未判定</span>
-     <strong id="slime-selection">地図のマスを選ぶとチャンク番号と座標が表示されます。</strong>
-     <p class="slime-coordinate-explainer"><strong>チャンク番号とブロック座標は別物です。</strong>掘る場所は次の四隅のX・Zを見て確認してください。</p>
-     <div class="slime-range-pair"><div class="slime-range" id="slime-range">X方向：—</div><div class="slime-range" id="slime-range-z">Z方向：—</div></div>
-     <div class="slime-corner-map" aria-label="選んだチャンクの四隅">
-      <div class="slime-corner-north">↑ 北（Z−）</div>
-      <div class="slime-corner-middle"><span class="slime-corner-west">← 西 X−</span>
-       <div class="slime-corners-grid">
-        <div class="slime-corner"><span class="slime-corner-title"><b>1</b> 北西・左上</span><strong id="slime-corner-nw">X — / Z —</strong></div>
-        <div class="slime-corner"><span class="slime-corner-title"><b>2</b> 北東・右上</span><strong id="slime-corner-ne">X — / Z —</strong></div>
-        <div class="slime-corner"><span class="slime-corner-title"><b>3</b> 南西・左下</span><strong id="slime-corner-sw">X — / Z —</strong></div>
-        <div class="slime-corner"><span class="slime-corner-title"><b>4</b> 南東・右下</span><strong id="slime-corner-se">X — / Z —</strong></div>
-       </div><span class="slime-corner-east">東 X+ →</span></div>
-      <div class="slime-corner-south">↓ 南（Z+）</div>
-     </div>
-     <p id="slime-center-block" class="slime-result-bottom"></p>
-     <p id="slime-near-distance" class="slime-result-distance"></p>
-    </div>
-    <div class="slime-result-actions"><button id="slime-copy" type="button" class="slime-primary" disabled>四隅＋範囲を一括コピー</button><button id="slime-copy-tp" type="button" class="slime-secondary" disabled>中心の /tpをコピー</button><button id="slime-copy-corners" type="button" class="slime-secondary" disabled>四隅の座標をコピー</button></div>
-    <div class="slime-quick-guide"><strong>掘る範囲の見方</strong><p><strong>①北西（左上）～④南東（右下）</strong>までが対象の16×16ブロックです。緑のチャンク内で、スライムは原則Y=40未満に出現します。</p></div>
-    <p class="slime-detail-tip">/tpは現在のY（高さ）を保持します。移動先の安全を確認してください。</p>
-   </section>
-  <div class="slime-nearest-box"><div><h3>いまの座標から近いスライムチャンク</h3><p>近い順に5件。押すと地図が移動し、選んだチャンクの四隅が表示されます。</p></div><div id="slime-nearest" class="slime-nearest-list"></div></div>
-  <button id="slime-share" type="button" class="slime-share">この検索条件の共有リンクをコピー <span aria-hidden="true">↗</span></button>
-  <p class="slime-alert" id="slime-status" role="status" aria-live="polite"></p>
- </section>
+<main id="main" class="tool-page sc-page">
+<nav class="tool-breadcrumb" aria-label="パンくず"><a href="/minecraft/">マイクラTOP</a> › <a href="/minecraft/strategy/">攻略情報</a> › スライムチャンクの座標</nav>
+<section class="sc-hero" aria-labelledby="sc-title">
+ <div><div class="sc-eyebrow">MINECRAFT / SLIME CHUNK FINDER</div>
+  <h1 id="sc-title">スライムチャンクの座標を探す</h1>
+  <p>拠点に近いスライムチャンクの<strong>行き先・距離・掘る範囲</strong>がすぐにわかる。Java版・統合版に対応した無料の座標マップです。</p>
+ </div>
+ <div class="sc-hero-tags"><span>無料・登録不要</span><span>Java / 統合版</span><span>スマホ対応</span></div>
 </section>
-<section class="slime-help-grid">
- <section class="slime-card slime-guide"><h2>使い方は3ステップ</h2><ol><li><b>版を選択</b> — 統合版はシード不要。Java版はチャットで <code>/seed</code> を確認。</li><li><b>拠点のX・Zを入力</b> — マイナス座標にも対応。近くの緑マスを見つける。</li><li><b>緑マスを選んで座標をコピー</b> — その16×16ブロック内のY=40未満に出現スペースを作る。</li></ol>
- <p class="slime-caution">緑マスは「スライムが出現できるチャンク」を示します。実際の出現には周辺の湧き条件・空間・プレイヤーとの距離なども影響します。ネザーやエンドではなくオーバーワールドで使ってください。</p></section>
- <section class="slime-card slime-guide"><h2>よくある質問</h2><details><summary>シード値がわからない場合は？</summary><p>Java版はシード値なしでは正確な位置を特定できません。自分のワールドなら <code>/seed</code> で確認してください。サーバーでは権限が必要な場合があります。統合版はシード値不要です。</p></details>
- <details><summary>マイナス座標にも対応している？</summary><p>はい。X=-1ならチャンクX=-1（ブロックX=-16〜-1）です。0方向へ切り捨てず、常にマイナス無限大方向へ切り下げます。</p></details>
- <details><summary>チャンク番号とブロック座標は何が違う？</summary><p>チャンク番号X=2・Z=21なら、ブロックのXは32〜47、Zは336〜351。四隅は北西(32,336)、北東(47,336)、南西(32,351)、南東(47,351)です。</p></details>
- <details><summary>緑マスでもスライムが出ないのはなぜ？</summary><p>高さY=40未満、十分な広さ、プレイヤーとの距離、Mobの湧き上限などを確認してください。沼地の地表での出現はスライムチャンクとは別の仕組みです。</p></details>
- <details><summary>シード値や座標はサイトに送信される？</summary><p>計算はブラウザ内だけで実行します。共有リンクのコピーを押した場合のみ、リンクにシード値・座標が含まれます。共有先にはこれらの値が見えるので注意してください。</p></details>
- <p class="slime-sources">仕様の参考：<a href="https://minecraft.wiki/w/Slime#Slime_chunks" target="_blank" rel="noopener noreferrer">Minecraft Wiki（スライムチャンク）</a> / <a href="https://bedrockwiki.com/books/chunks/page/slime-chunks" target="_blank" rel="noopener noreferrer">Bedrock Wiki</a>。非公式ツールです。</p>
- </section>
+<section class="sc-input-panel" aria-labelledby="sc-input-title">
+ <div class="sc-panel-heading"><div><span class="sc-step">1</span><h2 id="sc-input-title">まず、今いる場所を入力</h2></div><p>ゲーム内のX・Z座標だけでOK（Yは不要）</p></div>
+ <div class="sc-form-wrap">
+  <div class="sc-editions" role="group" aria-label="プレイしているMinecraftの版">
+   <button data-edition="bedrock" type="button" aria-pressed="true">統合版 <small>Switch・スマホ・PS・Xbox</small></button>
+   <button data-edition="java" type="button" aria-pressed="false">Java版 <small>PC</small></button>
+  </div>
+  <p class="sc-edition-caption" id="sc-edition-caption">統合版はシード値不要。座標だけで探せます。</p>
+  <div class="sc-fields">
+   <label class="sc-field"><span>今いる場所の <strong>X座標</strong></span><input id="sc-x" type="number" inputmode="numeric" step="1" min="-30000000" max="30000000" value="0" autocomplete="off"></label>
+   <label class="sc-field"><span>今いる場所の <strong>Z座標</strong></span><input id="sc-z" type="number" inputmode="numeric" step="1" min="-30000000" max="30000000" value="0" autocomplete="off"></label>
+   <div id="sc-seed-wrap" class="sc-seed-wrap" hidden>
+    <label class="sc-field"><span>ワールドの <strong>シード値</strong>（Java版）</span><input id="sc-seed" type="text" inputmode="text" placeholder="例：12345 / -123456789" spellcheck="false" autocomplete="off"></label>
+    <div class="sc-seed-help">ゲーム内チャットに <code>/seed</code> と入力して確認 <button type="button" id="sc-sample">例のシードで試す</button></div>
+   </div>
+  </div>
+  <button id="sc-submit" type="button" class="sc-search-btn">近くのスライムチャンクを探す <span aria-hidden="true">→</span></button>
+ </div>
+ <div id="sc-message" class="sc-message" role="alert" hidden></div>
+ <p class="sc-privacy">入力値はブラウザ内で計算します。通常の計算時にシード値や座標を外部送信しません。</p>
+</section>
+<section id="sc-outcome" class="sc-outcome" aria-labelledby="sc-answer-title">
+ <div class="sc-panel-heading"><div><span class="sc-step">2</span><h2 id="sc-answer-title">ここへ向かえばOK！</h2></div><span class="sc-positive" id="sc-result-kind">近くのスライムチャンク</span></div>
+ <p class="sc-outcome-hint">入力した場所から近い候補を自動で選択しています。別の候補を選ぶと下の結果も変わります。</p>
+ <div class="sc-target-primary">
+  <div class="sc-big-coords" id="sc-result-coords" aria-label="目標のX・Z座標">
+   <div><span>行き先の X座標</span><strong id="sc-result-x">—</strong></div>
+   <div><span>行き先の Z座標</span><strong id="sc-result-z">—</strong></div>
+  </div>
+  <div class="sc-target-secondary">
+   <div class="sc-distance"><small>今いる場所から</small><strong>約 <span id="sc-result-distance">—</span></strong><small>※行き先の中心までの直線距離</small></div>
+   <div class="sc-walk"><strong>どの方向に進む？</strong><span id="sc-walk-x"></span><span id="sc-walk-z"></span></div>
+  </div>
+ </div>
+ <div class="sc-target-actions">
+  <button type="button" id="sc-copy-coords" class="sc-primary-action"><span aria-hidden="true">⧉</span> 行き先X・Zをコピー</button>
+  <button type="button" id="sc-copy-tp" class="sc-quiet-action">/tp コマンド</button>
+ </div>
+ <div class="sc-dig-section">
+  <div class="sc-dig-heading"><h3>どこからどこまで掘る？</h3><span>16×16ブロック</span></div>
+  <p>上のX・Zは行き先の目安（中央付近）。<strong>実際に掘る範囲はこの中すべてです。</strong></p>
+  <div class="sc-range-line"><div><span>X方向の範囲</span><strong id="sc-range-x">—</strong></div><div><span>Z方向の範囲</span><strong id="sc-range-z">—</strong></div></div>
+  <details class="sc-corner-details" open><summary>四隅のブロック座標を確認 <span>4点</span></summary>
+   <div class="sc-corner-diagram">
+    <div class="sc-direction-top">↑ 北（Zが小さくなる）</div>
+    <div class="sc-corner-grid" aria-label="掘る範囲の四隅">
+      <div><small>北西・左上</small><strong id="sc-nw">—</strong></div>
+      <div><small>北東・右上</small><strong id="sc-ne">—</strong></div>
+      <div><small>南西・左下</small><strong id="sc-sw">—</strong></div>
+      <div><small>南東・右下</small><strong id="sc-se">—</strong></div>
+    </div>
+    <div class="sc-direction-bottom">↓ 南（Zが大きくなる）</div>
+   </div>
+  </details>
+  <div id="sc-pair-hint" class="sc-pair-hint" hidden></div>
+  <button id="sc-copy-all" type="button" class="sc-quiet-action sc-copy-full">行き先・四隅・範囲をまとめてコピー</button>
+  <p class="sc-dig-note"><strong>スライムの出現にはY=40未満の空間が必要です。</strong>場所が緑色でも、敵Mobの湧き上限などで出ないことがあります。</p>
+ </div>
+</section>
+<section class="sc-map-layout" id="sc-map-ready" aria-labelledby="sc-map-title">
+ <div class="sc-map-panel" id="sc-map-panel">
+  <div class="sc-panel-heading sc-map-head"><div><span class="sc-step">3</span><h2 id="sc-map-title">地図から別の場所を探す</h2></div><button type="button" id="sc-expand" aria-pressed="false" class="sc-small-btn">地図を大きく見る</button></div>
+  <p class="sc-map-hint">緑色＝スライムチャンク。<strong>緑のマスをタップ</strong>すると、上の目的地と掘る範囲が切り替わります。</p>
+  <div class="sc-legend"><span><i class="sc-legend-slime"></i>スライム</span><span><i class="sc-legend-plain"></i>通常</span><span><i class="sc-legend-current"></i>入力した座標</span><span><i class="sc-legend-picked"></i>選択中</span></div>
+  <div class="sc-direction"><span>← 西（X−）</span><span>東（X＋）→</span><span>↑ 北（Z−）</span><span>南（Z＋）↓</span></div>
+  <div class="sc-map-controls">
+   <div class="sc-zoom-control" aria-label="表示する範囲"><button type="button" data-grid="11" aria-pressed="false">近く</button><button type="button" data-grid="17" aria-pressed="true">標準</button><button type="button" data-grid="25" aria-pressed="false">広め</button></div>
+   <button id="sc-map-home" type="button" class="sc-small-btn">⌖ 今いる場所へ戻る</button>
+  </div>
+  <div class="sc-map-scroll" id="sc-map-scroll" tabindex="0" role="region" aria-label="X軸横・Z軸縦。上下左右スクロールできる座標マップ">
+   <div class="sc-map" id="sc-map" role="group" aria-label="スライムチャンク候補のマップ">座標を入力してマップを読み込みます。</div>
+  </div>
+  <p class="sc-map-help">↔ 左右：X方向　↕ 上下：Z方向。マウスドラッグ・指で自由にスクロールできます。<strong>目盛りはマスの左上のブロック座標</strong>です。</p>
+  <div class="sc-dpad-wrap"><span>端まで移動したいときは矢印で先の地図を表示できます。</span>
+    <div class="sc-dpad" role="group" aria-label="マップの方角移動">
+      <button type="button" data-pan="0,-1" class="sc-up" aria-label="北へ">↑</button>
+      <button type="button" data-pan="-1,0" class="sc-left" aria-label="西へ">←</button>
+      <button type="button" class="sc-center" id="sc-map-home-duplicate" aria-label="入力した座標へ戻る">⌖</button>
+      <button type="button" data-pan="1,0" class="sc-right" aria-label="東へ">→</button>
+      <button type="button" data-pan="0,1" class="sc-down" aria-label="南へ">↓</button>
+    </div>
+  </div>
+  <p id="sc-map-visible-range" class="sc-map-visible"></p>
+  <div class="sc-map-picked"><span id="sc-readout">選んだ候補の座標</span><button type="button" id="sc-show-result">詳しい座標を見る ↑</button></div>
+ </div>
+ <aside class="sc-near-panel" aria-labelledby="sc-near-title">
+  <h2 id="sc-near-title">近いスライムチャンク</h2>
+  <p>行き先の<strong>中心のX・Z座標</strong>を近い順に表示。タップするだけで選択できます。</p>
+  <div id="sc-nearest" class="sc-nearest-list"></div>
+  <p class="sc-near-note">距離は直線距離で、地形や洞窟を考慮した移動時間ではありません。</p>
+ </aside>
+</section>
+<section class="sc-extra" id="sc-pairs-section" aria-labelledby="sc-pairs-title">
+ <details id="sc-pairs-expand"><summary><span><strong id="sc-pairs-title">隣り合うスライムチャンクを探す</strong><small>効率よくトラップを作りたい人向け・2連続候補</small></span><b>見る ＋</b></summary>
+  <div class="sc-pairs-body"><p>1チャンクより大きなスペースを作りたいときに。近くで隣接する2つの候補を探し、<strong>まとめて掘る範囲</strong>を表示します。</p><div class="sc-pairs-list" id="sc-pairs"></div><p class="sc-note">候補は現在地周辺を計算して表示します。湧き効率は高度・掘削方法・AFK位置などにも左右されます。</p></div>
+ </details>
 </section>
 <aside class="as-slot as-inline-single" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="https://adm.shinobi.jp/s/8f484decc94c10e43e237e6221290bc5"></script></div></aside>
-<section class="slime-card slime-more"><h2>ほかのMinecraft攻略もチェック</h2><div><a href="/minecraft/strategy/">攻略情報トップへ</a><a href="/minecraft/tools/nether-coordinates.html">ネザー座標計算</a><a href="/minecraft/tools/stack-calculator.html">スタック・チェスト計算</a><a href="/minecraft/strategy/rare-mobs/">レアMobまとめ</a></div></section>
-<p class="mc-background-credit">背景：<a href="https://www.minecraft.net/en-us/article/trails---tales-update-now-available-bedrock" target="_blank" rel="noopener noreferrer">Minecraft公式ゲーム画像</a> ／ 非公式ガイド</p>
+<section class="sc-guide" aria-labelledby="sc-guide-title">
+ <h2 id="sc-guide-title">スライムチャンクの見つけ方・掘り方</h2>
+ <div class="sc-guide-steps"><div><b>1</b><strong>ゲームの座標を確認</strong><p>Java版はF3でX・Zを確認。統合版は設定から「座標を表示」を有効にして現在地をメモします。</p></div>
+ <div><b>2</b><strong>目的地へ移動</strong><p>検索結果の「行き先 X・Z」が目安。東西・南北それぞれの移動方向と距離も表示します。</p></div>
+ <div><b>3</b><strong>緑の範囲内を掘る</strong><p>上のXとZの範囲が16×16ブロック。4つの角の内側を掘り、Y=40未満に湧きスペースを作ります。</p></div></div>
+ <h2>よくある疑問</h2>
+ <div class="sc-faq">
+  <details><summary>Java版のシード値がわからない場合は？</summary><p>Java版は正しいシード値が必要です。通常のシングルプレイならチャットで <code>/seed</code> と入力します。マルチサーバーでは権限が必要なことがあります。</p></details>
+  <details><summary>統合版でもシード値が必要？</summary><p>いいえ。統合版のスライムチャンクはシード値に依存しません。統合版を選択し、拠点のX・Zを入力するだけで探せます。</p></details>
+  <details><summary>スライムチャンクなのに湧かないのはなぜ？</summary><p>スライムチャンクではY=40未満で出現し、明るさは関係ありません。ただしプレイヤーとの距離、他のMobの湧き上限、十分な空間やバージョンなどの条件で湧かないことがあります。沼地の地表に出るスライムは別の出現条件です。</p></details>
+  <details><summary>マイナス座標は正しく計算される？</summary><p>はい。例えばブロック座標 X=-1 は、X=-16〜-1 の範囲に含まれます。ゼロ方向への丸めではなく、16ブロック単位で切り下げて計算しています。</p></details>
+  <details><summary>チャンク番号はどこで確認するの？</summary><p>一般的な探索では必要ありません。このツールでは、ゲーム内に表示されるブロック座標を優先して案内しています。チャンクは16×16ブロックの区画を示す仕組みです。</p></details>
+  <details><summary>シード値や座標は保存される？</summary><p>計算はブラウザ内だけで行います。「共有URLをコピー」した場合のみURLに座標が含まれ、Java版はシード値も含まれます。共有相手に見えるため注意してください。</p></details>
+ </div>
+ <h2>計算方式・根拠</h2>
+ <p>Java版はワールドシードと各区画の位置から出現可否を計算します。統合版はシード値と無関係な配置を利用しています。出現位置の判定と、<strong>実際にスライムが湧くかどうか</strong>は別です。まず1か所で確認してから大規模な施設を建設することをおすすめします。</p>
+ <p class="sc-sources">仕様の参考：<a href="https://minecraft.wiki/w/Slime#Slime_chunks" target="_blank" rel="noopener noreferrer">Minecraft Wiki「Slime」</a> ／ <a href="https://www.chunkbase.com/apps/slime-finder" target="_blank" rel="noopener noreferrer">Chunkbase「Slime Finder」</a>（非公式ツールの比較）</p>
+</section>
+<div class="sc-related"><a href="/minecraft/strategy/">攻略情報へ戻る</a><a href="/minecraft/tools/nether-coordinates.html">ネザー座標計算</a><a href="/minecraft/strategy/rare-mobs/">レアMobまとめ</a><button id="sc-share" type="button">この条件の共有リンクをコピー</button></div>
+<p id="sc-status" class="sc-status" role="status" aria-live="polite"></p>
+<p class="mc-background-credit">背景：<a href="https://www.minecraft.net/en-us/article/trails---tales-update-now-available-bedrock" target="_blank" rel="noopener noreferrer">Minecraft公式画像</a> ／ 非公式ガイド</p>
 </main>
 <footer class="ml-footer"><div class="ml-shell"><div class="ml-links"><a href="/">総合トップ</a><a href="/minecraft/">マイクラTOP</a><a href="/minecraft/strategy/">攻略情報</a><a href="/privacy.html">プライバシー</a></div><p>MULTI LAB GUIDE © 2026　Minecraft非公式攻略サイト</p><p>Amazonのアソシエイトとして、MULTI LAB GUIDEは適格販売により収入を得ています。</p></div></footer>
 <script src="/interstitial-loader.js"></script>
