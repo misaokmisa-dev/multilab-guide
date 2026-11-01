@@ -322,15 +322,15 @@
       text(status,success);
     } catch(e) { text(status,"コピーできませんでした。結果の文字を選択してコピーしてください。"); }
   }
-  function cornerCopyText() {
+  function cornerCopyText(includeRanges) {
     const c=corners(selected.x,selected.z);
     return "チャンク番号 X "+selected.x+" / Z "+selected.z+
       "\n北西（左上）: X "+c.nw.x+", Z "+c.nw.z+
       "\n北東（右上）: X "+c.ne.x+", Z "+c.ne.z+
       "\n南西（左下）: X "+c.sw.x+", Z "+c.sw.z+
       "\n南東（右下）: X "+c.se.x+", Z "+c.se.z+
-      "\nX範囲: "+c.x0+"～"+c.x1+
-      "\nZ範囲: "+c.z0+"～"+c.z1;
+      (includeRanges ? "\nX範囲: "+c.x0+"～"+c.x1+
+      "\nZ範囲: "+c.z0+"～"+c.z1 : "");
   }
   function handleInput() {
     const v=validate(false);
@@ -369,7 +369,10 @@
   });
   nearest.addEventListener("click",e=>{
     const node=e.target.closest(".slime-nearest-item");
-    if(node) choose(Number(node.dataset.x),Number(node.dataset.z),true);
+    if(node) {
+      choose(Number(node.dataset.x),Number(node.dataset.z),true);
+      $("slime-selected-result").scrollIntoView({behavior:"smooth",block:"start"});
+    }
   });
   // Both axes scroll natively (touch / trackpad / wheel / scrollbars).
   // Desktop additionally supports click-and-drag without accidentally selecting cells.
@@ -391,6 +394,7 @@
   const stopDrag=()=>{
     dragStart=null;
     viewport.classList.remove("is-dragging");
+    if (cancelCellClick) window.setTimeout(()=>{cancelCellClick=false;},100);
   };
   viewport.addEventListener("pointerup",stopDrag);
   viewport.addEventListener("pointercancel",stopDrag);
@@ -402,10 +406,10 @@
     }
   },{passive:false});
   $("slime-copy").addEventListener("click",()=>{
-    if(selected) copyString(cornerCopyText(),"四隅のブロック座標とX・Z範囲をコピーしました。");
+    if(selected) copyString(cornerCopyText(true),"四隅のブロック座標とX・Z範囲をコピーしました。");
   });
   $("slime-copy-corners").addEventListener("click",()=>{
-    if(selected) copyString(cornerCopyText(),"四隅の座標をコピーしました。");
+    if(selected) copyString(cornerCopyText(false),"四隅の座標をコピーしました。");
   });
   $("slime-copy-tp").addEventListener("click",()=>{
     if(!selected)return;
