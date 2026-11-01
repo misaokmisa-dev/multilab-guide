@@ -176,3 +176,11 @@ body.mc-ambient .ency-copy-name:hover,body.mc-ambient .ency-copy-name:focus-visi
  body.mc-ambient .ency-name-fact dd{font-size:12px}
  body.mc-ambient .ency-name-fact-id dd{font-size:11px}
 }
+
+/* Phase 1: Java command / material planning connections. */
+body.mc-ambient .ency-inline-command{display:block;max-width:100%;width:max-content;padding:10px 13px;border-radius:9px;background:#edf8ef;color:#17542c;overflow-wrap:anywhere;font-size:13px;border:1px solid #c7e3cf;margin-top:6px}
+body.mc-ambient .ency-quick-links{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0 6px}
+body.mc-ambient a.ency-quick-action,body.mc-ambient button.ency-quick-action{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;padding:9px 13px;border:1.5px solid #12a734;border-radius:9px;background:#eaffee!important;color:#145b2c!important;font-weight:850;font-size:13px;text-decoration:none!important;cursor:pointer}
+body.mc-ambient button.ency-quick-copy{background:#01e427!important;color:#0f3018!important}
+body.mc-ambient .ency-quick-action:hover{filter:brightness(.94)}
+@media(max-width:540px){body.mc-ambient .ency-quick-links>.ency-quick-action{flex:1 1 100%}}
