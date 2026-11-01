@@ -60,6 +60,9 @@ function renderHeadline(f){
  l.hidden=!f.modules;
  if(f.modules){$("fs-unit-value").value=String(amount);$("fs-unit-label").textContent=f.modules.label+"（1〜"+f.modules.max+"株）";}
  const tools=$("fs-special-link");tools.replaceChildren();
+ const guideSlugs={iron:"iron-golem",mob:"mob-tower",slime:"slime-farm",sugar:"sugar-cane",bamboo:"bamboo"};
+ const guideLink=link("/minecraft/strategy/farm-designer/"+guideSlugs[selectedId]+".html","この装置の詳しい解説を見る →","fs-link-button fs-secondary");
+ tools.append(guideLink);
  if(selectedId==="slime"){tools.append(link("/minecraft/strategy/slime-chunks/","スライムチャンクの座標を探す →","fs-link-button"));}
  else if(selectedId==="iron"){tools.append(link("/minecraft/strategy/items/","鉄・ベッド・作業ブロックを図鑑で調べる →","fs-link-button"));}
  else tools.append(link("/minecraft/tools/material-planner.html","材料まとめて逆算ツールへ →","fs-link-button"));
