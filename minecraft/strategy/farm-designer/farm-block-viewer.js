@@ -13,9 +13,9 @@ observerFront:"block/observer_front.png",observerBack:"block/observer_back.png",
 observerSide:"block/observer_side.png",observerTop:"block/observer_top.png",
 water:"block/water_still.png",dust:"block/redstone_dust_dot.png",
 sugar:"block/sugar_cane.png",bamboo:"block/bamboo_stalk.png",
-hopperTop:"block/hopper_top.png",hopperSide:"block/hopper_outside.png"
+hopperTop:"block/hopper_top.png",hopperSide:"block/hopper_outside.png",
+ chestAtlas:"entity/chest/normal.png"
 };
-path.chestIcon="https://minecraft.wiki/images/Invicon_Chest.png?1cab7";
 const sprites=new Map();
 const state={farm:"sugar",edition:"java",step:0,view:"complete",units:3,showFuture:true};
 const $$=id=>document.getElementById(id);
@@ -93,7 +93,7 @@ function tintColor(type){
  observer:"#626569",water:"#2a92dc",sugar:"#52ae3c",bamboo:"#409a41",
  dust:"#bf2131",hopper:"#696e71",chest:"#a77d4b"}[type]||"#888";
 }
-function polygon(coords,texture,alpha=1,shade=0,textureRotation=0){
+function polygon(coords,texture,alpha=1,shade=0,textureRotation=0,sourceRect=null){
  ctx.save();ctx.globalAlpha=alpha;
  ctx.beginPath();ctx.moveTo(coords[0].x,coords[0].y);
  for(let k=1;k<coords.length;k++)ctx.lineTo(coords[k].x,coords[k].y);
@@ -109,8 +109,10 @@ function polygon(coords,texture,alpha=1,shade=0,textureRotation=0){
   ctx.imageSmoothingEnabled=false;
   if(textureRotation){
    ctx.translate(w/2,h/2);ctx.rotate(textureRotation*Math.PI/180);
-   ctx.drawImage(img,0,0,w,h,-w/2,-h/2,w,h);
-  }else ctx.drawImage(img,0,0,w,h,0,0,w,h);
+   if(sourceRect)ctx.drawImage(img,sourceRect[0],sourceRect[1],sourceRect[2],sourceRect[3],-w/2,-h/2,w,h);
+   else ctx.drawImage(img,0,0,w,h,-w/2,-h/2,w,h);
+  }else if(sourceRect)ctx.drawImage(img,sourceRect[0],sourceRect[1],sourceRect[2],sourceRect[3],0,0,w,h);
+  else ctx.drawImage(img,0,0,w,h,0,0,w,h);
  }else{
   ctx.fillStyle="#c7cdca";ctx.fillRect(0,0,canvas.width,canvas.height);
   ctx.fillStyle="#5a5c60";ctx.font="bold 11px sans-serif";
@@ -143,12 +145,28 @@ function block(blk,P,scale=1){
   return;
  }
  if(type==="chest"){
-  const front=P(x+.5,y+.5,z+.5),rect=38;
-  const img=load("chestIcon");
-  ctx.save();ctx.globalAlpha=opacity;
-  if(img?.loaded)ctx.drawImage(img.img,front.x-rect/2,front.y-rect*1.15,rect,rect);
-  else{ctx.fillStyle="#976237";ctx.fillRect(front.x-18,front.y-24,36,30);ctx.fillStyle="#f2d17b";ctx.fillRect(front.x-4,front.y-13,8,6);}
-  ctx.restore();return;
+  // Vanilla single chest is a 14x14 chest entity with a 10px body and 5px lid.
+  // It does NOT use a normal full-block texture or a flat inventory icon.
+  // All UV rectangles below refer to Mojang's 64x64 entity/chest/normal.png.
+  const l=x+1/16,r=x+15/16,near=z+1/16,far=z+15/16;
+  const baseBottom=y+1/16,bodyTop=y+11/16,lidTop=y+1;
+  const sideZ=(y1,y0)=>[P(l,y1,far),P(r,y1,far),P(r,y0,far),P(l,y0,far)];
+  const sideX=(y1,y0)=>[P(r,y1,near),P(r,y1,far),P(r,y0,far),P(r,y0,near)];
+  const top=[P(l,lidTop,near),P(r,lidTop,near),P(r,lidTop,far),P(l,lidTop,far)];
+  polygon(sideZ(bodyTop,baseBottom),"chestAtlas",opacity,0.04,0,[14,33,14,10]);
+  polygon(sideX(bodyTop,baseBottom),"chestAtlas",opacity,0.17,0,[28,33,14,10]);
+  polygon(sideZ(lidTop,bodyTop),"chestAtlas",opacity,0.03,0,[14,14,14,5]);
+  polygon(sideX(lidTop,bodyTop),"chestAtlas",opacity,0.16,0,[28,14,14,5]);
+  polygon(top,"chestAtlas",opacity,0,0,[14,0,14,14]);
+  // Chest latch projects slightly forward, like the actual chest block model.
+  const lockZ=far+1/120,lockX=x+.5,small=1/16;
+  const lockFace=[P(lockX-small,lidTop-1/16,lockZ),P(lockX+small,lidTop-1/16,lockZ),
+   P(lockX+small,lidTop-5/16,lockZ),P(lockX-small,lidTop-5/16,lockZ)];
+  ctx.save();ctx.globalAlpha=opacity;ctx.beginPath();
+  lockFace.forEach((c,i)=>i?ctx.lineTo(c.x,c.y):ctx.moveTo(c.x,c.y));
+  ctx.closePath();ctx.fillStyle="#c8c7ba";ctx.fill();ctx.strokeStyle="#3e453d";ctx.lineWidth=1.1;ctx.stroke();ctx.restore();
+  if(state.view!=="complete"&&!future&&step===state.step)outline(top);
+  return;
  }
  const A=P(x,y+1,z),B=P(x+1,y+1,z),C=P(x+1,y+1,z+1),D=P(x,y+1,z+1);
  const A0=P(x,y,z),B0=P(x+1,y,z),C0=P(x+1,y,z+1),D0=P(x,y,z+1);
