@@ -687,8 +687,23 @@ function initDetail(){
  if(item.id>1504){
  document.querySelector('link[rel="canonical"]')?.setAttribute("href",location.origin+itemUrl(item));
  document.querySelector('meta[name="description"]')?.setAttribute("content",item.jp+"（"+item.en+"）の"+(RECIPES[String(item.id)]?.length?"作り方と使い方":"入手方法")+"。Minecraft Java "+item.release+"の追加アイテムを解説。");}
- const name=q("h1","",item.jp);const en=q("p","ency-en",item.name);
- part.append(tag,name,en);
+ const name=q("h1","",item.jp);
+ const names=q("dl","ency-name-facts");
+ const englishFact=q("div","ency-name-fact");
+ englishFact.append(q("dt","","英語名（English）"));
+ const englishValue=q("dd","ency-english-value",item.en);
+ englishFact.append(englishValue);
+ if(navigator.clipboard&&typeof navigator.clipboard.writeText==="function"){
+  const copy=q("button","ency-copy-name","コピー");
+  copy.type="button";copy.setAttribute("aria-label",item.jp+"の英語名をコピー");
+  copy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(item.en);copy.textContent="コピー済み";copy.setAttribute("aria-label","英語名をコピーしました");}catch(_){copy.textContent="コピーできません";}});
+  englishFact.append(copy);
+ }
+ names.append(englishFact);
+ const idFact=q("div","ency-name-fact ency-name-fact-id");
+ idFact.append(q("dt","","アイテムID"),q("dd","ency-id-value","minecraft:"+item.name));
+ names.append(idFact);
+ part.append(tag,name,names);
  if(item.release==="26.4-snapshot-6"){part.append(q("p","ency-preview-status","26.4 開発版の発表済み要素・正式実装前。仕様と入手方法は変更される可能性があります。"));}
  hero.append(part);root.append(hero);
  // Keep all explanatory sections in one continuous card. Only the
