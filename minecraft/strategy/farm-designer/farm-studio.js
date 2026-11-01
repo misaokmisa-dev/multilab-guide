@@ -15,6 +15,7 @@ const rawEdition=params.get("edition");
 let edition=rawEdition==="bedrock"?"bedrock":"java", selectedId=initialId;
 let priority=["beginner","simple","efficient"].includes(params.get("goal"))?params.get("goal"):"beginner";
 let amount=Math.max(1,Math.min(16,Math.floor(Number(params.get("units"))||1)));
+const lastSymptoms=new Map();
 const stateVersion="v1";
 const safeStorage={
  get(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(_){return{}}},
@@ -26,7 +27,7 @@ function on(el,event,fn){if(el)el.addEventListener(event,fn);}
 function element(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=String(text);return n;}
 function p(tag,cls,text,parent){const e=element(tag,cls,text);parent.append(e);return e;}
 function link(href,label,cls){const e=element("a",cls||"",label);e.href=href;return e;}
-function checkData(){const v=safeStorage.get(storageKey());return {steps:v.steps||{},materials:v.materials||{}};}
+function checkData(){const v=safeStorage.get(storageKey());return {steps:v.steps||{},materials:v.materials||{},diagnostics:v.diagnostics||{}};}
 function saveChecked(checks){safeStorage.set(storageKey(),checks);}
 function notify(event,action){try{if(typeof window.gtag==="function")window.gtag("event","mlg_farm_studio",{action,project:selectedId,edition,page_path:location.pathname});}catch(_){}}
 function encodeRoute(){try{const url=new URL(location.href);url.searchParams.set("farm",selectedId);url.searchParams.set("edition",edition);url.searchParams.set("goal",priority);const f=project();if(f.modules)url.searchParams.set("units",String(amount));else url.searchParams.delete("units");history.replaceState(null,"",url);}catch(_){}}
@@ -51,11 +52,13 @@ function renderHeadline(f){
  const req=$("fs-requirements");req.replaceChildren();
  for(const requirement of f.modes[edition].requirements)p("li","",requirement,req);
  const tips={
- beginner:"はじめて作る場合は、まず条件と最小ユニットの動作確認から。大量増設は最後に行うのがおすすめです。",
- simple:"材料を節約する場合も、村の成立条件・信号系・回収部の省略は避けてください。",
- efficient:"効率優先の場合は湧き条件・待機位置・回収詰まり・処理速度を先に検証してください。"
+  iron:{beginner:"最初に版ごとの村人・ベッド条件を成立させ、ゴーレムが実際に生成されるかを確認してから回収部を作りましょう。",simple:"床と水路の材料を減らしても、村人の睡眠・就業条件とゴーレムの生成空間は省略できません。",efficient:"生成場所の分散・既存ゴーレムの滞留・村の中心ずれを優先して調べ、再生成が継続するか観察しましょう。"},
+  mob:{beginner:"まずは小さな暗室で距離と湧き条件を確認し、回収経路を動かしてから湧き床を増やしましょう。",simple:"湧き床を増やす前に既存の空間で湧き・誘導・回収が成立するか確認すると無駄な建材を抑えられます。",efficient:"待機位置・湧き上限の競合・処理詰まりを順に検証してください。統合版はシミュレーション距離の設定が特に重要です。"},
+  slime:{beginner:"最初に版に合ったスライムチャンクを特定し、Y=40未満に試験用の湧き床を作ってから掘削を広げましょう。",simple:"広範囲を掘る前に、候補チャンクと待機位置が正しいかを小規模な湧き試験で確認しましょう。",efficient:"大型スライム用の空間、ほかのMobによる湧き上限の競合、回収経路の詰まりを優先して点検しましょう。"},
+  sugar:{beginner:"まず1株で水・植え付け・成長検知・ピストン作動を確認し、その後で横に増設しましょう。",simple:"1株の試作で配線が成立したら隣の株と信号を共有できるか確認してください。材料表は株ごとの概算です。",efficient:"株数を増やす前に、成長検知後の回収率とアイテムの飛び散りを確認しましょう。"},
+  bamboo:{beginner:"まず1株で必要な明るさ・成長空間・ピストンの高さを確認してから増設しましょう。",simple:"竹の栽培には隣接する水源は不要です。回収水路を設ける場合だけ水を追加しましょう。",efficient:"収穫物の取りこぼし・回収ホッパーの負荷・成長空間の不足を優先して点検しましょう。"}
  };
- $("fs-priority-tip").textContent=tips[priority];
+ $("fs-priority-tip").textContent=tips[selectedId][priority];
  const l=$("fs-units-control");
  l.hidden=!f.modules;
  if(f.modules){$("fs-unit-value").value=String(amount);$("fs-unit-label").textContent=f.modules.label+"（1〜"+f.modules.max+"株）";}
@@ -118,6 +121,30 @@ function renderDiagram(f){
  "成立条件と構成の概念図です。正確なサイズ・高さ・ブロック配置を示す施工図ではありません。異なる版の設計を混ぜず、工程ごとに実際の動作を確認してください。":
  "1株を横に増やせる基本機構の概念図です。レッドストーンの向き・配線・回収設備の正確な位置を示す施工図ではありません。";
 }
+function renderLayerGuide(f){
+ const wrapper=$("fs-layer-guide"), host=$("fs-layer-grid");
+ if(!wrapper||!host)return;
+ const crop=f.id==="sugar"?"サトウキビ":f.id==="bamboo"?"竹":null;
+ wrapper.hidden=!crop;
+ host.replaceChildren();
+ if(!crop)return;
+ const isSugar=f.id==="sugar";
+ const rows=[
+  ["3段目",[["信号の出口","wire"],["オブザーバー →","sensor"],[crop+"（検知）","crop"],["空間","empty"]]],
+  ["2段目",[["信号を伝える","wire"],["ピストン →","machine"],[crop+"（収穫）","crop"],["空間","empty"]]],
+  ["1段目",[["背面の配線","wire"],["支え・空間","empty"],[crop+"（残す）","crop"],["空間","empty"]]],
+  ["地面",[["回路の支え","base"],["作業用空間","empty"],[isSugar?"砂・土など":"土など","base"],[isSugar?"隣接する水":"水は不要","water"]]]
+ ];
+ const headers=["高さ","背面側（回路）","収穫機構","栽培位置","水・周辺"];
+ for(const t of headers)p("div","fs-layer-head",t,host);
+ for(const [level,cells] of rows){
+  p("div","fs-layer-level",level,host);
+  for(const [label,type] of cells){const cell=p("div","fs-layer-cell is-"+type,label,host);cell.title=label;}
+ }
+ $("fs-layer-caption").textContent=isSugar?
+ "根元の砂・土などには水を真横に配置します。2段目をピストンで刈り取り、3段目への成長をオブザーバーで検知する例です。":
+ "竹は水なしでも育ちます。根元を残し、2段目をピストンで刈り取る例です。竹の上部には成長できる明るさと空間を確保します。";
+}
 function progressLabel(f,checks){
  const done=f.stages.filter((_,i)=>!!checks.steps[i]).length,total=f.stages.length;
  const progress=Math.round(done/total*100);
@@ -141,24 +168,55 @@ function renderSteps(f){
  progressLabel(f,checks);
 }
 function renderTrouble(f){
- const picker=$("fs-symptom");picker.replaceChildren();for(const c of f.checks){const option=element("option","",c.issue);option.value=c.issue;picker.append(option);}
- renderDiagnostic(f.checks[0]);
+ const picker=$("fs-symptom"), key=selectedId+":"+edition;
+ const prior=lastSymptoms.get(key);
+ picker.replaceChildren();
+ for(const c of f.checks){const option=element("option","",c.issue);option.value=c.issue;picker.append(option);}
+ const selected=f.checks.find(c=>c.issue===prior)||f.checks[0];
+ picker.value=selected.issue;
+ renderDiagnostic(selected);
 }
 function renderDiagnostic(c){
- const host=$("fs-diagnosis");host.replaceChildren();
- for(const line of c[edition]||c.both||[])p("li","",line,host);
+ const host=$("fs-diagnosis"), counter=$("fs-diagnosis-progress");
+ host.replaceChildren();
+ const lines=c[edition]||c.both||[];
+ const symptomKey=selectedId+":"+edition;
+ lastSymptoms.set(symptomKey,c.issue);
+ const storageId=c.issue;
+ const state=checkData();
+ const checked=state.diagnostics[storageId]||{};
+ const update=()=>{
+  const done=lines.reduce((n,_,i)=>n+(checked[i]?1:0),0);
+  counter.textContent=done+" / "+lines.length+" 項目を確認済み";
+ };
+ lines.forEach((line,i)=>{
+  const li=element("li","fs-diagnosis-row");
+  const label=element("label","fs-diagnosis-check");
+  const input=element("input","fs-diagnosis-checkbox");input.type="checkbox";
+  input.checked=!!checked[i];input.setAttribute("aria-label","確認済み："+line);
+  const text=element("span","",line);
+  label.append(input,text);li.append(label);host.append(li);
+  on(input,"change",()=>{
+   checked[i]=input.checked;
+   const next=checkData();next.diagnostics[storageId]=checked;saveChecked(next);
+   update();notify("diagnosis","cause_checked");
+  });
+ });
+ update();
 }
+
 function renderRefs(f){const host=$("fs-references");host.replaceChildren();
  for(const [label,href] of f.refs){const l=element("li");const a=link(href,label);if(/^https?:/.test(href)){a.target="_blank";a.rel="noopener noreferrer";}l.append(a);host.append(l);}
 }
 function render(){
  const f=project();
- renderFarmCards();renderHeadline(f);renderEssentials(f);renderMaterials(f);renderDiagram(f);renderSteps(f);renderTrouble(f);renderRefs(f);encodeRoute();
+ renderFarmCards();renderHeadline(f);renderEssentials(f);renderMaterials(f);renderDiagram(f);renderLayerGuide(f);renderSteps(f);renderTrouble(f);renderRefs(f);encodeRoute();
 }
 on($("fs-edition"),"change",e=>{edition=e.target.value==="bedrock"?"bedrock":"java";render();notify("change","edition_changed");});
 on($("fs-priority"),"change",e=>{priority=e.target.value;render();notify("change","goal_changed");});
 on($("fs-unit-value"),"change",e=>{const max=project().modules?.max||16;amount=Math.max(1,Math.min(max,Math.floor(Number(e.target.value)||1)));safeStorage.set("mlg-farm-units:"+selectedId,{units:amount});render();notify("change","modules_changed");});
 on($("fs-symptom"),"change",e=>{const f=project();const c=f.checks.find(c=>c.issue===e.target.value)||f.checks[0];renderDiagnostic(c);notify("diagnosis","symptom_selected");});
+on($("fs-reset-diagnosis"),"click",()=>{const c=project().checks.find(x=>x.issue===$("fs-symptom").value);if(!c)return;const state=checkData();delete state.diagnostics[c.issue];saveChecked(state);renderDiagnostic(c);notify("diagnosis","reset");});
 on($("fs-reset"),"click",()=>{const state=checkData();state.steps={};saveChecked(state);renderSteps(project());notify("progress","reset");});
 on($("fs-copy-materials"),"click",async()=>{
  const f=project(),rows=materialItems(f);const content=f.title+" / "+(edition==="java"?"Java版":"統合版")+"\n"+rows.map(x=>itemName(x.slug)+" ×"+x.qty).join("\n")+"\n※ "+f.modules.notes;
