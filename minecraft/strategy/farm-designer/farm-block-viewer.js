@@ -17,7 +17,7 @@ hopperTop:"block/hopper_top.png",hopperSide:"block/hopper_outside.png"
 };
 path.chestIcon="https://minecraft.wiki/images/Invicon_Chest.png?1cab7";
 const sprites=new Map();
-const state={farm:"sugar",edition:"java",step:0,view:"iso",units:3,showFuture:true};
+const state={farm:"sugar",edition:"java",step:0,view:"complete",units:3,showFuture:true};
 const $$=id=>document.getElementById(id);
 let renderQueued=false;
 function queue(){if(renderQueued)return;renderQueued=true;requestAnimationFrame(()=>{renderQueued=false;render();});}
@@ -105,7 +105,7 @@ function polygon(coords,texture,alpha=1,shade=0){
 }
 function block(blk,P){
  const {x,z,y,type,step}=blk;
- const future=step>state.step;
+ const future=step>state.step&&state.view!=="complete";
  if(future&&!state.showFuture)return;
  const opacity=future?.14:1;
  if(type==="sugar"||type==="bamboo"){
@@ -150,7 +150,7 @@ function drawGrid(){
  for(const item of items)block(item,p);
 }
 function faceTile(item,origin,dimension){
- const entry=load(tex(item.type,"front")||"stone"),future=item.step>state.step;
+ const entry=load(tex(item.type,"front")||"stone"),future=item.step>state.step&&state.view!=="complete";
  if(future&&!state.showFuture)return;
  ctx.save();ctx.globalAlpha=future?.2:1;
  const s=dimension;
@@ -188,8 +188,8 @@ function render(){
  const grad=ctx.createLinearGradient(0,0,0,h);grad.addColorStop(0,"#243e42");grad.addColorStop(.6,"#132b29");grad.addColorStop(1,"#091917");
  ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
  ctx.fillStyle="#def5e5";ctx.font="bold 20px system-ui,sans-serif";ctx.fillText((state.farm==="sugar"?"サトウキビ":"竹")+" 自動収穫機　"+(state.step+1)+"/5 工程",26,37);
- ctx.font="13px system-ui,sans-serif";ctx.fillStyle="#accabd";ctx.fillText(state.view==="iso"?"実ブロックのテクスチャによる立体配置図":state.view==="top"?"真上から見た配置図":"横から見た断面図",27,62);
- if(state.view==="iso"){drawGrid();caption("緑の輪郭＝今回の工程 ｜ 半透明＝まだ置かない部分 ｜ 作物の上部＝成長例");}
+ ctx.font="13px system-ui,sans-serif";ctx.fillStyle="#accabd";ctx.fillText(state.view==="complete"?"実ブロックテクスチャによる完成イメージ":state.view==="iso"?"実ブロックのテクスチャによる工程別立体図":state.view==="top"?"真上から見た配置図":"横から見た断面図",27,62);
+ if(state.view==="iso"||state.view==="complete"){drawGrid();caption(state.view==="complete"?"完成イメージ：Minecraft実ブロックのテクスチャで再現 ｜ 回収経路は配置例":"緑の輪郭＝今回の工程 ｜ 半透明＝まだ置かない部分 ｜ 作物の上部＝成長例");}
  else drawFlat(state.view);
  const missing=[...sprites.entries()].filter(([k,v])=>path[k]&&v.failed).map(([k])=>k);
  const status=$$("fs-block-status");
@@ -198,7 +198,7 @@ function render(){
  }
 }
 function setView(view){
- if(!["iso","top","side"].includes(view))return;
+ if(!["complete","iso","top","side"].includes(view))return;
  state.view=view;
  document.querySelectorAll("[data-fs-camera]").forEach(b=>{
   b.classList.toggle("is-active",b.dataset.fsCamera===view);
@@ -214,7 +214,10 @@ if(preview)preview.addEventListener("change",()=>{state.units=Math.max(1,Math.mi
 window.MLG_RENDER_FARM_BLOCKS=function(farm,edition,step){
  if(farm!=="sugar"&&farm!=="bamboo"){const section=$$("fs-block-viewer");if(section)section.hidden=true;return;}
  const section=$$("fs-block-viewer");if(section)section.hidden=false;
- state.farm=farm;state.edition=edition;state.step=Math.max(0,Math.min(4,step));
+ const nextStep=Math.max(0,Math.min(4,step));
+ const changed=state.farm!==farm||state.edition!==edition||state.step!==nextStep;
+ state.farm=farm;state.edition=edition;state.step=nextStep;
+ if(changed&&state.view==="complete"&&state.step>0)setView("iso");
  queue();
 };
 const texmap={
