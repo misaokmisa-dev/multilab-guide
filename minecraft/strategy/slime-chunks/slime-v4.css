@@ -1,0 +1,43 @@
+/* Slime finder v4: real optical zoom, search feedback and the layered trap artwork. */
+body.slime-body .sc-hero{
+  min-height:275px!important;align-items:center!important;
+  background:
+    linear-gradient(93deg,rgba(5,15,10,.88) 0%,rgba(6,20,12,.78) 42%,rgba(5,17,10,.25) 100%),
+    url("/minecraft/strategy/slime-chunks/slime-trap-hero.webp") center center / cover no-repeat!important;
+  border:1px solid #527456!important;
+}
+body.slime-body .sc-hero h1,body.slime-body .sc-hero p,body.slime-body .sc-hero .sc-eyebrow{position:relative;z-index:1;text-shadow:0 1px 9px #010b06aa!important;}
+body.slime-body .sc-hero-tags{position:relative;z-index:1;}
+body.slime-body .sc-zoom-control{display:flex;align-items:center;gap:5px;background:#eff9f1;border:1px solid #b3d5be;border-radius:12px;padding:5px;}
+body.slime-body .sc-zoom-control button{
+  min-height:45px!important;min-width:46px!important;
+  display:grid!important;place-items:center!important;border:1px solid #6fb086!important;
+  border-radius:9px!important;background:#fff!important;font:950 25px/1 system-ui,sans-serif!important;
+  color:#155832!important;padding:6px!important;box-shadow:0 2px 3px #1248291e;
+}
+body.slime-body .sc-zoom-control button:hover:not(:disabled){background:#d2ffd9!important;}
+body.slime-body .sc-zoom-control button:disabled{opacity:.36;cursor:not-allowed!important;box-shadow:none;}
+.sc-zoom-current{min-width:94px;display:grid;justify-items:center;gap:1px;padding:3px 5px;}
+.sc-zoom-current strong{font-size:13px;color:#154f30;font-weight:950;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.sc-zoom-current small{font-size:10px;color:#56745e;font-weight:750;white-space:nowrap;}
+.sc-zoom-caption{font-size:11px!important;color:#3a6047!important;line-height:1.6!important;margin:4px 0 9px!important;}
+body.slime-body .sc-map{
+ --sc-cell:43px;
+ grid-template-columns:86px repeat(var(--sc-count,25),var(--sc-cell))!important;
+ grid-template-rows:36px repeat(var(--sc-count,25),var(--sc-cell))!important;
+}
+body.slime-body .sc-cell{width:var(--sc-cell)!important;height:var(--sc-cell)!important;min-width:0!important;min-height:0!important;}
+body.slime-body .sc-axis-label{font-size:clamp(7px,1vw,10px)!important;}
+body.slime-body .sc-map-scroll{scrollbar-width:auto!important;}
+body.slime-body .sc-search-btn{box-shadow:inset 0 -3px #0caa2b!important;}
+body.slime-body #sc-search-feedback{font-size:12px!important;line-height:1.65!important;font-weight:850!important;color:#205d36!important;min-height:1.2em;margin:3px 0 0!important;}
+.sc-search-pulse{animation:sc-result-pulse .75s ease-out 1;}
+@keyframes sc-result-pulse{0%{box-shadow:0 0 0 0 #01e42799!important;border-color:#01e427!important;}55%{box-shadow:0 0 0 8px #01e42735!important;}100%{box-shadow:0 9px 26px #102c161a!important;}}
+@media(max-width:600px){
+ body.slime-body .sc-hero{min-height:270px!important;background-position:62% center!important;}
+ .sc-hero-tags{margin-top:12px;}
+ .sc-zoom-current{min-width:86px;}
+ body.slime-body .sc-zoom-control button{min-width:43px!important;min-height:43px!important;}
+ .sc-map-controls{align-items:stretch;}
+ .sc-zoom-control{justify-content:center;}
+}
