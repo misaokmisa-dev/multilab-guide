@@ -8,8 +8,9 @@
  const steps=[...root.querySelectorAll(".mlg-home-slide-step")];
  const prev=root.querySelector("#mlg-home-prev"),next=root.querySelector("#mlg-home-next");
  const count=root.querySelector("#mlg-home-slide-current");
+ const statusLabel=root.querySelector(".mlg-home-autoplay-text");
  if(slides.length<2||steps.length!==slides.length||!viewport)return;
- const duration=4300;
+ const duration=2600;
  const reduced=window.matchMedia?.("(prefers-reduced-motion: reduce)").matches??false;
  root.style.setProperty("--mlg-cycle",duration+"ms");
  let index=0,clock=null,hover=false,focused=false,gesture=null,settling=false,cleanup=null,suppressClickUntil=0;
@@ -21,6 +22,7 @@
   const paused=isPaused();
   root.classList.toggle("is-playing",!paused);
   root.classList.toggle("is-paused",paused);
+  if(statusLabel)statusLabel.textContent=reduced?"手動切替":paused?"一時停止":"自動切替";
  }
  function restart(){
   clearTimer();
@@ -124,8 +126,12 @@
  viewport.addEventListener("click",e=>{
   if(Date.now()<suppressClickUntil){e.preventDefault();e.stopPropagation()}
  },true);
- root.addEventListener("mouseenter",()=>{hover=true;clearTimer();updateProgress()});
- root.addEventListener("mouseleave",()=>{hover=false;restart()});
+ // Do not freeze autoplay merely because the cursor rests on the hero.
+ // Pause only when a visitor hovers an actual interactive control.
+ root.querySelectorAll(".mlg-home-slide-cta,.mlg-home-slide-arrow,.mlg-home-slide-step").forEach(control=>{
+  control.addEventListener("mouseenter",()=>{hover=true;clearTimer();updateProgress()});
+  control.addEventListener("mouseleave",()=>{hover=false;restart()});
+ });
  root.addEventListener("focusin",()=>{focused=true;clearTimer();updateProgress()});
  root.addEventListener("focusout",e=>{if(e.relatedTarget&&root.contains(e.relatedTarget))return;focused=false;restart()});
  document.addEventListener("visibilitychange",restart);
