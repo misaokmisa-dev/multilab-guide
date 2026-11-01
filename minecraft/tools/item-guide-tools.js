@@ -47,12 +47,20 @@ function expandPlan(item,amount,rootVariant){const raw=new Map(),steps=new Map()
   if(path.has(i.id)){addTo(raw,i.id,needed);cycles.add(i.jp);return;}
   const stock=Math.min(left.get(i.id)||0,needed);if(stock){left.set(i.id,(left.get(i.id)||0)-stock);needed-=stock;}
   if(!needed)return;
+  // Stop at readily collected base materials. Otherwise ingot ↔ nugget recipes
+  // and planks ↔ logs can create misleading loops or unexpected raw materials.
+  const baseMaterials=/(_planks|_ingot|_nugget)$/.test(i.slug)||["redstone","coal","charcoal","diamond","emerald","lapis_lazuli","quartz","flint","stick","string","leather","paper","slime_ball","iron_block","gold_block"].includes(i.slug);
+  if(depth>0&&baseMaterials){addTo(raw,i.id,needed);return;}
   const rs=optionsFor(i),r=i.id===item.id?rs[rootVariant]||rs[0]:rs[0];
   if(!r){addTo(raw,i.id,needed);return;}
   const batch=Math.ceil(needed/(r.c||1));const remain=batch*(r.c||1)-needed;if(remain)addTo(left,i.id,remain);
   let record=steps.get(i.id);if(!record){record={i,qty:0,batches:0,r};steps.set(i.id,record);}record.qty+=batch*(r.c||1);record.batches+=batch;
   const next=new Set(path);next.add(i.id);
-  const amounts=new Map();for(const id of recipeIds(r))amounts.set(id,(amounts.get(id)||0)+batch);
+  const amounts=new Map();for(const id of recipeIds(r)){
+   // A chest permits interchangeable planks. Oak is the documented sample.
+   const actual=(i.slug==="chest"&&idMap.get(id)?.slug.endsWith("_planks"))?slugMap.get("oak_planks").id:id;
+   amounts.set(actual,(amounts.get(actual)||0)+batch);
+  }
   for(const [id,n] of amounts)requireItem(idMap.get(id),n,next,depth+1);
  }
  requireItem(item,amount,new Set(),0);
@@ -71,7 +79,7 @@ function plannerView(i){
  for(const st of p.steps){const li=el("li");li.append(el("strong","",st.i.jp+" ×"+count(st.qty)+"（"+count(st.batches)+"回クラフト）"));const small=el("p","",recipeDescription(st.r));li.append(small,linked(st.i,"作り方を見る"));ol.append(li);}panel.append(ol);}
  if(p.left.length){panel.append(el("p","ml-i-muted","クラフトの端数余り："+p.left.map(([id,n])=>(idMap.get(id)?.jp||id)+" ×"+n).join("、")));}
  for(const w of p.warnings)panel.append(el("p","ml-i-warning",w));
- panel.append(el("p","ml-i-muted","※ 作業台の代表レシピを基に計算。精錬・石切台・鍛冶・取引などは自動展開しません。代替材料がある場合は一例を使用。クラフトの端数は考慮しますが、持ち物の在庫は未反映です。"));
+ panel.append(el("p","ml-i-muted","※ 作業台の代表レシピを基に計算。鉄インゴットや板材などは基本素材として集計します。チェストはオークの板材8個を使用する例です（ほかの木材も可）。精錬・石切台・鍛冶・取引などは自動展開しません。クラフトの端数は考慮しますが、持ち物の在庫は未反映です。"));
  const textItems=p.raw.map(([id,n])=>(idMap.get(id)?.jp||id)+"："+n+"個").join("\n");
  panel.append(buttonCopy(i.jp+" ×"+qty+"\n【必要な素材】\n"+textItems,"素材リストをコピー"));
  return panel;
