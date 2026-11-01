@@ -300,7 +300,7 @@
     if (selected) copyString("X " + selected.x * 16 + "〜" + (selected.x * 16 + 15) + " / Z " + selected.z * 16 + "〜" + (selected.z * 16 + 15), "選択したチャンクの範囲をコピーしました。");
   });
   $("slime-copy-tp").addEventListener("click", () => {
-    if (selected) copyString("/tp " + (selected.x * 16 + 8) + " 39 " + (selected.z * 16 + 8), "チャンク中央の /tp コマンドをコピーしました（高さY=39は目安）。");
+    if (selected) copyString("/tp " + (selected.x * 16 + 8) + " ~ " + (selected.z * 16 + 8), "現在の高さを維持する /tp コマンドをコピーしました。転送先の安全を確認してください。");
   });
   $("slime-share").addEventListener("click", () => {
     const v = validate(true);
