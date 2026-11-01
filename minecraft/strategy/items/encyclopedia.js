@@ -103,7 +103,7 @@ function score(i,query){
 }
 function itemUrl(i){return B+"detail/"+encodeURIComponent(i.name)+".html";}
 const CHEST_ICON_URLS={chest:"https://minecraft.wiki/images/Invicon_Chest.png?1cab7",ender_chest:"https://minecraft.wiki/images/Invicon_Ender_Chest.png?b4e68",trapped_chest:"https://minecraft.wiki/images/Invicon_Trapped_Chest.png?cf2b7"};
-function chooseImage(name){
+function legacyTextureSource(name){
  if(name==="shield")return "https://minecraft.wiki/images/Invicon_Shield.png?67b0b"; // genuine shield inventory icon
  // Model-based chests require real inventory sprites, not wood/obsidian stand-ins.
  if(Object.prototype.hasOwnProperty.call(CHEST_ICON_URLS,name))return CHEST_ICON_URLS[name];
@@ -201,6 +201,21 @@ function chooseImage(name){
  for(const n of ns)if(newBlockTextures.has(n))return ASSET_NEW+"block/"+encodeURIComponent(n)+".png";
  return null; // never show broken-image icons for assets not supplied as standalone textures.
 }
+// Resolve every gallery and item-detail image with the same rule as tools:
+// exact flat item sprite is authoritative; block faces / unrelated materials
+// must not pretend to be a shaped inventory item.
+function verifiedInventoryIcon(name){
+ const item=bySlug.get(name);
+ if(Object.prototype.hasOwnProperty.call(CHEST_ICON_URLS,name))return CHEST_ICON_URLS[name];
+ const raw=legacyTextureSource(name);
+ const filename=raw?.split("?")[0]?.split("/").pop();
+ if(raw&&raw.includes("/item/")&&filename===encodeURIComponent(name)+".png")return raw;
+ if(item?.id>1504)return null; // future/snapshot models require individual verification
+ if(!item)return null;
+ const title=name.split("_").map(p=>p?p[0].toUpperCase()+p.slice(1):"").join("_");
+ return "https://minecraft.wiki/images/Invicon_"+encodeURIComponent(title)+".png";
+}
+function chooseImage(name){return verifiedInventoryIcon(name);}
 function icon(i,size=54){
  const w=document.createElement("span");w.className="ency-icon";w.style.setProperty("--icon-size",size+"px");
  const url=chooseImage(i.name);const label=document.createElement("span");label.className="ency-icon-alt";label.textContent=/(?:_head|_skull)$/.test(i.name)?"頭":i.name==="shield"?"盾":"画像なし";
