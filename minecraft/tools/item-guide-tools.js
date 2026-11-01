@@ -25,7 +25,7 @@ function buttonCopy(text,label){const b=el("button","ml-i-button ml-i-copy",labe
 function count(n){return Number(n).toLocaleString("ja-JP");}
 const input=$("ml-item-search"),matches=$("ml-item-results"),current=$("ml-current"),quantity=$("ml-amount");
 let chosen=null, selectedRecipe=0;
-function select(i){chosen=i;selectedRecipe=0;if(input)input.value=i.jp;if(matches)matches.hidden=true;render();if(current)current.scrollIntoView({behavior:"smooth",block:"nearest"});}
+function select(i,scroll){chosen=i;selectedRecipe=0;if(input)input.value=i.jp;if(matches)matches.hidden=true;render();if(scroll!==false&&current)current.scrollIntoView({behavior:"smooth",block:"nearest"});}
 function list(){if(!input||!matches)return;matches.replaceChildren();const found=lookup(input.value);if(!found.length){matches.append(el("p","ml-i-muted","一致するアイテムがありません。日本語・英語名・IDで検索できます。"));}else{for(const i of found){const b=el("button","ml-i-option");b.type="button";b.append(picture(i,36));const span=el("span");span.append(el("strong","",i.jp),el("small","",i.en+" · minecraft:"+i.slug));b.append(span);b.addEventListener("click",()=>select(i));matches.append(b);}}matches.hidden=false;}
 function selectedHeader(i){const h=el("div","ml-i-selected");h.append(picture(i,72));const right=el("div");right.append(el("h2","",i.jp),el("p","ml-i-english",i.en));const id=el("div","ml-i-idline");id.append(el("code","", "minecraft:"+i.slug),buttonCopy("minecraft:"+i.slug,"IDをコピー"));right.append(id);h.append(right);return h;}
 function commandView(i){
@@ -89,6 +89,6 @@ $("ml-samples")?.addEventListener("click",e=>{const v=e.target.closest("[data-sa
 const qs=new URLSearchParams(location.search),q=qs.get("item");
 if(quantity&&qs.has("qty"))quantity.value=String(Math.min(10000,Math.max(1,Math.floor(Number(qs.get("qty"))||1))));
 const initial=slugMap.get(q)||slugMap.get(tool==="planner"?"hopper":"diamond");
-if(initial)select(initial);
+if(initial)select(initial,false);
 window.MLG_ITEM_TOOL_TEST={expandPlan,lookup,items,optionsFor};
 })();
