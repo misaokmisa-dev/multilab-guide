@@ -4,6 +4,8 @@
 const data=window.MLG_ITEMS, add=window.MLG_ITEM_ADDITIONS, rec=Object.assign({},window.MLG_RECIPES||{},window.MLG_RECIPES_2026||{});
 const root="/minecraft/strategy/items/", $=id=>document.getElementById(id);
 const tool=document.body.dataset.mlgTool||"";
+function record(action){try{if(typeof window.gtag==="function")window.gtag("event","mlg_minecraft_tool_use",{tool_name:tool,tool_action:action,page_path:location.pathname});}catch(_){}}
+
 if(!data||!Array.isArray(data.items)){const r=$("ml-tool-content");if(r)r.textContent="アイテムデータを読み込めませんでした。再読み込みしてください。";return;}
 const items=[...data.items,...(add?.items||[])].map(a=>({id:a[0],slug:a[1],jp:a[2],en:a[3],cat:a[4],stack:a[5]||64,release:a[6]||"1.21.11"}));
 const idMap=new Map(items.map(x=>[x.id,x])),slugMap=new Map(items.map(x=>[x.slug,x]));
@@ -21,11 +23,11 @@ function picture(i,px){const a=el("span","ml-i-icon");const img=el("img");const 
 img.src=asset+"item/"+encodeURIComponent(i.slug)+".png";img.alt="";img.width=px;img.height=px;img.loading="lazy";img.decoding="async";img.onerror=()=>{if(!img.dataset.fallback){img.dataset.fallback="1";img.src=asset+"block/"+encodeURIComponent(base)+".png";}else{img.remove();a.textContent="◆";}};a.append(img);return a;}
 function copy(text,button){if(navigator.clipboard?.writeText){navigator.clipboard.writeText(text).then(()=>{button.textContent="コピー済み ✓";}).catch(()=>{fallbackCopy(text,button);});}else fallbackCopy(text,button);}
 function fallbackCopy(text,button){const ta=el("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.append(ta);ta.select();try{document.execCommand("copy");button.textContent="コピー済み ✓";}catch(_){button.textContent="選択してコピー";}ta.remove();}
-function buttonCopy(text,label){const b=el("button","ml-i-button ml-i-copy",label||"コピー");b.type="button";b.addEventListener("click",()=>copy(text,b));return b;}
+function buttonCopy(text,label){const b=el("button","ml-i-button ml-i-copy",label||"コピー");b.type="button";b.addEventListener("click",()=>{record("copy_clicked");copy(text,b);});return b;}
 function count(n){return Number(n).toLocaleString("ja-JP");}
 const input=$("ml-item-search"),matches=$("ml-item-results"),current=$("ml-current"),quantity=$("ml-amount");
 let chosen=null, selectedRecipe=0;
-function select(i,scroll){chosen=i;selectedRecipe=0;if(input)input.value=i.jp;if(matches)matches.hidden=true;render();if(scroll!==false&&current)current.scrollIntoView({behavior:"smooth",block:"nearest"});}
+function select(i,scroll){chosen=i;selectedRecipe=0;if(input)input.value=i.jp;if(matches)matches.hidden=true;render();if(scroll!==false){record("item_selected");if(current)current.scrollIntoView({behavior:"smooth",block:"nearest"});}}
 function list(){if(!input||!matches)return;matches.replaceChildren();const found=lookup(input.value);if(!found.length){matches.append(el("p","ml-i-muted","一致するアイテムがありません。日本語・英語名・IDで検索できます。"));}else{for(const i of found){const b=el("button","ml-i-option");b.type="button";b.append(picture(i,36));const span=el("span");span.append(el("strong","",i.jp),el("small","",i.en+" · minecraft:"+i.slug));b.append(span);b.addEventListener("click",()=>select(i));matches.append(b);}}matches.hidden=false;}
 function selectedHeader(i){const h=el("div","ml-i-selected");h.append(picture(i,72));const right=el("div");right.append(el("h2","",i.jp),el("p","ml-i-english",i.en));const id=el("div","ml-i-idline");id.append(el("code","", "minecraft:"+i.slug),buttonCopy("minecraft:"+i.slug,"IDをコピー"));right.append(id);h.append(right);return h;}
 function commandView(i){
