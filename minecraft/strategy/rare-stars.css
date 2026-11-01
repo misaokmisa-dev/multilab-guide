@@ -687,3 +687,30 @@ body.st-body .rare-sort-toolbar select option{background:#00bd21!important;color
 body.rare-body a.rare-feature.rare-update-feature .rare-update-link{
   background:#00bd21!important;color:#fff!important;border-color:#00bd21!important;
 }
+
+
+/* Search-intent help cards on the rare-Mob index; preserve existing star rankings. */
+.st-body .rare-quick-answers{margin:24px 0 25px;padding:20px;border:1px solid #dce9d9;border-radius:17px;background:#fff;box-shadow:0 5px 18px #122b1712;color:#173e26}
+.st-body .rare-quick-heading>span{display:inline-block;color:#267241;font-size:11px;font-weight:900;letter-spacing:.11em}
+.st-body .rare-quick-heading h2{color:#183f29!important;font-size:clamp(19px,2.5vw,24px)!important;line-height:1.45;margin:7px 0 7px!important}
+.st-body .rare-quick-heading p{font-size:13px;line-height:1.8;color:#456652!important;margin:0 0 16px!important}
+.st-body .rare-quick-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.st-body .rare-quick-card{display:flex;flex-direction:column;gap:6px;min-width:0;border:1px solid #d9e8dc;border-radius:12px;padding:15px 14px;background:#f7fbf7;text-decoration:none!important;color:#22482f!important;transition:box-shadow .15s,border-color .15s,transform .15s}
+.st-body .rare-quick-card:hover,.st-body .rare-quick-card:focus-visible{border-color:#3b9658;box-shadow:0 7px 18px #16381b1b;transform:translateY(-2px)}
+.st-body .rare-quick-card>span{color:#2d8044;font-size:11px;font-weight:800}
+.st-body .rare-quick-card strong{color:#163c28!important;font-size:16px;line-height:1.5;overflow-wrap:anywhere}
+.st-body .rare-quick-card p{color:#4c6453!important;font-size:12.5px;line-height:1.7;margin:0!important;flex:1}
+.st-body .rare-quick-card b{color:#198047!important;font-size:12px}
+.st-body .rare-quick-note{margin:12px 0 0!important;color:#5a6e60!important;font-size:11px!important;line-height:1.75}
+.st-body .rare-faq,.rare-body .rare-faq{margin:22px 0;padding:21px 23px;border:1px solid #d8e8db;border-radius:15px;background:#fff;color:#213d2a}
+.st-body .rare-faq>h2,.rare-body .rare-faq>h2{font-size:clamp(19px,2.4vw,23px)!important;line-height:1.45;color:#19482d!important;margin:0 0 13px!important}
+.st-body .rare-faq-item,.rare-body .rare-faq-item{padding:14px 0;border-top:1px solid #e3ede3}
+.st-body .rare-faq-item h3,.rare-body .rare-faq-item h3{font-size:15px!important;color:#17452b!important;margin:0 0 7px!important;line-height:1.5}
+.st-body .rare-faq-item p,.rare-body .rare-faq-item p{margin:0!important;color:#355843!important;font-size:13px;line-height:1.9}
+.st-body .rare-faq-source,.rare-body .rare-faq-source{font-size:12px!important;line-height:1.7;color:#597361!important;margin:14px 0 0!important}
+.st-body .rare-faq a,.rare-body .rare-faq a{color:#176638!important;text-underline-offset:2px}
+.st-body .rare-related-guide,.rare-body .rare-related-guide{padding:15px 19px;margin:18px 0;border:1px solid #c9e0d0;border-radius:13px;background:#f5fbf6}
+.st-body .rare-related-guide>strong,.rare-body .rare-related-guide>strong{display:block;font-size:13px;color:#205b32;margin-bottom:9px}
+.st-body .rare-related-guide>div,.rare-body .rare-related-guide>div{display:flex;flex-wrap:wrap;gap:7px 18px}
+.st-body .rare-related-guide a,.rare-body .rare-related-guide a{font-weight:750;font-size:12px;line-height:1.6;color:#176638!important}
+@media(max-width:760px){.st-body .rare-quick-cards{grid-template-columns:1fr;gap:8px}.st-body .rare-quick-answers{padding:15px}.st-body .rare-quick-card{padding:12px 13px}.st-body .rare-quick-card strong{font-size:15px}.st-body .rare-faq,.rare-body .rare-faq{padding:16px}}
