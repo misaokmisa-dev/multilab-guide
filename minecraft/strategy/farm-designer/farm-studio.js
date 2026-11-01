@@ -73,10 +73,6 @@ function renderHeadline(f){
  else if(selectedId==="iron"){tools.append(link("/minecraft/strategy/items/","鉄・ベッド・作業ブロックを図鑑で調べる →","fs-link-button"));}
  else tools.append(link("/minecraft/tools/material-planner.html","材料まとめて逆算ツールへ →","fs-link-button"));
 }
-function renderEssentials(f){const list=$("fs-essentials");list.replaceChildren();
- for(const x of f.essentials){
- const card=element("div","fs-essential");p("strong","",x.label,card);p("span","",x[edition]||x.both||"",card);list.append(card);}
-}
 function materialItems(f){return (f.modules?.materialPerUnit||[]).map(([slug,qty])=>({slug,qty:qty*amount}));}
 function materialPlanURL(f){
  const entries=materialItems(f);if(!entries.length)return null;
