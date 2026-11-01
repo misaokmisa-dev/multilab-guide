@@ -222,3 +222,24 @@ body.slime-body .sc-map-panel.is-expanded .sc-dpad-wrap{flex:none!important;}
  .sc-hero-tags span{font-size:10px;padding:5px 7px;}
 }
 @media(prefers-reduced-motion:reduce){body.slime-body .sc-page *{transition:none!important;scroll-behavior:auto!important;}}
+
+/* Intentional local-only saved worlds — improves repeat visits without auto-saving seeds. */
+.sc-saved{border:1px solid #c9dfd0;border-radius:10px;background:#f7fbf8;margin-top:13px;}
+.sc-saved summary{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;cursor:pointer;padding:12px 14px;color:#1d5132;list-style:none;font-size:13px;}
+.sc-saved summary::-webkit-details-marker{display:none;}
+.sc-saved summary strong{font-weight:900;}
+.sc-saved summary span{font-size:11px;color:#627d67;font-weight:650;}
+.sc-saved-inner{border-top:1px solid #d7e8db;padding:12px 14px 15px;}
+body.slime-body .sc-saved-inner p{font-size:12px!important;color:#56715e!important;line-height:1.75!important;margin:3px 0 11px!important;}
+.sc-saved-form{display:flex;align-items:end;flex-wrap:wrap;gap:8px;}
+.sc-saved-form label{display:grid;gap:5px;flex:1 1 185px;font-size:12px;color:#2e5b3c;font-weight:850;}
+.sc-saved-form input{height:41px;min-width:0;border:1px solid #b3d0bc;border-radius:8px;padding:9px 12px;font-size:14px;color:#214e34;background:white;}
+.sc-saved-form button{min-height:41px;border-radius:8px;background:#1b723e;color:#fff;font-size:12px;font-weight:850;border:1px solid #145d30;padding:10px 14px;}
+.sc-saved-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px;}
+.sc-saved-item{display:flex;align-items:center;gap:9px;border:1px solid #cde0d2;background:#fff;border-radius:9px;padding:9px;min-width:0;}
+.sc-saved-item>span{flex:1;display:grid;gap:2px;min-width:0;font-size:11px;color:#60806c;}
+.sc-saved-item strong{font-size:13px;color:#154e2e;overflow-wrap:anywhere;}
+.sc-saved-item button{font-size:11px;font-weight:850;border:1px solid #b2d1bd;background:#f4fbf5;color:#1c5b35;border-radius:7px;padding:7px 8px;white-space:nowrap;}
+.sc-saved-item button:last-child{border-color:#d8b8b8;color:#9b3535;background:#fff;}
+body.slime-body .sc-saved-message{font-size:11px!important;color:#286847!important;margin:9px 0 0!important;min-height:15px;}
+@media(max-width:530px){.sc-saved-list{grid-template-columns:1fr;}.sc-saved-item{flex-wrap:wrap;}}
