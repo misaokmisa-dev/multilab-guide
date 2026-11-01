@@ -2,8 +2,8 @@
 body.slime-body .sc-hero{
   min-height:275px!important;align-items:center!important;
   background:
-    linear-gradient(93deg,rgba(5,15,10,.88) 0%,rgba(6,20,12,.78) 42%,rgba(5,17,10,.25) 100%),
-    url("/minecraft/strategy/slime-chunks/slime-trap-hero.svg") center center / cover no-repeat!important;
+    linear-gradient(93deg,rgba(5,15,10,.46) 0%,rgba(6,20,12,.24) 46%,rgba(5,17,10,.04) 100%),
+    url("/minecraft/strategy/slime-chunks/slime-trap-official-look.webp") center center / cover no-repeat!important;
   border:1px solid #527456!important;
 }
 body.slime-body .sc-hero h1,body.slime-body .sc-hero p,body.slime-body .sc-hero .sc-eyebrow{position:relative;z-index:1;text-shadow:0 1px 9px #010b06aa!important;}
