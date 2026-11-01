@@ -36,7 +36,6 @@ body.slime-body #sc-search-feedback{font-size:12px!important;line-height:1.65!im
 @media(max-width:600px){
  body.slime-body .sc-hero{min-height:270px!important;background-position:62% center!important;}
  .sc-hero-tags{margin-top:12px;}
- .sc-zoom-current{min-width:86px;}
  body.slime-body .sc-zoom-control button{min-width:43px!important;min-height:43px!important;}
  .sc-map-controls{align-items:stretch;}
  .sc-zoom-control{justify-content:center;}
@@ -46,7 +45,7 @@ body.slime-body #sc-search-feedback{font-size:12px!important;line-height:1.65!im
 body.slime-body .sc-hero{background-size:cover!important;background-repeat:no-repeat!important;background-position:center 48%!important;}
 @media(max-width:600px){body.slime-body .sc-hero{background-position:63% center!important;}}
 
-/* v4: bottom-right thumb-zone zoom. Overlay stays put while the actual map scrolls. */
+/* Bottom-right, horizontal + and - controls. The map scrolls independently. */
 body.slime-body .sc-map-viewport-wrap{
   position:relative;
   width:100%;
@@ -65,10 +64,10 @@ body.slime-body .sc-zoom-control.sc-zoom-floating{
   bottom:12px;
   z-index:12;
   display:flex!important;
-  flex-direction:column!important;
+  flex-direction:row!important;
   align-items:center!important;
   justify-content:center!important;
-  width:82px;
+  width:auto;
   max-width:calc(100% - 20px);
   margin:0!important;
   padding:6px!important;
@@ -81,24 +80,12 @@ body.slime-body .sc-zoom-control.sc-zoom-floating{
   backdrop-filter:blur(7px);
 }
 body.slime-body .sc-zoom-control.sc-zoom-floating button{
-  width:62px!important;
-  min-width:62px!important;
+  width:46px!important;
+  min-width:46px!important;
   height:46px!important;
   min-height:46px!important;
   flex:none;
   border-radius:10px!important;
-}
-body.slime-body .sc-zoom-floating .sc-zoom-current{
-  min-width:0!important;
-  width:100%;
-  gap:2px;
-  padding:2px 0!important;
-}
-body.slime-body .sc-zoom-floating .sc-zoom-current strong{
-  font-size:11px!important;
-}
-body.slime-body .sc-zoom-floating .sc-zoom-current small{
-  font-size:9px!important;
 }
 body.slime-body .sc-map-panel.is-expanded .sc-map-viewport-wrap{
   flex:1 1 auto;
@@ -115,16 +102,13 @@ body.slime-body .sc-map-panel.is-expanded .sc-map-viewport-wrap .sc-map-scroll{
  body.slime-body .sc-zoom-control.sc-zoom-floating{
    right:10px;
    bottom:10px;
-   width:74px;
+   width:auto;
    padding:5px!important;
  }
  body.slime-body .sc-zoom-control.sc-zoom-floating button{
-   width:60px!important;
-   min-width:60px!important;
+   width:46px!important;
+   min-width:46px!important;
    height:46px!important;
    min-height:46px!important;
  }
- body.slime-body .sc-zoom-floating .sc-zoom-current{
-   min-width:0!important;
  }
-}
