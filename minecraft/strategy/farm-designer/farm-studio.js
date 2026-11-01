@@ -16,6 +16,7 @@ let edition=rawEdition==="bedrock"?"bedrock":"java", selectedId=initialId;
 let priority=["beginner","simple","efficient"].includes(params.get("goal"))?params.get("goal"):"beginner";
 let amount=Math.max(1,Math.min(16,Math.floor(Number(params.get("units"))||1)));
 const lastSymptoms=new Map();
+const buildStageByKey=new Map();
 const stateVersion="v1";
 const safeStorage={
  get(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(_){return{}}},
@@ -122,28 +123,111 @@ function renderDiagram(f){
  "1株を横に増やせる基本機構の概念図です。レッドストーンの向き・配線・回収設備の正確な位置を示す施工図ではありません。";
 }
 function renderLayerGuide(f){
- const wrapper=$("fs-layer-guide"), host=$("fs-layer-grid");
+ const wrapper=$("fs-layer-guide"),host=$("fs-layer-grid");
  if(!wrapper||!host)return;
  const crop=f.id==="sugar"?"サトウキビ":f.id==="bamboo"?"竹":null;
  wrapper.hidden=!crop;
- host.replaceChildren();
- if(!crop)return;
- const isSugar=f.id==="sugar";
- const rows=[
-  ["3段目",[["信号の出口","wire"],["オブザーバー →","sensor"],[crop+"（検知）","crop"],["空間","empty"]]],
-  ["2段目",[["信号を伝える","wire"],["ピストン →","machine"],[crop+"（収穫）","crop"],["空間","empty"]]],
-  ["1段目",[["背面の配線","wire"],["支え・空間","empty"],[crop+"（残す）","crop"],["空間","empty"]]],
-  ["地面",[["回路の支え","base"],["作業用空間","empty"],[isSugar?"砂・土など":"土など","base"],[isSugar?"隣接する水":"水は不要","water"]]]
+ if(!crop){host.replaceChildren();return;}
+ const sugar=f.id==="sugar",name=crop;
+ const steps=[
+  {
+   title:"土台"+(sugar?"・水源":"を配置"),tag:"準備",
+   instructions:sugar?
+    "砂または土などを1ブロック置き、必ず真横に水源を設けます。図では苗の右隣を水源にします。水が横に漏れないよう囲い、増設するときは水路を共有できます。":
+    "土など竹を植えられるブロックを1つ置きます。竹には隣接する水が不要です。上方向に伸びる空間を確保してください。",
+   check:"土台"+(sugar?"と水源":"と成長空間")+"を確認した"
+  },
+  {
+   title:"根元を植える",tag:"植え付け",
+   instructions:name+"を土台に1本植えます。1段目の根元は収穫時も壊しません。2段目・3段目は成長する場所なので、そこへ別のブロックを置かないでください。",
+   check:"根元を植え、上の空間を確保した"
+  },
+  {
+   title:"ピストンと支持ブロック",tag:"収穫",
+   instructions:"根元の1段上（2段目）に、作物に向けて普通のピストンを置きます。同じ高さの、ピストンの背面に接する位置に不透明な普通の固体ブロックを1個置きます。そこがレッドストーンの支持ブロックです。配置用の仮足場は完成後に撤去します。",
+   check:"2段目のピストンの向きと背面ブロックを確認した"
+  },
+  {
+   title:"オブザーバーと配線",tag:"検知・配線",
+   instructions:"ピストンの真上（3段目の高さ）にオブザーバーを置き、顔（検知面）を作物側に向けます。背面の赤い出力が後ろの支持ブロック上のレッドストーンダストにつながるようにします。ダストはピストンの真上に置かず、背面ブロックの上に置きます。",
+   check:"観察面・背面出力・ダストのつながりを確認した"
+  },
+  {
+   title:"回収・試運転",tag:"完成確認",
+   instructions:"前面に落下物を受ける水路を作り、終点をホッパーとチェストへつなぎます。回収を強化するなら土台の下にレール＋ホッパー付きトロッコを設ける方式も選べます。収穫物が散らないようガラスなどで囲い、成長したときピストンが動いて根元が残ることを確認します。",
+   check:"ピストン動作・根元・回収先を実際に確認した"
+  }
  ];
- const headers=["高さ","背面側（回路）","収穫機構","栽培位置","水・周辺"];
- for(const t of headers)p("div","fs-layer-head",t,host);
- for(const [level,cells] of rows){
-  p("div","fs-layer-level",level,host);
-  for(const [label,type] of cells){const cell=p("div","fs-layer-cell is-"+type,label,host);cell.title=label;}
+ const id=f.id+":"+edition,storeKey="mlg-farm-build:v1:"+id;
+ const saved=safeStorage.get(storeKey),checked=saved.checked||{};
+ const current=Math.max(0,Math.min(steps.length-1,buildStageByKey.get(id)||0));
+ buildStageByKey.set(id,current);
+ const nav=$("fs-layer-steps");nav.replaceChildren();
+ for(let i=0;i<steps.length;i++){
+  const tab=element("button","fs-build-step-tab"+(i===current?" is-active":"")+(checked[i]?" is-done":""));
+  tab.type="button";tab.setAttribute("aria-pressed",String(i===current));
+  tab.textContent=(checked[i]?"✓ ":"")+(i+1)+". "+steps[i].title;
+  on(tab,"click",()=>{buildStageByKey.set(id,i);renderLayerGuide(f);notify("construction","diagram_step");});
+  nav.append(tab);
  }
- $("fs-layer-caption").textContent=isSugar?
- "根元の砂・土などには水を真横に配置します。2段目をピストンで刈り取り、3段目への成長をオブザーバーで検知する例です。":
- "竹は水なしでも育ちます。根元を残し、2段目をピストンで刈り取る例です。竹の上部には成長できる明るさと空間を確保します。";
+ const tiles=[
+  ["3段目",[
+   {text:"前面・空き",type:"empty",stage:-1},
+   {text:"3段目の成長位置",type:"empty",stage:-1},
+   {text:"オブザーバー ◀",type:"sensor",stage:3},
+   {text:"レッドストーン",type:"wire",stage:3}
+  ]],
+  ["2段目",[
+   {text:"前面・空き",type:"empty",stage:-1},
+   {text:"2段目の収穫位置",type:"empty",stage:-1},
+   {text:"ピストン ◀",type:"machine",stage:2},
+   {text:"動力用の固体ブロック",type:"base",stage:2}
+  ]],
+  ["1段目",[
+   {text:"前面・空き",type:"empty",stage:-1},
+   {text:name+"の根元",type:"crop",stage:1},
+   {text:"機構の下・空間",type:"empty",stage:-1},
+   {text:"作業用の空間",type:"empty",stage:-1}
+  ]],
+  ["地面",[
+   {text:"回収用の水路（例）",type:"water",stage:4},
+   {text:sugar?"砂・土など":"土など",type:"base",stage:0},
+   {text:sugar?"隣接する水源":"水は不要",type:sugar?"water":"empty",stage:sugar?0:-1},
+   {text:"周囲の空間",type:"empty",stage:-1}
+  ]]
+ ];
+ host.replaceChildren();
+ for(const label of ["高さ","前面（回収側）","作物を植える列","機械の列","背面（配線側）"])p("div","fs-layer-head",label,host);
+ for(const [level,cells] of tiles){
+  p("div","fs-layer-level",level,host);
+  for(const tile of cells){
+   const status=tile.stage<0?" is-reference":tile.stage===current?" is-current":tile.stage>current?" is-future":" is-built";
+   const cell=p("div","fs-layer-cell is-"+tile.type+status,tile.text,host);
+   if(tile.stage>=0){cell.title="工程"+(tile.stage+1)+"で設置："+tile.text;cell.setAttribute("data-build-stage",String(tile.stage+1));}
+  }
+ }
+ const details=$("fs-layer-detail");details.replaceChildren();
+ const heading=p("h4","",(current+1)+" / "+steps.length+"　"+steps[current].title,details);
+ p("p","",steps[current].instructions,details);
+ const editionNote=sugar?
+  (edition==="java"?"Java版：サトウキビは骨粉で育たないため、自然成長を待って動作確認してください。":"統合版：骨粉でサトウキビの成長を促して試運転できます。"):
+  "竹：成長する先端には明るさレベル9以上が必要です。";
+ p("p","fs-caption",editionNote,details);
+ const prev=$("fs-layer-prev"),next=$("fs-layer-next"),check=$("fs-layer-check"),meter=$("fs-layer-progress");
+ prev.disabled=current===0;next.disabled=current===steps.length-1;
+ next.textContent=current===steps.length-1?"最終工程":"次の工程 →";
+ check.textContent=checked[current]?"✓ この工程は確認済み（解除する）":"この工程を確認済みにする";
+ const done=steps.filter((_,i)=>!!checked[i]).length;
+ meter.textContent="建築確認 "+done+" / "+steps.length+" 工程";
+ $("fs-layer-caption").textContent="左から「回収 → 作物 → ピストン・観察者 → 配線」の側面図。◀ は作物の方向です。色付きで強調されたマスが選択中の工程で置く部分です。灰色のマスは後の工程です。";
+ const click=direction=>{buildStageByKey.set(id,Math.max(0,Math.min(steps.length-1,current+direction)));renderLayerGuide(f);notify("construction","diagram_step");};
+ prev.onclick=()=>click(-1);next.onclick=()=>click(1);
+ check.onclick=()=>{
+  const nextState=safeStorage.get(storeKey);nextState.checked=Object.assign({},nextState.checked||{});
+  nextState.checked[current]=!nextState.checked[current];
+  safeStorage.set(storeKey,nextState);
+  renderLayerGuide(f);notify("construction","diagram_checked");
+ };
 }
 function progressLabel(f,checks){
  const done=f.stages.filter((_,i)=>!!checks.steps[i]).length,total=f.stages.length;
