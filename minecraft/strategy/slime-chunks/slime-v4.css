@@ -2,8 +2,8 @@
 body.slime-body .sc-hero{
   min-height:275px!important;align-items:center!important;
   background:
-    linear-gradient(93deg,rgba(5,15,10,.46) 0%,rgba(6,20,12,.24) 46%,rgba(5,17,10,.04) 100%),
-    url("/minecraft/strategy/slime-chunks/slime-trap-official-look.webp") center center / cover no-repeat!important;
+    linear-gradient(93deg,rgba(5,15,10,.74) 0%,rgba(6,20,12,.55) 38%,rgba(5,17,10,.08) 80%,rgba(5,17,10,.04) 100%),
+    url("/minecraft/strategy/slime-chunks/slime-trap-natural-1280.webp") center center / cover no-repeat!important;
   border:1px solid #527456!important;
 }
 body.slime-body .sc-hero h1,body.slime-body .sc-hero p,body.slime-body .sc-hero .sc-eyebrow{position:relative;z-index:1;text-shadow:0 1px 9px #010b06aa!important;}
@@ -41,3 +41,7 @@ body.slime-body #sc-search-feedback{font-size:12px!important;line-height:1.65!im
  .sc-map-controls{align-items:stretch;}
  .sc-zoom-control{justify-content:center;}
 }
+
+/* The 1280×356 source is pre-cropped to the actual wide hero ratio; cover crops instead of stretching. */
+body.slime-body .sc-hero{background-size:cover!important;background-repeat:no-repeat!important;background-position:center 48%!important;}
+@media(max-width:600px){body.slime-body .sc-hero{background-position:63% center!important;}}
