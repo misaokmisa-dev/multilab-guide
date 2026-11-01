@@ -15,14 +15,14 @@
 <link rel="stylesheet" href="/global-site-header.css?v=20261027a">
 <link rel="stylesheet" href="/ad-system.css">
 <link rel="stylesheet" href="/minecraft/strategy/minecraft-ambient.css?v=20261028allcontrols9">
-<link rel="stylesheet" href="/minecraft/strategy/farm-designer/farm-studio.css?v=20261101blockviewer03">
+<link rel="stylesheet" href="/minecraft/strategy/farm-designer/farm-studio.css?v=20261101drawer01">
 <script defer src="/ad-config.js"></script><script defer src="/ad-system.js"></script>
 <script defer src="/affiliate-tracker.js?v=20261031funnelviews"></script>
 <script defer src="/site-language.js?v=20261028full"></script>
 <script defer src="/minecraft/strategy/items/items-data.js?v=20261029a"></script>
 <script defer src="/minecraft/strategy/items/items-2026-data.js?v=20261029plus1"></script>
 <script defer src="/minecraft/strategy/farm-designer/farm-data.js?v=20261101a"></script>
-<script defer src="/minecraft/strategy/farm-designer/farm-studio.js?v=20261101blockviewer01"></script>
+<script defer src="/minecraft/strategy/farm-designer/farm-studio.js?v=20261101drawer01"></script>
 <script defer src="/minecraft/strategy/farm-designer/farm-block-viewer.js?v=20261101blockviewer03"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"マイクラ自動装置・トラップ設計室","description":"Minecraft自動装置の版別条件・材料目安・建築進捗・動作診断を扱う無料ワークスペース","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/strategy/farm-designer/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
 </head>
@@ -38,7 +38,7 @@
 <p class="fs-photo-credit">背景：<a href="https://www.minecraft.net/en-us/creator/article/redstone" target="_blank" rel="noopener noreferrer">Minecraft公式「Researching Redstone」</a> の掲載画像</p>
 <aside class="as-slot as-top fs-ad" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/top-ad-loader.js"></script></div></aside>
 <section class="fs-area" aria-labelledby="fs-choice-heading">
-<h2 id="fs-choice-heading">1. 作りたい自動装置を選ぶ</h2>
+<h2 id="fs-choice-heading">作りたい自動装置を選ぶ</h2>
 <p class="fs-muted">まずは5種類からスタート。装置ごとの対応条件を比較しながら選べます。</p>
 <div class="fs-card-grid" id="fs-farm-list"><p>アイアンゴーレムトラップ／天空トラップタワー／スライムトラップ／サトウキビ自動収穫機／竹の自動収穫機</p></div>
 <div class="fs-control-grid">
@@ -53,8 +53,14 @@
 <div class="fs-version-note"><strong>この版で成立させるための条件</strong><p id="fs-version-summary"></p><ul id="fs-requirements"></ul></div>
 <p id="fs-version-warning" class="fs-alert"></p>
 <p id="fs-priority-tip" class="fs-tip"></p>
-<h3>構成の必要条件</h3><div class="fs-essential-grid" id="fs-essentials"></div>
 <div class="fs-toolbar" id="fs-special-link"></div>
+</section>
+<section class="fs-area" aria-labelledby="fs-material-heading">
+<h2 id="fs-material-heading">1. 必要な材料・持ち物</h2>
+<p class="fs-muted">小型の収穫機は基本ユニットの材料数を計算できます。トラップ系は設計差が大きいため、未確定の材料数を捏造しません。</p>
+<div id="fs-materials" class="fs-materials"></div>
+<p id="fs-material-note" class="fs-caption"></p>
+<div class="fs-toolbar"><a id="fs-plan-button" class="fs-link-button" href="/minecraft/tools/material-planner.html">材料まとめて逆算ツールへ →</a><button type="button" class="fs-button fs-secondary" id="fs-copy-materials">材料をコピー</button></div>
 </section>
 <div class="fs-work-grid">
 <div>
@@ -71,8 +77,9 @@
 <p class="fs-caption" id="fs-diagram-note"></p>
 <div id="fs-layer-guide" class="fs-layer-guide" hidden>
 <h3>1株の建築工程図（工程を選んで確認）</h3>
-<p class="fs-caption">工程ボタンを押すと、今置くブロックが強調されます。左から回収側・作物・機械・背面配線の順で表示します。</p>
+<p class="fs-caption">工程を選ぶと作り方の説明が開き、プレビューの該当部分が切り替わります。</p>
 <nav class="fs-build-tabs" id="fs-layer-steps" aria-label="建築工程を切り替える"></nav>
+<div class="fs-build-drawer" id="fs-layer-detail" role="region" aria-live="polite"><div class="fs-build-drawer-inner" id="fs-layer-detail-content"></div></div>
 <section id="fs-block-viewer" class="fs-block-viewer" aria-label="Minecraftブロック画像の立体建築図">
 <div class="fs-block-toolbar">
 <div class="fs-block-cameras" role="group" aria-label="建築図の視点"><button type="button" class="fs-block-camera is-active" data-fs-camera="complete" aria-pressed="true">完成イメージ</button><button type="button" class="fs-block-camera" data-fs-camera="iso" aria-pressed="false">工程の立体図</button><button type="button" class="fs-block-camera" data-fs-camera="top" aria-pressed="false">上から</button><button type="button" class="fs-block-camera" data-fs-camera="side" aria-pressed="false">横から</button></div>
@@ -80,35 +87,18 @@
 <label class="fs-block-toggle"><input type="checkbox" id="fs-block-future" checked> 後の工程も薄く表示</label>
 </div>
 <div class="fs-block-scroller"><canvas id="fs-block-canvas" width="980" height="620" role="img" aria-label="Minecraft本物のブロックテクスチャを使った配置図。緑の輪郭は現在の工程、薄いブロックは今後置く場所です。">Minecraftブロックの立体図。上の5工程と下の配置表をご利用ください。</canvas></div>
-<div class="fs-block-legend" aria-label="画像中のブロック一覧">
-<span><img data-fs-block-icon="sand" alt="" width="24" height="24" loading="lazy">砂・土</span><span><img data-fs-block-icon="sugar" alt="" width="24" height="24" loading="lazy">栽培物</span><span><img data-fs-block-icon="piston" alt="" width="24" height="24" loading="lazy">ピストン</span><span><img data-fs-block-icon="observer" alt="" width="24" height="24" loading="lazy">観察者</span><span><img data-fs-block-icon="redstone" alt="" width="24" height="24" loading="lazy">配線</span><span><img data-fs-block-icon="water" alt="" width="24" height="24" loading="lazy">水</span><span><img data-fs-block-icon="hopper" alt="" width="24" height="24" loading="lazy">回収（別途）</span>
-</div>
-<p class="fs-caption" id="fs-block-status" aria-live="polite">Minecraftの実際のブロックテクスチャを読み込んでいます。</p>
-<p class="fs-caption">図の株数は見本用で、材料計算に使う「栽培ユニット数」とは独立しています。回収経路は例示です。実際のゲームを撮影したスクリーンショットではありません。</p>
+
 </section>
-<details class="fs-legacy-diagram"><summary>文字付きの高さ・位置関係も確認</summary>
-<div class="fs-layer-scroll"><div id="fs-layer-grid" class="fs-layer-grid" role="group" aria-label="選択した工程の、1株の高さ別配置図"></div></div>
-</details>
-<div class="fs-build-detail" id="fs-layer-detail" aria-live="polite"></div>
-<div class="fs-build-toolbar"><span class="fs-build-progress" id="fs-layer-progress" aria-live="polite">建築確認 0 / 5 工程</span><button class="fs-button fs-secondary" id="fs-layer-check" type="button">この工程を確認済みにする</button></div>
-<div class="fs-build-controls"><button class="fs-button fs-secondary" id="fs-layer-prev" type="button">← 前の工程</button><button class="fs-button" id="fs-layer-next" type="button">次の工程 →</button></div>
-<p id="fs-layer-caption" class="fs-caption"></p>
-<p class="fs-notice">※ 1株分の基本構成を示しています。回収水路の延長・チェストの置き方・水止め・仮足場・装飾などは建築場所によって異なり、基本材料数には含まれません。実際のワールドで各工程の動作を確認してください。</p>
+
+
 </div>
-<p class="fs-notice">※ 模式図は施工用の3D設計図ではありません。未検証のサイズ・配置を完成保証として案内しないため、建築時には版別の成立条件と参照元も確認してください。</p>
 </section>
 </div>
 <div>
-<section class="fs-area" aria-labelledby="fs-material-heading">
-<h2 id="fs-material-heading">4. 必要な材料・持ち物</h2>
-<p class="fs-muted">小型の収穫機は基本ユニットの材料数を計算できます。トラップ系は設計差が大きいため、未確定の材料数を捏造しません。</p>
-<div id="fs-materials" class="fs-materials"></div>
-<p id="fs-material-note" class="fs-caption"></p>
-<div class="fs-toolbar"><a id="fs-plan-button" class="fs-link-button" href="/minecraft/tools/material-planner.html">材料まとめて逆算ツールへ →</a><button type="button" class="fs-button fs-secondary" id="fs-copy-materials">材料をコピー</button></div>
-</section>
+
 <aside class="as-slot as-inline-single fs-ad" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="https://adm.shinobi.jp/s/8f484decc94c10e43e237e6221290bc5"></script></div></aside>
 <section class="fs-area fs-trouble" aria-labelledby="fs-diagnose-heading">
-<h2 id="fs-diagnose-heading">5. 動かないときの原因診断</h2>
+<h2 id="fs-diagnose-heading">4. 動かないときの原因診断</h2>
 <p class="fs-muted">症状を選ぶと、現在選択している版に応じたチェックポイントが表示されます。</p>
 <label class="fs-label" for="fs-symptom">どんな問題が起きていますか？</label><select id="fs-symptom"><option>症状を選ぶ</option></select>
 <ul class="fs-diagnosis" id="fs-diagnosis"></ul>
