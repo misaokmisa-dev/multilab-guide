@@ -373,6 +373,8 @@
     const next=Math.max(0,Math.min(ZOOM_LEVELS.length-1,state.zoomIndex+direction));
     if(next===state.zoomIndex)return;
     state.zoomIndex=next;
+    // Zoom around the selected destination so it cannot disappear at high magnification.
+    if(state.chosen)state.view={x:state.chosen.x,z:state.chosen.z};
     drawMap(true);
   }
   $("sc-zoom-plus").addEventListener("click",()=>changeZoom(-1));
