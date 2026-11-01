@@ -6,6 +6,8 @@ const $=id=>document.getElementById(id);
 if(!data?.farms?.length){const root=$("fs-status");if(root)root.textContent="装置データが読み込めませんでした。ページを更新してください。";return;}
 const farms=data.farms;
 const farmMap=new Map(farms.map(f=>[f.id,f]));
+const itemNames=new Map([...(window.MLG_ITEMS?.items||[]),...(window.MLG_ITEM_ADDITIONS?.items||[])].map(x=>[x[1],x[2]]));
+const itemName=slug=>itemNames.get(slug)||slug.replaceAll("_"," ");
 const colors={準備:"note",環境:"note",条件:"note",組立:"warn",検証:"ok",土台:"note",収穫:"warn",検知:"note",配線:"warn",回収:"ok"};
 const params=new URLSearchParams(location.search);
 const initialId=farmMap.has(params.get("farm"))?params.get("farm"):"iron";
@@ -83,7 +85,7 @@ function renderMaterials(f){
  host.append(count);
  for(const x of items){
   const row=element("div","fs-material");
-  const i=element("a","fs-material-name",x.slug.replaceAll("_"," "));
+  const i=element("a","fs-material-name",itemName(x.slug));
   i.href="/minecraft/tools/material-planner.html?item="+encodeURIComponent(x.slug);row.append(i);
   p("strong","",x.qty+"個",row);host.append(row);
  }
@@ -156,7 +158,7 @@ on($("fs-unit-value"),"change",e=>{const max=project().modules?.max||16;amount=M
 on($("fs-symptom"),"change",e=>{const f=project();const c=f.checks.find(c=>c.issue===e.target.value)||f.checks[0];renderDiagnostic(c);notify("diagnosis","symptom_selected");});
 on($("fs-reset"),"click",()=>{const state=checkData();state.steps={};saveChecked(state);renderSteps(project());notify("progress","reset");});
 on($("fs-copy-materials"),"click",async()=>{
- const f=project(),rows=materialItems(f);const content=f.title+" / "+(edition==="java"?"Java版":"統合版")+"\n"+rows.map(x=>x.slug.replaceAll("_"," ")+" ×"+x.qty).join("\n")+"\n※ "+f.modules.notes;
+ const f=project(),rows=materialItems(f);const content=f.title+" / "+(edition==="java"?"Java版":"統合版")+"\n"+rows.map(x=>itemName(x.slug)+" ×"+x.qty).join("\n")+"\n※ "+f.modules.notes;
  try{await navigator.clipboard.writeText(content);$("fs-copy-materials").textContent="コピーしました ✓";notify("copy","materials");}catch(_){$("fs-copy-materials").textContent="コピーできませんでした";}
 });
 on($("fs-copy-share"),"click",async()=>{try{await navigator.clipboard.writeText(location.href);$("fs-copy-share").textContent="URLをコピーしました ✓";notify("copy","share");}catch(_){$("fs-copy-share").textContent="コピーできませんでした";}});
