@@ -104,6 +104,7 @@ function score(i,query){
 function itemUrl(i){return B+"detail/"+encodeURIComponent(i.name)+".html";}
 const CHEST_ICON_URLS={chest:"https://minecraft.wiki/images/Invicon_Chest.png?1cab7",ender_chest:"https://minecraft.wiki/images/Invicon_Ender_Chest.png?b4e68",trapped_chest:"https://minecraft.wiki/images/Invicon_Trapped_Chest.png?cf2b7"};
 function chooseImage(name){
+ if(name==="shield")return "https://minecraft.wiki/images/Invicon_Shield.png?67b0b"; // genuine shield inventory icon
  // Model-based chests require real inventory sprites, not wood/obsidian stand-ins.
  if(Object.prototype.hasOwnProperty.call(CHEST_ICON_URLS,name))return CHEST_ICON_URLS[name];
  const ns=[name];
