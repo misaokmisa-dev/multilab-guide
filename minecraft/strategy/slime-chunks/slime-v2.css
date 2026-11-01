@@ -124,3 +124,18 @@ body.slime-body .slime-result-actions button:last-child{grid-column:1/-1;}
  .slime-dpad-caption{flex:0 1 105px;}
 }
 @media(prefers-reduced-motion:reduce){body.slime-body .slime-map *{transition:none!important;}}
+
+/* Four-corner result is deliberately placed right below map, especially on phones. */
+body.slime-body .slime-detail-panel{
+ display:block;padding:clamp(15px,2vw,21px);margin:19px 0 5px;
+ border:2px solid #9ccbac;background:#f9fffa;color:#1a3b28;border-radius:14px;
+}
+body.slime-body .slime-detail-panel h2{
+ color:#173f2a!important;text-shadow:none!important;font-size:19px!important;
+ font-weight:950!important;margin:0!important;line-height:1.4!important;
+}
+body.slime-body .slime-detail-panel .slime-section-head p{
+ margin:5px 0 0!important;font-size:12px!important;color:#45664f!important;
+}
+body.slime-body .slime-detail-panel .slime-section-head p strong{color:#195b37;}
+body.slime-body .slime-detail-panel .slime-selection-result{max-width:100%;}
