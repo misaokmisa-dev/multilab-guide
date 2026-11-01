@@ -103,116 +103,18 @@ function score(i,query){
 }
 function itemUrl(i){return B+"detail/"+encodeURIComponent(i.name)+".html";}
 const CHEST_ICON_URLS={chest:"https://minecraft.wiki/images/Invicon_Chest.png?1cab7",ender_chest:"https://minecraft.wiki/images/Invicon_Ender_Chest.png?b4e68",trapped_chest:"https://minecraft.wiki/images/Invicon_Trapped_Chest.png?cf2b7"};
-function legacyTextureSource(name){
- if(name==="shield")return "https://minecraft.wiki/images/Invicon_Shield.png?67b0b"; // genuine shield inventory icon
- // Model-based chests require real inventory sprites, not wood/obsidian stand-ins.
- if(Object.prototype.hasOwnProperty.call(CHEST_ICON_URLS,name))return CHEST_ICON_URLS[name];
- const ns=[name];
- // Some game items share the genuine texture of their base block (stairs/slabs, waxed variants).
- const replace=[
-   name.replace(/^waxed_/,""),
-   name.replace(/^stripped_/,""),
-   name.replace(/_(slab|stairs|wall|fence|fence_gate)$/,""),
-   name.replace(/_(slab|stairs|wall|fence|fence_gate)$/,"_planks"),
-   name.replace(/_wood$/,"_log").replace(/_hyphae$/,"_stem"),
-   name.replace(/^suspicious_/,""),
-   name.replace(/_brick_(slab|stairs|wall)$/,"_bricks"),
-   name.replace(/^(brick|nether_brick|mud_brick|stone_brick)_(slab|stairs|wall)$/,"$1s"),
-   name.replace(/_copper_(slab|stairs)$/,"_copper"),
-   name.replace(/_concrete_powder$/,"_concrete")
- ];
- for(const a of replace)if(a!==name&&!ns.includes(a))ns.push(a);
- const fallback={
-   sulfur_spike:"sulfur_spike_up_tip",icicle:"icicle_down_tip",poplar_leaves:"red_poplar_leaves",
-   straw_bed:"straw_bed",brittle_ice:"ice",red_shrub:"red_shrub",shelf_mushroom:"shelf_mushroom_stage0",
-
-   snow_block:"snow",decorated_pot:"decorated_pot_side",
-   purpur_stairs:"purpur_block",smooth_quartz:"quartz_block_bottom",
-   smooth_sandstone:"sandstone_bottom",smooth_red_sandstone:"red_sandstone_bottom",
-   moss_carpet:"moss_block",white_candle:"white_candle",
-   petrified_oak_slab:"oak_planks",oak_fence:"oak_planks"
- };
- if(fallback[name])ns.push(fallback[name]);
- // Some blocks only offer side/top texture, never a direct filename.
- for(const v of [...ns])for(const suf of ["_side","_front","_top","_bottom","_end","_all","_still"])ns.push(v+suf);
- // Some textures share plurals, and a few resource names are irregular.
- for(const v of [...ns]){
-   if(v.includes("brick")&&!v.includes("bricks"))ns.push(v.replace("brick","bricks"));
-   if(v.includes("tuff_bricks"))ns.push(v.replace("tuff_bricks","tuff_bricks"));
- }
- // Some game items use another texture name.
- const map={grass_block:"grass_block_side",podzol:"podzol_side",mycelium:"mycelium_side",tnt:"tnt_side",crafting_table:"crafting_table_front",furnace:"furnace_front",blast_furnace:"blast_furnace_front",smoker:"smoker_front",piston:"piston_side",oak_log:"oak_log",diamond_ore:"diamond_ore",chest:"chest_front",ender_chest:"ender_chest_front"};
- if(map[name])ns.push(map[name]);
- // Game item icons sometimes use a different model filename than their registry ID.
- // Prefer exact Mojang textures; use their own material textures for render-only models.
- const visualAliases={
-  magma_block:"magma",decorated_pot:"flower_pot",dried_kelp_block:"dried_kelp_side",
-  dried_ghast:"dried_ghast_hydration_0_north",test_block:"test_block_start",
-  enchanted_golden_apple:"golden_apple",sticky_piston:"piston_top_sticky",
-  clock:"clock_00",compass:"compass_00",recovery_compass:"recovery_compass_00",
-  netherite_nautilus_armor:"netherite_ingot",netherite_spear:"netherite_spear_in_hand",
-  dried_ghast_hydration_0:"dried_ghast_hydration_0_north",
-  light_weighted_pressure_plate:"iron_block",heavy_weighted_pressure_plate:"gold_block",
-  petrified_oak_slab:"oak_planks",smooth_stone_slab:"smooth_stone",
-  purpur_slab:"purpur_block",deepslate_tile_wall:"deepslate_tiles",
-  tipped_arrow:"tipped_arrow_base",crossbow:"crossbow_standby",debug_stick:"stick"
- };
- if(visualAliases[name])ns.push(visualAliases[name]);
- // 3D copper chests and golem statues do not have flat item sprites.
- // Display the correct copper oxidation texture as a representative material.
- if(/_copper_(chest|golem_statue)$/.test(name)||/^copper_(chest|golem_statue)$/.test(name)){
-  const part=name.replace(/^waxed_/,"").replace(/_(chest|golem_statue)$/,"");
-  ns.push(part==="copper"?"copper_block":part);
- }
- const colors="white orange magenta light_blue yellow lime pink gray light_gray cyan purple blue brown green red black".split(" ");
- const color=colors.find(c=>name.startsWith(c+"_"));
- if(color && /_(bed|banner|carpet)$/.test(name))ns.push(color+"_wool");
- // The original registry uses an item ID for button / slab / stair / wall models;
- // only the underlying block texture exists in the texture atlas.
- const roots=[...ns.slice(0,14)];
- for(const root of roots){
-  const candidates=[
-   root.replace(/^waxed_/,""),root.replace(/^infested_/,""),
-   root.replace(/_(stairs|slab|wall|button|pressure_plate)$/,""),
-   root.replace(/_(stairs|slab|wall)$/,"s"),
-   root.replace(/_(button|pressure_plate)$/,"_planks"),
-   root.replace(/_tile$/,"_tiles"),
-   root.replace(/^smooth_(?=sandstone|red_sandstone|quartz)/,""),
-   root.replace(/_concrete_powder$/,"_concrete"),
-   root.replace(/_brick$/,"_bricks"),
-   root.replace(/_stairs$/,"_planks"),
-   root.replace(/_spear$/,"_spear_in_hand")
-  ];
-  for(const v of candidates)if(v && v!==root && !ns.includes(v))ns.push(v);
- }
- // Combined variants: waxed copper stairs, cut sandstone slabs, wooden buttons, etc.
- for(const root of [...ns.slice(0,32)]){
-  const stem=root.replace(/^waxed_/,"").replace(/^infested_/,"").replace(/_(stairs|slab|wall|button|pressure_plate)$/,"");
-  for(const v of [stem,stem+"_planks",stem+"_tiles",stem+"_bricks",stem+"_side",stem+"_top"]){
-   if(v&&!ns.includes(v))ns.push(v);
-  }
- }
- ns.push(name+"_side",name+"_front",name+"_top");
- const newer=bySlug.get(name)?.id>1504;
- if(newer){for(const n of ns)if(newItemTextures.has(n))return ASSET_NEW+"item/"+encodeURIComponent(n)+".png";for(const n of ns)if(newBlockTextures.has(n))return ASSET_NEW+"block/"+encodeURIComponent(n)+".png";}
- for(const n of ns)if(textureItem.has(n))return ASSET+"item/"+encodeURIComponent(n)+".png";
- for(const n of ns)if(textureBlock.has(n))return ASSET+"block/"+encodeURIComponent(n)+".png";
- for(const n of ns)if(newItemTextures.has(n))return ASSET_NEW+"item/"+encodeURIComponent(n)+".png";
- for(const n of ns)if(newBlockTextures.has(n))return ASSET_NEW+"block/"+encodeURIComponent(n)+".png";
- return null; // never show broken-image icons for assets not supplied as standalone textures.
-}
 // Resolve every gallery and item-detail image with the same rule as tools:
 // exact flat item sprite is authoritative; block faces / unrelated materials
 // must not pretend to be a shaped inventory item.
 function verifiedInventoryIcon(name){
  const item=bySlug.get(name);
  if(Object.prototype.hasOwnProperty.call(CHEST_ICON_URLS,name))return CHEST_ICON_URLS[name];
- const raw=legacyTextureSource(name);
- const filename=raw?.split("?")[0]?.split("/").pop();
- if(raw&&raw.includes("/item/")&&filename===encodeURIComponent(name)+".png")return raw;
- // Snapshot entries use their individual inventory sprite if one is published;
- // an absent asset displays a neutral placeholder, not another item.
  if(!item)return null;
+ // Direct resource-pack item textures are already correct sprites.
+ // Generic block face textures and unrelated recipe materials are NOT item icons.
+ if(item.id>1504&&newItemTextures.has(name))return ASSET_NEW+"item/"+encodeURIComponent(name)+".png";
+ if(textureItem.has(name))return ASSET+"item/"+encodeURIComponent(name)+".png";
+ if(newItemTextures.has(name))return ASSET_NEW+"item/"+encodeURIComponent(name)+".png";
  const title=name.split("_").map(p=>p?p[0].toUpperCase()+p.slice(1):"").join("_");
  return "https://minecraft.wiki/images/Invicon_"+encodeURIComponent(title)+".png";
 }
