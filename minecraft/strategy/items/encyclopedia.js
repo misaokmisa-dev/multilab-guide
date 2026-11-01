@@ -726,7 +726,6 @@ function initDetail(){
  actions.append(gotoCommand,gotoPlanner);
  if(navigator.clipboard?.writeText){const clip=q("button","ency-quick-action ency-quick-copy","/giveをコピー");clip.type="button";clip.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(give);clip.textContent="コピーしました ✓";}catch(_){clip.textContent="コピーに失敗しました";}});actions.prepend(clip);}
  quick.append(actions,q("p","ency-muted","※ Java版のIDです。統合版は異なるID・コマンド形式の場合があります。"));
- joined.append(quick);
  const recipes=RECIPES[String(item.id)]||[];
  // Use the same search-facing title for both prebuilt pages and 2026 additions.
  const seoTitle="【マイクラ】 "+item.jp+(recipes.length?"の作り方と使い方":"の入手方法");
@@ -756,6 +755,9 @@ function initDetail(){
   const ref=q("p","ency-muted");ref.append(document.createTextNode("参考："));
   const a=q("a");a.href="https://minecraft.wiki/w/"+encodeURIComponent(item.name);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Minecraft Wiki（"+item.jp+"）";ref.append(a);obtain.append(ref);joined.append(obtain);
  }
+
+ // Command / material tools must appear *after* obtaining or crafting steps.
+ joined.append(quick);
 
  const use=q("section","ency-panel");use.append(q("h2","","使い道・関連アイテム"));
  const useSet=new Set();
