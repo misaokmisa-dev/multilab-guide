@@ -65,10 +65,10 @@ function tex(type,face){
 }
 function geometry(){
  const cw=canvas.width,ch=canvas.height;
- const scale=state.units>=6?0.76:state.units>=4?0.88:1;
+ const scale=state.units>=6?1.02:state.units>=4?1.18:1.38;
  const sx=48*scale,sz=25*scale,sy=47*scale;
- const center=state.units>=6?cw*0.41:cw*.45;
- const baseline=ch*.70;
+ const center=state.units>=6?cw*0.41:cw*.44;
+ const baseline=ch*.74;
  function p(x,y,z){return{x:center+(x-z)*sx,y:baseline+(x+z)*sz-y*sy};}
  return{p,sx,sz,sy};
 }
@@ -166,10 +166,10 @@ function drawFlat(view){
  const items=makeModel().filter(item=>item.type!=="chest"),size=64;
  if(view==="top"){
   const buckets=new Map();
-  for(const b of items){const k=b.x+":"+b.z;const previous=buckets.get(k);if(!previous||b.y>previous.y)buckets.set(k,b);}
+  for(const b of items.filter(b=>b.step<=state.step)){const k=b.x+":"+b.z;const previous=buckets.get(k);if(!previous||b.y>previous.y)buckets.set(k,b);}
   const a=[...buckets.values()],cols=state.units+2,baseX=(canvas.width-(cols*size))/2,baseY=145;
   for(const b of a)faceTile(b,{x:baseX+b.x*size,y:baseY+(b.z+2)*size},size-4);
-  caption("上面図：最も高いブロックを表示。下に隠れたブロックは側面図で確認。");
+  caption("上面図：今の工程までに置くブロックを表示。下の層は側面図で確認。");
   return;
  }
  const representative=items.filter(b=>b.x===0).sort((a,b)=>a.z-b.z||a.y-b.y);
@@ -225,9 +225,13 @@ document.querySelectorAll("[data-fs-block-icon]").forEach(img=>{
  const key=texmap[img.dataset.fsBlockIcon];if(key)img.src=base+path[key];
  img.onerror=()=>{img.hidden=true;};
 });
-window.MLG_RENDER_FARM_BLOCKS(
- new URLSearchParams(location.search).get("farm")||"iron",
- new URLSearchParams(location.search).get("edition")||"java",
- 0
-);
+const initialParams=new URLSearchParams(location.search);
+const initialFarm=initialParams.get("farm")||"iron";
+const initialEdition=initialParams.get("edition")==="bedrock"?"bedrock":"java";
+let initialStep=0;
+try{
+ const saved=JSON.parse(localStorage.getItem("mlg-farm-build:v1:"+initialFarm+":"+initialEdition)||"{}");
+ initialStep=Math.max(0,Math.min(4,Math.floor(Number(saved.step)||0)));
+}catch(_){}
+window.MLG_RENDER_FARM_BLOCKS(initialFarm,initialEdition,initialStep);
 })();
