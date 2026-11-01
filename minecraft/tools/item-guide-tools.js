@@ -30,7 +30,7 @@ function itemTexture(i){
  const more={
  suspicious_sand:"sand",suspicious_gravel:"gravel",moss_carpet:"moss_block",petrified_oak_slab:"oak_planks",purpur_slab:"purpur_block",
  smooth_quartz:"quartz_block_bottom",smooth_sandstone:"sandstone_bottom",smooth_red_sandstone:"red_sandstone_bottom",
- decorated_pot:"decorated_pot_side",chest:"oak_planks",ender_chest:"obsidian",trapped_chest:"oak_planks",
+ decorated_pot:"brick",chest:"oak_planks",ender_chest:"obsidian",trapped_chest:"oak_planks",
  snow_block:"snow",light_weighted_pressure_plate:"iron_block",heavy_weighted_pressure_plate:"gold_block",
  dried_ghast:"dried_ghast_hydration_0_north",dried_kelp_block:"dried_kelp_side",test_block:"test_block_start",
  skeleton_skull:"bone",wither_skeleton_skull:"wither_rose",player_head:"oak_planks",zombie_head:"rotten_flesh",creeper_head:"gunpowder",dragon_head:"dragon_egg",piglin_head:"gold_ingot",
