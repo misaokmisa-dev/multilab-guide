@@ -210,7 +210,8 @@ function verifiedInventoryIcon(name){
  const raw=legacyTextureSource(name);
  const filename=raw?.split("?")[0]?.split("/").pop();
  if(raw&&raw.includes("/item/")&&filename===encodeURIComponent(name)+".png")return raw;
- if(item?.id>1504)return null; // future/snapshot models require individual verification
+ // Snapshot entries use their individual inventory sprite if one is published;
+ // an absent asset displays a neutral placeholder, not another item.
  if(!item)return null;
  const title=name.split("_").map(p=>p?p[0].toUpperCase()+p.slice(1):"").join("_");
  return "https://minecraft.wiki/images/Invicon_"+encodeURIComponent(title)+".png";
