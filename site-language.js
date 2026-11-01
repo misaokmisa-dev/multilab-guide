@@ -6,6 +6,21 @@
  'use strict';
  if(window.__mlgLanguageLoaded)return;
  window.__mlgLanguageLoaded=true;
+ // Website analytics: existing connected Metricool brand. One anonymous
+ // visit per document load; no cookies or URL query strings stored locally.
+ // Keeps the tracker on every content page, including item detail pages.
+ if(!location.pathname.startsWith('/admin/')&&!window.__mlgMetricoolLoaded){
+   window.__mlgMetricoolLoaded=true;
+   const metricool=document.createElement('script');
+   metricool.async=true;
+   metricool.src='https://tracker.metricool.com/resources/be.js';
+   metricool.onload=()=>{
+     try{if(window.beTracker&&typeof window.beTracker.t==='function'){
+       window.beTracker.t({hash:'8559c7a0ab6f61f3f3a6da59ca9350bd'});
+     }}catch(_){/* Analytics must never interrupt the site. */}
+   };
+   document.head.appendChild(metricool);
+ }
  const LANGS={ja:'日本語',en:'English',ko:'한국어',zh:'简体中文'};
  const CODES={ja:'JA',en:'EN',ko:'KO',zh:'中文'};
  const STORE='mlg-language-v1';
