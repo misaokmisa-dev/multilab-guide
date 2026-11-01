@@ -88,3 +88,6 @@ body.fs-page .fs-shell *{box-sizing:border-box}
 @media(max-width:1000px){.fs-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.fs-work-grid{grid-template-columns:1fr}.fs-work-grid>.fs-area{margin:0 0 18px}}
 @media(max-width:650px){.fs-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fs-card{min-height:146px}.fs-control-grid{grid-template-columns:1fr}.fs-essential-grid,.fs-materials{grid-template-columns:repeat(2,minmax(0,1fr))}.fs-hero{min-height:240px}.fs-diagram{gap:6px}.fs-diagram-node{flex:1 1 115px}.fs-diagram-arrow{display:none}.fs-area{margin:13px 0;padding:15px}.fs-toolbar .fs-link-button,.fs-toolbar .fs-button{flex:1 1 100%}}
 @media(max-width:380px){.fs-essential-grid,.fs-materials{grid-template-columns:1fr}.fs-card-grid{gap:8px}.fs-card{padding:10px}}
+
+/* Always hide optional material-copy control on farms without a validated bill of materials. */
+body.fs-page #fs-copy-materials[hidden]{display:none!important}
