@@ -39,7 +39,7 @@ function commandView(i){
 }
 function recipeIds(r){return (r.s?r.s.flat():r.i||[]).filter(x=>x!==null&&x!==undefined).map(Number);}
 function optionsFor(i){return (rec[String(i.id)]||[]).filter(r=>(r.s||r.i)&&recipeIds(r).length&&Number.isInteger(r.c||1)&&(r.c||1)>0);}
-function recipeDescription(r){const needs=new Map();for(const id of recipeIds(r))needs.set(id,(needs.get(id)||0)+1);return [...needs].map(([id,n])=>(idMap.get(id)?.jp||"不明")+"×"+n).join("、")+" → "+(r.c||1)+"個";}
+function recipeDescription(r,product){const needs=new Map();for(const id of recipeIds(r)){const actual=(product?.slug==="chest"&&idMap.get(id)?.slug.endsWith("_planks"))?slugMap.get("oak_planks").id:id;needs.set(actual,(needs.get(actual)||0)+1);}return [...needs].map(([id,n])=>(idMap.get(id)?.jp||"不明")+"×"+n).join("、")+" → "+(r.c||1)+"個";}
 function expandPlan(item,amount,rootVariant){const raw=new Map(),steps=new Map(),left=new Map(),alerts=new Set(),cycles=new Set();
  function addTo(m,id,n){m.set(id,(m.get(id)||0)+n);}
  function requireItem(i,needed,path,depth){
@@ -69,14 +69,14 @@ function plannerView(i){
  const panel=el("section","ml-i-result-section");panel.append(el("h3","", "材料の逆算・必要数"));
  const rs=optionsFor(i);
  if(!rs.length){panel.append(el("p","ml-i-warning","このアイテムの作業台レシピは登録されていません。採掘・精錬・交易などの入手手段は、図鑑の詳細ページで確認してください。"));panel.append(linked(i,"入手方法を見る →"));return panel;}
- if(rs.length>1){const row=el("label","ml-i-variant");row.append(el("strong","", "材料の組み合わせを選ぶ"));const sel=el("select");rs.forEach((r,idx)=>{const op=el("option","",String(idx+1)+". "+recipeDescription(r));op.value=String(idx);sel.append(op);});sel.value=String(Math.min(selectedRecipe,rs.length-1));sel.addEventListener("change",()=>{selectedRecipe=Number(sel.value)||0;render();});row.append(sel);panel.append(row);}
+ if(rs.length>1){const row=el("label","ml-i-variant");row.append(el("strong","", "材料の組み合わせを選ぶ"));const sel=el("select");rs.forEach((r,idx)=>{const op=el("option","",String(idx+1)+". "+recipeDescription(r,i));op.value=String(idx);sel.append(op);});sel.value=String(Math.min(selectedRecipe,rs.length-1));sel.addEventListener("change",()=>{selectedRecipe=Number(sel.value)||0;render();});row.append(sel);panel.append(row);}
  const qty=Math.min(10000,Math.max(1,Math.floor(Number(quantity?.value)||1))),p=expandPlan(i,qty,selectedRecipe);
  const summary=el("p","ml-i-summary",i.jp+" ×"+count(qty)+" を作るための材料（作業台レシピを再帰計算）");panel.append(summary);
  const cards=el("div","ml-i-materials");
  for(const [id,number] of p.raw){const obj=idMap.get(id);if(!obj)continue;const card=el("div","ml-i-material");card.append(picture(obj,40));const meta=el("div");meta.append(linked(obj),el("strong","ml-i-count",count(number)+" 個"));const stacks=Math.floor(number/obj.stack),rem=number%obj.stack;meta.append(el("small","",obj.stack>1?(stacks?count(stacks)+" スタック ":"")+(rem?"＋"+rem+"個":""):"重ねられないアイテム"));card.append(meta);cards.append(card);}
  panel.append(cards);
  if(p.steps.length){panel.append(el("h3","", "クラフト工程"));const ol=el("ol","ml-i-steps");
- for(const st of p.steps){const li=el("li");li.append(el("strong","",st.i.jp+" ×"+count(st.qty)+"（"+count(st.batches)+"回クラフト）"));const small=el("p","",recipeDescription(st.r));li.append(small,linked(st.i,"作り方を見る"));ol.append(li);}panel.append(ol);}
+ for(const st of p.steps){const li=el("li");li.append(el("strong","",st.i.jp+" ×"+count(st.qty)+"（"+count(st.batches)+"回クラフト）"));const small=el("p","",recipeDescription(st.r,st.i));li.append(small,linked(st.i,"作り方を見る"));ol.append(li);}panel.append(ol);}
  if(p.left.length){panel.append(el("p","ml-i-muted","クラフトの端数余り："+p.left.map(([id,n])=>(idMap.get(id)?.jp||id)+" ×"+n).join("、")));}
  for(const w of p.warnings)panel.append(el("p","ml-i-warning",w));
  panel.append(el("p","ml-i-muted","※ 作業台の代表レシピを基に計算。鉄インゴットや板材などは基本素材として集計します。チェストはオークの板材8個を使用する例です（ほかの木材も可）。精錬・石切台・鍛冶・取引などは自動展開しません。クラフトの端数は考慮しますが、持ち物の在庫は未反映です。"));
