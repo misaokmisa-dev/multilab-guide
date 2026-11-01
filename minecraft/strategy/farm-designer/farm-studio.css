@@ -168,7 +168,7 @@ body.fs-page #fs-copy-materials[hidden]{display:none!important}
 .fs-block-select select{padding:8px 9px;background:#fff;color:#183b28;border:1px solid #b4d1ba;border-radius:8px;font-weight:800;font-size:13px}
 .fs-block-toggle input{width:18px;height:18px;accent-color:#03bd39}
 .fs-block-scroller{max-width:100%;width:100%;overflow-x:auto;overscroll-behavior-x:contain;background:#102825;border:1px solid #143a2b;border-radius:12px;box-shadow:inset 0 2px 10px #0004}
-#fs-block-canvas{display:block;width:100%;min-width:650px;height:auto;aspect-ratio:980/520;background:#132625;touch-action:pan-x;image-rendering:auto}
+#fs-block-canvas{display:block;width:100%;min-width:0;height:auto;aspect-ratio:980/620;background:#132625;touch-action:pan-x;image-rendering:auto}
 .fs-block-legend{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 7px}
 .fs-block-legend span{display:inline-flex;align-items:center;gap:6px;border:1px solid #c8dfcf;background:#fff;border-radius:6px;font-size:11px;font-weight:760;color:#235335;padding:4px 7px}
 .fs-block-legend img{width:24px;height:24px;object-fit:contain;image-rendering:pixelated}
