@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/update-item-seo-titles.yml'
       - 'scripts/update_item_seo_titles.py'
+      - 'scripts/update_item_english_names.py'
       - 'minecraft/strategy/items/items-data.js'
       - 'minecraft/strategy/items/items-2026-data.js'
       - 'minecraft/strategy/items/recipes-data.js'
@@ -35,12 +36,13 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             python scripts/update_item_seo_titles.py
+            python scripts/update_item_english_names.py
             git add -A -- minecraft/strategy/items/detail sitemap.xml
             if git diff --cached --quiet; then
-              echo "All 1,672 item pages, titles and sitemap entries match the recipes"
+              echo "All 1,672 item titles, English names, IDs and sitemap entries are current"
               exit 0
             fi
-            git commit -m "Sync all 1,672 Minecraft item SEO titles and static URLs"
+            git commit -m "Sync 1,672 Minecraft item SEO titles, English names and static URLs"
             if git push origin HEAD:main; then
               echo "Updated item titles published"
               exit 0
