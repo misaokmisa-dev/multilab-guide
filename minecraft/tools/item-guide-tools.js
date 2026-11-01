@@ -82,7 +82,7 @@ function commandView(i){
 }
 function recipeIds(r){return (r.s?r.s.flat():r.i||[]).filter(x=>x!==null&&x!==undefined).map(Number);}
 function optionsFor(i){return (rec[String(i.id)]||[]).filter(r=>(r.s||r.i)&&recipeIds(r).length&&Number.isInteger(r.c||1)&&(r.c||1)>0);}
-function recipeDescription(r,product){const needs=new Map();for(const id of recipeIds(r)){const actual=(product?.slug==="chest"&&idMap.get(id)?.slug.endsWith("_planks"))?slugMap.get("oak_planks").id:id;needs.set(actual,(needs.get(actual)||0)+1);}return [...needs].map(([id,n])=>(idMap.get(id)?.jp||"不明")+"×"+n).join("、")+" → "+(r.c||1)+"個";}
+function recipeDescription(r,product){const needs=new Map();for(const id of recipeIds(r)){const actual=(["chest","piston","crafting_table","shield"].includes(product?.slug)&&idMap.get(id)?.slug.endsWith("_planks"))?slugMap.get("oak_planks").id:id;needs.set(actual,(needs.get(actual)||0)+1);}return [...needs].map(([id,n])=>(idMap.get(id)?.jp||"不明")+"×"+n).join("、")+" → "+(r.c||1)+"個";}
 function expandPlan(item,amount,rootVariant,carry){const raw=new Map(),steps=new Map(),left=new Map(carry||[]),alerts=new Set(),cycles=new Set();
  function addTo(m,id,n){m.set(id,(m.get(id)||0)+n);}
  function requireItem(i,needed,path,depth){
@@ -101,7 +101,7 @@ function expandPlan(item,amount,rootVariant,carry){const raw=new Map(),steps=new
   const next=new Set(path);next.add(i.id);
   const amounts=new Map();for(const id of recipeIds(r)){
    // A chest permits interchangeable planks. Oak is the documented sample.
-   const actual=(i.slug==="chest"&&idMap.get(id)?.slug.endsWith("_planks"))?slugMap.get("oak_planks").id:id;
+   const actual=(["chest","piston","crafting_table","shield"].includes(i.slug)&&idMap.get(id)?.slug.endsWith("_planks"))?slugMap.get("oak_planks").id:id;
    amounts.set(actual,(amounts.get(actual)||0)+batch);
   }
   for(const [id,n] of amounts)requireItem(idMap.get(id),n,next,depth+1);
@@ -147,6 +147,7 @@ function renderBasket(){
  area.replaceChildren();current.replaceChildren();
  const heading=el("h2","", "追加したアイテム（"+basket.length+"/"+MAX_ENTRIES+"種類）");area.append(heading);
  if(!basket.length){
+  try{const u=new URL(location.href);u.searchParams.delete("plan");u.searchParams.delete("item");u.searchParams.delete("qty");history.replaceState(null,"",u);}catch(_){}
   area.append(el("p","ml-i-muted","作りたいアイテムを検索して選択すると、ここに追加されます。選択を残したまま次のアイテムを検索できます。"));
   current.append(el("h2","","必要素材の合計"),el("p","ml-i-muted","アイテムを1つ以上追加すると、必要な材料をまとめて計算します。"));
   return;
@@ -202,7 +203,7 @@ function renderBasket(){
  }
  if(p.left.length)current.append(el("p","ml-i-muted","クラフト後の余り："+p.left.map(([id,n])=>(idMap.get(id)?.jp||id)+" ×"+count(n)).join("、")));
  for(const w of p.warnings)current.append(el("p","ml-i-warning",w));
- current.append(el("p","ml-i-muted","※ Java版の登録済み作業台レシピを使用。鉄インゴットや板材などは基本素材として計算します。チェストはオークの板材8個の例です。精錬・鍛冶・石切・取引は自動計算対象外です。端数の余りはリスト内で共通利用します。"));
+ current.append(el("p","ml-i-muted","※ Java版の登録済み作業台レシピを使用。鉄インゴットや板材などは基本素材として計算します。チェストやピストンなど木材を選べるレシピはオークの板材を代表例にしています。精錬・鍛冶・石切・取引は自動計算対象外です。端数の余りはリスト内で共通利用します。"));
  const summary=basket.map(row=>slugMap.get(row.slug)?.jp+" ×"+row.qty).join("\n");
  const listText=p.raw.map(([id,n])=>(idMap.get(id)?.jp||id)+"："+count(n)+"個").join("\n");
  current.append(buttonCopy("【作りたいもの】\n"+summary+"\n\n【必要素材の合計】\n"+listText,"合計素材リストをコピー"));
@@ -235,5 +236,5 @@ if(tool==="planner"){
  const initial=slugMap.get(q)||slugMap.get("diamond");
  if(initial)select(initial,false);
 }
-window.MLG_ITEM_TOOL_TEST={expandPlan,expandBasket,lookup,items,optionsFor,basket};
+window.MLG_ITEM_TOOL_TEST={expandPlan,expandBasket,lookup,items,optionsFor,basket,itemTexture};
 })();
