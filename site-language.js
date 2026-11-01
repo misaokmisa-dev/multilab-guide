@@ -29,6 +29,12 @@
  try{lang=valid(localStorage.getItem(STORE));}catch(_){}
  document.documentElement.lang=lang==='zh'?'zh-CN':lang;
  const UI = [
+  ['英語名（English）','English name','영어 이름','英文名称'],
+  ['アイテムID','Item ID','아이템 ID','物品 ID'],
+  ['コピー','Copy','복사','复制'],
+  ['コピー済み','Copied','복사 완료','已复制'],
+  ['コピーできません','Copy failed','복사 실패','复制失败'],
+  ['白いカエルの確率・出現条件【よくある質問】','White Frog: Spawn Chance & Conditions — FAQ','흰색 개구리 출현 조건 및 확률 FAQ','白色青蛙出现条件及概率常见问题'],
   ['マイクラ最新アップデート情報','Latest Minecraft Updates','마인크래프트 최신 업데이트 정보','Minecraft 最新更新资讯'],
   ['最新アップデート情報','Latest Update Information','최신 업데이트 정보','最新更新资讯'],
   ['最新アップデートを見る →','See Latest Updates →','최신 업데이트 보기 →','查看最新更新 →'],
