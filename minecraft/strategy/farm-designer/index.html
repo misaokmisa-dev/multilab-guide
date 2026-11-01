@@ -15,14 +15,14 @@
 <link rel="stylesheet" href="/global-site-header.css?v=20261027a">
 <link rel="stylesheet" href="/ad-system.css">
 <link rel="stylesheet" href="/minecraft/strategy/minecraft-ambient.css?v=20261028allcontrols9">
-<link rel="stylesheet" href="/minecraft/strategy/farm-designer/farm-studio.css?v=20261101phase2c">
+<link rel="stylesheet" href="/minecraft/strategy/farm-designer/farm-studio.css?v=20261101phase2d">
 <script defer src="/ad-config.js"></script><script defer src="/ad-system.js"></script>
 <script defer src="/affiliate-tracker.js?v=20261031funnelviews"></script>
 <script defer src="/site-language.js?v=20261028full"></script>
 <script defer src="/minecraft/strategy/items/items-data.js?v=20261029a"></script>
 <script defer src="/minecraft/strategy/items/items-2026-data.js?v=20261029plus1"></script>
 <script defer src="/minecraft/strategy/farm-designer/farm-data.js?v=20261101a"></script>
-<script defer src="/minecraft/strategy/farm-designer/farm-studio.js?v=20261101phase2c"></script>
+<script defer src="/minecraft/strategy/farm-designer/farm-studio.js?v=20261101phase2d"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"マイクラ自動装置・トラップ設計室","description":"Minecraft自動装置の版別条件・材料目安・建築進捗・動作診断を扱う無料ワークスペース","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/strategy/farm-designer/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
 </head>
 <body class="ml-body mc-ambient fs-page">
@@ -68,6 +68,13 @@
 <h2 id="fs-figure-heading">3. 装置の構成・流れ</h2>
 <div class="fs-diagram" id="fs-diagram"></div>
 <p class="fs-caption" id="fs-diagram-note"></p>
+<div id="fs-layer-guide" class="fs-layer-guide" hidden>
+<h3>1株の側面配置イメージ</h3>
+<p class="fs-caption">左が回路側、右が栽培側です。作物と検知器・ピストン・土台の上下関係を確認できます。</p>
+<div class="fs-layer-scroll"><div id="fs-layer-grid" class="fs-layer-grid" role="group" aria-label="栽培ユニットの高さ別構成"></div></div>
+<p id="fs-layer-caption" class="fs-caption"></p>
+<p class="fs-notice">※ 高さの関係を示す概念図です。動力配線・回収機構・支えブロックの最終的な置き方は装置により異なります。完成を保証するブロック配置図ではありません。</p>
+</div>
 <p class="fs-notice">※ 模式図は施工用の3D設計図ではありません。未検証のサイズ・配置を完成保証として案内しないため、建築時には版別の成立条件と参照元も確認してください。</p>
 </section>
 </div>
@@ -85,6 +92,8 @@
 <p class="fs-muted">症状を選ぶと、現在選択している版に応じたチェックポイントが表示されます。</p>
 <label class="fs-label" for="fs-symptom">どんな問題が起きていますか？</label><select id="fs-symptom"><option>症状を選ぶ</option></select>
 <ul class="fs-diagnosis" id="fs-diagnosis"></ul>
+<div class="fs-diagnosis-actions"><p class="fs-caption" id="fs-diagnosis-progress" aria-live="polite"></p><button class="fs-button fs-secondary" type="button" id="fs-reset-diagnosis">この症状の確認をリセット</button></div>
+<p class="fs-caption">チェックした項目はこの装置・版・症状ごとにブラウザへ保存されます。確認した項目をもう一度調べるときはリセットできます。</p>
 </section>
 <section class="fs-area">
 <h2>次回も続きから使う</h2>
