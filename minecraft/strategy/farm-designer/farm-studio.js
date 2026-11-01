@@ -127,7 +127,7 @@ function renderLayerGuide(f){
  if(!wrapper||!host)return;
  const crop=f.id==="sugar"?"サトウキビ":f.id==="bamboo"?"竹":null;
  wrapper.hidden=!crop;
- if(!crop){host.replaceChildren();return;}
+ if(!crop){host.replaceChildren();if(window.MLG_RENDER_FARM_BLOCKS)window.MLG_RENDER_FARM_BLOCKS(f.id,edition,0);return;}
  const sugar=f.id==="sugar",name=crop;
  const steps=[
   {
@@ -225,6 +225,7 @@ function renderLayerGuide(f){
  check.textContent=checked[current]?"✓ この工程は確認済み（解除する）":"この工程を確認済みにする";
  const done=steps.filter((_,i)=>!!checked[i]).length;
  meter.textContent="建築確認 "+done+" / "+steps.length+" 工程";
+ if(window.MLG_RENDER_FARM_BLOCKS)window.MLG_RENDER_FARM_BLOCKS(f.id,edition,current);
  $("fs-layer-caption").textContent="左から「回収 → 作物 → ピストン・観察者 → 配線」の側面図。◀ は作物の方向です。色付きで強調されたマスが選択中の工程で置く部分です。灰色のマスは後の工程です。";
  const click=direction=>goToStep(current+direction);
  prev.onclick=()=>click(-1);next.onclick=()=>click(1);
