@@ -79,7 +79,8 @@ function itemTexture(i){
  if(directFlat)return directFlat;
  // Skip guessing a wiki inventory icon for development-only new items. When
  // no exact sprite exists, display an explicit missing-image placeholder.
- if(recent&&!texOldItem.has(slug)&&!texOldBlock.has(slug))return "";
+ // New snapshot items may also have Wiki inventory icons; try their exact
+ // names and show a clearly marked placeholder only on an actual 404.
  return wikiInvicon(slug);
 }
 function picture(i,px){
