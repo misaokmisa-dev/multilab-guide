@@ -21,8 +21,13 @@ function el(tag,klass,txt){const e=document.createElement(tag);if(klass)e.classN
 function linked(i,txt){const a=el("a","ml-i-link",txt||i.jp);a.href=root+"detail/"+encodeURIComponent(i.slug)+".html";return a;}
 const textureOld=window.MLG_TEXTURE_INDEX||{item:[],block:[]},textureNew=window.MLG_TEXTURE_INDEX_2026||{item:[],block:[]};
 const texOldItem=new Set(textureOld.item||[]),texOldBlock=new Set(textureOld.block||[]),texNewItem=new Set(textureNew.item||[]),texNewBlock=new Set(textureNew.block||[]);
+const CHEST_ICON_URLS={"chest":"https://minecraft.wiki/images/Invicon_Chest.png?1cab7","ender_chest":"https://minecraft.wiki/images/Invicon_Ender_Chest.png?b4e68","trapped_chest":"https://minecraft.wiki/images/Invicon_Trapped_Chest.png?cf2b7"};
 function itemTexture(i){
- const slug=i.slug,base="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/";
+ const slug=i.slug;
+ // Use the actual in-game inventory render for model-based chest items.
+ // Neither planks nor obsidian represent the chest's appearance.
+ if(Object.prototype.hasOwnProperty.call(CHEST_ICON_URLS,slug))return CHEST_ICON_URLS[slug];
+ const base="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/";
  const candidates=[slug,slug.replace(/^waxed_/,""),slug.replace(/^stripped_/,""),slug.replace(/_(stairs|slab|wall|button|pressure_plate|fence|fence_gate)$/,""),
  slug.replace(/_(stairs|slab|wall|button|pressure_plate|fence|fence_gate)$/,"_planks"),slug.replace(/_wood$/,"_log"),slug.replace(/_concrete_powder$/,"_concrete"),
  slug.replace(/_brick_(slab|stairs|wall)$/,"_bricks")];
@@ -30,7 +35,7 @@ function itemTexture(i){
  const more={
  suspicious_sand:"sand",suspicious_gravel:"gravel",moss_carpet:"moss_block",petrified_oak_slab:"oak_planks",purpur_slab:"purpur_block",
  smooth_quartz:"quartz_block_bottom",smooth_sandstone:"sandstone_bottom",smooth_red_sandstone:"red_sandstone_bottom",
- decorated_pot:"brick",chest:"oak_planks",ender_chest:"obsidian",trapped_chest:"oak_planks",
+ decorated_pot:"brick",
  snow_block:"snow",light_weighted_pressure_plate:"iron_block",heavy_weighted_pressure_plate:"gold_block",
  dried_ghast:"dried_ghast_hydration_0_north",dried_kelp_block:"dried_kelp_side",test_block:"test_block_start",
  skeleton_skull:"bone",wither_skeleton_skull:"wither_rose",player_head:"oak_planks",zombie_head:"rotten_flesh",creeper_head:"gunpowder",dragon_head:"dragon_egg",piglin_head:"gold_ingot",
