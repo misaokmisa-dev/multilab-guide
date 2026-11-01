@@ -24,9 +24,10 @@ const texOldItem=new Set(textureOld.item||[]),texOldBlock=new Set(textureOld.blo
 const CHEST_ICON_URLS={"chest":"https://minecraft.wiki/images/Invicon_Chest.png?1cab7","ender_chest":"https://minecraft.wiki/images/Invicon_Ender_Chest.png?b4e68","trapped_chest":"https://minecraft.wiki/images/Invicon_Trapped_Chest.png?cf2b7"};
 // Resolve model-based inventory sprites through Minecraft Wiki rather than
 // rendering a different flat material texture (e.g. wood instead of a shield).
+const WIKI_INVICON_ALIASES={"lapis_ore":"Lapis_Lazuli_Ore","deepslate_lapis_ore":"Deepslate_Lapis_Lazuli_Ore","coal_block":"Block_of_Coal","raw_iron_block":"Block_of_Raw_Iron","raw_copper_block":"Block_of_Raw_Copper","raw_gold_block":"Block_of_Raw_Gold","amethyst_block":"Block_of_Amethyst","iron_block":"Block_of_Iron","copper_block":"Block_of_Copper","gold_block":"Block_of_Gold","diamond_block":"Block_of_Diamond","netherite_block":"Block_of_Netherite","waxed_copper_block":"Waxed_Block_of_Copper","bamboo_block":"Block_of_Bamboo","stripped_bamboo_block":"Block_of_Stripped_Bamboo","lapis_block":"Block_of_Lapis_Lazuli","lily_of_the_valley":"Lily_of_the_Valley","spawner":"Monster_Spawner","jack_o_lantern":"Jack_o'Lantern","vine":"Vines","resin_block":"Block_of_Resin","emerald_block":"Block_of_Emerald","quartz_block":"Block_of_Quartz","hay_block":"Hay_Bale","redstone_block":"Block_of_Redstone"};
 function wikiInvicon(slug){
- const title=slug.split("_").map(part=>part?part[0].toUpperCase()+part.slice(1):"").join("_");
- return "https://minecraft.wiki/images/Invicon_"+encodeURIComponent(title)+".png";
+ const title=WIKI_INVICON_ALIASES[slug]||slug.split("_").map(part=>part?part[0].toUpperCase()+part.slice(1):"").join("_");
+ return "https://minecraft.wiki/images/Invicon_"+encodeURIComponent(title).replace(/'/g,"%27")+".png";
 }
 function itemTexture(i){
  const slug=i.slug;
