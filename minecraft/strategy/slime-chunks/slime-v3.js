@@ -89,7 +89,7 @@
       const cx=ox+dx,cz=oz+dz;
       if(slime(cx,cz))items.push(info(cx,cz));
     }
-    items.sort((a,b)=>a.edge-b.edge||a.dist-b.dist||a.cz-b.cz||a.cx-b.cx);
+    items.sort((a,b)=>a.dist-b.dist||a.edge-b.edge||a.cz-b.cz||a.cx-b.cx);
     return items.slice(0,limit);
   }
   function findPairs(limit=4){
@@ -245,10 +245,10 @@
         const selected=!!state.chosen&&state.chosen.x===cx&&state.chosen.z===cz;
         const pair=state.selectedPair&&((state.selectedPair.a.x===cx&&state.selectedPair.a.z===cz)||(state.selectedPair.b.x===cx&&state.selectedPair.b.z===cz));
         const home=chunkOf(state.origin.x)===cx&&chunkOf(state.origin.z)===cz;
-        const cell=make("button","sc-cell"+(yes?" is-slime":"")+(selected||pair?" is-selected":"")+(home?" is-home":""));
-        cell.type="button";cell.dataset.x=cx;cell.dataset.z=cz;
+        const cell=make(yes?"button":"span","sc-cell"+(yes?" is-slime":"")+(selected||pair?" is-selected":"")+(home?" is-home":""));
+        if(yes)cell.type="button";cell.dataset.x=cx;cell.dataset.z=cz;
         const b=bounds(cx,cz);
-        cell.setAttribute("aria-pressed",String(!!selected||!!pair));
+        if(yes)cell.setAttribute("aria-pressed",String(!!selected||!!pair));
         cell.setAttribute("aria-label",(yes?"スライム":"通常")+"、X "+b.x0+"〜"+b.x1+"、Z "+b.z0+"〜"+b.z1+(home?"、入力位置":""));
         cell.title=(yes?"スライム":"通常")+" / X "+b.x0+"〜"+b.x1+" / Z "+b.z0+"〜"+b.z1;
         if(home)cell.append(make("span","sc-home-dot"));
@@ -334,14 +334,17 @@
     const b=e.target.closest("button[data-index]");if(b&&state.pairs[+b.dataset.index])selectPair(state.pairs[+b.dataset.index]);
   });
   $("sc-map").addEventListener("click",e=>{
-    const b=e.target.closest("button[data-x]");if(!b)return;
+    const b=e.target.closest("button[data-x]");if(!b||!slime(Number(b.dataset.x),Number(b.dataset.z)))return;
     if(state.ignoreClick){state.ignoreClick=false;return;}
     choose(Number(b.dataset.x),Number(b.dataset.z),false);
   });
   document.querySelectorAll("[data-pan]").forEach(b=>b.addEventListener("click",()=>{
     const [dx,dz]=b.dataset.pan.split(",").map(Number);pan(dx*5,dz*5);
   }));
-  $("sc-map-home").addEventListener("click",()=>{state.view={x:chunkOf(state.origin.x),z:chunkOf(state.origin.z)};drawMap(true);});
+  const home=()=>{state.view={x:chunkOf(state.origin.x),z:chunkOf(state.origin.z)};drawMap(true);};
+  $("sc-map-home").addEventListener("click",home);
+  $("sc-map-home-duplicate").addEventListener("click",home);
+  $("sc-show-result").addEventListener("click",()=>$("sc-outcome").scrollIntoView({behavior:"smooth",block:"start"}));
   document.querySelectorAll("[data-grid]").forEach(b=>b.addEventListener("click",()=>{
     state.zoom=Number(b.dataset.grid);
     document.querySelectorAll("[data-grid]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
