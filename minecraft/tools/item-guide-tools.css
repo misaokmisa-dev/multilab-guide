@@ -93,3 +93,62 @@ body.ml-item-tool .as-slot.as-inline-single,body.ml-item-tool .as-mosaic-bottom{
  body.ml-item-tool .ml-i-basket-qty{flex:1}
  body.ml-item-tool .ml-i-basket-qty input{min-width:80px}
 }
+
+/* 3x3 ingredient-only crafting diagrams for the combined crafting steps. */
+body.ml-item-tool .ml-i-step-grid{
+ display:grid;
+ grid-template-columns:repeat(3,48px);
+ grid-template-rows:repeat(3,48px);
+ gap:4px;
+ width:max-content;
+ max-width:100%;
+ padding:6px;
+ margin:10px 0 9px;
+ border:1px solid #a9c7b1;
+ border-radius:10px;
+ background:#e0ede3;
+}
+body.ml-item-tool .ml-i-step-cell{
+ display:grid;
+ place-items:center;
+ width:48px;
+ height:48px;
+ min-width:0;
+ border:1px solid #b7d0bd;
+ border-radius:6px;
+ background:#fff;
+ overflow:hidden;
+}
+body.ml-item-tool .ml-i-step-cell.is-empty{background:#f4f8f5}
+body.ml-item-tool .ml-i-step-ingredient{
+ display:grid;
+ place-items:center;
+ width:100%;
+ height:100%;
+ text-decoration:none;
+}
+body.ml-item-tool .ml-i-step-ingredient:hover,
+body.ml-item-tool .ml-i-step-ingredient:focus-visible{
+ background:#ddffe5;
+ outline:2px solid #04b83b;
+ outline-offset:-2px;
+}
+body.ml-item-tool .ml-i-step-cell .ml-i-icon{
+ width:42px!important;
+ height:42px!important;
+ background:transparent;
+ border:0;
+ border-radius:0;
+ font-size:16px;
+}
+body.ml-item-tool .ml-i-step-cell .ml-i-icon img{
+ width:90%;
+ height:90%;
+ object-fit:contain;
+ image-rendering:pixelated;
+}
+@media(max-width:370px){
+ body.ml-item-tool .ml-i-step-grid{grid-template-columns:repeat(3,42px);grid-template-rows:repeat(3,42px)}
+ body.ml-item-tool .ml-i-step-cell{width:42px;height:42px}
+ body.ml-item-tool .ml-i-step-cell .ml-i-icon{width:37px!important;height:37px!important}
+}
