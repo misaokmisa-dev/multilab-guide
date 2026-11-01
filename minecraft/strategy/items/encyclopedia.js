@@ -106,6 +106,7 @@ const CHEST_ICON_URLS={chest:"https://minecraft.wiki/images/Invicon_Chest.png?1c
 // Resolve every gallery and item-detail image with the same rule as tools:
 // exact flat item sprite is authoritative; block faces / unrelated materials
 // must not pretend to be a shaped inventory item.
+const WIKI_INVICON_ALIASES={"lapis_ore":"Lapis_Lazuli_Ore","deepslate_lapis_ore":"Deepslate_Lapis_Lazuli_Ore","coal_block":"Block_of_Coal","raw_iron_block":"Block_of_Raw_Iron","raw_copper_block":"Block_of_Raw_Copper","raw_gold_block":"Block_of_Raw_Gold","amethyst_block":"Block_of_Amethyst","iron_block":"Block_of_Iron","copper_block":"Block_of_Copper","gold_block":"Block_of_Gold","diamond_block":"Block_of_Diamond","netherite_block":"Block_of_Netherite","waxed_copper_block":"Waxed_Block_of_Copper","bamboo_block":"Block_of_Bamboo","stripped_bamboo_block":"Block_of_Stripped_Bamboo","lapis_block":"Block_of_Lapis_Lazuli","lily_of_the_valley":"Lily_of_the_Valley","spawner":"Monster_Spawner","jack_o_lantern":"Jack_o'Lantern","vine":"Vines","resin_block":"Block_of_Resin","emerald_block":"Block_of_Emerald","quartz_block":"Block_of_Quartz","hay_block":"Hay_Bale","redstone_block":"Block_of_Redstone"};
 function verifiedInventoryIcon(name){
  const item=bySlug.get(name);
  if(Object.prototype.hasOwnProperty.call(CHEST_ICON_URLS,name))return CHEST_ICON_URLS[name];
@@ -115,8 +116,8 @@ function verifiedInventoryIcon(name){
  if(item.id>1504&&newItemTextures.has(name))return ASSET_NEW+"item/"+encodeURIComponent(name)+".png";
  if(textureItem.has(name))return ASSET+"item/"+encodeURIComponent(name)+".png";
  if(newItemTextures.has(name))return ASSET_NEW+"item/"+encodeURIComponent(name)+".png";
- const title=name.split("_").map(p=>p?p[0].toUpperCase()+p.slice(1):"").join("_");
- return "https://minecraft.wiki/images/Invicon_"+encodeURIComponent(title)+".png";
+ const title=WIKI_INVICON_ALIASES[name]||name.split("_").map(p=>p?p[0].toUpperCase()+p.slice(1):"").join("_");
+ return "https://minecraft.wiki/images/Invicon_"+encodeURIComponent(title).replace(/'/g,"%27")+".png";
 }
 function chooseImage(name){return verifiedInventoryIcon(name);}
 function icon(i,size=54){
