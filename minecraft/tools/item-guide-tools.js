@@ -78,17 +78,18 @@ function select(i,scroll){
   if(found)found.qty=Math.min(10000,found.qty+q);
   else if(basket.length<MAX_ENTRIES)basket.push({slug:i.slug,qty:q,variant:0});
   else{alert("一度に登録できるアイテムは"+MAX_ENTRIES+"種類です。");return;}
-  if(input){input.value="";input.placeholder="続けて次のアイテムを検索…";}
+  // Keep the typed keyword and the picture-backed results visible after adding.
+  // Users can add several related items without retyping the search term.
   if(quantity)quantity.value="1";
-  if(matches)matches.hidden=true;
   renderBasket();
+  list();
   if(scroll!==false)record("item_added");
   return;
  }
  chosen=i;selectedRecipe=0;if(input)input.value=i.jp;if(matches)matches.hidden=true;render();
  if(scroll!==false){record("item_selected");if(current)current.scrollIntoView({behavior:"smooth",block:"nearest"});}
 }
-function list(){if(!input||!matches)return;matches.replaceChildren();const found=lookup(input.value);if(!found.length){matches.append(el("p","ml-i-muted","一致するアイテムがありません。日本語・英語名・IDで検索できます。"));}else{for(const i of found){const b=el("button","ml-i-option");b.type="button";b.append(picture(i,36));const span=el("span");span.append(el("strong","",i.jp),el("small","",i.en+" · minecraft:"+i.slug));b.append(span);b.addEventListener("click",()=>select(i));matches.append(b);}}matches.hidden=false;}
+function list(){if(!input||!matches)return;matches.replaceChildren();if(!norm(input.value)){matches.hidden=true;return;}const found=lookup(input.value);if(!found.length){matches.append(el("p","ml-i-muted","一致するアイテムがありません。日本語・英語名・IDで検索できます。"));}else{for(const i of found){const b=el("button","ml-i-option");b.type="button";b.append(picture(i,36));const span=el("span");span.append(el("strong","",i.jp),el("small","",i.en+" · minecraft:"+i.slug));b.append(span);b.addEventListener("click",()=>select(i));matches.append(b);}}matches.hidden=false;}
 function selectedHeader(i){const h=el("div","ml-i-selected");h.append(picture(i,72));const right=el("div");right.append(el("h2","",i.jp),el("p","ml-i-english",i.en));const id=el("div","ml-i-idline");id.append(el("code","", "minecraft:"+i.slug),buttonCopy("minecraft:"+i.slug,"IDをコピー"));right.append(id);h.append(right);return h;}
 function commandView(i){
  const code="/give @s minecraft:"+i.slug+" "+Math.min(2304,Math.max(1,Math.floor(Number(quantity?.value)||1)));
