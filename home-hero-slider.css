@@ -10,10 +10,10 @@
 .mlg-home-slide{
  position:absolute;inset:0;isolation:isolate;z-index:0;
  opacity:0;visibility:hidden;pointer-events:none;
- transition:opacity .48s cubic-bezier(.23,1,.35,1),visibility 0s linear .48s;
+ transition:opacity 1.25s cubic-bezier(.42,0,.58,1),visibility 0s linear 1.25s;
  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
 }
-.mlg-home-slide.is-active{opacity:1;visibility:visible;pointer-events:auto;z-index:1;transition:opacity .48s cubic-bezier(.23,1,.35,1),visibility 0s}
+.mlg-home-slide.is-active{opacity:1;visibility:visible;pointer-events:auto;z-index:1;transition:opacity 1.25s cubic-bezier(.42,0,.58,1),visibility 0s}
 .mlg-home-slide.is-swipe-target{visibility:visible;z-index:2;pointer-events:none;transition:opacity .32s cubic-bezier(.23,1,.35,1),visibility 0s}
 .mlg-home-slide.is-swipe-out{visibility:visible;z-index:1;pointer-events:none;transition:opacity .32s cubic-bezier(.23,1,.35,1),visibility 0s}
 .mlg-home-slide-art{position:absolute;inset:0;z-index:-2;overflow:hidden;pointer-events:none;transform:none!important;filter:none!important;backdrop-filter:none!important}
