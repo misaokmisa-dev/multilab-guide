@@ -254,9 +254,12 @@ window.MLG_RENDER_FARM_BLOCKS=function(farm,edition,step){
  if(farm!=="sugar"&&farm!=="bamboo"){const section=$$("fs-block-viewer");if(section)section.hidden=true;return;}
  const section=$$("fs-block-viewer");if(section)section.hidden=false;
  const nextStep=Math.max(0,Math.min(4,step));
- const changed=state.farm!==farm||state.edition!==edition||state.step!==nextStep;
+ const differentBuild=state.farm!==farm||state.edition!==edition;
+ const changedStep=state.step!==nextStep;
  state.farm=farm;state.edition=edition;state.step=nextStep;
- if(changed&&state.view==="complete"&&state.step>0)setView("iso");
+ // Every selected machine/edition starts in "Completed" camera mode.
+ if(differentBuild)setView("complete");
+ else if(changedStep&&state.view==="complete"&&nextStep>0)setView("iso");
  queue();
 };
 const texmap={
@@ -270,10 +273,6 @@ document.querySelectorAll("[data-fs-block-icon]").forEach(img=>{
 const initialParams=new URLSearchParams(location.search);
 const initialFarm=initialParams.get("farm")||"iron";
 const initialEdition=initialParams.get("edition")==="bedrock"?"bedrock":"java";
-let initialStep=0;
-try{
- const saved=JSON.parse(localStorage.getItem("mlg-farm-build:v1:"+initialFarm+":"+initialEdition)||"{}");
- initialStep=Math.max(0,Math.min(4,Math.floor(Number(saved.step)||0)));
-}catch(_){}
-window.MLG_RENDER_FARM_BLOCKS(initialFarm,initialEdition,initialStep);
+// Default to the completed preview and the first construction step, even after a prior visit.
+window.MLG_RENDER_FARM_BLOCKS(initialFarm,initialEdition,0);
 })();
