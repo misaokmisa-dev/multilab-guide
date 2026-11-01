@@ -183,3 +183,47 @@ body.fs-page #fs-copy-materials[hidden]{display:none!important}
  .fs-block-camera{flex:1;padding:9px 5px}
  .fs-block-select,.fs-block-toggle{font-size:11px}
 }
+
+
+/* 2026-11-01: one unified pull-out step description directly beneath the stage tabs. */
+.fs-build-drawer{
+ display:grid;
+ grid-template-rows:0fr;
+ min-height:0;
+ opacity:0;
+ visibility:hidden;
+ overflow:hidden;
+ transform:translateY(-8px);
+ margin:0;
+ border:0 solid transparent;
+ border-radius:10px;
+ background:#f4fff5;
+ transition:grid-template-rows .17s ease,opacity .17s ease,transform .17s ease,
+            margin .17s ease,border-width .17s ease,visibility 0s linear .17s;
+}
+.fs-build-drawer.is-open{
+ grid-template-rows:1fr;
+ opacity:1;
+ visibility:visible;
+ transform:translateY(0);
+ margin:8px 0 14px;
+ border-width:1px;
+ border-color:#b9dfc3;
+ transition:grid-template-rows .20s ease,opacity .20s ease,transform .20s ease,
+            margin .20s ease,border-width .20s ease,visibility 0s;
+}
+.fs-build-drawer-inner{min-height:0;overflow:hidden;padding:0 14px}
+.fs-build-drawer.is-open .fs-build-drawer-inner{padding:13px 14px}
+.fs-build-drawer h4{margin:0 0 7px;color:#154d29;font-size:14px;font-weight:900}
+.fs-build-drawer p{margin:0 0 9px;font-size:13px;line-height:1.85;color:#34533d}
+.fs-build-drawer p:last-child{margin-bottom:0}
+.fs-build-step-tab[aria-expanded="true"]{box-shadow:0 2px 0 #03b737,0 0 0 1px #9fefb1}
+@media(max-width:520px){
+ .fs-build-drawer-inner{padding-left:11px;padding-right:11px}
+ .fs-build-drawer.is-open .fs-build-drawer-inner{padding:12px}
+ .fs-build-drawer h4{font-size:13px}
+ .fs-build-drawer p{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .fs-build-drawer{transition:none}
+}
