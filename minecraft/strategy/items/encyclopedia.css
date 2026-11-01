@@ -184,3 +184,7 @@ body.mc-ambient a.ency-quick-action,body.mc-ambient button.ency-quick-action{dis
 body.mc-ambient button.ency-quick-copy{background:#01e427!important;color:#0f3018!important}
 body.mc-ambient .ency-quick-action:hover{filter:brightness(.94)}
 @media(max-width:540px){body.mc-ambient .ency-quick-links>.ency-quick-action{flex:1 1 100%}}
+
+/* Link-form CTAs in the encyclopedia search landing page. */
+body.mc-ambient a.ency-button{display:inline-flex!important;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;padding:10px 15px;border:1.5px solid #00bf27;border-radius:10px;background:#01e427!important;color:#102d18!important;font-size:13px;font-weight:900;text-decoration:none!important}
+body.mc-ambient a.ency-button:hover,body.mc-ambient a.ency-button:focus-visible{background:#00c722!important;box-shadow:0 0 0 3px #9cf3ab}
