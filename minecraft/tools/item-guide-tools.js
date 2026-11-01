@@ -22,6 +22,12 @@ function linked(i,txt){const a=el("a","ml-i-link",txt||i.jp);a.href=root+"detail
 const textureOld=window.MLG_TEXTURE_INDEX||{item:[],block:[]},textureNew=window.MLG_TEXTURE_INDEX_2026||{item:[],block:[]};
 const texOldItem=new Set(textureOld.item||[]),texOldBlock=new Set(textureOld.block||[]),texNewItem=new Set(textureNew.item||[]),texNewBlock=new Set(textureNew.block||[]);
 const CHEST_ICON_URLS={"chest":"https://minecraft.wiki/images/Invicon_Chest.png?1cab7","ender_chest":"https://minecraft.wiki/images/Invicon_Ender_Chest.png?b4e68","trapped_chest":"https://minecraft.wiki/images/Invicon_Trapped_Chest.png?cf2b7"};
+// Resolve model-based inventory sprites through Minecraft Wiki rather than
+// rendering a different flat material texture (e.g. wood instead of a shield).
+function wikiInvicon(slug){
+ const title=slug.split("_").map(part=>part?part[0].toUpperCase()+part.slice(1):"").join("_");
+ return "https://minecraft.wiki/images/Invicon_"+encodeURIComponent(title)+".png";
+}
 function itemTexture(i){
  const slug=i.slug;
  if(slug==="shield")return "https://minecraft.wiki/images/Invicon_Shield.png?67b0b"; // genuine shield inventory icon
@@ -58,17 +64,34 @@ function itemTexture(i){
  if(/_spawn_egg$/.test(slug))candidates.push("zombie_spawn_egg");
  if(/_copper_(chest|golem_statue)$/.test(slug))candidates.push(slug.replace(/^waxed_/,"").replace(/_(chest|golem_statue)$/,""));
  const recent=i.id>1504;
- for(const [entries,ver,group] of [
+ // Prefer the item's own sprite; a block face or another material is NOT the
+ // in-game inventory representation for stairs, fences, shield, skulls, etc.
+ // No guessed render is substituted when a true inventory icon is unavailable.
+ const tables=[
  ...(recent?[[texNewItem,"26.4-snapshot-6","item"],[texNewBlock,"26.4-snapshot-6","block"]]:[]),
  [texOldItem,"1.21.11","item"],[texOldBlock,"1.21.11","block"],
  ...(!recent?[[texNewItem,"26.4-snapshot-6","item"],[texNewBlock,"26.4-snapshot-6","block"]]:[])
- ]){const found=candidates.find(n=>entries.has(n));if(found)return base+ver+"/assets/minecraft/textures/"+group+"/"+encodeURIComponent(found)+".png";}
- return "";
+ ];
+ let directFlat="";
+ for(const [entries,ver,group] of tables){
+  if(group==="item"&&entries.has(slug)){directFlat=base+ver+"/assets/minecraft/textures/item/"+encodeURIComponent(slug)+".png";break;}
+ }
+ if(directFlat)return directFlat;
+ // Skip guessing a wiki inventory icon for development-only new items. When
+ // no exact sprite exists, display an explicit missing-image placeholder.
+ if(recent&&!texOldItem.has(slug)&&!texOldBlock.has(slug))return "";
+ return wikiInvicon(slug);
 }
-function picture(i,px){const a=el("span","ml-i-icon");const url=itemTexture(i);
- if(url){const img=el("img");img.src=url;img.alt="";img.width=px;img.height=px;img.loading="lazy";img.decoding="async";img.onerror=()=>{img.remove();a.textContent="◆";a.title="代表画像なし";};a.append(img);}
- else{a.textContent="◆";a.title="代表画像なし";}
- return a;}
+function picture(i,px){
+ const a=el("span","ml-i-icon");const url=itemTexture(i);
+ a.title=i.jp;
+ if(url){
+  const img=el("img");img.src=url;img.alt=i.jp;img.width=px;img.height=px;img.loading="lazy";img.decoding="async";
+  img.onerror=()=>{img.remove();a.textContent="画像なし";a.classList.add("ml-i-icon-missing");a.title=i.jp+"：正確なアイテム画像が未確認";};
+  a.append(img);
+ }else{a.textContent="画像なし";a.classList.add("ml-i-icon-missing");a.title=i.jp+"：正確なアイテム画像が未確認";}
+ return a;
+}
 function copy(text,button){if(navigator.clipboard?.writeText){navigator.clipboard.writeText(text).then(()=>{button.textContent="コピー済み ✓";}).catch(()=>{fallbackCopy(text,button);});}else fallbackCopy(text,button);}
 function fallbackCopy(text,button){const ta=el("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.append(ta);ta.select();try{document.execCommand("copy");button.textContent="コピー済み ✓";}catch(_){button.textContent="選択してコピー";}ta.remove();}
 function buttonCopy(text,label){const b=el("button","ml-i-button ml-i-copy",label||"コピー");b.type="button";b.addEventListener("click",()=>{record("copy_clicked");copy(text,b);});return b;}
@@ -311,5 +334,5 @@ if(tool==="planner"){
  const initial=slugMap.get(q)||slugMap.get("diamond");
  if(initial)select(initial,false);
 }
-window.MLG_ITEM_TOOL_TEST={expandPlan,expandBasket,lookup,items,optionsFor,basket,itemTexture,recipeGridItems,craftIngredientsGrid};
+window.MLG_ITEM_TOOL_TEST={expandPlan,expandBasket,lookup,items,optionsFor,basket,itemTexture,recipeGridItems,craftIngredientsGrid,wikiInvicon};
 })();
