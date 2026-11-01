@@ -15,14 +15,14 @@
 <link rel="stylesheet" href="/global-site-header.css?v=20261027a">
 <link rel="stylesheet" href="/ad-system.css">
 <link rel="stylesheet" href="/minecraft/strategy/minecraft-ambient.css?v=20261028allcontrols9">
-<link rel="stylesheet" href="/minecraft/strategy/farm-designer/farm-studio.css?v=20261101phase2d">
+<link rel="stylesheet" href="/minecraft/strategy/farm-designer/farm-studio.css?v=20261101buildguide01">
 <script defer src="/ad-config.js"></script><script defer src="/ad-system.js"></script>
 <script defer src="/affiliate-tracker.js?v=20261031funnelviews"></script>
 <script defer src="/site-language.js?v=20261028full"></script>
 <script defer src="/minecraft/strategy/items/items-data.js?v=20261029a"></script>
 <script defer src="/minecraft/strategy/items/items-2026-data.js?v=20261029plus1"></script>
 <script defer src="/minecraft/strategy/farm-designer/farm-data.js?v=20261101a"></script>
-<script defer src="/minecraft/strategy/farm-designer/farm-studio.js?v=20261101phase2d"></script>
+<script defer src="/minecraft/strategy/farm-designer/farm-studio.js?v=20261101buildguide01"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"マイクラ自動装置・トラップ設計室","description":"Minecraft自動装置の版別条件・材料目安・建築進捗・動作診断を扱う無料ワークスペース","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/strategy/farm-designer/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
 </head>
 <body class="ml-body mc-ambient fs-page">
@@ -69,11 +69,15 @@
 <div class="fs-diagram" id="fs-diagram"></div>
 <p class="fs-caption" id="fs-diagram-note"></p>
 <div id="fs-layer-guide" class="fs-layer-guide" hidden>
-<h3>1株の側面配置イメージ</h3>
-<p class="fs-caption">左が回路側、右が栽培側です。作物と検知器・ピストン・土台の上下関係を確認できます。</p>
-<div class="fs-layer-scroll"><div id="fs-layer-grid" class="fs-layer-grid" role="group" aria-label="栽培ユニットの高さ別構成"></div></div>
+<h3>1株の建築工程図（工程を選んで確認）</h3>
+<p class="fs-caption">工程ボタンを押すと、今置くブロックが強調されます。左から回収側・作物・機械・背面配線の順で表示します。</p>
+<nav class="fs-build-tabs" id="fs-layer-steps" aria-label="建築工程を切り替える"></nav>
+<div class="fs-layer-scroll"><div id="fs-layer-grid" class="fs-layer-grid" role="group" aria-label="選択した工程の、1株の高さ別配置図"></div></div>
+<div class="fs-build-detail" id="fs-layer-detail" aria-live="polite"></div>
+<div class="fs-build-toolbar"><span class="fs-build-progress" id="fs-layer-progress" aria-live="polite">建築確認 0 / 5 工程</span><button class="fs-button fs-secondary" id="fs-layer-check" type="button">この工程を確認済みにする</button></div>
+<div class="fs-build-controls"><button class="fs-button fs-secondary" id="fs-layer-prev" type="button">← 前の工程</button><button class="fs-button" id="fs-layer-next" type="button">次の工程 →</button></div>
 <p id="fs-layer-caption" class="fs-caption"></p>
-<p class="fs-notice">※ 高さの関係を示す概念図です。動力配線・回収機構・支えブロックの最終的な置き方は装置により異なります。完成を保証するブロック配置図ではありません。</p>
+<p class="fs-notice">※ 1株分の基本構成を示しています。回収水路の延長・チェストの置き方・水止め・仮足場・装飾などは建築場所によって異なり、基本材料数には含まれません。実際のワールドで各工程の動作を確認してください。</p>
 </div>
 <p class="fs-notice">※ 模式図は施工用の3D設計図ではありません。未検証のサイズ・配置を完成保証として案内しないため、建築時には版別の成立条件と参照元も確認してください。</p>
 </section>
