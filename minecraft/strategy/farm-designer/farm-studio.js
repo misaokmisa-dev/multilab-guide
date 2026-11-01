@@ -78,6 +78,27 @@ function materialPlanURL(f){
  const entries=materialItems(f);if(!entries.length)return null;
  return "/minecraft/tools/material-planner.html?plan="+encodeURIComponent(entries.map(x=>x.slug+":"+x.qty).join(","));
 }
+/* Use Minecraft's actual inventory/item artwork; never substitute unrelated block faces. */
+function materialIcon(slug,name){
+ const base="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.11/assets/minecraft/textures/";
+ const itemTextures=new Set(["sugar_cane","redstone","bamboo"]);
+ const faceFallback={sand:"sand",dirt:"dirt",cobblestone:"cobblestone",piston:"piston_top",observer:"observer_front"};
+ const wikiName=slug.split("_").map(w=>w?w[0].toUpperCase()+w.slice(1):"").join("_");
+ const url=itemTextures.has(slug)?base+"item/"+encodeURIComponent(slug)+".png":
+  "https://minecraft.wiki/images/Invicon_"+encodeURIComponent(wikiName)+".png";
+ const icon=element("span","fs-material-icon");
+ const img=element("img","fs-material-image");
+ img.src=url;img.alt=name;img.width=42;img.height=42;
+ img.loading="lazy";img.decoding="async";
+ const fallback=faceFallback[slug];
+ img.onerror=()=>{
+  if(fallback&&img.getAttribute("data-fallback")!=="1"){
+   img.setAttribute("data-fallback","1");
+   img.src=base+"block/"+fallback+".png";
+  }else{img.hidden=true;icon.title=name+"の画像を読み込めませんでした";}
+ };
+ icon.append(img);return icon;
+}
 function renderMaterials(f){
  const host=$("fs-materials"), btn=$("fs-plan-button"), copy=$("fs-copy-materials");
  host.replaceChildren();const items=materialItems(f);
@@ -90,11 +111,14 @@ function renderMaterials(f){
  host.append(count);
  for(const x of items){
   const row=element("div","fs-material");
-  const i=element("a","fs-material-name",itemName(x.slug));
-  i.href="/minecraft/tools/material-planner.html?item="+encodeURIComponent(x.slug);row.append(i);
-  p("strong","",x.qty+"個",row);host.append(row);
+  const i=element("a","fs-material-name");
+  i.href="/minecraft/tools/material-planner.html?item="+encodeURIComponent(x.slug);
+  const name=itemName(x.slug);
+  i.append(materialIcon(x.slug,name),element("span","fs-material-item-label",name));
+  row.append(i);
+  p("strong","fs-material-qty",x.qty+"個",row);host.append(row);
  }
- btn.href=materialPlanURL(f);btn.textContent="この材料をまとめて逆算する →";
+ btn.href=materialPlanURL(f);btn.textContent="この材料に必要な素材をまとめて逆算する→";
  copy.hidden=false;
  $("fs-material-note").textContent=f.modules.notes+" 必要な水・回収設備・レール等は方式により追加してください。";
 }
