@@ -19,8 +19,31 @@ function lookup(word){const q=norm(word);if(!q)return presets.map(x=>slugMap.get
 function rank(i,q){const a=norm(i.jp),b=norm(i.slug),c=norm(i.en);return a===q||b===q?100:c===q?90:a.startsWith(q)?75:b.startsWith(q)?65:c.startsWith(q)?55:20;}
 function el(tag,klass,txt){const e=document.createElement(tag);if(klass)e.className=klass;if(txt!==undefined)e.textContent=txt;return e;}
 function linked(i,txt){const a=el("a","ml-i-link",txt||i.jp);a.href=root+"detail/"+encodeURIComponent(i.slug)+".html";return a;}
-function picture(i,px){const a=el("span","ml-i-icon");const img=el("img");const asset="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.11/assets/minecraft/textures/";const base=i.slug.replace(/_(stairs|slab|wall)$/,"");
-img.src=asset+"item/"+encodeURIComponent(i.slug)+".png";img.alt="";img.width=px;img.height=px;img.loading="lazy";img.decoding="async";img.onerror=()=>{if(!img.dataset.fallback){img.dataset.fallback="1";img.src=asset+"block/"+encodeURIComponent(base)+".png";}else{img.remove();a.textContent="◆";}};a.append(img);return a;}
+const textureOld=window.MLG_TEXTURE_INDEX||{item:[],block:[]},textureNew=window.MLG_TEXTURE_INDEX_2026||{item:[],block:[]};
+const texOldItem=new Set(textureOld.item||[]),texOldBlock=new Set(textureOld.block||[]),texNewItem=new Set(textureNew.item||[]),texNewBlock=new Set(textureNew.block||[]);
+function itemTexture(i){
+ const slug=i.slug,base="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/";
+ const candidates=[slug,slug.replace(/^waxed_/,""),slug.replace(/^stripped_/,""),slug.replace(/_(stairs|slab|wall|button|pressure_plate|fence|fence_gate)$/,""),
+ slug.replace(/_(stairs|slab|wall|button|pressure_plate|fence|fence_gate)$/,"_planks"),slug.replace(/_wood$/,"_log"),slug.replace(/_concrete_powder$/,"_concrete"),
+ slug.replace(/_brick_(slab|stairs|wall)$/,"_bricks")];
+ const alias={crafting_table:"crafting_table_front",chest:"chest_front",trapped_chest:"trapped_chest_front",ender_chest:"ender_chest_front",furnace:"furnace_front",hopper:"hopper",grass_block:"grass_block_side",tnt:"tnt_side",piston:"piston_side",sticky_piston:"piston_top_sticky",oak_log:"oak_log",clock:"clock_00",compass:"compass_00",recovery_compass:"recovery_compass_00",crossbow:"crossbow_standby",enchanted_golden_apple:"golden_apple",magma_block:"magma",purpur_stairs:"purpur_block",smooth_stone_slab:"smooth_stone",tipped_arrow:"tipped_arrow_base",stripped_oak_log:"stripped_oak_log"};
+ if(alias[slug])candidates.push(alias[slug]);
+ for(const n of [...candidates])candidates.push(n+"_side",n+"_front",n+"_top",n+"_end",n+"_bottom",n+"_all");
+ if(/_bed$|_banner$/.test(slug))candidates.push("white_wool");
+ if(/_spawn_egg$/.test(slug))candidates.push("zombie_spawn_egg");
+ if(/_copper_(chest|golem_statue)$/.test(slug))candidates.push(slug.replace(/^waxed_/,"").replace(/_(chest|golem_statue)$/,""));
+ const recent=i.id>1504;
+ for(const [entries,ver,group] of [
+ ...(recent?[[texNewItem,"26.4-snapshot-6","item"],[texNewBlock,"26.4-snapshot-6","block"]]:[]),
+ [texOldItem,"1.21.11","item"],[texOldBlock,"1.21.11","block"],
+ ...(!recent?[[texNewItem,"26.4-snapshot-6","item"],[texNewBlock,"26.4-snapshot-6","block"]]:[])
+ ]){const found=candidates.find(n=>entries.has(n));if(found)return base+ver+"/assets/minecraft/textures/"+group+"/"+encodeURIComponent(found)+".png";}
+ return "";
+}
+function picture(i,px){const a=el("span","ml-i-icon");const url=itemTexture(i);
+ if(url){const img=el("img");img.src=url;img.alt="";img.width=px;img.height=px;img.loading="lazy";img.decoding="async";img.onerror=()=>{img.remove();a.textContent="◆";a.title="代表画像なし";};a.append(img);}
+ else{a.textContent="◆";a.title="代表画像なし";}
+ return a;}
 function copy(text,button){if(navigator.clipboard?.writeText){navigator.clipboard.writeText(text).then(()=>{button.textContent="コピー済み ✓";}).catch(()=>{fallbackCopy(text,button);});}else fallbackCopy(text,button);}
 function fallbackCopy(text,button){const ta=el("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.append(ta);ta.select();try{document.execCommand("copy");button.textContent="コピー済み ✓";}catch(_){button.textContent="選択してコピー";}ta.remove();}
 function buttonCopy(text,label){const b=el("button","ml-i-button ml-i-copy",label||"コピー");b.type="button";b.addEventListener("click",()=>{record("copy_clicked");copy(text,b);});return b;}
