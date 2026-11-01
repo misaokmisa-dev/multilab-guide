@@ -1,0 +1,95 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>【マイクラ】スライムチャンク座標特定ツール｜Java・統合版対応 | MULTI LAB GUIDE</title>
+<meta name="description" content="マイクラのスライムチャンクを地図で特定。Java版はシード値と座標、統合版は座標だけで検索。最寄り5件・16×16ブロック範囲・座標コピー付き。スマホでも無料で使えます。">
+<link rel="canonical" href="https://mlabg.com/minecraft/strategy/slime-chunks/">
+<meta property="og:type" content="website"><meta property="og:title" content="マイクラ スライムチャンク座標特定ツール｜Java・統合版">
+<meta property="og:description" content="近くのスライムチャンクを地図で探し、座標をコピー。Java・統合版対応。"><meta property="og:url" content="https://mlabg.com/minecraft/strategy/slime-chunks/">
+<meta name="theme-color" content="#123e27"><link rel="icon" href="/favicon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"スライムチャンク座標特定ツール","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/strategy/slime-chunks/","description":"MinecraftのJava版と統合版でスライムチャンクの座標を検索できるブラウザツール。","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4384918189756650" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/minecraft/portal.css"><link rel="stylesheet" href="/site-unified.css">
+<link rel="stylesheet" href="/ad-system.css"><link rel="stylesheet" href="/global-site-header.css?v=20261027a">
+<link rel="stylesheet" href="/minecraft/strategy/minecraft-ambient.css?v=20261028allcontrols9">
+<link rel="stylesheet" href="/minecraft/tools/tools.css?v=20261029tools2">
+<link rel="stylesheet" href="/minecraft/strategy/slime-chunks/slime.css?v=20261101a">
+<script defer src="/ad-config.js"></script><script defer src="/ad-system.js"></script>
+<script defer src="/affiliate-tracker.js?v=20261029revenueclick01"></script>
+<script defer src="/site-language.js?v=20261028full"></script>
+<script defer src="/minecraft/strategy/slime-chunks/slime.js?v=20261101a"></script>
+</head><body class="ml-body mc-ambient slime-body">
+<header class="mlg-site-header" data-section="minecraft"><div class="mlg-site-topline"><a class="mlg-site-brand" href="/" aria-label="MULTI LAB GUIDE 総合トップへ戻る"><img class="mlg-site-brand-icon" src="/favicon.png?v=20261026" alt="" width="36" height="36" aria-hidden="true"><span class="mlg-site-brand-name"><span class="mlg-site-brand-main">MULTI <strong>LAB</strong></span><span class="mlg-site-brand-guide">GUIDE</span></span></a><nav class="mlg-site-primary" aria-label="サイト共通ナビゲーション"><a class="mlg-site-link" data-nav="home" href="/">ホーム</a><a class="mlg-site-link" data-nav="roblox" href="/roblox/">ROBLOX</a><a class="mlg-site-link" data-nav="minecraft" href="/minecraft/" aria-current="page">Minecraft</a><a class="mlg-site-link" data-nav="devices" href="/devices/">デバイス</a><a class="mlg-site-link" data-nav="articles" href="/sitemap.html">記事一覧</a></nav></div><div class="mlg-site-context"><nav class="mlg-site-context-inner" aria-label="Minecraft内のメニュー"><span class="mlg-site-context-label">Minecraft</span><a class="mlg-site-context-link" href="/minecraft/">マイクラTOP</a><a class="mlg-site-context-link" href="/minecraft/strategy/" aria-current="page">攻略情報</a><a class="mlg-site-context-link" href="/minecraft/mod-ranking.html">人気MOD</a><a class="mlg-site-context-link" href="/minecraft/mod-diagnosis.html">MOD診断</a><a class="mlg-site-context-link" href="/minecraft/server.html">サーバー診断</a><a class="mlg-site-context-link" href="/minecraft/mods/">MODガイド</a><a class="mlg-site-context-link" href="/minecraft/server.html#articles">解説記事</a></nav></div></header>
+<main class="tool-page slime-page" id="main">
+<nav class="tool-breadcrumb" aria-label="パンくず"><a href="/minecraft/">マイクラTOP</a> › <a href="/minecraft/strategy/">攻略情報</a> › スライムチャンク座標特定</nav>
+<section class="tool-hero slime-hero"><div class="slime-hero-copy"><span class="tool-eyebrow">MINECRAFT / SLIME CHUNK FINDER</span>
+<h1>スライムチャンク<br class="slime-mobile-only">座標特定ツール</h1>
+<p>現在地を入力するだけで、近くのスライムチャンクをマップに表示。緑色のマスを押すと、掘る範囲の座標までわかります。</p>
+<div class="slime-hero-meta"><span>✓ Java版・統合版</span><span>✓ シード値の送信なし</span><span>✓ スマホ対応</span></div>
+</div><div class="slime-hero-art" aria-hidden="true"><div class="slime-face"><i></i><i></i><b></b></div></div></section>
+<aside class="as-slot as-top tool-ad" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/top-ad-loader.js"></script></div></aside>
+<section class="slime-workspace" aria-label="スライムチャンク検索">
+ <div class="slime-controls">
+  <section class="slime-card slime-setup" aria-labelledby="slime-setup-title">
+   <div class="slime-section-head"><span class="slime-step">1</span><div><h2 id="slime-setup-title">まず、プレイしている版を選ぶ</h2><p>違う版ではチャンクの位置が変わります。</p></div></div>
+   <div class="slime-edition-switch" role="group" aria-label="Minecraftのエディション">
+    <button type="button" data-edition="bedrock" aria-pressed="true">統合版 <small>Switch・スマホ・PSなど</small></button>
+    <button type="button" data-edition="java" aria-pressed="false">Java版 <small>PC</small></button>
+   </div>
+   <p class="slime-hint" id="slime-edition-note">統合版はシード値が不要です。</p>
+   <div id="slime-seed-field" class="slime-field-group" hidden>
+    <label for="slime-seed" class="slime-label">ワールドのシード値 <em>Java版のみ必須</em></label>
+    <input id="slime-seed" class="slime-input" type="text" inputmode="text" spellcheck="false" autocomplete="off" placeholder="例：12345 / -827364...">
+    <div class="slime-field-foot"><span>ゲーム内チャットの <code>/seed</code> で確認</span><button type="button" class="slime-text-button" id="slime-example">サンプル値で試す</button></div>
+   </div>
+  </section>
+  <section class="slime-card slime-position" aria-labelledby="slime-position-title">
+   <div class="slime-section-head"><span class="slime-step">2</span><div><h2 id="slime-position-title">探したい場所の座標を入力</h2><p>ゲーム内で確認したXとZだけでOK。Yは不要です。</p></div></div>
+   <div class="slime-coordinate-inputs">
+    <label for="slime-x"><span>X座標 <small>東西</small></span><input id="slime-x" class="slime-input" type="number" step="1" inputmode="numeric" value="0" min="-30000000" max="30000000"></label>
+    <label for="slime-z"><span>Z座標 <small>南北</small></span><input id="slime-z" class="slime-input" type="number" step="1" inputmode="numeric" value="0" min="-30000000" max="30000000"></label>
+   </div>
+   <button type="button" class="slime-primary" id="slime-reset">入力座標を地図の中心に戻す <span aria-hidden="true">⌖</span></button>
+   <div class="slime-current">あなたの座標を含むチャンクは、地図の <b>● 印</b> です。</div>
+  </section>
+  <section class="slime-card slime-detail" aria-labelledby="slime-result-title">
+   <div class="slime-section-head"><span class="slime-step">3</span><div><h2 id="slime-result-title">選んだチャンクの座標</h2><p>緑のマスをタップすると下の結果が変わります。</p></div></div>
+   <div class="slime-selection-result"><span id="slime-center-kind" class="slime-result-kind">未判定</span>
+    <strong id="slime-selection">版と座標を入力すると結果が表示されます。</strong>
+    <div class="slime-range" id="slime-range">X — / Z —</div>
+    <p id="slime-near-distance" class="slime-result-distance"></p>
+   </div>
+   <div class="slime-result-actions"><button id="slime-copy" type="button" class="slime-primary" disabled>範囲をコピー</button><button id="slime-copy-tp" type="button" class="slime-secondary" disabled>/tpをコピー</button></div>
+   <p class="slime-detail-tip">チャンクの大きさは16×16ブロック。スライムの自然出現は原則Y=40未満です。</p>
+  </section>
+ </div>
+ <section class="slime-card slime-map-card" aria-labelledby="slime-map-title">
+  <div class="slime-map-heading"><div><span class="slime-eyebrow">LIVE CHUNK MAP</span><h2 id="slime-map-title">近くのチャンクを地図で探す</h2></div><span id="slime-count" class="slime-map-count">—</span></div>
+  <div class="slime-legend" aria-label="地図の凡例"><span><i class="slime-legend-green"></i>スライム</span><span><i class="slime-legend-light"></i>通常</span><span><i class="slime-legend-dot"></i>入力座標</span><span><i class="slime-legend-outline"></i>選択中</span></div>
+  <p class="slime-map-help">地図の1マス = 16×16ブロック。<strong>緑のマスをタップ</strong>すると座標を確認できます。</p>
+  <div class="slime-map-toolbar"><span id="slime-map-center">表示中心: チャンク (0, 0)</span><div class="slime-size-buttons" role="group" aria-label="マップの表示範囲"><button type="button" data-size="9" aria-pressed="false">狭く</button><button type="button" data-size="11" aria-pressed="true">標準</button><button type="button" data-size="15" aria-pressed="false">広く</button></div></div>
+  <div class="slime-map-frame"><span class="slime-north" aria-hidden="true">↑ 北 / Z−</span>
+   <div id="slime-map-viewport" class="slime-map-viewport"><div id="slime-map" class="slime-map" role="group" aria-label="クリックできるチャンク地図"></div></div>
+   <div class="slime-directions" aria-label="地図の移動"><button type="button" data-pan="0,-1" aria-label="北へ移動">↑</button><div><button type="button" data-pan="-1,0" aria-label="西へ移動">←</button><button type="button" data-pan="0,1" aria-label="南へ移動">↓</button><button type="button" data-pan="1,0" aria-label="東へ移動">→</button></div><small>矢印1回で3チャンク移動</small></div>
+  </div>
+  <div class="slime-nearest-box"><div><h3>いまの座標から近いスライムチャンク</h3><p>近い順に5件。選択すると、その場所を地図の中心に移動します。</p></div><div id="slime-nearest" class="slime-nearest-list"></div></div>
+  <button id="slime-share" type="button" class="slime-share">この検索条件の共有リンクをコピー <span aria-hidden="true">↗</span></button>
+  <p class="slime-alert" id="slime-status" role="status" aria-live="polite"></p>
+ </section>
+</section>
+<section class="slime-help-grid">
+ <section class="slime-card slime-guide"><h2>使い方は3ステップ</h2><ol><li><b>版を選択</b> — 統合版はシード不要。Java版はチャットで <code>/seed</code> を確認。</li><li><b>拠点のX・Zを入力</b> — マイナス座標にも対応。近くの緑マスを見つける。</li><li><b>緑マスを選んで座標をコピー</b> — その16×16ブロック内のY=40未満に出現スペースを作る。</li></ol>
+ <p class="slime-caution">緑マスは「スライムが出現できるチャンク」を示します。実際の出現には周辺の湧き条件・空間・プレイヤーとの距離なども影響します。ネザーやエンドではなくオーバーワールドで使ってください。</p></section>
+ <section class="slime-card slime-guide"><h2>よくある質問</h2><details><summary>シード値がわからない場合は？</summary><p>Java版はシード値なしでは正確な位置を特定できません。自分のワールドなら <code>/seed</code> で確認してください。サーバーでは権限が必要な場合があります。統合版はシード値不要です。</p></details>
+ <details><summary>マイナス座標にも対応している？</summary><p>はい。X=-1ならチャンクX=-1（ブロックX=-16〜-1）です。0方向へ切り捨てず、常にマイナス無限大方向へ切り下げます。</p></details>
+ <details><summary>緑マスでもスライムが出ないのはなぜ？</summary><p>高さY=40未満、十分な広さ、プレイヤーとの距離、Mobの湧き上限などを確認してください。沼地の地表での出現はスライムチャンクとは別の仕組みです。</p></details>
+ <details><summary>シード値や座標はサイトに送信される？</summary><p>計算はブラウザ内だけで実行します。共有リンクのコピーを押した場合のみ、リンクにシード値・座標が含まれます。共有先にはこれらの値が見えるので注意してください。</p></details>
+ <p class="slime-sources">仕様の参考：<a href="https://minecraft.wiki/w/Slime#Slime_chunks" target="_blank" rel="noopener noreferrer">Minecraft Wiki（スライムチャンク）</a> / <a href="https://bedrockwiki.com/books/chunks/page/slime-chunks" target="_blank" rel="noopener noreferrer">Bedrock Wiki</a>。非公式ツールです。</p>
+ </section>
+</section>
+<aside class="as-slot as-inline-single" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="https://adm.shinobi.jp/s/8f484decc94c10e43e237e6221290bc5"></script></div></aside>
+<section class="slime-card slime-more"><h2>ほかのMinecraft攻略もチェック</h2><div><a href="/minecraft/strategy/">攻略情報トップへ</a><a href="/minecraft/tools/nether-coordinates.html">ネザー座標計算</a><a href="/minecraft/tools/stack-calculator.html">スタック・チェスト計算</a><a href="/minecraft/strategy/rare-mobs/">レアMobまとめ</a></div></section>
+<p class="mc-background-credit">背景：<a href="https://www.minecraft.net/en-us/article/trails---tales-update-now-available-bedrock" target="_blank" rel="noopener noreferrer">Minecraft公式ゲーム画像</a> ／ 非公式ガイド</p>
+</main>
+<footer class="ml-footer"><div class="ml-shell"><div class="ml-links"><a href="/">総合トップ</a><a href="/minecraft/">マイクラTOP</a><a href="/minecraft/strategy/">攻略情報</a><a href="/privacy.html">プライバシー</a></div><p>MULTI LAB GUIDE © 2026　Minecraft非公式攻略サイト</p><p>Amazonのアソシエイトとして、MULTI LAB GUIDEは適格販売により収入を得ています。</p></div></footer>
+<script src="/interstitial-loader.js"></script>
+</body></html>
