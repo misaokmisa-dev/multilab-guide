@@ -27,7 +27,26 @@ function itemTexture(i){
  slug.replace(/_(stairs|slab|wall|button|pressure_plate|fence|fence_gate)$/,"_planks"),slug.replace(/_wood$/,"_log"),slug.replace(/_concrete_powder$/,"_concrete"),
  slug.replace(/_brick_(slab|stairs|wall)$/,"_bricks")];
  const alias={crafting_table:"crafting_table_front",chest:"chest_front",trapped_chest:"trapped_chest_front",ender_chest:"ender_chest_front",furnace:"furnace_front",hopper:"hopper",grass_block:"grass_block_side",tnt:"tnt_side",piston:"piston_side",sticky_piston:"piston_top_sticky",oak_log:"oak_log",clock:"clock_00",compass:"compass_00",recovery_compass:"recovery_compass_00",crossbow:"crossbow_standby",enchanted_golden_apple:"golden_apple",magma_block:"magma",purpur_stairs:"purpur_block",smooth_stone_slab:"smooth_stone",tipped_arrow:"tipped_arrow_base",stripped_oak_log:"stripped_oak_log"};
+ const more={
+ suspicious_sand:"sand",suspicious_gravel:"gravel",moss_carpet:"moss_block",petrified_oak_slab:"oak_planks",purpur_slab:"purpur_block",
+ smooth_quartz:"quartz_block_bottom",smooth_sandstone:"sandstone_bottom",smooth_red_sandstone:"red_sandstone_bottom",
+ decorated_pot:"decorated_pot_side",chest:"oak_planks",ender_chest:"obsidian",trapped_chest:"oak_planks",
+ snow_block:"snow",light_weighted_pressure_plate:"iron_block",heavy_weighted_pressure_plate:"gold_block",
+ dried_ghast:"dried_ghast_hydration_0_north",dried_kelp_block:"dried_kelp_side",test_block:"test_block_start",
+ skeleton_skull:"bone",wither_skeleton_skull:"wither_rose",player_head:"oak_planks",zombie_head:"rotten_flesh",creeper_head:"gunpowder",dragon_head:"dragon_egg",piglin_head:"gold_ingot",
+ shield:"oak_planks",debug_stick:"stick",copper_chest:"copper_block",waxed_copper_chest:"copper_block",copper_golem_statue:"copper_block",waxed_copper_golem_statue:"copper_block",
+ poplar_leaves:"red_poplar_leaves",shelf_mushroom:"shelf_mushroom_stage0",brittle_ice:"ice",
+ crimson_hyphae:"crimson_stem",warped_hyphae:"warped_stem",stripped_crimson_hyphae:"stripped_crimson_stem",stripped_warped_hyphae:"stripped_warped_stem"
+ };
  if(alias[slug])candidates.push(alias[slug]);
+ if(more[slug])candidates.push(more[slug]);
+ if(/_carpet$/.test(slug))candidates.push(slug.replace(/_carpet$/,"_wool"));
+ if(/^infested_/.test(slug))candidates.push(slug.replace(/^infested_/,""));
+ if(/_spear$/.test(slug))candidates.push(slug+"_in_hand");
+ const derived=[...candidates];for(const name of derived){
+  const cut=name.replace(/^waxed_/,"").replace(/^infested_/,"").replace(/_(stairs|slab|wall|button|pressure_plate)$/,"");
+  candidates.push(cut,cut.replace(/^smooth_/,""),cut.replace(/_brick$/,"_bricks"),cut.replace(/_tile$/,"_tiles"),cut.replace(/_wood$/,"_log"),cut.replace(/_hyphae$/,"_stem"));
+ }
  for(const n of [...candidates])candidates.push(n+"_side",n+"_front",n+"_top",n+"_end",n+"_bottom",n+"_all");
  if(/_bed$|_banner$/.test(slug))candidates.push("white_wool");
  if(/_spawn_egg$/.test(slug))candidates.push("zombie_spawn_egg");
