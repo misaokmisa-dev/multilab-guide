@@ -105,13 +105,14 @@ function materialIcon(slug,name){
 function renderMaterials(f){
  const host=$("fs-materials"), btn=$("fs-plan-button"), copy=$("fs-copy-materials");
  host.replaceChildren();const items=materialItems(f);
+ const summary=$("fs-material-summary");
+ summary.hidden=!items.length;
+ summary.textContent=items.length?amount+"株の基本ユニット用・材料の目安":"";
  if(!items.length){
  host.append(element("p","fs-muted","この装置は版・方式によって材料数が大きく変わるため、誤った固定個数を表示しません。選択した版の条件と詳しい解説を確認してから、実際に使用する設計の必要数を材料まとめて逆算ツールへ入力してください。"));
  btn.href="/minecraft/tools/material-planner.html";btn.textContent="材料まとめて逆算ツールを開く →";
  copy.hidden=true;$("fs-material-note").textContent="村の条件や湧き条件は確定情報ですが、完全な施工用材料表はこのページにはまだありません。";return;
  }
- const count=element("p","fs-material-head",amount+"株の基本ユニット用・材料の目安");
- host.append(count);
  for(const x of items){
   const row=element("div","fs-material");
   const i=element("a","fs-material-name");
