@@ -160,14 +160,20 @@ function renderLayerGuide(f){
  ];
  const id=f.id+":"+edition,storeKey="mlg-farm-build:v1:"+id;
  const saved=safeStorage.get(storeKey),checked=saved.checked||{};
- const current=Math.max(0,Math.min(steps.length-1,buildStageByKey.get(id)||0));
+ const current=Math.max(0,Math.min(steps.length-1,buildStageByKey.has(id)?buildStageByKey.get(id):(Number(saved.step)||0)));
+ const goToStep=n=>{
+  const step=Math.max(0,Math.min(steps.length-1,n));
+  buildStageByKey.set(id,step);
+  const state=safeStorage.get(storeKey);state.step=step;safeStorage.set(storeKey,state);
+  renderLayerGuide(f);notify("construction","diagram_step");
+ };
  buildStageByKey.set(id,current);
  const nav=$("fs-layer-steps");nav.replaceChildren();
  for(let i=0;i<steps.length;i++){
   const tab=element("button","fs-build-step-tab"+(i===current?" is-active":"")+(checked[i]?" is-done":""));
   tab.type="button";tab.setAttribute("aria-pressed",String(i===current));
   tab.textContent=(checked[i]?"✓ ":"")+(i+1)+". "+steps[i].title;
-  on(tab,"click",()=>{buildStageByKey.set(id,i);renderLayerGuide(f);notify("construction","diagram_step");});
+  on(tab,"click",()=>goToStep(i));
   nav.append(tab);
  }
  const tiles=[
@@ -220,7 +226,7 @@ function renderLayerGuide(f){
  const done=steps.filter((_,i)=>!!checked[i]).length;
  meter.textContent="建築確認 "+done+" / "+steps.length+" 工程";
  $("fs-layer-caption").textContent="左から「回収 → 作物 → ピストン・観察者 → 配線」の側面図。◀ は作物の方向です。色付きで強調されたマスが選択中の工程で置く部分です。灰色のマスは後の工程です。";
- const click=direction=>{buildStageByKey.set(id,Math.max(0,Math.min(steps.length-1,current+direction)));renderLayerGuide(f);notify("construction","diagram_step");};
+ const click=direction=>goToStep(current+direction);
  prev.onclick=()=>click(-1);next.onclick=()=>click(1);
  check.onclick=()=>{
   const nextState=safeStorage.get(storeKey);nextState.checked=Object.assign({},nextState.checked||{});
