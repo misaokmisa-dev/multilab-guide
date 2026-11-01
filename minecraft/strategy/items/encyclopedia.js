@@ -686,7 +686,10 @@ function initDetail(){
  const part=q("div");const tag=q("span","ency-kicker",groupMap.get(item.cat)?.title+" / Java "+(item.release==="26.4-snapshot-6"?"26.4 Snapshot 6（開発版）":item.release));
  if(item.id>1504){
  document.querySelector('link[rel="canonical"]')?.setAttribute("href",location.origin+itemUrl(item));
- document.querySelector('meta[name="description"]')?.setAttribute("content",item.jp+"（"+item.en+"）の"+(RECIPES[String(item.id)]?.length?"作り方と使い方":"入手方法")+"。Minecraft Java "+item.release+"の追加アイテムを解説。");}
+ // Individual 2026 pages already ship their full English-name SEO summary in
+ // the original HTML. Only legacy query-based /new.html needs a JS fallback.
+ if(location.pathname.endsWith("/new.html"))
+  document.querySelector('meta[name="description"]')?.setAttribute("content",item.jp+"（"+item.en+"）の"+(RECIPES[String(item.id)]?.length?"作り方と使い方":"入手方法")+"。Minecraft Java "+item.release+"の追加アイテムを解説。");}
  const name=q("h1","",item.jp);
  const names=q("dl","ency-name-facts");
  const englishFact=q("div","ency-name-fact");
