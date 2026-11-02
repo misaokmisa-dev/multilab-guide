@@ -248,3 +248,25 @@ body.dv-body{margin:0;background:var(--dv-bg);color:var(--dv-ink);font:16px/1.78
 .dv-body .partner-shop .partner-shop-bottom a:hover{background:#045ac5;color:#fff!important}
 @media(max-width:800px){.dv-body .dv-pr .dv-partners{grid-template-columns:repeat(1,minmax(0,1fr));gap:12px}.dv-body .partner-shop .partner-visual{min-height:136px}.dv-body .partner-shop .partner-visual img{height:116px!important;max-height:116px!important}}
 @media(max-width:480px){.dv-body .partner-shop .partner-visual{padding:15px 13px 15px 15px;min-height:127px}.dv-body .partner-shop .partner-visual h3{font-size:21px!important}.dv-body .partner-shop .partner-visual p{font-size:11px!important}.dv-body .partner-shop .partner-visual img{height:104px!important;max-height:104px!important;max-width:130px}.dv-body .partner-shop .partner-shop-bottom{padding:12px 13px}}
+
+
+/* Device category hub: real photos of the #1 product replace AI hero backgrounds. */
+.dv-body.device-hub .dv-topic:not(.dv-topic--extras)::before{display:none!important}
+.dv-body.device-hub .dv-topic:not(.dv-topic--extras)>.dv-topic-image{
+  position:relative;display:flex;flex:0 0 166px;align-items:center;justify-content:center;
+  width:calc(100% + 34px);height:166px;margin:0 -17px 12px;
+  background:linear-gradient(125deg,#f3f7fc,#e6eef5);
+  border-bottom:1px solid #dce6ef;overflow:hidden;
+}
+.dv-body.device-hub .dv-topic:not(.dv-topic--extras)>.dv-topic-image img{
+  display:block;width:100%;height:100%;max-width:100%;max-height:100%;
+  object-fit:contain;object-position:center;padding:9px;background:#fff;
+}
+.dv-body.device-hub .dv-topic:not(.dv-topic--extras)>.dv-topic-image img[hidden]{display:none!important}
+.dv-body.device-hub .dv-topic:not(.dv-topic--extras)>.dv-topic-image .dv-topic-image-tag{
+  position:absolute;left:7px;bottom:6px;max-width:calc(100% - 14px);
+  background:#fffdfaef;border:1px solid #b6d7c2;border-radius:4px;padding:3px 6px;
+  font-size:10px;line-height:1.3;color:#276144;font-weight:800;
+}
+.dv-body.device-hub .dv-topic:not(.dv-topic--extras)>.dv-topic-body{display:flex;flex:1;flex-direction:column;gap:8px;min-width:0}
+@media(max-width:550px){.dv-body.device-hub .dv-topic:not(.dv-topic--extras)>.dv-topic-image{height:142px;flex-basis:142px}}
