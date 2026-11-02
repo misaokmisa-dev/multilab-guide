@@ -186,6 +186,46 @@ export default {
     return json({ok:true,status:'collected'});
    }catch(err){return json({ok:false,message:'集計の受付に失敗しました'},503)}
   }
+
+  // A personal percentile is a comparison of anonymous submissions, NOT a
+  // unique-user leaderboard. Only scores and counts leave this API.
+  if(url.pathname==='/api/world-score-percentile') {
+    if(request.method!=='GET')return json({error:'Method not allowed'},405);
+    const rawScore=url.searchParams.get('score');
+    if(rawScore===null||!/^(?:0|[1-9]\\d{0,5})$/.test(rawScore))
+      return json({error:'0〜100,000の点数を指定してください'},400);
+    const score=Number(rawScore);
+    if(!Number.isSafeInteger(score)||score>100000)
+      return json({error:'点数が範囲外です'},400);
+    if(!env.MLG_SQL)return json({status:'unavailable',message:'集計データに接続できません'},503);
+    try{
+      const result=await env.MLG_SQL.query({query:`SELECT
+        SUM(_sample_interval) AS submissions,
+        COUNT() AS sampled_rows,
+        SUM(if(double1 > ${score}, _sample_interval, 0)) AS higher,
+        SUM(if(double1 = ${score}, _sample_interval, 0)) AS tied
+        FROM ${DATASET}
+        WHERE blob1 = 'world_score'
+        AND timestamp >= NOW() - INTERVAL '90' DAY`});
+      const row=result.data?.[0]||{};
+      const total=Number(row.submissions||0);
+      const rawRows=Number(row.sampled_rows||0);
+      const higher=Number(row.higher||0);
+      const tied=Number(row.tied||0);
+      if(![total,rawRows,higher,tied].every(n=>Number.isFinite(n)&&n>=0)||higher+tied>total+0.01)
+        throw Error('Bad aggregate');
+      const common={periodDays:90,submissions:Math.round(total),sampled:true,comparison:'submissions',minimumSamples:10};
+      if(total<10||rawRows<10)
+        return json({...common,status:'insufficient',message:'比較に必要な採点結果を集計中'});
+      // Mid-rank for ties, so identical scores receive the same fair percentile.
+      const topPercent=Math.max(0,Math.min(100,(higher+tied/2)/total*100));
+      // Never imply an exact world/player rank from anonymous sampled events.
+      return json({...common,status:'ready',topPercent:Math.round(topPercent*10)/10,
+        updatedAt:new Date().toISOString()});
+    }catch(err){
+      return json({status:'unavailable',message:'現在スコア比較を取得できません'},503);
+    }
+  }
   // Score samples are not publicly ranked until validation / abuse controls are ready.
   if(url.pathname==='/api/world-score-admin') {
    if(request.method!=='GET')return json({error:'Method not allowed'},405);
