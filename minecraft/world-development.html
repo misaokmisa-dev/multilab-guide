@@ -128,6 +128,7 @@
 <div class="wd-result-head"><b>診断結果が出ました！</b><small>WORLD DEVELOPMENT RESULT</small></div>
 <div class="wd-scorecard wd-rarity-green" id="score-card">
 <div class="wd-scorecard-top"><span>★ WORLD SCORE / MULTI LAB GUIDE</span><span>RESULT</span></div>
+<div class="wd-rarity-eyebrow" id="wd-rarity-eyebrow">COMMON / WORLD RARITY</div>
 <div class="wd-scorecard-world" id="result-name">YOUR WORLD</div>
 <div class="wd-score-panel"><div><div class="wd-score-value"><span id="score">0</span><small>pt</small></div><div class="wd-score-max">/ 100,000 pt</div></div><span class="wd-result-rank" id="grade"></span></div>
 <div class="wd-meter" aria-hidden="true"><div id="meter-fill"></div></div>
@@ -184,6 +185,24 @@ const MAX_FILE=5*1024*1024;
 const levels=[[90000,'伝説級ワールド'],[72000,'大都市級ワールド'],[50000,'発展都市級ワールド'],[30000,'発展拠点級ワールド'],[12000,'開拓拠点級ワールド'],[0,'開拓初期']];
 const statNames=['建築規模','建材の多様さ','設備・装飾','採掘・制作','探索'];
 const maxValues=[60000,15000,10000,8000,7000];
+const rarityTiers=[
+ {min:90000,key:'red',label:'MYTHIC / 神話級',c:'#ff566a',light:'#ffd6dc',dark:'#430b18'},
+ {min:72000,key:'gold',label:'LEGEND / 伝説級',c:'#ffd35b',light:'#fff2bc',dark:'#503410'},
+ {min:50000,key:'purple',label:'EPIC / 最高級',c:'#b977ff',light:'#efdbff',dark:'#2d124a'},
+ {min:12000,key:'blue',label:'RARE / 希少級',c:'#4dbdff',light:'#c0f0ff',dark:'#103e66'},
+ {min:0,key:'green',label:'COMMON / 開拓級',c:'#51e786',light:'#d1ffdc',dark:'#0e4529'}
+];
+function rarityForScore(score){return rarityTiers.find(t=>score>=t.min)||rarityTiers[rarityTiers.length-1]}
+let scoreAnimation=null;
+function revealScore(score){
+ const node=$('score');
+ if(scoreAnimation)cancelAnimationFrame(scoreAnimation);
+ if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){node.textContent=format(score);return}
+ const duration=1050,begin=performance.now();
+ function frame(now){const p=Math.min(1,(now-begin)/duration);node.textContent=format(Math.round(score*(1-Math.pow(1-p,3))));
+ if(p<1)scoreAnimation=requestAnimationFrame(frame);else{node.textContent=format(score);scoreAnimation=null}}
+ scoreAnimation=requestAnimationFrame(frame);
+}
 function total(o){return Object.values(o||{}).reduce((a,n)=>a+(typeof n==='number'&&Number.isFinite(n)&&n>0?Math.min(n,1e9):0),0)}
 function growth(value,scale,max){return Math.round(max*-Math.expm1(-Math.max(0,value)/scale))}
 // Stats record use events, not surviving buildings. Distinguish construction
@@ -397,7 +416,14 @@ try{const data=JSON.parse(await current.text());const r=calculate(data);lastResu
 catch(e){error('読み込めませんでした。'+(e instanceof SyntaxError?'JSON形式を確認してください。':(e.message||'ファイルをご確認ください。')))}
 finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を診断する'}}
 function render(r){
-$('result-name').textContent=r.world;$('score').textContent=format(r.score);$('grade').textContent=r.grade;
+const tier=rarityForScore(r.score),panel=$('result'),scoreCard=$('score-card');
+for(const t of rarityTiers){panel.classList.remove('wd-rarity-'+t.key);scoreCard.classList.remove('wd-rarity-'+t.key)}
+panel.classList.add('wd-rarity-'+tier.key);scoreCard.classList.add('wd-rarity-'+tier.key);
+$('wd-rarity-eyebrow').textContent='✦ '+tier.label+' ✦';
+$('result-name').textContent=r.world;revealScore(r.score);
+$('grade').textContent=r.grade;$('grade').setAttribute('aria-label',tier.label+' '+r.grade);
+const submit=$('wd-submit-score');submit.disabled=false;submit.textContent='ランキング集計に参加する ↗';
+$('wd-submit-status').textContent='';
 $('result-note').textContent='建築関連ブロック使用 約'+format(r.placed)+'回 · プレイ '+format(r.hours)+'時間（建築活動を重視した推定値）';
 $('meter-fill').style.width=(r.score/100000*100)+'%';
 const container=$('metrics');container.replaceChildren();
@@ -424,18 +450,37 @@ $('share').addEventListener('click',()=>{if(shareText){const url='https://twitte
 $('copy').addEventListener('click',async()=>{if(!shareText)return;try{await navigator.clipboard.writeText(shareText);$('copy').textContent='コピーしました';setTimeout(()=>$('copy').textContent='テキストをコピー',2200)}catch(e){$('copy').textContent='コピーに失敗しました'}});
 function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}
 $('save-card').addEventListener('click',()=>{if(!lastResult)return;const r=lastResult;const c=document.createElement('canvas');c.width=1200;c.height=630;const g=c.getContext('2d');if(!g)return;
-const bg=g.createLinearGradient(0,0,1200,630);bg.addColorStop(0,'#06170f');bg.addColorStop(.6,'#174a2b');bg.addColorStop(1,'#0a3224');g.fillStyle=bg;g.fillRect(0,0,1200,630);
+const tier=rarityForScore(r.score);const bg=g.createLinearGradient(0,0,1200,630);bg.addColorStop(0,tier.dark);bg.addColorStop(.6,'#101724');bg.addColorStop(1,tier.dark);g.fillStyle=bg;g.fillRect(0,0,1200,630);
 for(let x=0;x<1200;x+=34){for(let y=0;y<630;y+=34){if((x/34+y/34)%5===0){g.fillStyle='#81ed8e0b';g.fillRect(x,y,30,30)}}}
-g.strokeStyle='#63df8577';g.lineWidth=3;roundRect(g,32,32,1136,566,22);g.stroke();
-g.fillStyle='#9affab';g.font='900 24px system-ui,sans-serif';g.textAlign='left';g.fillText('MULTI LAB GUIDE   /   WORLD SCORE',80,103);
+g.strokeStyle=tier.c;g.lineWidth=3;roundRect(g,32,32,1136,566,22);g.stroke();
+g.fillStyle=tier.light;g.font='900 24px system-ui,sans-serif';g.textAlign='left';g.fillText('MULTI LAB GUIDE   /   WORLD SCORE',80,103);
 g.fillStyle='#fff';g.font='900 58px system-ui,sans-serif';g.fillText('ワールド発展度',80,193);
 g.font='700 29px system-ui,sans-serif';g.fillStyle='#d8f4de';const worldName=r.world.length>23?r.world.slice(0,23)+'…':r.world;g.fillText(worldName,83,251);
-g.textAlign='left';g.fillStyle='#9dff97';g.font='900 112px ui-monospace,monospace';g.fillText(format(r.score)+' pt',70,395);
+g.textAlign='left';g.fillStyle=tier.c;g.font='900 105px ui-monospace,monospace';g.fillText(format(r.score)+' pt',70,395);
 g.fillStyle='#e8fce7';g.font='900 22px system-ui,sans-serif';g.fillText('/ 100,000 pt',90,436);
-g.fillStyle='#cdff9a';roundRect(g,80,465,360,66,13);g.fill();g.fillStyle='#144328';g.font='900 27px system-ui,sans-serif';g.fillText(r.grade,102,508);
+g.fillStyle=tier.c;roundRect(g,80,465,360,66,13);g.fill();g.fillStyle=tier.dark;g.font='900 27px system-ui,sans-serif';g.fillText(r.grade,102,508);
 g.fillStyle='#bbdbcb';g.font='700 19px system-ui,sans-serif';g.fillText('mlabg.com/minecraft/world-development.html',80,570);
 g.textAlign='right';g.fillStyle='#ffffff23';g.font='900 400px system-ui,sans-serif';g.fillText('✦',1140,425);
 c.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='minecraft-world-score.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)},'image/png')});
+// Ranking participation is opt-in. File contents, world names and user identifiers are not uploaded.
+$('wd-submit-score').addEventListener('click',async()=>{
+ const result=lastResult,button=$('wd-submit-score'),status=$('wd-submit-status');
+ if(!result||button.disabled)return;
+ button.disabled=true;button.textContent='集計に送信しています…';
+ const payload={version:'wd-score-v2',score:result.score,grade:result.grade,
+  points:result.points.map(x=>Math.round(x)),placed:Math.round(result.placed),
+  hours:Math.round(result.hours*100)/100,distance:Math.round(result.distance*100)/100};
+ try{
+  const response=await fetch('/api/world-score-submit',{method:'POST',
+   headers:{'content-type':'application/json'},credentials:'same-origin',
+   cache:'no-store',body:JSON.stringify(payload)});
+  const data=await response.json();
+  if(!response.ok||!data.ok)throw Error(data.message||'送信できませんでした');
+  button.textContent='ランキング集計に参加済み ✓';
+  status.textContent='集計に参加しました。ランキング公開後の表示順位を保証するものではありません。';
+ }catch(e){button.disabled=false;button.textContent='送信をもう一度試す ↗';
+  status.textContent='集計に送信できませんでした。通信環境をご確認ください。';}
+});
 })();
 
 </script>
