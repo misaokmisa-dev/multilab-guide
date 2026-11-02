@@ -1,6 +1,6 @@
 /* World Development UI / on-device activity scoring, score card export */
 (()=>{'use strict';
-const $=id=>document.getElementById(id),format=n=>Math.round(n).toLocaleString('ja-JP');let file=null,shareText='',lastResult=null;
+const $=id=>document.getElementById(id),format=n=>Math.round(n).toLocaleString('ja-JP');let file=null,shareText='',lastResult=null,activeWorldName='名前のないワールド';
 const MAX_FILE=5*1024*1024;
 const levels=[[85000,'伝説級ワールド'],[68000,'大都市級ワールド'],[48000,'発展都市級ワールド'],[28000,'開拓拠点級ワールド'],[0,'開拓スタート']];
 const statNames=['建築活動','クラフト','採掘','探索','プレイ'];
@@ -16,12 +16,12 @@ catch(e){window.prompt('このパスをコピーして Windows の「ファイ�
 let candidates=[];
 function pickedFile(item){
   file=item.file;
+  activeWorldName=(item.world&&item.world!=='stats'&&item.world!=='players'?item.world:'名前のないワールド').slice(0,40);
   const zone=$('pick-world-folder');
   zone.classList.add('is-selected');
   $('stats-filename').textContent=item.world && item.world!=='stats' ? item.world+' を読み込みました' : '統計データを読み込みました';
   $('stats-meta').textContent='統計ファイル：'+item.file.name+' ／ 読み込み完了';
   $('folder-picked-note').textContent='✓ 統計データが見つかりました';
-  if(item.world && item.world!=='stats' && item.world!=='players' && !$('world').value.trim())$('world').value=item.world;
   error('');
 }
 async function selectCandidates(found){
@@ -109,7 +109,7 @@ $('pick-json-file').addEventListener('click',()=>{$('stats').click()});
 $('stats').addEventListener('change',async e=>{
   const selected=e.target.files[0];if(!selected)return;
   $('player-select-box').hidden=true;
-  pickedFile({file:selected,world:$('world').value.trim()});
+  pickedFile({file:selected,world:'名前のないワールド'});
   await run();
 });
 $('player-file-list').addEventListener('change',async e=>{
@@ -126,7 +126,7 @@ const ticks=Number(custom['minecraft:play_time']??custom['minecraft:play_one_min
 const hours=Math.max(0,ticks/72000);
 const points=[normalize(placed,250000,35000),normalize(crafts,150000,20000),normalize(minedTotal,200000,20000),normalize(distance,4000,15000),normalize(hours,1200,10000)];
 const score=points.reduce((a,b)=>a+b,0),grade=levels.find(a=>score>=a[0])[1];
-return {score,grade,points,placed,distance,hours,world:($('world').value.trim()||'名前のないワールド').slice(0,40),seed:$('seed').value.trim()}}
+return {score,grade,points,placed,distance,hours,world:activeWorldName}}
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('統計ファイル（.json）を選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
 const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='診断中…';
