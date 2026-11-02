@@ -257,3 +257,21 @@
  .md-rank-switcher .md-tab{transition:none}
  .md-rank-switcher .md-tab:not([aria-selected="true"]):hover{transform:none}
 }
+
+/* 2026-11-02 Bing entry-page improvement: concise, crawlable selection guidance */
+.md-rank-companion{
+ display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px;
+ padding:12px 15px;margin:0 0 15px;border:1px solid #cde5d1;
+ border-left:4px solid #01e427;border-radius:9px;background:#f4fbf5;
+ font-size:12px;line-height:1.65;color:#34543e;
+}
+.md-rank-companion strong{flex:0 0 auto;font-size:13px;color:#1b5430}
+.md-rank-companion span{flex:1 1 430px}
+.md-rank-companion-links{display:flex;flex-wrap:wrap;gap:6px 13px}
+.md-rank-companion-links a{color:#1c6638!important;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.md-rank-companion-links a:focus-visible{outline:2px solid #1b8143;outline-offset:3px}
+@media(max-width:620px){
+ .md-rank-companion{display:block;padding:10px 12px}
+ .md-rank-companion span{display:block;margin:5px 0}
+ .md-rank-companion-links{margin-top:6px}
+}
