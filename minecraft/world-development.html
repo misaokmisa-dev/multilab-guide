@@ -16,7 +16,7 @@
 <p class="help">Java版のワールドフォルダ → <b>stats</b> → プレイヤーのUUID.jsonを選択してください。統計はプレイヤー単位なので、複数人のワールド全体の実績ではありません。</p>
 <button class="btn" id="calculate" type="button">発展度を計測する</button><div class="status" id="status" aria-live="polite"></div></section>
 <section class="panel"><h2>📊 発展度の測り方</h2><p>統計データに記録された<b>ブロック使用・クラフト・採掘・移動・プレイ時間</b>から、活動に基づく推定スコアを計算します。</p><ol class="steps"><li>統計JSONから記録を読み取る</li><li>建築・制作・採掘・探索・継続の5項目を評価</li><li>合計を0〜100,000点の範囲で表示</li><li>結果をXに共有して競う</li></ol><div class="caution"><b>重要：</b>seed値だけでプレイヤーが建てた建築物は特定できません。またMinecraftの統計で分かる「ブロックを使用した回数」は現存する建築物の数とは異なります。これは<b>活動統計に基づく暫定スコア</b>で、ワールドデータを解析した建築物の全数調査ではありません。複数人で比較する場合は同じ計算ルールを使ってください。</div></section></div>
-<section class="result hidden" id="result" aria-live="polite"><div class="eyebrow" style="color:#1e7535">WORLD DEVELOPMENT SCORE</div><h2 id="result-name">あなたのワールド</h2><div class="score" id="score">0</div><div class="rank" id="grade"></div><p id="result-note">活動記録から推定した発展度</p><div class="metrics" id="metrics"></div><div class="actions"><button class="btn" id="share" type="button">𝕏 結果をXで共有</button><button class="btn secondary" id="copy" type="button">結果をコピー</button></div><p class="help">※ 自己アップロード型のスコアです。ランキングの本人確認・不正防止は未実装です。</p></section>
+<section class="panel" style="margin-top:22px"><h2>🏗️ ワールドの建築関連ブロックを解析（β版）</h2><p>Java版ワールドの <b>region</b> フォルダにある <code>r.*.*.mca</code> ファイルを選択すると、建築によく使われるブロックの種類と個数を集計します。最大10ファイルずつ、ブラウザ内で処理します。</p><label class="field" for="regions">ワールドのリージョンファイル（.mca）</label><input type="file" id="regions" accept=".mca" multiple><p class="help">例：<code>.minecraft/saves/ワールド名/region/</code>。建物の正確な棟数・所有者・プレイヤーによる建築かどうかは判別できません。自然生成の村なども含まれる場合があります。巨大なワールドは10ファイルずつ解析できます。</p><button class="btn" type="button" id="analyze-region">建築関連ブロックを集計する</button><div id="region-output" aria-live="polite" style="margin-top:16px;line-height:1.9"></div></section><section class="result hidden" id="result" aria-live="polite"><div class="eyebrow" style="color:#1e7535">WORLD DEVELOPMENT SCORE</div><h2 id="result-name">あなたのワールド</h2><div class="score" id="score">0</div><div class="rank" id="grade"></div><p id="result-note">活動記録から推定した発展度</p><div class="metrics" id="metrics"></div><div class="actions"><button class="btn" id="share" type="button">𝕏 結果をXで共有</button><button class="btn secondary" id="copy" type="button">結果をコピー</button><button class="btn secondary" type="button" id="save-card">結果カードを画像保存</button></div><p class="help">※ 自己アップロード型のスコアです。ランキングの本人確認・不正防止は未実装です。</p></section>
 <p class="footer">MULTI LAB GUIDE ｜ このページは非公式のMinecraftファン向けツールです。</p></main>
 <script>
 (()=>{'use strict';const $=id=>document.getElementById(id),fmt=n=>Math.round(n).toLocaleString('ja-JP');let shareText='';
@@ -44,5 +44,20 @@ $('result').classList.remove('hidden');$('result').scrollIntoView({behavior:'smo
 });
 $('share').addEventListener('click',()=>{if(shareText)window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(shareText),'_blank','noopener,noreferrer')});
 $('copy').addEventListener('click',async()=>{if(!shareText)return;try{await navigator.clipboard.writeText(shareText);$('copy').textContent='コピーしました'}catch(e){$('copy').textContent='コピーできませんでした'}});
+})();
+</script><script defer src="/minecraft/world-region-analyzer.js?v=20261102a"></script>
+<script>
+(()=>{const button=document.getElementById('save-card');button.addEventListener('click',()=>{
+const name=document.getElementById('result-name').textContent,score=document.getElementById('score').textContent,grade=document.getElementById('grade').textContent;
+const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=630;const ctx=canvas.getContext('2d');const bg=ctx.createLinearGradient(0,0,1200,630);bg.addColorStop(0,'#092e17');bg.addColorStop(.6,'#14572a');bg.addColorStop(1,'#218c42');ctx.fillStyle=bg;ctx.fillRect(0,0,1200,630);
+ctx.strokeStyle='#80ffb1';ctx.lineWidth=5;ctx.strokeRect(30,30,1140,570);ctx.textAlign='center';ctx.fillStyle='#abffc4';ctx.font='bold 26px sans-serif';ctx.fillText('MINECRAFT WORLD DEVELOPMENT',600,102);
+ctx.fillStyle='#ffffff';ctx.font='bold 51px sans-serif';ctx.fillText('ワールド発展度チャレンジ',600,184);
+ctx.font='bold 32px sans-serif';ctx.fillText(name.length>22?name.slice(0,22)+'…':name,600,261);
+ctx.fillStyle='#aaff99';ctx.font='bold 93px sans-serif';ctx.fillText(score,600,393);
+ctx.fillStyle='#fff';ctx.font='bold 34px sans-serif';ctx.fillText('🏆 '+grade,600,460);
+ctx.font='22px sans-serif';ctx.fillText('プレイヤー活動統計による推定スコア',600,526);
+ctx.font='bold 25px sans-serif';ctx.fillText('mlabg.com/minecraft/world-development.html',600,573);
+canvas.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='minecraft-world-score.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)},'image/png');
+});
 })();
 </script></body></html>
