@@ -454,3 +454,27 @@ body.wd-body a{text-underline-offset:4px}
 
 /* Keep the colored hazard-like marker visible even before opening a category. */
 .wd-stat-group:not([open]) .wd-stat-group-head::after{content:"";position:absolute;bottom:0;left:0;right:0;height:5px;background:repeating-linear-gradient(90deg,#7568ef 0 36px,#4068b8 36px 62px,#34285d 62px 67px);pointer-events:none}
+
+
+/* PC comparison CTA after scoring: same high-contrast hero as Minecraft TOP. */
+body.wd-body .wd-pc-scout{width:min(1100px,100%);margin:32px auto 35px}
+body.wd-body .wd-pc-scout .mlg-device-scout__hero{background:linear-gradient(120deg,#061626,#092e33 54%,#08411e);border-color:#f4dc76}
+body.wd-body .wd-pc-scout .mlg-device-scout__hero::before{z-index:0;background:linear-gradient(90deg,#061827f5 0%,#07252fe9 49%,#082b3e88 70%,#09342d7a 100%)}
+body.wd-body .wd-pc-scout .mlg-device-scout__rays{z-index:1;opacity:.52;right:-32%}
+body.wd-body .wd-pc-scout .mlg-device-scout__image{z-index:2;right:-2%;top:0;width:49%;height:100%;object-position:right center;opacity:.95;filter:drop-shadow(0 12px 17px #0009)}
+body.wd-body .wd-pc-scout .mlg-device-scout__inner{z-index:4}
+body.wd-body .wd-pc-scout .mlg-device-scout__hero h2{color:#fff2d1!important;text-shadow:0 3px 10px #001b22}
+body.wd-body .wd-pc-scout .mlg-device-scout__hero h2 em{color:#ffed88!important;text-shadow:0 0 19px #ffdf7580}
+body.wd-body .wd-pc-scout .mlg-device-scout__description{color:#f6fff6!important}
+body.wd-body .wd-pc-scout .mlg-device-scout__issues a strong{color:#1a3a27!important;text-shadow:none}
+body.wd-body .wd-pc-scout .mlg-device-scout__issues a small{color:#365241!important}
+body.wd-body .wd-pc-scout .mlg-device-scout__issues a b{color:#067d39!important}
+@media(max-width:850px){
+ body.wd-body .wd-pc-scout .mlg-device-scout__image{width:62%;right:-14%;opacity:.67}
+ body.wd-body .wd-pc-scout .mlg-device-scout__hero::before{background:linear-gradient(90deg,#061827f9 0%,#07252fee 54%,#082b3edb 80%,#09342dc9 100%)}
+}
+@media(max-width:600px){
+ body.wd-body .wd-pc-scout{margin:22px auto 27px}
+ body.wd-body .wd-pc-scout .mlg-device-scout__image{width:79%;right:-25%;opacity:.3}
+ body.wd-body .wd-pc-scout .mlg-device-scout__hero::before{background:linear-gradient(90deg,#061827fc 0%,#07252ff3 58%,#082b3ee4 86%,#09342dd5 100%)}
+}
