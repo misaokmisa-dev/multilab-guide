@@ -309,7 +309,40 @@ $('pick-world-folder').addEventListener('click',()=>{
       error('フォルダを読み取れませんでした。「ファイル一覧から選ぶ（.json）」をご利用ください。');
     });
 });
-$('pick-folder-basic').addEventListener('click',()=>{$('stats').click()});
+// Windows/Edge/Chrome may otherwise reopen the last directory chosen for an
+// unrelated file picker (such as the removed region .mca analyzer).
+// A dedicated picker id starts in Documents the first time, then remembers
+// the actual stats folder on subsequent uses. Browser permissions prevent
+// websites from forcing %appdata%\\.minecraft\\saves on local machines.
+let statsPickerDirectory=null;
+async function openStatsJsonPicker(){
+ error('');
+ if(typeof window.showOpenFilePicker!=='function'){
+  // Older browsers cannot override the OS file dialog's last-open directory.
+  $('stats').value='';$('stats').click();return;
+ }
+ try{
+  const handles=await window.showOpenFilePicker({
+   id:'mlg-minecraft-stats-json-2026',
+   startIn:statsPickerDirectory||'documents',
+   types:[{description:'Minecraftワールド統計 (.json)',accept:{'application/json':['.json']}}],
+   excludeAcceptAllOption:true,
+   multiple:false
+  });
+  if(!handles.length)return;
+  const incoming=await handles[0].getFile();
+  await acceptStatsFile(incoming);
+ }catch(e){
+  if(e?.name==='AbortError')return;
+  // Some Chromium builds do not support the startIn hint; still provide the
+  // normal JSON-only picker rather than a folder-only region selector.
+  if(e?.name==='TypeError'||e?.name==='NotSupportedError'){
+   $('stats').value='';$('stats').click();return;
+  }
+  error('JSONファイルの選択に失敗しました。もう一度お試しください。');
+ }
+}
+$('pick-folder-basic').addEventListener('click',openStatsJsonPicker);
 $('world-folder-fallback').addEventListener('change',async e=>{
   const files=Array.from(e.target.files||[]);
   const found=files.filter(x=>/(?:^|\/)(?:players\/stats|stats)\/[^/]+\.json$/i.test(x.webkitRelativePath||'')).map(x=>{
@@ -323,7 +356,7 @@ $('world-folder-fallback').addEventListener('change',async e=>{
   await selectCandidates(found);
   e.target.value='';
 });
-$('pick-json-file').addEventListener('click',()=>{$('stats').click()});
+$('pick-json-file').addEventListener('click',openStatsJsonPicker);
 
 const dropZone=$('stats-drop');
 async function acceptStatsFile(incoming){
@@ -334,9 +367,9 @@ async function acceptStatsFile(incoming){
   pickedFile({file:incoming,world:'名前のないワールド'});
   await run();
 }
-dropZone.addEventListener('click',()=>{$('stats').click()});
+dropZone.addEventListener('click',openStatsJsonPicker);
 dropZone.addEventListener('keydown',e=>{
-  if(e.key==='Enter'||e.key===' '){e.preventDefault();$('stats').click()}
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();openStatsJsonPicker()}
 });
 for(const type of ['dragenter','dragover']){
   dropZone.addEventListener(type,e=>{
