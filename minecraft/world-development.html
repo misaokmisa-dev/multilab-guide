@@ -574,7 +574,14 @@ function resolveIdentity(category,key){
   // spawn eggs or unrelated object textures. The wiki sprite filename convention
   // uses hyphens for entity IDs such as ender_dragon -> ender-dragon.
   const spriteId=slug.replace(/_/g,'-');
-  return {name,slug:null,icon:full.startsWith('minecraft:')?{src:'https://minecraft.wiki/images/EntitySprite_'+encodeURIComponent(spriteId)+'.png'}:null};
+  return {name,slug:null,icon:full.startsWith('minecraft:')?{
+   src:'https://minecraft.wiki/images/EntitySprite_'+encodeURIComponent(spriteId)+'.png',
+   sources:[
+    'https://minecraft.wiki/images/EntitySprite_'+encodeURIComponent(spriteId)+'.png',
+    'https://minecraft.wiki/images/EntitySprite_'+encodeURIComponent(slug)+'.png',
+    'https://minecraft.wiki/images/thumb/EntitySprite_'+encodeURIComponent(spriteId)+'.png/64px-EntitySprite_'+encodeURIComponent(spriteId)+'.png'
+   ]
+  }:null};
  }
  const crop=full.startsWith('minecraft:')?blockOnlyCrops[slug]:null;
  if(crop){
@@ -582,7 +589,8 @@ function resolveIdentity(category,key){
    icon:{src:textureAsset('1.21.11','block',crop.texture)}};
  }
  const item=full.startsWith('minecraft:')?registry.get(slug):null;
- return {name:item?.jp||englishFallback(slug),slug:item?.slug||null,icon:item?resolveIcon(item):null};
+ return {name:item?.jp||englishFallback(slug),slug:item?.slug||null,
+  icon:full.startsWith('minecraft:')?resolveIcon(item||{slug,release:'1.21.11'}):null};
 }
 const TEXTURE_BASE='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/';
 function textureAsset(version,type,slug){
@@ -593,19 +601,25 @@ function wikiIcon(slug){
  return 'https://minecraft.wiki/images/Invicon_'+encodeURIComponent(name).replace(/'/g,'%27')+'.png';
 }
 function resolveIcon(item){
- const slug=item.slug,modern=item.release!=='1.21.11';
- const old='1.21.11',newer='26.4-snapshot-6';
- if(slug==='shield')return {src:'https://minecraft.wiki/images/Invicon_Shield.png?67b0b'};
- if(['chest','ender_chest','trapped_chest'].includes(slug))return {src:wikiIcon(slug)};
- if(modern&&itemTexNew.has(slug))return {src:textureAsset(newer,'item',slug)};
- if(itemTexOld.has(slug))return {src:textureAsset(old,'item',slug)};
- if(itemTexNew.has(slug))return {src:textureAsset(newer,'item',slug)};
- // Direct Mojang block textures are genuine block faces (e.g. stone/stone.png).
- // Where possible use wiki's 3-D rendered inventory icon first for blocks that
- // have a model rather than erroneously representing stairs with a brick face.
- if(blockTexOld.has(slug))return {src:wikiIcon(slug),fallback:textureAsset(old,'block',slug)};
- if(blockTexNew.has(slug))return {src:wikiIcon(slug),fallback:textureAsset(newer,'block',slug)};
- return {src:wikiIcon(slug)};
+ const slug=item.slug,modern=item.release!=='1.21.11',old='1.21.11',newer='26.4-snapshot-6';
+ const urls=[],add=x=>{if(x&&!urls.includes(x))urls.push(x)};
+ const wikiSprite=type=>'https://minecraft.wiki/images/'+type+'_'+encodeURIComponent(slug.replace(/_/g,'-'))+'.png';
+ if(slug==='shield')add('https://minecraft.wiki/images/Invicon_Shield.png?67b0b');
+ if(['chest','ender_chest','trapped_chest'].includes(slug))add(wikiIcon(slug));
+ // Game item textures are exact, directly verified in the site's texture indexes.
+ if(modern&&itemTexNew.has(slug))add(textureAsset(newer,'item',slug));
+ if(itemTexOld.has(slug))add(textureAsset(old,'item',slug));
+ if(itemTexNew.has(slug))add(textureAsset(newer,'item',slug));
+ // Wiki inventory renders preserve real 3-D shapes for crafted blocks and models.
+ if(!itemTexOld.has(slug)&&!itemTexNew.has(slug))add(wikiIcon(slug));
+ // A real Mojang block face is preferable to an empty/broken icon when the
+ // inventory renderer is unavailable; never invent a texture filename.
+ if(blockTexOld.has(slug))add(textureAsset(old,'block',slug));
+ if(blockTexNew.has(slug))add(textureAsset(newer,'block',slug));
+ if(!itemTexOld.has(slug)&&!itemTexNew.has(slug)){
+  add(wikiSprite('BlockSprite'));add(wikiSprite('ItemSprite'));
+ }
+ return {src:urls[0]||null,sources:urls};
 }
 function prettyKey(k){const v=k.replace(/^[^:]+:/,'');return japanese[v]||englishFallback(v)}
 function duration(ticks){const sec=Math.floor(Math.max(0,Number(ticks)||0)/20);return fmt(Math.floor(sec/3600))+'時間'+(Math.floor(sec%3600/60))+'分'}
@@ -692,16 +706,19 @@ function renderStatsRow(item){
  const left=document.createElement('div');left.className='wd-stat-entry';
  if(item.icon){
   const icon=document.createElement('span');icon.className='wd-stat-icon';
-  const img=document.createElement('img');img.src=item.icon.src;
-  img.width=37;img.height=37;img.alt=item.name+'のMinecraftゲーム画像';
-  img.loading='lazy';img.decoding='async';
-  const secondary=item.icon.fallback;
+  const urls=[...new Set([...(item.icon.sources||[item.icon.src]),item.icon.fallback].filter(Boolean))];
+  const img=document.createElement('img');img.width=37;img.height=37;
+  img.alt=item.name+'のMinecraftゲーム画像';img.loading='lazy';img.decoding='async';
+  let next=0;
   img.addEventListener('error',()=>{
-   if(secondary&&img.src!==secondary){img.src=secondary;return}
+   next++;
+   if(next<urls.length){img.src=urls[next];return}
    img.remove();icon.textContent='▣';icon.classList.add('wd-stat-icon-missing');
-   icon.title='画像を取得できませんでした';
+   icon.title='画像が取得できないためIDを表示';
   });
-  icon.append(img);left.append(icon);
+  if(urls.length)img.src=urls[0];
+  if(urls.length)icon.append(img);else{icon.textContent='▣';icon.classList.add('wd-stat-icon-missing')}
+  left.append(icon);
  }
  const col=document.createElement('div');col.className='wd-stat-description';
  let label;
