@@ -15,7 +15,7 @@
 <script defer src="/ad-config.js"></script>
 <script defer src="/ad-system.js"></script>
 <script defer src="/affiliate-tracker.js?v=20261031funnelviews"></script>
-<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102scorelabel5">
+<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102percentile1">
 <link rel="stylesheet" href="/minecraft/device-discovery.css?v=20261102legibility04">
 <style>
 .wd-breakdown-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:22px 0 11px;padding:0 3px}
@@ -26,6 +26,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js"></script>
 <script defer src="/site-language.js?v=20261028full"></script>
 <script defer src="/minecraft/world-score-history.js?v=20261102a"></script>
+<script defer src="/minecraft/world-percentile.js?v=20261102a"></script>
 
 
 <script defer src="/minecraft/strategy/items/items-data.js?v=20261029a"></script>
@@ -148,6 +149,11 @@
 <div class="wd-scorecard-world" id="result-name">YOUR WORLD</div>
 <div class="wd-score-panel"><div><div class="wd-score-value"><span id="score">0</span><small>pt</small></div><div class="wd-score-max">/ 100,000 pt</div></div><span class="wd-result-rank" id="grade"></span></div>
 <div class="wd-meter" aria-hidden="true"><div id="meter-fill"></div></div>
+<div class="wd-percentile" id="wd-percentile" data-state="loading" role="status" aria-live="polite">
+  <span class="wd-percentile-label">✦ WORLD SCORE COMPARISON / 直近90日</span>
+  <strong id="wd-percentile-value">他のワールドと比較中…</strong>
+  <small id="wd-percentile-note">匿名の採点結果をもとにした参考順位です</small>
+</div>
 </div>
 <div class="wd-breakdown-head"><h3>スコアの内訳</h3><span>5項目合計 <b>100,000 pt 満点</b></span></div>
 <div class="wd-stats-grid" id="metrics" aria-label="発展度の内訳（pt）"></div>
@@ -445,7 +451,7 @@ function calculate(data){
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('ワールドファイルをドロップするか、クリックして選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
 const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='採点中…';
-try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldScoreHistory?.save(r);window.mlgWorldStatsShow?.(data,r);void submitAnonymizedScore(r,current)}
+try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldScoreHistory?.save(r);window.mlgWorldStatsShow?.(data,r);void submitAnonymizedScore(r,current).then(()=>window.mlgWorldPercentile?.showResult(r.score))}
 catch(e){error('読み込めませんでした。'+(e instanceof SyntaxError?'JSON形式を確認してください。':(e.message||'ファイルをご確認ください。')))}
 finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を採点する'}}
 function render(r){
