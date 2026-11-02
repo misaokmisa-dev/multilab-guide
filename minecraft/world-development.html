@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="/ad-system.css">
 <script defer src="/ad-config.js"></script>
 <script defer src="/ad-system.js"></script>
-<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102strict5">
+<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102activitystrict6">
 <style>
 .wd-breakdown-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:22px 0 11px;padding:0 3px}
 .wd-breakdown-head h3{font-size:clamp(18px,2.5vw,22px);font-weight:1000;letter-spacing:-.04em;color:#1b482b;margin:0}
@@ -146,7 +146,7 @@
 </div>
 </section>
 <section class="wd-insights" id="world-insights" aria-labelledby="wd-insights-heading" hidden>
-<div class="wd-insights-title"><div><span class="wd-overline">WORLD DATA / PLAYER STATS</span><h2 id="wd-insights-heading">ワールドの記録</h2><p class="wd-activity-legend">色はプレイ時間あたりの活動量に基づく独自の目安です。世界の上位何％かを示すものではありません。</p></div><span class="wd-insights-tag">JAVA EDITION</span></div>
+<div class="wd-insights-title"><div><span class="wd-overline">WORLD DATA / PLAYER STATS</span><h2 id="wd-insights-heading">ワールドの記録</h2><p class="wd-activity-legend">評価基準を厳格化。各記録はプレイ時間あたりの活動密度で判定し、金・赤は長時間にわたる極めて高い活動量でのみ到達します。世界順位ではありません。死亡回数の赤は「危険」を示します。</p></div><span class="wd-insights-tag">JAVA EDITION</span></div>
 <div class="wd-insights-cards" id="world-stat-cards"></div>
 <div class="wd-day-help" id="wd-day-help"><span class="wd-day-help-icon" aria-hidden="true">☀</span><div class="wd-day-help-text"><b>ゲーム内の経過日数を確認</b><p>ワールドフォルダの <code>level.dat</code> を追加すると、ゲーム内の日数を表示できます。</p></div>
 <label class="wd-level-input">level.dat を選択<input id="wd-level-file" type="file" accept=".dat,application/octet-stream"></label>
@@ -727,23 +727,40 @@ const sum=o=>Object.values(o||{}).reduce((a,v)=>a+(typeof v==='number'&&Number.i
 const get=(o,k)=>Math.max(0,Number(o?.['minecraft:'+k])||0);
 let currentStats=null,currentResult=null,worldDays=null,levelSelected=null,levelToken=0;
 const activityColors=['green','blue','purple','gold','red'];
-const activityTitles=['少なめ','控えめ','活発','かなり活発','非常に活発'];
+const activityTitles=['少なめ','活発','かなり活発','極めて活発','規格外の活動量'];
+// v3: Per-hour reference rates are benchmarks, not measured global percentiles.
+// Red needs extraordinary sustained work: at least 30x baseline over a long
+// play history. Require a reasonable number of hours so a short farm burst
+// cannot earn the highest rarity.
+function activityStage(ratio,hours){
+ let stage=ratio>=30?4:ratio>=12?3:ratio>=4?2:ratio>=1.5?1:0;
+ if(hours<12)stage=Math.min(stage,1);
+ else if(hours<80)stage=Math.min(stage,2);
+ else if(hours<500)stage=Math.min(stage,3);
+ return stage;
+}
 function densityProfile(value,hours,perHour){
- const ratio=Math.max(0,Number(value)||0)/(Math.max(2,hours)*perHour);
- const stage=ratio>=5?4:ratio>=2.4?3:ratio>=1.2?2:ratio>=.55?1:0;
+ const play=Math.max(0,Number(hours)||0);
+ const ratio=Math.max(0,Number(value)||0)/(Math.max(24,play)*perHour);
+ const stage=activityStage(ratio,play);
  return {stage,label:activityTitles[stage],note:'同じプレイ時間あたりの活動量'};
 }
 function timeProfile(hours){
- const stage=hours>=2000?4:hours>=700?3:hours>=240?2:hours>=55?1:0;
- return {stage,label:['初心者','継続中','長期プレイ','大ベテラン','超長期プレイ'][stage],note:'累計プレイ時間'};
+ const play=Math.max(0,Number(hours)||0);
+ const stage=play>=30000?4:play>=10000?3:play>=3000?2:play>=500?1:0;
+ return {stage,label:['序盤','継続プレイ','長期プレイ','超長期プレイ','伝説級の累計時間'][stage],note:'累計プレイ時間'};
 }
 function dayProfile(days,hours){
- const ratio=days/Math.max(2,hours);const stage=ratio>=7?4:ratio>=5?3:ratio>=3.5?2:ratio>=2.5?1:0;
- return {stage,label:['ゆっくり','標準的','日数多め','日数が多い','日数が非常に多い'][stage],note:'プレイ時間あたりの日数'};
+ const play=Math.max(0,Number(hours)||0);
+ const ratio=Math.max(0,Number(days)||0)/Math.max(24,play);
+ const stage=activityStage(ratio/2.5,play);
+ return {stage,label:['平均的な経過','経過日数が多い','経過日数が非常に多い','長大なワールド歴','規格外の経過日数'][stage],note:'プレイ時間あたりの日数'};
 }
 function dangerProfile(deaths,hours){
- const ratio=deaths/Math.max(2,hours),stage=ratio>=.5?4:ratio>=.2?3:ratio>=.08?2:ratio>=.025?1:0;
- return {stage,label:['死亡頻度：低','死亡頻度：やや低','死亡頻度：中','死亡頻度：高','死亡頻度：非常に高'][stage],note:'死亡回数は少ないほど安全'};
+ // High death frequency is *danger*, not a positive achievement ranking.
+ const ratio=Math.max(0,Number(deaths)||0)/Math.max(24,Number(hours)||0);
+ const stage=ratio>=1.5?4:ratio>=.7?3:ratio>=.3?2:ratio>=.12?1:0;
+ return {stage,label:['死亡頻度：低','死亡頻度：やや高い','死亡頻度：高い','死亡頻度：非常に高い','死亡頻度：危険域'][stage],note:'赤は良い評価ではなく危険を示します'};
 }
 function setActivity(card,profile){
  const cls=activityColors[profile.stage];card.classList.add('wd-activity-'+cls);
