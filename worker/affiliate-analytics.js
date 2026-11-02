@@ -122,6 +122,58 @@ export default {
     return json({error:'Robloxの最新データを取得できませんでした'},503);
    }
   }
+  // Minecraft World Score: explicit, privacy-preserving leaderboard pre-entry.
+  // This Analytics Engine dataset records only summarized numeric scores.
+  if(url.pathname==='/api/world-score-status') {
+   if(request.method!=='GET')return json({error:'Method not allowed'},405);
+   return json({status:'collecting',rankingPublished:false,message:'集計中 / ランキングは後日公開'});
+  }
+  if(url.pathname==='/api/world-score-submit') {
+   if(request.method!=='POST')return json({ok:false,message:'Method not allowed'},405);
+   if(!env.MLG_EVENTS)return json({ok:false,message:'ランキング集計の受付が準備中です'},503);
+   const origin=request.headers.get('origin');
+   if(origin!==url.origin)return json({ok:false,message:'Forbidden'},403);
+   const contentType=request.headers.get('content-type')||'';
+   if(!contentType.toLowerCase().startsWith('application/json'))return json({ok:false,message:'JSONが必要です'},415);
+   const size=Number(request.headers.get('content-length')||0);
+   if(size>1200)return json({ok:false,message:'Payload too large'},413);
+   let body;
+   try{
+    const raw=await request.text();
+    if(raw.length>1200)return json({ok:false,message:'Payload too large'},413);
+    body=JSON.parse(raw);
+   }catch(e){return json({ok:false,message:'Invalid JSON'},400)}
+   const caps=[60000,15000,10000,8000,7000];
+   const goodInteger=(n,max)=>Number.isSafeInteger(n)&&n>=0&&n<=max;
+   if(body?.version!=='wd-score-v2'||!Array.isArray(body.points)||body.points.length!==5
+     ||!body.points.every((p,i)=>goodInteger(p,caps[i]))
+     ||!goodInteger(body.score,100000)||body.points.reduce((a,b)=>a+b,0)!==body.score
+     ||!goodInteger(body.placed,1000000000)
+     ||typeof body.hours!=='number'||!Number.isFinite(body.hours)||body.hours<0||body.hours>1000000
+     ||typeof body.distance!=='number'||!Number.isFinite(body.distance)||body.distance<0||body.distance>10000000)
+    return json({ok:false,message:'診断データの形式が正しくありません'},400);
+   const ranks=[[90000,'伝説級ワールド'],[72000,'大都市級ワールド'],[50000,'発展都市級ワールド'],[30000,'発展拠点級ワールド'],[12000,'開拓拠点級ワールド'],[0,'開拓初期']];
+   const expected=ranks.find(r=>body.score>=r[0])[1];
+   if(body.grade!==expected)return json({ok:false,message:'スコアと称号が一致しません'},400);
+   try{
+    env.MLG_EVENTS.writeDataPoint({
+     blobs:['world_score',body.grade,'wd-score-v2',new Date().toISOString().slice(0,10)],
+     doubles:[body.score,...body.points,body.placed,body.hours,body.distance,1],
+     indexes:['world_score']
+    });
+    return json({ok:true,status:'collected'});
+   }catch(err){return json({ok:false,message:'集計の受付に失敗しました'},503)}
+  }
+  // Score samples are not publicly ranked until validation / abuse controls are ready.
+  if(url.pathname==='/api/world-score-admin') {
+   if(request.method!=='GET')return json({error:'Method not allowed'},405);
+   if(!await auth(request,env))return json({error:'Unauthorized'},401);
+   if(!env.MLG_SQL)return json({error:'Analytics SQL binding is unavailable'},503);
+   try{
+    const result=await env.MLG_SQL.query({query:`SELECT blob2 AS grade, COUNT() AS samples, SUM(_sample_interval) AS approximate_submissions, AVG(double1) AS average_score, MAX(double1) AS max_score FROM ${DATASET} WHERE blob1 = 'world_score' AND timestamp >= NOW() - INTERVAL '90' DAY GROUP BY blob2 ORDER BY average_score DESC LIMIT 30`});
+    return json({status:'collecting',sampled:true,rows:result.data||[],updatedAt:new Date().toISOString()});
+   }catch(err){return json({error:'ランキング集計を読み込めませんでした'},503)}
+  }
   if(url.pathname==='/api/affiliate-event') {
    if(request.method!=='POST')return json({error:'Method not allowed'},405);
    if(!env.MLG_EVENTS)return json({error:'Tracking is not configured'},503);
