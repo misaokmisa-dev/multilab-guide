@@ -38,7 +38,7 @@
         updateResult('あなたは上位約'+topLabel(data.topPercent)+'です',
           '直近90日・採点結果 約'+fmt(data.submissions)+'件と比較（重複投稿を含む場合があります）','ready');
       }else{
-        updateResult('ランキングデータを集計中',
+        updateResult('点数比較データを集計中',
           '比較可能な採点結果が10件以上集まると表示します（現在 約'+fmt(data.submissions)+'件）','insufficient');
       }
     }catch(_){
@@ -51,7 +51,7 @@
     if(!node)return;
     const saved=window.mlgWorldScoreHistory?.read();
     if(!saved||!validScore(saved.score)){node.textContent='';return}
-    node.textContent='順位を確認中…';
+    node.textContent='比較結果を確認中…';
     try{
       const data=await lookup(saved.score);
       if(!window.mlgWorldScoreHistory||window.mlgWorldScoreHistory.read()?.score!==saved.score)return;
