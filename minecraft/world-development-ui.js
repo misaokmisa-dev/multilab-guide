@@ -31,6 +31,7 @@ catch(e){window.prompt('このパスをコピーして Windows の「ファイ�
 let candidates=[];
 function pickedFile(item){
   file=item.file;
+  window.mlgWorldSetLevelDat?.(item.levelFile||null);
   activeWorldName=(item.world&&item.world!=='stats'&&item.world!=='players'?item.world:'名前のないワールド').slice(0,40);
   const zone=$('stats-drop');
   zone.classList.add('is-selected');
@@ -85,11 +86,18 @@ async function scanWorldHandle(root){
     }
   }
   for(const dir of candidatesToVisit){
+    const startIndex=found.length;
     if(dir.name==='stats')await readStatsFromDirectory(dir,'ワールド',found);
     const legacy=await tryDirectory(dir,'stats');
     await readStatsFromDirectory(legacy,dir.name,found);
     const players=await tryDirectory(dir,'players');
     if(players)await readStatsFromDirectory(await tryDirectory(players,'stats'),dir.name,found);
+    if(found.length>startIndex){
+      try{
+        const lv=await (await dir.getFileHandle('level.dat')).getFile();
+        for(let i=startIndex;i<found.length;i++)found[i].levelFile=lv;
+      }catch(e){}
+    }
   }
   return found;
 }
@@ -114,8 +122,10 @@ $('world-folder-fallback').addEventListener('change',async e=>{
   const found=files.filter(x=>/(?:^|\/)(?:players\/stats|stats)\/[^/]+\.json$/i.test(x.webkitRelativePath||'')).map(x=>{
     const parts=x.webkitRelativePath.split('/');
     const statsIndex=parts.lastIndexOf('stats');
-    const guess=parts[statsIndex-1]==='players'?parts[statsIndex-2]:parts[statsIndex-1];
-    return {file:x,world:guess||'ワールド'};
+    const worldIndex=parts[statsIndex-1]==='players'?statsIndex-2:statsIndex-1;
+    const guess=parts[worldIndex],dirPath=parts.slice(0,worldIndex+1).join('/');
+    const levelFile=files.find(f=>f.webkitRelativePath===dirPath+'/level.dat')||null;
+    return {file:x,world:guess||'ワールド',levelFile};
   });
   await selectCandidates(found);
   e.target.value='';
@@ -204,7 +214,7 @@ function calculate(data){
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('ワールドファイルをドロップするか、クリックして選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
 const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='診断中…';
-try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r)}
+try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldStatsShow?.(data,r)}
 catch(e){error('読み込めませんでした。'+(e instanceof SyntaxError?'JSON形式を確認してください。':(e.message||'ファイルをご確認ください。')))}
 finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を診断する'}}
 function render(r){
@@ -212,7 +222,7 @@ $('result-name').textContent=r.world;$('score').textContent=format(r.score);$('g
 $('result-note').textContent='建築関連ブロック使用 約'+format(r.placed)+'回 · プレイ '+format(r.hours)+'時間（建築活動を重視した推定値）';
 $('meter-fill').style.width=(r.score/100000*100)+'%';
 const container=$('metrics');container.replaceChildren();
-r.points.forEach((n,i)=>{const c=document.createElement('div');c.className='wd-stat';const b=document.createElement('b');b.textContent=format(n);const t=document.createElement('span');t.textContent=statNames[i];const bar=document.createElement('div');bar.className='wd-stat-track';const fill=document.createElement('div');fill.style.width=(n/maxValues[i]*100)+'%';bar.append(fill);c.append(b,t,bar);container.append(c)});
+r.points.forEach((n,i)=>{const c=document.createElement('div');c.className='wd-stat';const b=document.createElement('b');b.textContent=format(n)+' pt';const t=document.createElement('span');t.textContent=statNames[i];const bar=document.createElement('div');bar.className='wd-stat-track';const fill=document.createElement('div');fill.style.width=(n/maxValues[i]*100)+'%';bar.append(fill);c.append(b,t,bar);container.append(c)});
 shareText='🌍 マイクラ ワールド発展度\n「'+r.world+'」\n🏆 '+format(r.score)+' / 100,000 pt\n称号：'+r.grade+'\n\nあなたのワールドは何点？\n#マイクラ #ワールド発展度\nhttps://mlabg.com/minecraft/world-development.html';
 $('result').hidden=false;$('result').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -227,8 +237,8 @@ g.strokeStyle='#63df8577';g.lineWidth=3;roundRect(g,32,32,1136,566,22);g.stroke(
 g.fillStyle='#9affab';g.font='900 24px system-ui,sans-serif';g.textAlign='left';g.fillText('MULTI LAB GUIDE   /   WORLD SCORE',80,103);
 g.fillStyle='#fff';g.font='900 58px system-ui,sans-serif';g.fillText('ワールド発展度',80,193);
 g.font='700 29px system-ui,sans-serif';g.fillStyle='#d8f4de';const worldName=r.world.length>23?r.world.slice(0,23)+'…':r.world;g.fillText(worldName,83,251);
-g.textAlign='left';g.fillStyle='#9dff97';g.font='900 112px ui-monospace,monospace';g.fillText(format(r.score),70,395);
-g.fillStyle='#e8fce7';g.font='900 22px system-ui,sans-serif';g.fillText('/ 100,000 POINTS',90,436);
+g.textAlign='left';g.fillStyle='#9dff97';g.font='900 112px ui-monospace,monospace';g.fillText(format(r.score)+' pt',70,395);
+g.fillStyle='#e8fce7';g.font='900 22px system-ui,sans-serif';g.fillText('/ 100,000 pt',90,436);
 g.fillStyle='#cdff9a';roundRect(g,80,465,360,66,13);g.fill();g.fillStyle='#144328';g.font='900 27px system-ui,sans-serif';g.fillText(r.grade,102,508);
 g.fillStyle='#bbdbcb';g.font='700 19px system-ui,sans-serif';g.fillText('mlabg.com/minecraft/world-development.html',80,570);
 g.textAlign='right';g.fillStyle='#ffffff23';g.font='900 400px system-ui,sans-serif';g.fillText('✦',1140,425);
