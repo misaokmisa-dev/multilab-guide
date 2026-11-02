@@ -478,3 +478,37 @@ body.wd-body .wd-pc-scout .mlg-device-scout__issues a b{color:#067d39!important}
  body.wd-body .wd-pc-scout .mlg-device-scout__image{width:79%;right:-25%;opacity:.3}
  body.wd-body .wd-pc-scout .mlg-device-scout__hero::before{background:linear-gradient(90deg,#061827fc 0%,#07252ff3 58%,#082b3ee4 86%,#09342dd5 100%)}
 }
+
+
+/* World Score percentile: sourced from the last 90 days of anonymous scored submissions. */
+.wd-result .wd-percentile{
+  position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;
+  gap:5px;margin:19px auto 1px;padding:15px 18px;width:min(100%,580px);
+  border-radius:13px;border:1px solid #bcff74b0;
+  background:linear-gradient(120deg,#0b1c19eb,#16281edb);
+  box-shadow:inset 0 0 18px #b6ff3714,0 0 24px #aaff3828;
+  text-align:center;
+}
+.wd-result .wd-percentile-label{
+  color:#cfffaa;font:900 10px/1.5 ui-monospace,Consolas,monospace;
+  letter-spacing:.1em;
+}
+.wd-result .wd-percentile strong{
+  color:#f2ffad;font-size:clamp(18px,3.2vw,30px);line-height:1.35;
+  font-weight:1000;text-shadow:0 0 16px #beff7355;
+}
+.wd-result .wd-percentile small{
+  color:#e0efe3;font-size:11px;line-height:1.6;font-weight:680;
+}
+.wd-result .wd-percentile[data-state="ready"]{
+  border-color:#dfff6d;box-shadow:inset 0 0 25px #aaff4025,0 0 26px #dcff6c55;
+}
+.wd-result .wd-percentile[data-state="unavailable"],
+.wd-result .wd-percentile[data-state="insufficient"]{
+  border-color:#e4efb570;box-shadow:none;
+}
+@media(max-width:600px){
+  .wd-result .wd-percentile{padding:13px 10px;gap:6px;margin-top:15px}
+  .wd-result .wd-percentile-label{font-size:9px;letter-spacing:.03em}
+  .wd-result .wd-percentile strong{font-size:clamp(17px,5vw,24px)}
+}
