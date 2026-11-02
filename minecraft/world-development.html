@@ -446,7 +446,83 @@ const japanese={
  clean_armor:'防具を洗った回数',clean_banner:'旗を洗った回数',inspect_dispenser:'ディスペンサーを開けた回数',inspect_dropper:'ドロッパーを開けた回数'
 };
 const cmKey=k=>/_one_cm$/.test(k);
-function prettyKey(k){const v=k.replace(/^[^:]+:/,'');return japanese[v]||v.replace(/_/g,' ')}
+const WIKI_TEXTURE_ALIAS={
+ 'lapis_ore':'Lapis_Lazuli_Ore','deepslate_lapis_ore':'Deepslate_Lapis_Lazuli_Ore',
+ 'coal_block':'Block_of_Coal','raw_iron_block':'Block_of_Raw_Iron',
+ 'raw_copper_block':'Block_of_Raw_Copper','raw_gold_block':'Block_of_Raw_Gold',
+ 'iron_block':'Block_of_Iron','copper_block':'Block_of_Copper',
+ 'gold_block':'Block_of_Gold','diamond_block':'Block_of_Diamond',
+ 'netherite_block':'Block_of_Netherite','amethyst_block':'Block_of_Amethyst',
+ 'bamboo_block':'Block_of_Bamboo','lapis_block':'Block_of_Lapis_Lazuli',
+ 'spawner':'Monster_Spawner','jack_o_lantern':"Jack_o'Lantern",
+ 'emerald_block':'Block_of_Emerald','quartz_block':'Block_of_Quartz',
+ 'redstone_block':'Block_of_Redstone','hay_block':'Hay_Bale'
+};
+const mobNames={
+ 'ender_dragon':'エンダードラゴン','wither':'ウィザー',
+ 'iron_golem':'アイアンゴーレム','snow_golem':'スノーゴーレム','player':'プレイヤー',
+ 'giant':'ジャイアント','illusioner':'イリュージョナー','ender_crystal':'エンドクリスタル',
+ 'trader_llama':'行商人のラマ','wandering_trader':'行商人','zombified_piglin':'ゾンビピグリン',
+ 'piglin_brute':'ピグリンブルート','magma_cube':'マグマキューブ',
+ 'endermite':'エンダーマイト','cave_spider':'洞窟グモ','wither_skeleton':'ウィザースケルトン',
+ 'elder_guardian':'エルダーガーディアン','mooshroom':'ムーシュルーム',
+ 'husk':'ハスク','drowned':'ドラウンド','stray':'ストレイ',
+ 'evoker':'エヴォーカー','vindicator':'ヴィンディケーター',
+ 'ravager':'ラヴェジャー','shulker':'シュルカー',
+ 'allay':'アレイ','sniffer':'スニッファー','armadillo':'アルマジロ',
+ 'bogged':'ボグド','breeze':'ブリーズ','creaking':'クリーキング',
+ 'happy_ghast':'ハッピーガスト','nautilus':'オウムガイ'
+};
+const registry=new Map(),itemTexOld=new Set(),blockTexOld=new Set(),itemTexNew=new Set(),blockTexNew=new Set();
+let registryReady=false;
+function setupRegistry(){
+ if(registryReady)return;
+ registryReady=true;
+ for(const row of [...(window.MLG_ITEMS?.items||[]),...(window.MLG_ITEM_ADDITIONS?.items||[])]){
+  const slug=row?.[1],jp=row?.[2];
+  if(typeof slug==='string'&&typeof jp==='string')registry.set(slug,{slug,jp,release:row[6]||'1.21.11'});
+ }
+ for(const [list,source] of [[itemTexOld,window.MLG_TEXTURE_INDEX?.item],[blockTexOld,window.MLG_TEXTURE_INDEX?.block],[itemTexNew,window.MLG_TEXTURE_INDEX_2026?.item],[blockTexNew,window.MLG_TEXTURE_INDEX_2026?.block]]){
+  for(const x of source||[])list.add(x);
+ }
+}
+function englishFallback(id){return id.replace(/_/g,' ')}
+function resolveIdentity(category,key){
+ setupRegistry();
+ const full=String(key),slug=full.replace(/^[^:]+:/,'');
+ if(category==='minecraft:custom')return {name:japanese[slug]||englishFallback(slug),slug:null,icon:null};
+ if(category==='minecraft:killed'||category==='minecraft:killed_by'){
+  const fromSpawn=registry.get(slug+'_spawn_egg')?.jp||'';
+  const name=mobNames[slug]||fromSpawn.replace(/のスポーンエッグ$|スポーンエッグ$/,'')||englishFallback(slug);
+  return {name,slug:null,icon:null};
+ }
+ const item=full.startsWith('minecraft:')?registry.get(slug):null;
+ return {name:item?.jp||englishFallback(slug),slug:item?.slug||null,icon:item?resolveIcon(item):null};
+}
+const TEXTURE_BASE='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/';
+function textureAsset(version,type,slug){
+ return TEXTURE_BASE+version+'/assets/minecraft/textures/'+type+'/'+encodeURIComponent(slug)+'.png';
+}
+function wikiIcon(slug){
+ const name=WIKI_TEXTURE_ALIAS[slug]||slug.split('_').map(x=>x?x[0].toUpperCase()+x.slice(1):'').join('_');
+ return 'https://minecraft.wiki/images/Invicon_'+encodeURIComponent(name).replace(/'/g,'%27')+'.png';
+}
+function resolveIcon(item){
+ const slug=item.slug,modern=item.release!=='1.21.11';
+ const old='1.21.11',newer='26.4-snapshot-6';
+ if(slug==='shield')return {src:'https://minecraft.wiki/images/Invicon_Shield.png?67b0b'};
+ if(['chest','ender_chest','trapped_chest'].includes(slug))return {src:wikiIcon(slug)};
+ if(modern&&itemTexNew.has(slug))return {src:textureAsset(newer,'item',slug)};
+ if(itemTexOld.has(slug))return {src:textureAsset(old,'item',slug)};
+ if(itemTexNew.has(slug))return {src:textureAsset(newer,'item',slug)};
+ // Direct Mojang block textures are genuine block faces (e.g. stone/stone.png).
+ // Where possible use wiki's 3-D rendered inventory icon first for blocks that
+ // have a model rather than erroneously representing stairs with a brick face.
+ if(blockTexOld.has(slug))return {src:textureAsset(old,'block',slug),fallback:wikiIcon(slug)};
+ if(blockTexNew.has(slug))return {src:textureAsset(newer,'block',slug),fallback:wikiIcon(slug)};
+ return {src:wikiIcon(slug)};
+}
+function prettyKey(k){const v=k.replace(/^[^:]+:/,'');return japanese[v]||englishFallback(v)}
 function duration(ticks){const sec=Math.floor(Math.max(0,Number(ticks)||0)/20);return fmt(Math.floor(sec/3600))+'時間'+(Math.floor(sec%3600/60))+'分'}
 function displayValue(cat,key,value){
  const clean=key.replace(/^[^:]+:/,'');
