@@ -67,3 +67,9 @@
 .dv-body .mlg-rank-shortcuts a:hover{background:#d2e8ff;border-color:#458bd6}
 .dv-body #criteria,.dv-body #mlg-compare,.dv-body .rank-item[id^="mlg-product-"]{scroll-margin-top:92px}
 @media(max-width:600px){.dv-body .mlg-rank-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.dv-body .mlg-rank-shortcuts a{padding:8px 7px;font-size:11px}.dv-body .mlg-rank-shortcuts a:first-child{grid-column:1/-1}}
+
+/* Buying checklist is now a standalone section below the complete ranking. */
+.dv-body.ranking-page .rank-choice-checklist.rank-choice-checklist-below{margin:22px 0 14px;padding:20px 22px;border:1px solid #d6e4d7;border-radius:14px;background:#f7fbf7;box-shadow:0 3px 14px rgba(22,68,38,.06)}
+.dv-body.ranking-page .rank-choice-checklist.rank-choice-checklist-below h3{margin:0 0 12px}
+.dv-body.ranking-page .rank-ad-note{margin:10px 0 22px}
+@media(max-width:600px){.dv-body.ranking-page .rank-choice-checklist.rank-choice-checklist-below{padding:16px 13px;margin:17px 0 12px}}
