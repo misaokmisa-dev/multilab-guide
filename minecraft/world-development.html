@@ -143,11 +143,26 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id),format=n=>Math.round(n).toLocaleString('ja-JP');let file=null,shareText='',lastResult=null,activeWorldName='名前のないワールド';
 const MAX_FILE=5*1024*1024;
-const levels=[[85000,'伝説級ワールド'],[68000,'大都市級ワールド'],[48000,'発展都市級ワールド'],[28000,'開拓拠点級ワールド'],[0,'開拓スタート']];
-const statNames=['建築活動','クラフト','採掘','探索','プレイ'];
-const maxValues=[35000,20000,20000,15000,10000];
-function total(o){return Object.values(o||{}).reduce((a,n)=>a+(typeof n==='number'&&Number.isFinite(n)&&n>0?n:0),0)}
-function normalize(n,target,max){return Math.round(Math.min(max,Math.log1p(Math.max(0,n))/Math.log1p(target)*max))}
+const levels=[[90000,'伝説級ワールド'],[72000,'大都市級ワールド'],[50000,'発展都市級ワールド'],[30000,'発展拠点級ワールド'],[12000,'開拓拠点級ワールド'],[0,'開拓初期']];
+const statNames=['建築規模','建材の多様さ','設備・装飾','採掘・制作','探索'];
+const maxValues=[60000,15000,10000,8000,7000];
+function total(o){return Object.values(o||{}).reduce((a,n)=>a+(typeof n==='number'&&Number.isFinite(n)&&n>0?Math.min(n,1e9):0),0)}
+function growth(value,scale,max){return Math.round(max*-Math.expm1(-Math.max(0,value)/scale))}
+// Stats record use events, not surviving buildings. Distinguish construction
+// from time, tool use, mining and crafting; require many placed blocks for high ranks.
+const terrainNames=new Set(['dirt','grass_block','coarse_dirt','rooted_dirt','sand','red_sand','gravel','netherrack','soul_sand','soul_soil','clay','mud','moss_block','snow','snow_block','ice','packed_ice','powder_snow','farmland']);
+const utilityNames=new Set(['chest','trapped_chest','ender_chest','barrel','furnace','blast_furnace','smoker','crafting_table','enchanting_table','brewing_stand','anvil','chipped_anvil','damaged_anvil','grindstone','smithing_table','cartography_table','fletching_table','stonecutter','loom','lectern','composter','hopper','dropper','dispenser','observer','piston','sticky_piston','redstone','redstone_block','redstone_lamp','redstone_torch','repeater','comparator','target','note_block','jukebox','beacon','conduit','lightning_rod','crafter','scaffolding']);
+const detailNames=new Set(['torch','soul_torch','lantern','soul_lantern','sea_lantern','glass','glass_pane','tinted_glass','glowstone','end_rod','flower_pot','decorated_pot','candle','chain','iron_bars','ladder','bookshelf','chiseled_bookshelf','painting','item_frame','glow_item_frame','armor_stand','campfire','soul_campfire','bell']);
+const structureNames=new Set(['stone','cobblestone','mossy_cobblestone','smooth_stone','bricks','stone_bricks','mossy_stone_bricks','cracked_stone_bricks','chiseled_stone_bricks','deepslate','cobbled_deepslate','polished_deepslate','sandstone','red_sandstone','smooth_sandstone','smooth_red_sandstone','quartz_block','smooth_quartz','nether_bricks','red_nether_bricks','blackstone','polished_blackstone','basalt','smooth_basalt','polished_basalt','calcite','tuff','polished_tuff','tuff_bricks','obsidian','crying_obsidian','prismarine','prismarine_bricks','dark_prismarine','purpur_block','end_stone_bricks','mud_bricks','terracotta','granite','diorite','andesite','polished_granite','polished_diorite','polished_andesite','dripstone_block','magma_block','bamboo_block']);
+function buildType(key){
+ if(!key.startsWith('minecraft:'))return null;
+ const id=key.slice(10);
+ if(terrainNames.has(id))return {weight:.08,detail:false,terrain:true};
+ if(utilityNames.has(id)||/(?:_chest|_hopper|_piston|_observer|_dispenser|_dropper|_repeater|_comparator|_redstone_lamp|_furnace|_crafter)$/.test(id))return {weight:1.7,detail:true,terrain:false};
+ if(detailNames.has(id)||/(?:_stairs|_slab|_fence|_fence_gate|_wall|_door|_trapdoor|_glass|_glass_pane|_wool|_carpet|_banner|_sign|_hanging_sign|_bed|_torch|_lantern|_candle|_button|_pressure_plate|_leaves|_rail)$/.test(id))return {weight:1.25,detail:true,terrain:false};
+ if(structureNames.has(id)||/(?:_planks|_log|_wood|_stem|_hyphae|_bricks|_tiles|_concrete|_terracotta|_sandstone|_quartz|_prismarine|_blackstone|_deepslate|_copper|_basalt|_tuff|_stone|_mud_bricks|_block)$/.test(id))return {weight:1,detail:false,terrain:false};
+ return null;
+}
 function error(s){$('status').textContent=s}
 $('wd-copy-path').addEventListener('click',async()=>{
 const path=$('wd-saves-path').textContent,btn=$('wd-copy-path');
@@ -299,17 +314,34 @@ $('player-file-list').addEventListener('change',async e=>{
   const selected=candidates[Number(e.target.value)];
   if(selected){pickedFile(selected);await run()}
 });
-function calculate(data){const stats=data.stats;if(!stats||typeof stats!=='object'||Array.isArray(stats))throw Error('Minecraftのワールドファイルを選んでください。');
-const used=stats['minecraft:used']||{},mined=stats['minecraft:mined']||{},crafted=stats['minecraft:crafted']||{},custom=stats['minecraft:custom']||{};
-const notBlocks=/(?:pickaxe|axe|shovel|hoe|sword|bow|crossbow|trident|shield|bucket|fishing_rod|shears|flint_and_steel|food|apple|bread|beef|porkchop|chicken|carrot|potato|stew|potion|ender_pearl|spawn_egg|bone_meal|map|compass|clock|firework|elytra|boat|minecart)/;
-const placed=Object.entries(used).reduce((n,[k,v])=>n+(!notBlocks.test(k)&&typeof v==='number'&&Number.isFinite(v)&&v>0?v:0),0);
-const crafts=total(crafted),minedTotal=total(mined);
-const distance=['minecraft:walk_one_cm','minecraft:sprint_one_cm','minecraft:swim_one_cm','minecraft:fly_one_cm','minecraft:aviate_one_cm','minecraft:boat_one_cm','minecraft:minecart_one_cm'].reduce((n,k)=>n+(typeof custom[k]==='number'&&custom[k]>0?custom[k]:0),0)/100000;
-const ticks=Number(custom['minecraft:play_time']??custom['minecraft:play_one_minute']??0);
-const hours=Math.max(0,ticks/72000);
-const points=[normalize(placed,250000,35000),normalize(crafts,150000,20000),normalize(minedTotal,200000,20000),normalize(distance,4000,15000),normalize(hours,1200,10000)];
-const score=points.reduce((a,b)=>a+b,0),grade=levels.find(a=>score>=a[0])[1];
-return {score,grade,points,placed,distance,hours,world:activeWorldName}}
+function calculate(data){
+ const stats=data.stats;
+ if(!stats||typeof stats!=='object'||Array.isArray(stats))throw Error('Minecraftのワールドファイル（stats内の.json）を選んでください。');
+ const used=stats['minecraft:used']||{},mined=stats['minecraft:mined']||{},crafted=stats['minecraft:crafted']||{},custom=stats['minecraft:custom']||{};
+ let placed=0,weighted=0,decor=0,diversity=0;
+ for(const [key,value] of Object.entries(used)){
+   if(typeof value!=='number'||!Number.isFinite(value)||value<=0)continue;
+   const block=buildType(key);if(!block)continue;
+   const count=block.terrain?Math.min(value,1600):Math.min(value,100000000);
+   weighted+=count*block.weight;
+   placed+=count;
+   if(!block.terrain&&value>=12)diversity++;
+   if(block.detail)decor+=count;
+ }
+ const crafts=total(crafted),minedTotal=total(mined);
+ const movement=['minecraft:walk_one_cm','minecraft:sprint_one_cm','minecraft:swim_one_cm','minecraft:fly_one_cm','minecraft:aviate_one_cm','minecraft:boat_one_cm','minecraft:minecart_one_cm'];
+ const distance=movement.reduce((n,k)=>n+(typeof custom[k]==='number'&&custom[k]>0?Math.min(custom[k],1e11):0),0)/100000;
+ const ticks=Number(custom['minecraft:play_time']??custom['minecraft:play_one_minute']??0);
+ const hours=Math.max(0,Math.min(Number.isFinite(ticks)?ticks:0,1e10)/72000);
+ const construction=growth(weighted,180000,60000);
+ const variety=Math.round(growth(diversity,70,15000)*Math.min(1,weighted/90000));
+ const details=Math.round(growth(decor,8000,10000)*Math.min(1,weighted/22000));
+ const resources=growth(crafts,130000,5000)+growth(minedTotal,250000,3000);
+ const exploration=growth(distance,8000,4000)+growth(hours,2500,3000);
+ const points=[construction,variety,details,resources,exploration];
+ const score=Math.min(100000,points.reduce((a,b)=>a+b,0)),grade=levels.find(a=>score>=a[0])[1];
+ return {score,grade,points,placed,distance,hours,world:activeWorldName};
+}
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('ワールドファイルをドロップするか、クリックして選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
 const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='診断中…';
@@ -318,7 +350,7 @@ catch(e){error('読み込めませんでした。'+(e instanceof SyntaxError?'JS
 finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を診断する'}}
 function render(r){
 $('result-name').textContent=r.world;$('score').textContent=format(r.score);$('grade').textContent=r.grade;
-$('result-note').textContent='ブロック使用 約'+format(r.placed)+'回 · 移動 '+format(r.distance)+'km · プレイ '+format(r.hours)+'時間';
+$('result-note').textContent='建築関連ブロック使用 約'+format(r.placed)+'回 · プレイ '+format(r.hours)+'時間（建築活動を重視した推定値）';
 $('meter-fill').style.width=(r.score/100000*100)+'%';
 const container=$('metrics');container.replaceChildren();
 r.points.forEach((n,i)=>{const c=document.createElement('div');c.className='wd-stat';const b=document.createElement('b');b.textContent=format(n);const t=document.createElement('span');t.textContent=statNames[i];const bar=document.createElement('div');bar.className='wd-stat-track';const fill=document.createElement('div');fill.style.width=(n/maxValues[i]*100)+'%';bar.append(fill);c.append(b,t,bar);container.append(c)});
