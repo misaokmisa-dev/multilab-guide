@@ -513,7 +513,8 @@ Object.assign(japanese,{
  'time_since_death':'最後の死亡からの時間','time_since_rest':'最後に寝てからの時間',
  'interact_with_chiseled_bookshelf':'模様入りの本棚を使った回数',
  'interact_with_crafter':'自動作業台を使った回数',
- 'interact_with_copper_golem_statue':'カッパーゴーレムの像を使った回数'
+ 'interact_with_copper_golem_statue':'カッパーゴーレムの像を使った回数',
+ 'sleep_in_straw_bed':'わらのベッドで寝た回数'
 });
 const cmKey=k=>/_one_cm$/.test(k);
 const WIKI_TEXTURE_ALIAS={
@@ -634,6 +635,7 @@ function displayValue(cat,key,value){
    const meters=Number(value)/100;
    return meters>=1000?fmt(meters/1000)+' km':fmt(meters)+' m';
  }
+ if(cat==='minecraft:custom'&&/^damage_(?:dealt|taken|absorbed|resisted|blocked_by_shield|dealt_absorbed|dealt_resisted)$/.test(clean))return fmt(value/10)+' HP';
  if(cat==='minecraft:custom')return fmt(value)+' 回';
  if(cat==='minecraft:killed')return fmt(value)+' 体';
  if(cat==='minecraft:mined'||cat==='minecraft:crafted'||cat==='minecraft:picked_up'||cat==='minecraft:dropped')return fmt(value)+' 個';
