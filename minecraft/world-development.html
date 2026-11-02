@@ -146,14 +146,14 @@
 </div>
 </section>
 <section class="wd-insights" id="world-insights" aria-labelledby="wd-insights-heading" hidden>
-<div class="wd-insights-title"><div><span class="wd-overline">WORLD DATA / PLAYER STATS</span><h2 id="wd-insights-heading">ワールドの記録</h2></div><span class="wd-insights-tag">JAVA EDITION</span></div>
+<div class="wd-insights-title"><div><span class="wd-overline">WORLD DATA / PLAYER STATS</span><h2 id="wd-insights-heading">ワールドの記録</h2><p class="wd-activity-legend">色はプレイ時間あたりの活動量に基づく独自の目安です。世界の上位何％かを示すものではありません。</p></div><span class="wd-insights-tag">JAVA EDITION</span></div>
 <div class="wd-insights-cards" id="world-stat-cards"></div>
 <div class="wd-day-help" id="wd-day-help"><span class="wd-day-help-icon" aria-hidden="true">☀</span><div class="wd-day-help-text"><b>ゲーム内の経過日数を確認</b><p>ワールドフォルダの <code>level.dat</code> を追加すると、ゲーム内の日数を表示できます。</p></div>
 <label class="wd-level-input">level.dat を選択<input id="wd-level-file" type="file" accept=".dat,application/octet-stream"></label>
 <div id="wd-level-status" class="wd-level-status" role="status" aria-live="polite"></div></div>
 <div class="wd-fullstats"><div class="wd-fullstats-head"><div><span class="wd-overline">ALL RECORDED DATA</span><h3>全統計データ <span id="wd-stat-count"></span></h3></div><span class="wd-fullstats-sub">記録された全項目を閲覧</span></div>
 <section class="wd-death-reasons" id="wd-death-reasons" aria-label="死亡原因の内訳">
-<div class="wd-death-head"><div><span class="wd-overline">DEATH ANALYSIS</span><h4>死亡原因の内訳</h4></div><strong id="wd-death-total">0 回</strong></div>
+<div class="wd-death-head"><span class="wd-death-emblem" aria-hidden="true">☠</span><div class="wd-death-header-copy"><span class="wd-overline">DEATH RECORD / DANGER</span><h4>死亡原因の内訳</h4><small>死亡記録・Mob別の内訳</small></div><strong id="wd-death-total">0 回</strong></div><div class="wd-death-danger-strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 <div id="wd-death-items" class="wd-death-items"></div>
 <p id="wd-death-note" class="wd-death-note"></p>
 </section>
@@ -693,29 +693,59 @@ function displayValue(cat,key,value){
 const sum=o=>Object.values(o||{}).reduce((a,v)=>a+(typeof v==='number'&&Number.isFinite(v)?Math.max(0,v):0),0);
 const get=(o,k)=>Math.max(0,Number(o?.['minecraft:'+k])||0);
 let currentStats=null,currentResult=null,worldDays=null,levelSelected=null,levelToken=0;
-function card(title,val,small,kind){
+const activityColors=['green','blue','purple','gold','red'];
+const activityTitles=['少なめ','控えめ','活発','かなり活発','非常に活発'];
+function densityProfile(value,hours,perHour){
+ const ratio=Math.max(0,Number(value)||0)/(Math.max(2,hours)*perHour);
+ const stage=ratio>=5?4:ratio>=2.4?3:ratio>=1.2?2:ratio>=.55?1:0;
+ return {stage,label:activityTitles[stage],note:'同じプレイ時間あたりの活動量'};
+}
+function timeProfile(hours){
+ const stage=hours>=2000?4:hours>=700?3:hours>=240?2:hours>=55?1:0;
+ return {stage,label:['初心者','継続中','長期プレイ','大ベテラン','超長期プレイ'][stage],note:'累計プレイ時間'};
+}
+function dayProfile(days,hours){
+ const ratio=days/Math.max(2,hours);const stage=ratio>=7?4:ratio>=5?3:ratio>=3.5?2:ratio>=2.5?1:0;
+ return {stage,label:['ゆっくり','標準的','日数多め','日数が多い','日数が非常に多い'][stage],note:'プレイ時間あたりの日数'};
+}
+function dangerProfile(deaths,hours){
+ const ratio=deaths/Math.max(2,hours),stage=ratio>=.5?4:ratio>=.2?3:ratio>=.08?2:ratio>=.025?1:0;
+ return {stage,label:['死亡頻度：低','死亡頻度：やや低','死亡頻度：中','死亡頻度：高','死亡頻度：非常に高'][stage],note:'死亡回数は少ないほど安全'};
+}
+function setActivity(card,profile){
+ const cls=activityColors[profile.stage];card.classList.add('wd-activity-'+cls);
+ const display=document.createElement('div');display.className='wd-activity-rating';
+ const name=document.createElement('b');name.className='wd-activity-chip';name.textContent='◆ '+profile.label;
+ const track=document.createElement('div');track.className='wd-activity-ticks';track.setAttribute('aria-label',profile.label+'：5段階中'+(profile.stage+1));
+ for(let i=0;i<5;i++){const seg=document.createElement('i');if(i<=profile.stage)seg.classList.add('active');track.append(seg)}
+ display.append(name,track);card.append(display);
+}
+function card(title,val,small,kind,profile){
  const root=document.createElement('div');root.className='wd-insight-card'+(kind?' wd-day-card':'');
  const top=document.createElement('span');top.className='wd-insight-label';top.textContent=title;
  const value=document.createElement('strong');value.className='wd-insight-value';value.textContent=val;
  const info=document.createElement('span');info.className='wd-insight-note';info.textContent=small||'';
  if(kind){value.id='wd-day-value';info.id='wd-day-note'}
- root.append(top,value,info);return root;
+ root.append(top,value,info);if(profile)setActivity(root,profile);
+ return root;
 }
 function makeCards(r){
- const c=currentStats?.['minecraft:custom']||{},time=Number(c['minecraft:play_time']??c['minecraft:play_one_minute']??0);
+ const c=currentStats?.['minecraft:custom']||{},time=Number(c['minecraft:play_time']??c['minecraft:play_one_minute']??0),hours=Math.max(0,r.hours);
+ const sumValid=o=>sum(Object.fromEntries(Object.entries(o||{}).filter(([k])=>!invisibleStatsIds.has(k))));
+ const days=Math.max(0,Math.floor(time/24000));
  const items=[
-  ['プレイ時間',duration(time),'統計に記録された累計時間'],
-  ['ゲーム内経過日数','—','level.dat から取得',true],
-  ['建築関連ブロック',fmt(r.placed)+' 回','建築向けブロックの使用記録'],
-  ['アイテム・ブロック使用',fmt(sum(currentStats?.['minecraft:used']))+' 回','道具・食料などの使用も含む'],
-  ['採掘したブロック',fmt(sum(currentStats?.['minecraft:mined']))+' 個','採掘統計の合計'],
-  ['クラフトした数',fmt(sum(Object.fromEntries(Object.entries(currentStats?.['minecraft:crafted']||{}).filter(([key])=>!invisibleStatsIds.has(key)))))+' 個','クラフト統計の合計（無効な空気IDは除外）'],
-  ['移動距離',fmt(r.distance)+' km','歩行・ダッシュなどの記録'],
-  ['ジャンプ',fmt(get(c,'jump'))+' 回','ジャンプした回数'],
-  ['死亡回数',fmt(get(c,'deaths'))+' 回','プレイヤーの死亡回数'],
-  ['Mob撃破',fmt(get(c,'mob_kills'))+' 体','プレイヤーが倒したMob'],
-  ['村人との取引',fmt(get(c,'traded_with_villager'))+' 回','取引した回数'],
-  ['睡眠回数',fmt(get(c,'sleep_in_bed'))+' 回','ベッドで寝た回数']
+  ['プレイ時間',duration(time),'統計に記録された累計時間',false,timeProfile(hours)],
+  ['ゲーム内経過日数','—','level.dat から取得',true,dayProfile(days,hours)],
+  ['建築関連ブロック',fmt(r.placed)+' 回','建築向けブロックの使用記録',false,densityProfile(r.placed,hours,140)],
+  ['アイテム・ブロック使用',fmt(sumValid(currentStats?.['minecraft:used']))+' 回','道具・食料などの使用も含む',false,densityProfile(sumValid(currentStats?.['minecraft:used']),hours,260)],
+  ['採掘したブロック',fmt(sumValid(currentStats?.['minecraft:mined']))+' 個','採掘統計の合計',false,densityProfile(sumValid(currentStats?.['minecraft:mined']),hours,260)],
+  ['クラフトした数',fmt(sumValid(currentStats?.['minecraft:crafted']))+' 個','クラフト統計の合計',false,densityProfile(sumValid(currentStats?.['minecraft:crafted']),hours,100)],
+  ['移動距離',fmt(r.distance)+' km','歩行・ダッシュなどの記録',false,densityProfile(r.distance,hours,2)],
+  ['ジャンプ',fmt(get(c,'jump'))+' 回','ジャンプした回数',false,densityProfile(get(c,'jump'),hours,65)],
+  ['死亡回数',fmt(get(c,'deaths'))+' 回','プレイヤーの死亡回数',false,dangerProfile(get(c,'deaths'),hours)],
+  ['Mob撃破',fmt(get(c,'mob_kills'))+' 体','プレイヤーが倒したMob',false,densityProfile(get(c,'mob_kills'),hours,4)],
+  ['村人との取引',fmt(get(c,'traded_with_villager'))+' 回','取引した回数',false,densityProfile(get(c,'traded_with_villager'),hours,.7)],
+  ['睡眠回数',fmt(get(c,'sleep_in_bed'))+' 回','ベッドで寝た回数',false,densityProfile(get(c,'sleep_in_bed'),hours,.25)]
  ];
  const el=$('world-stat-cards');el.replaceChildren(...items.map(i=>card(...i)));updateDay();
 }
@@ -724,6 +754,8 @@ function updateDay(){
  const el=$('wd-day-value'),note=$('wd-day-note');if(!el||!note)return;
  const c=currentStats['minecraft:custom']||{},ticks=Number(c['minecraft:play_time']??c['minecraft:play_one_minute']??NaN);
  if(worldDays!==null){
+  const card=$('wd-day-value').closest('.wd-insight-card');
+  if(card){for(const color of activityColors)card.classList.remove('wd-activity-'+color);card.querySelector('.wd-activity-rating')?.remove();setActivity(card,dayProfile(worldDays,Math.max(0,currentResult?.hours||0)))}
   el.textContent=fmt(worldDays)+' 日';note.textContent='level.dat の DayTime から取得';
   $('wd-day-help').classList.add('wd-day-verified');
   $('wd-day-help').querySelector('.wd-day-help-text b').textContent='ゲーム内経過日数を取得済み';
