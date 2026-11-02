@@ -261,3 +261,9 @@ body.wd-body a{text-underline-offset:4px}
 .wd-stat-description small{margin-top:3px;font-size:10px;line-height:1.5;overflow-wrap:anywhere;color:#83958a}
 .wd-stat-row .wd-stat-number{flex:none;white-space:nowrap;font-size:13px}
 @media(max-width:650px){.wd-stats-grid .wd-stat{min-height:116px;padding:13px 11px}.wd-stats-grid .wd-stat-label{font-size:11px}.wd-stats-grid .wd-stat-amount b{font-size:clamp(17px,4vw,22px)}.wd-stat-amount>span{font-size:10px}.wd-stat-row{gap:8px}.wd-stat-entry{gap:8px}.wd-stat-icon{width:39px;height:39px;border-radius:7px}.wd-stat-icon img{width:33px;height:33px}.wd-stat-description .wd-stat-item-link,.wd-stat-description b{font-size:12px}.wd-stat-description small{font-size:9px}.wd-stat-row .wd-stat-number{font-size:11px}}
+
+.wd-breakdown-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:22px 0 11px;padding:0 3px}
+.wd-breakdown-head h3{font-size:clamp(18px,2.5vw,22px);font-weight:1000;letter-spacing:-.04em;color:#1b482b;margin:0}
+.wd-breakdown-head>span{font-size:11px;font-weight:800;color:#647c68}
+.wd-breakdown-head>span b{display:inline-block;color:#18843c;background:#e4f6e5;padding:5px 9px;border:1px solid #c4e8cc;border-radius:6px;font-weight:950;margin-left:6px}
+@media(max-width:560px){.wd-breakdown-head{margin-top:19px}.wd-breakdown-head h3{font-size:19px}}
