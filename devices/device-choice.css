@@ -55,3 +55,17 @@
 @media(max-width:700px){.dv-body .mlg-diagnosis-callout{grid-template-columns:1fr;gap:15px;padding:20px 18px;margin:14px auto}.dv-body .mlg-diag-actions{min-width:0}.dv-body .mlg-purpose{padding:20px 16px}.dv-body .mlg-compare{padding:17px 11px}.dv-body .mlg-purpose-result{padding:15px}.dv-body .mlg-purpose-links{width:100%}.dv-body .mlg-purpose-links a{flex:1 1 120px}.dv-body .mlg-rank-pick{padding:15px}}
 @media(max-width:400px){.dv-body .mlg-purpose-options{gap:7px}.dv-body .mlg-purpose-button{padding:10px;min-height:83px}.dv-body .mlg-purpose-button strong{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.dv-body .mlg-diag-primary,.dv-body .mlg-purpose-button{transition:none}}
+
+/* Price visibility for gaming PC: deliberately separate domestic comparable from the linked product. */
+.dv-body .rank-price-disclosure{padding:12px 16px;margin:0 0 18px;border-radius:10px;border:1px solid #c9dbed;background:#f3f8ff;color:#234665;font-size:12px;line-height:1.75}
+.dv-body .rank-price-disclosure strong{font-weight:950;color:#1354a6}
+.dv-body .rank-comparison-price{margin:12px 0;background:#fffaf0;border:1px solid #ebd5ad;padding:12px 14px;border-radius:9px}
+.dv-body .rank-comparison-price .rank-price-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 13px}
+.dv-body .rank-comparison-price .rank-price-number{font-size:clamp(22px,3vw,29px);font-weight:950;color:#ae4b08}
+.dv-body .rank-comparison-price .rank-price-source{display:inline-flex;border:1px solid #e8c58e;background:#fff0d6;color:#8c490d;font-weight:900;border-radius:5px;padding:3px 7px;font-size:11px}
+.dv-body .rank-price-comparison-note{margin:9px 0 8px!important;display:grid;gap:4px;font-size:11px!important;line-height:1.5;color:#634f3d}
+.dv-body .rank-price-comparison-note strong{font-size:12px;color:#47351e}
+.dv-body .rank-price-comparison-note span{color:#675641}
+.dv-body .rank-comparison-price .rank-price-small{display:flex;flex-wrap:wrap;align-items:center;gap:3px;font-size:11px}
+.dv-body .rank-comparison-price .rank-price-small a{font-size:11px;color:#865016;font-weight:850;text-decoration:underline;text-underline-offset:2px}
+.dv-body .rank-comparison-price .rank-price-different-model{display:block;font-size:10px;line-height:1.6;color:#80532b;margin-top:7px;font-weight:750}
