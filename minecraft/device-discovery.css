@@ -96,3 +96,119 @@
  .mlg-device-scout .mlg-device-scout__inner{position:relative;width:100%;max-width:none;padding:23px 16px}
  .mlg-device-scout .mlg-device-scout__rays{opacity:.25}
 }
+
+
+/* 2026-11-02: accurate design match + ambient CSS collision fix
+ * The Minecraft global ambient theme forces dark colors on descendants of
+ * .md-section, even on dark hero banners. Scoped higher-specificity !important
+ * rules below restore the same contrast and gold typography as the device
+ * rankings "失敗しない○○の選び方" CTA without affecting normal guide cards.
+ */
+body.mc-ambient .mlg-device-scout .mlg-device-scout__hero {
+  background:linear-gradient(120deg,#061626 0%,#092e33 54%,#08411e 100%);
+  border-color:#f4dc76;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__hero::before {
+  z-index:0;
+  background:linear-gradient(90deg,#061827f5 0%,#07252fe0 49%,#082b3e88 70%,#09342d7a 100%);
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__rays {
+  z-index:1;
+  opacity:.52;
+  right:-32%;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__image {
+  z-index:2;
+  right:-2%;
+  top:0;
+  width:49%;
+  height:100%;
+  object-fit:contain;
+  object-position:right center;
+  opacity:.97!important;
+  -webkit-mask-image:none;
+  mask-image:none;
+  filter:drop-shadow(0 10px 17px rgba(0,0,0,.56));
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__inner {z-index:4}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__hero h2 {
+  color:#fff2d1!important;
+  opacity:1!important;
+  text-shadow:0 3px 0 #74511c66,0 0 9px #f2c75a70,0 3px 9px #001b22!important;
+  font-weight:950!important;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__hero h2 em {
+  color:#fff0a0!important;
+  -webkit-text-fill-color:transparent;
+  background:linear-gradient(180deg,#fffed6 0%,#fff28e 43%,#f8be35 100%);
+  background-clip:text;
+  -webkit-background-clip:text;
+  filter:drop-shadow(0 2px 4px #f3b94255);
+  opacity:1!important;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__hero .mlg-device-scout__description {
+  color:#f5fff9!important;
+  opacity:1!important;
+  font-weight:800!important;
+  text-shadow:0 2px 4px #00151a!important;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__hero .mlg-device-scout__credit {
+  color:#edf9f2!important;
+  opacity:1!important;
+  font-weight:700;
+  text-shadow:0 1px 3px #001a1c!important;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__hero .mlg-device-scout__eyebrow {
+  color:#ffedae!important;
+  opacity:1!important;
+  background:rgba(36,49,45,.92);
+  border-color:rgba(253,231,141,.75);
+  text-shadow:0 1px 3px #001a1a!important;
+}
+/* Avoid the global white-card text rule recoloring the two neon CTAs. */
+body.mc-ambient .mlg-device-scout .mlg-device-scout__hero a.mlg-device-scout__primary {
+  color:#053a1b!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__hero a.mlg-device-scout__secondary {
+  color:#503600!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__issues a strong {
+  color:#1a3a27!important;
+  text-shadow:none!important;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__issues a small {
+  color:#365241!important;
+  text-shadow:none!important;
+}
+body.mc-ambient .mlg-device-scout .mlg-device-scout__issues a b {
+  color:#067d39!important;
+  text-shadow:none!important;
+}
+@media(max-width:850px) {
+  body.mc-ambient .mlg-device-scout .mlg-device-scout__image {
+    width:62%;
+    right:-14%;
+    opacity:.84!important;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 28%,#000);
+    mask-image:linear-gradient(90deg,transparent,#000 28%,#000);
+  }
+  body.mc-ambient .mlg-device-scout .mlg-device-scout__hero::before {
+    background:linear-gradient(90deg,#061827f8 0%,#07252fee 54%,#082b3e90 77%,#09342d70 100%);
+  }
+}
+@media(max-width:600px) {
+  body.mc-ambient .mlg-device-scout .mlg-device-scout__image {
+    width:79%;
+    right:-25%;
+    opacity:.78!important;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 34%,#000);
+    mask-image:linear-gradient(90deg,transparent,#000 34%,#000);
+  }
+  body.mc-ambient .mlg-device-scout .mlg-device-scout__hero::before {
+    background:linear-gradient(90deg,#061827f9 0%,#07252ff0 58%,#082b3eae 82%,#09342d84 100%);
+  }
+}
