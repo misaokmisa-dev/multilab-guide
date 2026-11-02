@@ -306,38 +306,98 @@ async function scanWorldHandle(root){
   }
   return found;
 }
-// Windows/Edge/Chrome may otherwise reopen the last directory chosen for an
-// unrelated file picker (such as the removed region .mca analyzer).
-// A dedicated picker id starts in Documents the first time, then remembers
-// the actual stats folder on subsequent uses. Browser permissions prevent
-// websites from forcing %appdata%\\.minecraft\\saves on local machines.
+// Remember the selected Minecraft stats folder across browser restarts.
+// The picker ID is deliberately stable: Chromium also remembers its last
+// directory independently of IndexedDB. Never force startIn='documents'
+// on every visit, as that resets the user's previously selected folder.
+const statsPickerId='mlg-minecraft-stats-json-2026';
+const statsPickerDB='mlg-world-score-local';
 let statsPickerDirectory=null;
+function openStatsPickerDB(){
+ return new Promise((resolve,reject)=>{
+  const req=indexedDB.open(statsPickerDB,1);
+  req.onupgradeneeded=()=>{
+   if(!req.result.objectStoreNames.contains('preferences'))req.result.createObjectStore('preferences');
+  };
+  req.onsuccess=()=>resolve(req.result);
+  req.onerror=()=>reject(req.error);
+ });
+}
+async function restoreStatsPickerLocation(){
+ if(!('indexedDB' in window))return;
+ let db;
+ try{
+  db=await openStatsPickerDB();
+  const handle=await new Promise((resolve,reject)=>{
+   const req=db.transaction('preferences','readonly').objectStore('preferences').get('last-stats-file');
+   req.onsuccess=()=>resolve(req.result);
+   req.onerror=()=>reject(req.error);
+  });
+  if(!statsPickerDirectory && handle?.kind==='file')statsPickerDirectory=handle;
+ }catch(_){/* Private browsing, storage disabled or an outdated handle. */}
+ finally{if(db)db.close()}
+}
+async function rememberStatsPickerLocation(handle){
+ if(!handle||handle.kind!=='file')return;
+ statsPickerDirectory=handle;
+ if(!('indexedDB' in window))return;
+ let db;
+ try{
+  db=await openStatsPickerDB();
+  await new Promise((resolve,reject)=>{
+   const tx=db.transaction('preferences','readwrite');
+   tx.objectStore('preferences').put(handle,'last-stats-file');
+   tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);
+  });
+ }catch(_){/* The stable native picker ID still remembers the folder. */}
+ finally{if(db)db.close()}
+}
+// Load before the first click without delaying the user-gesture file dialog.
+void restoreStatsPickerLocation();
 async function openStatsJsonPicker(){
  error('');
  if(typeof window.showOpenFilePicker!=='function'){
-  // Older browsers cannot override the OS file dialog's last-open directory.
+  // Browsers without this API do not allow websites to choose the OS dialog's folder.
   $('stats').value='';$('stats').click();return;
  }
+ const options={
+  id:statsPickerId,
+  types:[{description:'Minecraftワールド統計 (.json)',accept:{'application/json':['.json']}}],
+  excludeAcceptAllOption:true,
+  multiple:false
+ };
+ // A FileSystemFileHandle is a valid startIn and points to its parent folder.
+ // When none is stored, omit startIn to let the native picker ID restore it.
+ if(statsPickerDirectory)options.startIn=statsPickerDirectory;
+ let handles;
  try{
-  const handles=await window.showOpenFilePicker({
-   id:'mlg-minecraft-stats-json-2026',
-   startIn:statsPickerDirectory||'documents',
-   types:[{description:'Minecraftワールド統計 (.json)',accept:{'application/json':['.json']}}],
-   excludeAcceptAllOption:true,
-   multiple:false
-  });
-  if(!handles.length)return;
-  const incoming=await handles[0].getFile();
-  await acceptStatsFile(incoming);
+  handles=await window.showOpenFilePicker(options);
  }catch(e){
   if(e?.name==='AbortError')return;
-  // Some Chromium builds do not support the startIn hint; still provide the
-  // normal JSON-only picker rather than a folder-only region selector.
-  if(e?.name==='TypeError'||e?.name==='NotSupportedError'){
-   $('stats').value='';$('stats').click();return;
+  if(options.startIn && (e?.name==='TypeError'||e?.name==='NotSupportedError')){
+   // Stale/unavailable handle: fall back to Chromium's remembered picker ID.
+   delete options.startIn;
+   try{handles=await window.showOpenFilePicker(options)}
+   catch(err){if(err?.name==='AbortError')return;handles=null}
   }
-  error('JSONファイルの選択に失敗しました。もう一度お試しください。');
+  if(!handles){
+   if(e?.name==='TypeError'||e?.name==='NotSupportedError'){
+    $('stats').value='';$('stats').click();return;
+   }
+   error('JSONファイルの選択に失敗しました。もう一度お試しください。');return;
+  }
  }
+ if(!handles?.length)return;
+ try{
+  const chosen=handles[0];
+  const incoming=await chosen.getFile();
+  if(!/\.json$/i.test(incoming.name)||incoming.size>MAX_FILE){
+   await acceptStatsFile(incoming);return;
+  }
+  // Remember file handle only. Never save/upload the JSON contents or local path.
+  void rememberStatsPickerLocation(chosen);
+  await acceptStatsFile(incoming);
+ }catch(_){error('選択したJSONファイルを読み込めませんでした。もう一度選択してください。')}
 }
 $('world-folder-fallback').addEventListener('change',async e=>{
   const files=Array.from(e.target.files||[]);
