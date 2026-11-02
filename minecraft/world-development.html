@@ -15,6 +15,10 @@
 <script defer src="/site-language.js?v=20261028full"></script>
 
 <script defer src="/minecraft/world-region-analyzer.js?v=20261102a"></script>
+<script defer src="/minecraft/strategy/items/items-data.js?v=20261029a"></script>
+<script defer src="/minecraft/strategy/items/items-2026-data.js?v=20261029plus1"></script>
+<script defer src="/minecraft/strategy/items/texture-index.js?v=20261029b"></script>
+<script defer src="/minecraft/strategy/items/texture-index-2026.js?v=20261029plus1"></script>
 </head><body class="wd-body">
 <header class="mlg-site-header" data-section="minecraft">
 <div class="mlg-site-topline"><a class="mlg-site-brand" href="/" aria-label="MULTI LAB GUIDE 総合トップ">
@@ -374,7 +378,21 @@ $('result-name').textContent=r.world;$('score').textContent=format(r.score);$('g
 $('result-note').textContent='建築関連ブロック使用 約'+format(r.placed)+'回 · プレイ '+format(r.hours)+'時間（建築活動を重視した推定値）';
 $('meter-fill').style.width=(r.score/100000*100)+'%';
 const container=$('metrics');container.replaceChildren();
-r.points.forEach((n,i)=>{const c=document.createElement('div');c.className='wd-stat';const b=document.createElement('b');b.textContent=format(n)+' pt';const t=document.createElement('span');t.textContent=statNames[i];const bar=document.createElement('div');bar.className='wd-stat-track';const fill=document.createElement('div');fill.style.width=(n/maxValues[i]*100)+'%';bar.append(fill);c.append(b,t,bar);container.append(c)});
+r.points.forEach((n,i)=>{
+  const full=maxValues[i],pct=full?Math.round(n/full*100):0,c=document.createElement('div');
+  c.className='wd-stat';c.setAttribute('aria-label',statNames[i]+': '+format(n)+' pt / '+format(full)+' pt 満点');
+  const header=document.createElement('div');header.className='wd-stat-header';
+  const title=document.createElement('span');title.className='wd-stat-label';title.textContent=statNames[i];
+  const percent=document.createElement('span');percent.className='wd-stat-pct';percent.textContent=pct+'%';
+  header.append(title,percent);
+  const amount=document.createElement('div');amount.className='wd-stat-amount';
+  const earned=document.createElement('b');earned.textContent=format(n)+' pt';
+  const total=document.createElement('span');total.textContent='/ '+format(full)+' pt 満点';
+  amount.append(earned,total);
+  const bar=document.createElement('div');bar.className='wd-stat-track';bar.setAttribute('aria-hidden','true');
+  const fill=document.createElement('div');fill.style.width=Math.min(100,n/full*100)+'%';bar.append(fill);
+  c.append(header,amount,bar);container.append(c);
+});
 shareText='🌍 マイクラ ワールド発展度\n「'+r.world+'」\n🏆 '+format(r.score)+' / 100,000 pt\n称号：'+r.grade+'\n\nあなたのワールドは何点？\n#マイクラ #ワールド発展度\nhttps://mlabg.com/minecraft/world-development.html';
 $('result').hidden=false;$('result').scrollIntoView({behavior:'smooth',block:'start'});
 }
