@@ -476,7 +476,7 @@ const mobNames={
 const registry=new Map(),itemTexOld=new Set(),blockTexOld=new Set(),itemTexNew=new Set(),blockTexNew=new Set();
 let registryReady=false;
 function setupRegistry(){
- if(registryReady)return;
+ if(registryReady||!Array.isArray(window.MLG_ITEMS?.items))return;
  registryReady=true;
  for(const row of [...(window.MLG_ITEMS?.items||[]),...(window.MLG_ITEM_ADDITIONS?.items||[])]){
   const slug=row?.[1],jp=row?.[2];
@@ -518,8 +518,8 @@ function resolveIcon(item){
  // Direct Mojang block textures are genuine block faces (e.g. stone/stone.png).
  // Where possible use wiki's 3-D rendered inventory icon first for blocks that
  // have a model rather than erroneously representing stairs with a brick face.
- if(blockTexOld.has(slug))return {src:textureAsset(old,'block',slug),fallback:wikiIcon(slug)};
- if(blockTexNew.has(slug))return {src:textureAsset(newer,'block',slug),fallback:wikiIcon(slug)};
+ if(blockTexOld.has(slug))return {src:wikiIcon(slug),fallback:textureAsset(old,'block',slug)};
+ if(blockTexNew.has(slug))return {src:wikiIcon(slug),fallback:textureAsset(newer,'block',slug)};
  return {src:wikiIcon(slug)};
 }
 function prettyKey(k){const v=k.replace(/^[^:]+:/,'');return japanese[v]||englishFallback(v)}
@@ -609,7 +609,7 @@ function renderStatsRow(item){
   const icon=document.createElement('span');icon.className='wd-stat-icon';
   const img=document.createElement('img');img.src=item.icon.src;
   img.width=37;img.height=37;img.alt=item.name+'のMinecraftゲーム画像';
-  img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';
+  img.loading='lazy';img.decoding='async';
   const secondary=item.icon.fallback;
   img.addEventListener('error',()=>{
    if(secondary&&img.src!==secondary){img.src=secondary;return}
@@ -638,7 +638,7 @@ function displayGroups(query){
   if(!entries.length)continue;
   visible+=entries.length;
   const details=document.createElement('details');details.className='wd-stat-group';
-  const startOpen=!!needle||group.name==='minecraft:custom';
+  const startOpen=!!needle||group.name==='minecraft:custom'||group.name==='minecraft:mined';
   details.open=startOpen;
   const summary=document.createElement('summary');summary.className='wd-stat-group-head';
   const title=document.createElement('strong');title.textContent=group.title;
