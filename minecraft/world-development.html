@@ -110,19 +110,23 @@
 <div id="status" class="wd-error" role="status" aria-live="polite"></div>
 </div>
 </section>
-<aside class="wd-guide" aria-label="診断ガイド">
-<div class="wd-panel wd-guide-box">
-<h2 class="wd-guide-title">診断までの3ステップ</h2>
-<div class="wd-guide-step"><div class="wd-guide-ico">1</div><div><b>ワールドファイルを見つける</b><span>下の「探し方」から場所を確認</span></div></div>
-<div class="wd-guide-step"><div class="wd-guide-ico">2</div><div><b>ドラッグしてドロップ</b><span>またはクリックしてファイルを選択</span></div></div>
-<div class="wd-guide-step"><div class="wd-guide-ico">3</div><div><b>スコアをXでシェア</b><span>読み込んだら自動で診断</span></div></div>
-<p class="wd-guide-aside-note">ワールドフォルダを直接選んで自動検索する方法も使えます。</p>
-</div>
+<aside class="wd-leaderboard" aria-label="全世界ランキング">
+<section class="wd-leaderboard-panel">
+<div class="wd-leaderboard-sparks" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span></div>
+<div class="wd-leaderboard-kicker">GLOBAL WORLD RANKINGS <span class="wd-leaderboard-lock" aria-hidden="true">♛</span></div>
+<h2>全世界<br><em>ランキング</em></h2>
+<div class="wd-leaderboard-podium" aria-hidden="true"><span class="wd-podium-rank rank-two">Ⅱ</span><span class="wd-podium-rank rank-one">Ⅰ</span><span class="wd-podium-rank rank-three">Ⅲ</span></div>
+<div class="wd-leaderboard-status"><span class="wd-status-led"></span>COMING SOON / 後日公開</div>
+<p>世界中のプレイヤーのワールドスコアを集計中。データが十分に集まり次第、総合ランキングを公開します。</p>
+<div class="wd-leaderboard-rule"></div>
+<div class="wd-leaderboard-micro">あなたのワールドも、ランキング候補に。</div>
+<span class="wd-leaderboard-caption">診断後に結果の集計参加を選択できます</span>
+</section>
 </aside>
 </div>
 <section class="wd-result" id="result" aria-live="polite" hidden>
 <div class="wd-result-head"><b>診断結果が出ました！</b><small>WORLD DEVELOPMENT RESULT</small></div>
-<div class="wd-scorecard" id="score-card">
+<div class="wd-scorecard wd-rarity-green" id="score-card">
 <div class="wd-scorecard-top"><span>★ WORLD SCORE / MULTI LAB GUIDE</span><span>RESULT</span></div>
 <div class="wd-scorecard-world" id="result-name">YOUR WORLD</div>
 <div class="wd-score-panel"><div><div class="wd-score-value"><span id="score">0</span><small>pt</small></div><div class="wd-score-max">/ 100,000 pt</div></div><span class="wd-result-rank" id="grade"></span></div>
@@ -135,6 +139,14 @@
 <button class="wd-primary" type="button" id="share">𝕏 Xでスコアをシェア <span class="wd-arrow" aria-hidden="true">↗</span></button>
 <button class="wd-outline" type="button" id="save-card">画像を保存 ↓</button>
 <button class="wd-outline" type="button" id="copy">テキストをコピー</button>
+</div>
+<div class="wd-ranking-entry" id="wd-ranking-entry">
+<div class="wd-ranking-entry-text"><span class="wd-ranking-entry-tag">GLOBAL RANKING / PRE-ENTRY</span>
+<h3>あなたの記録を、世界ランキングへ。</h3>
+<p>ワールド名やファイルは送信しません。点数・5項目のpt・プレイ時間などの数値だけを集計します。ランキングは準備が整い次第公開します。</p>
+</div>
+<button type="button" id="wd-submit-score" class="wd-ranking-submit">ランキング集計に参加する <span aria-hidden="true">↗</span></button>
+<div id="wd-submit-status" class="wd-submit-status" role="status" aria-live="polite"></div>
 </div></section>
 <section class="wd-insights" id="world-insights" aria-labelledby="wd-insights-heading" hidden>
 <div class="wd-insights-title"><div><span class="wd-overline">WORLD DATA / PLAYER STATS</span><h2 id="wd-insights-heading">ワールドの記録</h2></div><span class="wd-insights-tag">JAVA EDITION</span></div>
