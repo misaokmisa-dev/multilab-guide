@@ -60,7 +60,7 @@
     const old=document.querySelector('section[aria-label="ゲーミングPCスペック診断"]');
     if(old)old.remove(); // Retains old markup as no-JS fallback.
     hero.after(diagnosisBanner(true));
-    categories.before(makePurpose());
+    categories.after(makePurpose());
   }
   function specs(card){
     const values={};
