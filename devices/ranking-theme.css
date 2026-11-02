@@ -251,3 +251,28 @@
   .ranking-page .rank-choice-cta-arrow{animation:none!important}
   .ranking-page .rank-choice-cta{transition:none}
 }
+
+
+/* Product-review stars: sourced dated snapshots, never fabricated. */
+.ranking-page .rank-amazon-review{
+ display:flex;align-items:center;flex-wrap:wrap;column-gap:7px;row-gap:4px;
+ min-height:34px;padding:6px 0 7px;margin:5px 0 9px;
+ border-bottom:1px solid #e7edf5;color:#344963;font-size:12px;line-height:1.45;
+}
+.ranking-page .rank-review-label{font-size:10px;font-weight:800;color:#4a5f7c;white-space:nowrap}
+.ranking-page .rank-review-star-wrap{
+ position:relative;display:inline-block;vertical-align:middle;white-space:nowrap;
+ font-size:clamp(17px,1.7vw,22px);line-height:1;letter-spacing:1px;font-weight:900;
+ font-family:Arial,"Noto Sans JP",sans-serif;
+}
+.ranking-page .rank-review-star-base{color:#c7ced7}
+.ranking-page .rank-review-star-fill{
+ position:absolute;left:0;top:0;width:var(--star-fill,0%);height:100%;
+ overflow:hidden;white-space:nowrap;color:#f4ac13;
+}
+.ranking-page .rank-review-score{color:#bc5c00;font-weight:950;font-size:15px;font-variant-numeric:tabular-nums}
+.ranking-page .rank-review-count{color:#3f628b;font-size:11px;font-weight:750;text-decoration:underline;text-underline-offset:2px}
+.ranking-page .rank-review-unavailable{color:#68788c;font-size:11px}
+.ranking-page .rank-review-snapshot{font-size:10px;color:#617087}
+.ranking-page .rank-review-info{font-size:11px;line-height:1.6;color:#64758a;margin:8px 0 17px}
+@media(max-width:600px){.ranking-page .rank-amazon-review{column-gap:5px}.ranking-page .rank-review-label{font-size:10px}}
