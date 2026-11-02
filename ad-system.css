@@ -35,7 +35,12 @@
 .as-rail .as-ad-content{width:160px;max-width:160px;line-height:0}
 .as-rail.as-empty{display:none!important}
 .as-close{position:absolute;top:0;right:0;z-index:1;border:1px solid #ddd;border-radius:4px;background:#fff;color:#444;cursor:pointer}
-@media(min-width:1180px){body:has(.as-rail-right:not(.as-empty)) main{box-sizing:border-box;margin-right:192px!important;width:auto!important;max-width:none!important}}
+/* Preserve every page template's original centered content width.
+   Older rail rule forced main width:auto/max-width:none and a 192px margin,
+   breaking new farm/tool/encyclopedia pages as soon as a right ad was added. */
+@media (min-width:1180px) and (max-width:1599px) {
+ body:has(main:is(.tool-page,.fs-shell,.ency-shell,.ml-i-shell,.wd-wrap)) > .as-rail.as-rail-right {display:none!important}
+}
 @media(max-width:1179px){.as-rail{display:none!important}}
 @media(max-width:759px){.as-slot{margin:12px auto}.as-mosaic{margin:14px auto 18px}.as-top .as-ad-content{max-width:320px}.as-bottom{display:none!important}}
 
