@@ -11,9 +11,9 @@
 <meta property="og:image" content="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/cherrygrove-header.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/global-site-header.css?v=20261027a">
-<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102full2">
+<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102findhelp1">
 <script defer src="/site-language.js?v=20261028full"></script>
-<script defer src="/minecraft/world-development-ui.js?v=20261102full2"></script>
+<script defer src="/minecraft/world-development-ui.js?v=20261102findhelp1"></script>
 <script defer src="/minecraft/world-region-analyzer.js?v=20261102a"></script>
 </head><body class="wd-body">
 <header class="mlg-site-header" data-section="minecraft">
@@ -66,8 +66,20 @@
 <div class="wd-field"><span class="wd-field-head"><span class="wd-field-label">ワールドの統計データ</span><span class="wd-opt">必須 · .json</span></span>
 <label class="wd-drop" id="stats-drop" for="stats">
 <input class="wd-file-real" id="stats" type="file" accept=".json,application/json" aria-label="Minecraft統計JSONファイルを選択">
-<span class="wd-drop-symbol" aria-hidden="true">↑</span><span class="wd-drop-body"><strong class="wd-drop-title" id="stats-filename">統計ファイルを選択</strong><span class="wd-drop-sub" id="stats-meta">クリック または ドラッグ＆ドロップ</span><span class="wd-drop-tag">stats / UUID.json</span></span>
-</label></div>
+<span class="wd-drop-symbol" aria-hidden="true">↑</span><span class="wd-drop-body"><strong class="wd-drop-title" id="stats-filename">統計ファイルを選択</strong><span class="wd-drop-sub" id="stats-meta">クリック または ドラッグ＆ドロップ</span><span class="wd-drop-tag">UUID.json ファイル</span></span>
+</label>
+<div class="wd-find-guide" aria-labelledby="wd-find-title">
+<div class="wd-find-header"><span class="wd-find-question" aria-hidden="true">?</span><strong id="wd-find-title">統計ファイルはどこにある？</strong><span class="wd-find-platform">Windows / Java版</span></div>
+<ol class="wd-find-steps">
+<li><span class="wd-find-num">1</span><div><b><kbd>Win</kbd> + <kbd>R</kbd> を押す</b><span>下のパスを貼り付けて Enter</span></div></li>
+</ol>
+<div class="wd-find-path"><code id="wd-saves-path">%appdata%&#92;.minecraft&#92;saves</code><button id="wd-copy-path" type="button" aria-label="ワールド保存フォルダの場所をコピー">コピー</button></div>
+<ol class="wd-find-steps" start="2">
+<li><span class="wd-find-num">2</span><div><b>遊んでいるワールドのフォルダを開く</b><span>最新バージョン（26.1以降）：<code>players → stats</code><br>旧バージョン：<code>stats</code></span></div></li>
+<li><span class="wd-find-num">3</span><div><b>長い英数字の <code>.json</code> ファイルを選ぶ</b><span>例：<code class="wd-file-example">123e4567-e89b-12d3-a456-426614174000.json</code></span></div></li>
+</ol>
+<details class="wd-find-more"><summary>Mac・サーバーの場合</summary><p><b>Mac：</b><code>~/Library/Application Support/minecraft/saves</code> のワールドフォルダから同じ順に進みます。<br><b>マルチプレイ：</b>統計ファイルはサーバー側のワールド保存フォルダにあります。</p></details>
+</div></div>
 <div class="wd-form-foot"><button id="calculate" type="button" class="wd-primary"><span class="wd-cta-label">発展度を診断する</span><span class="wd-arrow" aria-hidden="true">↗</span></button><span class="wd-form-note">データは端末内で解析</span></div>
 <div id="status" class="wd-error" role="status" aria-live="polite"></div>
 </div>
@@ -78,7 +90,7 @@
 <div class="wd-guide-step"><div class="wd-guide-ico">1</div><div><b>ワールド名を入力</b><span>好きな名前でOK</span></div></div>
 <div class="wd-guide-step"><div class="wd-guide-ico">2</div><div><b>統計ファイルを選択</b><span>Java版の stats フォルダから</span></div></div>
 <div class="wd-guide-step"><div class="wd-guide-ico">3</div><div><b>スコアをチェック</b><span>結果カードをXでシェア</span></div></div>
-<details class="wd-guide-extra"><summary>統計ファイルの場所は？</summary><p><b>Java版：</b>ワールドフォルダ → stats → UUID.json<br>シード値だけでは発展度は計測できません。統計JSONが必要です。</p></details>
+<p class="wd-guide-aside-note">ファイルの探し方は入力欄の下にあります。</p>
 </div>
 <div class="wd-side-mini"><small>YOUR WORLD. YOUR RECORD.</small><b>世界を育てた<br>その記録を、数字に。</b><p>あなたのワールドは、どのランク？</p></div>
 </aside>
