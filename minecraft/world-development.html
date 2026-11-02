@@ -94,12 +94,7 @@
 <select id="player-file-list" class="wd-input"></select>
 <span>データが複数ある場合は、対象を選択できます。</span>
 </div>
-<div class="wd-picker-alternatives">
-<button type="button" id="pick-world-folder" class="wd-simple-link">ワールドフォルダを選んで自動検索</button>
-<span aria-hidden="true">・</span>
-<button type="button" id="pick-folder-basic" class="wd-simple-link">ファイル一覧から選ぶ（.json）</button>
-<button type="button" id="pick-json-file" class="wd-simple-link wd-visually-hidden-control" tabindex="-1">ファイルを直接選ぶ</button>
-</div>
+
 <details class="wd-find-guide wd-folder-help" id="file-help">
 <summary><span class="wd-find-question" aria-hidden="true">?</span><span>ワールドフォルダの場所がわからない</span><span class="wd-find-platform">Windows</span></summary>
 <div class="wd-folder-help-body">
@@ -301,21 +296,6 @@ async function scanWorldHandle(root){
   }
   return found;
 }
-$('pick-world-folder').addEventListener('click',()=>{
-  error('');
-  if(typeof window.showDirectoryPicker!=='function'){$('world-folder-fallback').click();return}
-  // The picker can remember this site's most recently selected directory;
-  // web pages cannot force the dialog to an arbitrary local filesystem path.
-  window.showDirectoryPicker({id:'mlg-world-folder',mode:'read'})
-    .then(async handle=>{
-      $('folder-picked-note').textContent='フォルダ内を確認しています…';
-      const items=await scanWorldHandle(handle);
-      await selectCandidates(items);
-    }).catch(e=>{
-      if(e.name==='AbortError'){$('folder-picked-note').textContent='';return}
-      error('フォルダを読み取れませんでした。「ファイル一覧から選ぶ（.json）」をご利用ください。');
-    });
-});
 // Windows/Edge/Chrome may otherwise reopen the last directory chosen for an
 // unrelated file picker (such as the removed region .mca analyzer).
 // A dedicated picker id starts in Documents the first time, then remembers
@@ -349,7 +329,6 @@ async function openStatsJsonPicker(){
   error('JSONファイルの選択に失敗しました。もう一度お試しください。');
  }
 }
-$('pick-folder-basic').addEventListener('click',openStatsJsonPicker);
 $('world-folder-fallback').addEventListener('change',async e=>{
   const files=Array.from(e.target.files||[]);
   const found=files.filter(x=>/(?:^|\/)(?:players\/stats|stats)\/[^/]+\.json$/i.test(x.webkitRelativePath||'')).map(x=>{
@@ -363,7 +342,6 @@ $('world-folder-fallback').addEventListener('change',async e=>{
   await selectCandidates(found);
   e.target.value='';
 });
-$('pick-json-file').addEventListener('click',openStatsJsonPicker);
 
 const dropZone=$('stats-drop');
 async function acceptStatsFile(incoming){
