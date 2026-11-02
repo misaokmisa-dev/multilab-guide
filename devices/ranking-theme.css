@@ -251,3 +251,20 @@
   .ranking-page .rank-choice-cta-arrow{animation:none!important}
   .ranking-page .rank-choice-cta{transition:none}
 }
+
+/* White background removal for the two solid-background manufacturer photos.
+   Keep product colors and all other buying-guide layouts unchanged. */
+.ranking-page .rank-choice-whitekey-def{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+.ranking-page.ranking-mice #criteria .rank-choice-photo,
+.ranking-page.ranking-audio #criteria .rank-choice-photo{
+  z-index:1;opacity:1;
+  filter:url(#mlg-white-cut-mice) drop-shadow(0 10px 13px rgba(0,0,0,.7)) drop-shadow(0 0 8px rgba(206,255,227,.38));
+}
+.ranking-page.ranking-audio #criteria .rank-choice-photo{
+  filter:url(#mlg-white-cut-audio) drop-shadow(0 10px 13px rgba(0,0,0,.7)) drop-shadow(0 0 8px rgba(206,255,227,.38));
+}
+.ranking-page:is(.ranking-mice,.ranking-audio) #criteria .rank-choice-hero::after{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  width:54%;height:112%;right:-7%;top:-6%;
+  background:radial-gradient(ellipse at center,rgba(160,255,212,.22) 0%,rgba(100,210,177,.08) 50%,transparent 73%);
+}
