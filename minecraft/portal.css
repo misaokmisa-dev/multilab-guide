@@ -41,3 +41,80 @@ body.ml-body .ml-mini-grid--reading .ml-mini span{font-size:12px;line-height:1.4
 @media(max-width:1060px){body.ml-body .ml-mini-grid--reading{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){body.ml-body .ml-mini-grid--reading{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:430px){body.ml-body .ml-mini-grid--reading{grid-template-columns:1fr}}
+
+
+/* Minecraft TOP: world-score link, explicit vertical structure. The kicker is
+   ALWAYS on its own row; the score box sits immediately after the heading. */
+.ml-world-score-section{margin:26px auto!important}
+.ml-world-score-banner{
+ position:relative;isolation:isolate;overflow:hidden;
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ justify-content:center;gap:0;min-height:225px;
+ text-decoration:none!important;border-radius:17px;
+ padding:clamp(24px,4vw,39px);color:#fff!important;
+ background:linear-gradient(102deg,#091e13fb 0%,#103c24ef 55%,#183e2990 100%),
+ url('https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/cherrygrove-header.jpg') 60% 50%/cover;
+ border:1px solid #316e43;box-shadow:0 16px 35px #173b2426;
+}
+.ml-world-score-banner:focus-visible{outline:3px solid #01e427;outline-offset:4px}
+.ml-world-score-kicker{
+ display:block!important;flex:0 0 auto!important;width:100%;
+ margin:0!important;color:#a7ffa8!important;font-size:11px;
+ font-weight:900;letter-spacing:.12em;line-height:1.5
+}
+.ml-world-score-heading-row{
+ display:flex!important;align-items:center!important;justify-content:flex-start!important;
+ flex-wrap:wrap;gap:14px clamp(16px,2.5vw,28px);
+ align-self:stretch;width:100%;min-width:0;
+ margin:15px 0 13px;
+}
+.ml-world-score-title{
+ display:block!important;flex:0 1 auto!important;
+ color:#fff!important;font-size:clamp(24px,3.1vw,38px)!important;
+ line-height:1.3!important;font-weight:950!important;letter-spacing:-.04em;
+ margin:0!important;padding:0!important;border:0!important;
+ text-shadow:0 2px 8px #001a1055
+}
+.ml-world-score-preview{
+ display:flex!important;flex:0 0 172px;flex-direction:column;
+ align-items:flex-start;justify-content:center;gap:4px;
+ max-width:100%;min-width:0;min-height:99px;
+ padding:12px 15px;background:#081b12e9;
+ border:1px solid #7dda9077;border-radius:13px;
+ box-shadow:0 11px 32px #00180d5e;
+}
+.ml-world-score-preview small{
+ display:block;color:#b4cbb6;font-weight:700;font-size:10px;line-height:1.4
+}
+.ml-world-score-preview small:first-child{
+ color:#a1d1ad;font-weight:900;letter-spacing:.12em
+}
+.ml-world-score-preview b{
+ display:block;color:#b6ffb4!important;
+ font:950 clamp(25px,3vw,34px)/1.25 ui-monospace,Consolas,monospace;
+ white-space:nowrap
+}
+.ml-world-score-desc{
+ display:block;width:100%;max-width:780px;color:#e4f7e6!important;
+ font-size:14px;line-height:1.7;margin:0!important;
+}
+.ml-world-score-action{
+ display:inline-block;align-self:flex-start;margin-top:18px;
+ color:#0b3515!important;background:#01e427;border-radius:9px;
+ padding:11px 20px;font-weight:950;box-shadow:0 4px 0 #0b752a;
+ transition:transform .2s,box-shadow .2s;
+}
+.ml-world-score-banner:hover .ml-world-score-action{
+ transform:translateY(-2px);box-shadow:0 6px 0 #0b752a,0 0 15px #01e42775
+}
+@media(max-width:600px){
+ .ml-world-score-banner{padding:22px 20px;min-height:210px}
+ .ml-world-score-heading-row{gap:13px;margin:14px 0 12px}
+ .ml-world-score-title{font-size:clamp(23px,6vw,30px)!important}
+ .ml-world-score-preview{flex-basis:142px;min-height:84px;padding:10px 12px}
+ .ml-world-score-preview b{font-size:27px}
+ .ml-world-score-desc{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .ml-world-score-action{transition:none!important}
+}
