@@ -144,6 +144,11 @@
 <label class="wd-level-input">level.dat を選択<input id="wd-level-file" type="file" accept=".dat,application/octet-stream"></label>
 <div id="wd-level-status" class="wd-level-status" role="status" aria-live="polite"></div></div>
 <div class="wd-fullstats"><div class="wd-fullstats-head"><div><span class="wd-overline">ALL RECORDED DATA</span><h3>全統計データ <span id="wd-stat-count"></span></h3></div><span class="wd-fullstats-sub">記録された全項目を閲覧</span></div>
+<section class="wd-death-reasons" id="wd-death-reasons" aria-label="死亡原因の内訳">
+<div class="wd-death-head"><div><span class="wd-overline">DEATH ANALYSIS</span><h4>死亡原因の内訳</h4></div><strong id="wd-death-total">0 回</strong></div>
+<div id="wd-death-items" class="wd-death-items"></div>
+<p id="wd-death-note" class="wd-death-note"></p>
+</section>
 <div class="wd-fullstats-search"><span aria-hidden="true">⌕</span><input id="wd-stat-search" type="search" placeholder="アイテム名・統計名・IDで検索" aria-label="全統計を検索"><button id="wd-stat-clear" type="button" aria-label="検索を消去">×</button></div>
 <div id="wd-stat-groups" class="wd-stat-groups"></div><div id="wd-stat-empty" class="wd-stat-empty" hidden>一致する統計が見つかりませんでした。</div>
 <p class="wd-stat-caveat">統計はプレイヤーの行動記録です。使用回数は現在の建築物のブロック数と一致するとは限りません。</p>
@@ -764,6 +769,34 @@ function displayGroups(query){
  }
  list.replaceChildren(fragment);$('wd-stat-empty').hidden=visible>0;
 }
+function makeDeathReasons(stats){
+ const deaths=Math.max(0,Math.floor(get(stats['minecraft:custom']||{},'deaths')));
+ const killers=Object.entries(stats['minecraft:killed_by']||{})
+  .filter(([key,val])=>!invisibleStatsIds.has(key)&&typeof val==='number'&&Number.isFinite(val)&&val>0)
+  .sort((a,b)=>b[1]-a[1]);
+ const container=$('wd-death-items');container.replaceChildren();
+ $('wd-death-total').textContent=fmt(deaths)+' 回';
+ $('wd-death-reasons').hidden=deaths===0&&!killers.length;
+ let assigned=0;
+ for(const [key,count] of killers){
+  const n=Math.min(deaths-assigned,Math.floor(count));
+  if(n<=0)break;
+  const info=resolveIdentity('minecraft:killed_by',key);
+  const row=renderStatsRow({name:info.name+'に倒された',key,icon:info.icon,slug:null,formatted:fmt(n)+' 回'});
+  container.append(row);assigned+=n;
+ }
+ const missing=Math.max(0,deaths-assigned);
+ if(missing){
+  const row=document.createElement('div');row.className='wd-stat-row wd-death-unknown';
+  const label=document.createElement('div');label.className='wd-death-unknown-text';
+  const strong=document.createElement('b');strong.textContent='原因が記録されていない死亡';
+  const small=document.createElement('small');small.textContent='落下・溶岩・窒息などの詳細は統計JSONから区別できません';
+  label.append(strong,small);
+  const count=document.createElement('strong');count.className='wd-stat-number';count.textContent=fmt(missing)+' 回';
+  row.append(label,count);container.append(row);
+ }
+ $('wd-death-note').textContent='死亡回数 '+fmt(deaths)+' 回 ＝ Mobによる死亡 '+fmt(assigned)+' 回 ＋ 原因不明 '+fmt(missing)+' 回。統計JSONには死亡時の文章や、落下・溶岩などの個別原因は保存されません。';
+}
 window.mlgWorldStatsShow=(data,r)=>{
  currentStats=data.stats;currentResult=r;
  const raw=collectStats(data.stats);indexed=raw;
@@ -771,6 +804,7 @@ window.mlgWorldStatsShow=(data,r)=>{
  $('wd-stat-count').textContent=fmt(count)+' 項目';
  $('world-insights').hidden=false;
  makeCards(r);
+ makeDeathReasons(data.stats);
  $('wd-stat-search').value='';displayGroups('');
 };
 $('wd-stat-search').addEventListener('input',e=>displayGroups(e.target.value));
