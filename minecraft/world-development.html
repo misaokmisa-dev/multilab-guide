@@ -399,6 +399,211 @@ c.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.c
 
 </script>
 <script>
-/* Detailed statistics module */
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n).toLocaleString('ja-JP',{maximumFractionDigits:1});
+const tickKeys=new Set(['play_time','play_one_minute','total_world_time','time_since_death','time_since_rest','sneak_time']);
+const titles={
+ 'minecraft:custom':'プレイ・行動',
+ 'minecraft:mined':'採掘したブロック',
+ 'minecraft:crafted':'クラフトしたアイテム',
+ 'minecraft:used':'使ったアイテム・ブロック',
+ 'minecraft:broken':'使い切った道具',
+ 'minecraft:picked_up':'拾ったアイテム',
+ 'minecraft:dropped':'捨てたアイテム',
+ 'minecraft:killed':'倒したMob',
+ 'minecraft:killed_by':'倒されたMob'
+};
+const japanese={
+ play_time:'プレイ時間',play_one_minute:'プレイ時間',total_world_time:'ワールドを開いていた時間',
+ time_since_death:'最後の死亡からの時間',time_since_rest:'最後に寝てからの時間',sneak_time:'しゃがんでいた時間',
+ jump:'ジャンプ回数',deaths:'死亡回数',mob_kills:'Mob撃破数',player_kills:'プレイヤー撃破数',
+ walk_one_cm:'歩いた距離',walked_one_cm:'歩いた距離',sprint_one_cm:'ダッシュした距離',swim_one_cm:'泳いだ距離',walk_under_water_one_cm:'水中で歩いた距離',walk_on_water_one_cm:'水面を歩いた距離',climb_one_cm:'登った距離',fly_one_cm:'空中移動距離',aviate_one_cm:'エリトラ飛行距離',fall_one_cm:'落下距離',
+ boat_one_cm:'ボートで移動した距離',minecart_one_cm:'トロッコで移動した距離',horse_one_cm:'馬で移動した距離',pig_one_cm:'ブタで移動した距離',strider_one_cm:'ストライダー移動距離',
+ damage_dealt:'与えたダメージ',damage_taken:'受けたダメージ',damage_blocked_by_shield:'盾で防いだダメージ',damage_absorbed:'吸収したダメージ',damage_resisted:'軽減したダメージ',
+ animals_bred:'動物の繁殖回数',fish_caught:'魚を釣った数',traded_with_villager:'村人との取引回数',talked_to_villager:'村人に話しかけた回数',sleep_in_bed:'ベッドで寝た回数',raid_win:'襲撃の勝利回数',raid_trigger:'襲撃の発生回数',
+ open_chest:'チェストを開けた回数',open_enderchest:'エンダーチェストを開けた回数',open_shulker_box:'シュルカーボックスを開けた回数',interact_with_crafting_table:'作業台の使用回数',interact_with_furnace:'かまどの使用回数',interact_with_anvil:'金床の使用回数',interact_with_enchanting_table:'エンチャントテーブルの使用回数',interact_with_brewingstand:'醸造台の使用回数',
+ drop:'アイテムを捨てた回数',eat_cake_slice:'ケーキを食べた回数',leave_game:'ゲーム退出回数',play_record:'レコードを再生した回数',pot_flower:'植木鉢に植えた回数',trigger_trapped_chest:'トラップチェストの使用回数',open_barrel:'樽を開けた回数',
+ clean_armor:'防具を洗った回数',clean_banner:'旗を洗った回数',inspect_dispenser:'ディスペンサーを開けた回数',inspect_dropper:'ドロッパーを開けた回数'
+};
+const cmKey=k=>/_one_cm$/.test(k);
+function prettyKey(k){const v=k.replace(/^[^:]+:/,'');return japanese[v]||v.replace(/_/g,' ')}
+function duration(ticks){const sec=Math.floor(Math.max(0,Number(ticks)||0)/20);return fmt(Math.floor(sec/3600))+'時間'+(Math.floor(sec%3600/60))+'分'}
+function displayValue(cat,key,value){
+ const clean=key.replace(/^[^:]+:/,'');
+ if(cat==='minecraft:custom'&&tickKeys.has(clean))return duration(value);
+ if(cat==='minecraft:custom'&&cmKey(clean)){
+   const meters=Number(value)/100;
+   return meters>=1000?fmt(meters/1000)+' km':fmt(meters)+' m';
+ }
+ if(cat==='minecraft:custom')return fmt(value)+' 回';
+ if(cat==='minecraft:killed')return fmt(value)+' 体';
+ if(cat==='minecraft:mined'||cat==='minecraft:crafted'||cat==='minecraft:picked_up'||cat==='minecraft:dropped')return fmt(value)+' 個';
+ return fmt(value)+' 回';
+}
+const sum=o=>Object.values(o||{}).reduce((a,v)=>a+(typeof v==='number'&&Number.isFinite(v)?Math.max(0,v):0),0);
+const get=(o,k)=>Math.max(0,Number(o?.['minecraft:'+k])||0);
+let currentStats=null,currentResult=null,worldDays=null,levelSelected=null,levelToken=0;
+function card(title,val,small,kind){
+ const root=document.createElement('div');root.className='wd-insight-card'+(kind?' wd-day-card':'');
+ const top=document.createElement('span');top.className='wd-insight-label';top.textContent=title;
+ const value=document.createElement('strong');value.className='wd-insight-value';value.textContent=val;
+ const info=document.createElement('span');info.className='wd-insight-note';info.textContent=small||'';
+ if(kind){value.id='wd-day-value';info.id='wd-day-note'}
+ root.append(top,value,info);return root;
+}
+function makeCards(r){
+ const c=currentStats?.['minecraft:custom']||{},time=Number(c['minecraft:play_time']??c['minecraft:play_one_minute']??0);
+ const items=[
+  ['プレイ時間',duration(time),'統計に記録された累計時間'],
+  ['ゲーム内経過日数','—','level.dat から取得',true],
+  ['建築関連ブロック',fmt(r.placed)+' 回','建築向けブロックの使用記録'],
+  ['アイテム・ブロック使用',fmt(sum(currentStats?.['minecraft:used']))+' 回','道具・食料などの使用も含む'],
+  ['採掘したブロック',fmt(sum(currentStats?.['minecraft:mined']))+' 個','採掘統計の合計'],
+  ['クラフトした数',fmt(sum(currentStats?.['minecraft:crafted']))+' 個','クラフト統計の合計'],
+  ['移動距離',fmt(r.distance)+' km','歩行・ダッシュなどの記録'],
+  ['ジャンプ',fmt(get(c,'jump'))+' 回','ジャンプした回数'],
+  ['死亡回数',fmt(get(c,'deaths'))+' 回','プレイヤーの死亡回数'],
+  ['Mob撃破',fmt(get(c,'mob_kills'))+' 体','プレイヤーが倒したMob'],
+  ['村人との取引',fmt(get(c,'traded_with_villager'))+' 回','取引した回数'],
+  ['睡眠回数',fmt(get(c,'sleep_in_bed'))+' 回','ベッドで寝た回数']
+ ];
+ const el=$('world-stat-cards');el.replaceChildren(...items.map(i=>card(...i)));updateDay();
+}
+function updateDay(){
+ if(!currentStats)return;
+ const el=$('wd-day-value'),note=$('wd-day-note');if(!el||!note)return;
+ const c=currentStats['minecraft:custom']||{},ticks=Number(c['minecraft:play_time']??c['minecraft:play_one_minute']??NaN);
+ if(worldDays!==null){
+  el.textContent=fmt(worldDays)+' 日';note.textContent='level.dat の DayTime から取得';
+  $('wd-day-help').classList.add('wd-day-verified');
+  $('wd-day-help').querySelector('.wd-day-help-text b').textContent='ゲーム内経過日数を取得済み';
+  $('wd-day-help').querySelector('.wd-day-help-text p').textContent='ワールドの保存データから読み取りました。';
+ }else{
+  el.textContent=Number.isFinite(ticks)?fmt(Math.floor(Math.max(0,ticks)/24000))+' 日相当':'—';
+  note.textContent=Number.isFinite(ticks)?'プレイ時間からの換算値・参考':'level.dat で正確な日数を表示';
+  $('wd-day-help').classList.remove('wd-day-verified');
+  $('wd-day-help').querySelector('.wd-day-help-text b').textContent='正確なゲーム内経過日数を表示';
+  $('wd-day-help').querySelector('.wd-day-help-text p').textContent='level.dat を読み込むと、睡眠なども反映したゲーム内の日数を表示できます。';
+ }
+}
+function collectStats(stats){
+ const categories=[];
+ for(const [cat,all] of Object.entries(stats||{})){
+  if(!all||typeof all!=='object'||Array.isArray(all))continue;
+  const entries=Object.entries(all).filter(([k,v])=>typeof v==='number'&&Number.isFinite(v)).map(([key,value])=>({
+   key,value,cat,name:prettyKey(key),
+   formatted:displayValue(cat,key,value),
+   search:(key+' '+prettyKey(key)+' '+(titles[cat]||cat)).toLocaleLowerCase()
+  })).sort((a,b)=>b.value-a.value||a.key.localeCompare(b.key));
+  if(entries.length)categories.push({name:cat,title:titles[cat]||cat,count:entries.length,entries});
+ }
+ categories.sort((a,b)=>{const order=Object.keys(titles);const i=order.indexOf(a.name),j=order.indexOf(b.name);return (i<0?999:i)-(j<0?999:j)});
+ return categories;
+}
+let indexed=[];
+function displayGroups(query){
+ const list=$('wd-stat-groups'),fragment=document.createDocumentFragment(),needle=query.trim().toLocaleLowerCase();
+ let visible=0;
+ for(const group of indexed){
+  const entries=needle?group.entries.filter(x=>x.search.includes(needle)):group.entries;
+  if(!entries.length)continue;
+  visible+=entries.length;
+  const details=document.createElement('details');details.className='wd-stat-group';details.open=!!needle||group.name==='minecraft:custom';
+  const summary=document.createElement('summary');summary.className='wd-stat-group-head';
+  const title=document.createElement('strong');title.textContent=group.title;
+  const amount=document.createElement('span');amount.textContent=fmt(entries.length)+' 項目';
+  const arrow=document.createElement('span');arrow.className='wd-stat-group-arrow';arrow.textContent='⌄';
+  summary.append(title,amount,arrow);
+  const items=document.createElement('div');items.className='wd-stat-items';
+  for(const item of entries){
+   const row=document.createElement('div');row.className='wd-stat-row';
+   const col=document.createElement('div');col.className='wd-stat-description';
+   const name=document.createElement('b');name.textContent=item.name;
+   const code=document.createElement('small');code.textContent=item.key;
+   col.append(name,code);
+   const n=document.createElement('strong');n.className='wd-stat-number';n.textContent=item.formatted;
+   row.append(col,n);items.append(row);
+  }
+  details.append(summary,items);fragment.append(details);
+ }
+ list.replaceChildren(fragment);$('wd-stat-empty').hidden=visible>0;
+}
+window.mlgWorldStatsShow=(data,r)=>{
+ currentStats=data.stats;currentResult=r;
+ const raw=collectStats(data.stats);indexed=raw;
+ const count=raw.reduce((a,x)=>a+x.count,0);
+ $('wd-stat-count').textContent=fmt(count)+' 項目';
+ $('world-insights').hidden=false;
+ makeCards(r);
+ $('wd-stat-search').value='';displayGroups('');
+};
+$('wd-stat-search').addEventListener('input',e=>displayGroups(e.target.value));
+$('wd-stat-clear').addEventListener('click',()=>{$('wd-stat-search').value='';displayGroups('');$('wd-stat-search').focus()});
+function parseDays(buffer){
+ const view=new DataView(buffer);let p=0,day=null;
+ const need=n=>{if(n<0||p+n>view.byteLength)throw Error('NBTが途中で切れています')};
+ const byte=()=>{need(1);return view.getUint8(p++)};
+ const i16=()=>{need(2);const x=view.getUint16(p);p+=2;return x};
+ const i32=()=>{need(4);const x=view.getInt32(p);p+=4;return x};
+ const long=()=>{need(8);const x=view.getBigInt64(p);p+=8;return x};
+ const str=()=>{const n=i16();if(n>65535)throw Error('文字列が長すぎます');need(n);const x=new TextDecoder().decode(new Uint8Array(buffer,p,n));p+=n;return x};
+ function skip(type,depth){
+  if(depth>64)throw Error('NBTの階層が深すぎます');
+  if(type===1){need(1);p+=1}
+  else if(type===2){need(2);p+=2}
+  else if(type===3||type===5){need(4);p+=4}
+  else if(type===4||type===6){need(8);p+=8}
+  else if(type===8){str()}
+  else if(type===7||type===11||type===12){
+   const n=i32(),size=type===7?1:type===11?4:8;
+   if(n<0)throw Error('不正な配列サイズ');need(n*size);p+=n*size;
+  }else if(type===9){
+   const subtype=byte(),n=i32();
+   if(n<0||n>2000000)throw Error('不正なリスト');
+   for(let i=0;i<n;i++)skip(subtype,depth+1);
+  }else if(type===10){compound(2,depth+1)}
+  else throw Error('読み取りに対応していないNBT形式');
+ }
+ function compound(target,depth){
+  if(depth>64)throw Error('NBTの階層が深すぎます');
+  while(true){
+   const type=byte();if(type===0)return;
+   const name=str();
+   if(target===0&&name==='Data'&&type===10){compound(1,depth+1)}
+   else if(target===1&&name==='DayTime'&&type===4){day=long()}
+   else if(target===1&&name==='DayTime'&&type===3){day=BigInt(i32())}
+   else skip(type,depth+1);
+  }
+ }
+ if(byte()!==10)throw Error('level.dat のNBTではありません');
+ str();compound(0,0);
+ if(day===null)throw Error('DayTimeが見つかりません');
+ return Math.max(0,Number(day/24000n));
+}
+async function loadLevel(file){
+ if(!file){levelSelected=null;worldDays=null;updateDay();return}
+ if(file.name!=='level.dat'&&file.name!=='level.dat_old'){throw Error('level.dat を選択してください')}
+ if(file.size>16*1024*1024)throw Error('level.dat が大きすぎます');
+ const raw=await file.arrayBuffer();const u=new Uint8Array(raw);
+ if(u.length<8)throw Error('ファイルが短すぎます');
+ let decoded=raw;
+ if(u[0]===31&&u[1]===139){
+  if(!('DecompressionStream' in window))throw Error('このブラウザではlevel.datを解凍できません');
+  decoded=await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+ }
+ return parseDays(decoded);
+}
+window.mlgWorldSetLevelDat=async file=>{
+ const token=++levelToken;levelSelected=file;worldDays=null;
+ $('wd-level-status').textContent='';
+ if(!file){updateDay();return}
+ $('wd-level-status').textContent='level.dat を解析中…';
+ try{const days=await loadLevel(file);if(token!==levelToken)return;worldDays=days;updateDay();$('wd-level-status').textContent='✓ ゲーム内経過日数を取得しました'}
+ catch(e){if(token!==levelToken)return;worldDays=null;updateDay();$('wd-level-status').textContent=e.message||'読み取りに失敗しました'}
+};
+$('wd-level-file').addEventListener('change',e=>{const f=e.target.files[0];if(f)window.mlgWorldSetLevelDat(f)});
+})();
 </script>
 </body></html>
