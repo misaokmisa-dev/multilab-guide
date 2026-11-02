@@ -452,6 +452,65 @@ const japanese={
  drop:'アイテムを捨てた回数',eat_cake_slice:'ケーキを食べた回数',leave_game:'ゲーム退出回数',play_record:'レコードを再生した回数',pot_flower:'植木鉢に植えた回数',trigger_trapped_chest:'トラップチェストの使用回数',open_barrel:'樽を開けた回数',
  clean_armor:'防具を洗った回数',clean_banner:'旗を洗った回数',inspect_dispenser:'ディスペンサーを開けた回数',inspect_dropper:'ドロッパーを開けた回数'
 };
+// Minecraft Java's vanilla GENERAL statistics, including modern block interactions.
+Object.assign(japanese,{
+ 'leave_game':'ゲームを終了した回数',
+ 'total_world_time':'ワールド内の累計時間',
+ 'sneak_time':'しゃがんでいた時間',
+ 'walked_one_cm':'歩いた距離','crouch_one_cm':'しゃがんで移動した距離',
+ 'sprint_one_cm':'ダッシュした距離','walk_on_water_one_cm':'水面を歩いた距離',
+ 'walk_under_water_one_cm':'水中で歩いた距離','fall_one_cm':'落下した距離',
+ 'climb_one_cm':'登った距離','fly_one_cm':'空中を移動した距離',
+ 'aviate_one_cm':'エリトラで移動した距離','swim_one_cm':'泳いだ距離',
+ 'horse_one_cm':'馬で移動した距離','pig_one_cm':'ブタで移動した距離',
+ 'strider_one_cm':'ストライダーで移動した距離','nautilus_one_cm':'オウムガイで移動した距離',
+ 'happy_ghast_one_cm':'ハッピーガストで移動した距離',
+ 'damage_dealt':'与えたダメージ','damage_dealt_absorbed':'相手に吸収されたダメージ',
+ 'damage_dealt_resisted':'相手に軽減されたダメージ',
+ 'damage_taken':'受けたダメージ','damage_blocked_by_shield':'盾で防いだダメージ',
+ 'damage_absorbed':'吸収したダメージ','damage_resisted':'軽減したダメージ',
+ 'deaths':'死亡回数','mob_kills':'Mob撃破数','player_kills':'プレイヤー撃破数',
+ 'fish_caught':'釣り上げた魚の数','talked_to_villager':'村人に話しかけた回数',
+ 'traded_with_villager':'村人と取引した回数','animals_bred':'動物を繁殖させた回数',
+ 'eat_cake_slice':'ケーキを食べた回数','fill_cauldron':'大釜に水を入れた回数',
+ 'use_cauldron':'大釜から水を取り出した回数','clean_armor':'革の防具を洗った回数',
+ 'clean_banner':'旗を洗った回数','clean_shulker_box':'シュルカーボックスを洗った回数',
+ 'interact_with_brewingstand':'醸造台を使った回数',
+ 'interact_with_beacon':'ビーコンを使った回数',
+ 'interact_with_blast_furnace':'溶鉱炉を使った回数',
+ 'interact_with_campfire':'焚き火を使った回数',
+ 'interact_with_cartography_table':'製図台を使った回数',
+ 'interact_with_crafting_table':'作業台を使った回数',
+ 'interact_with_furnace':'かまどを使った回数',
+ 'interact_with_grindstone':'砥石を使った回数',
+ 'interact_with_lectern':'書見台を使った回数',
+ 'interact_with_loom':'機織り機を使った回数',
+ 'interact_with_smithing_table':'鍛冶台を使った回数',
+ 'interact_with_smoker':'燻製器を使った回数',
+ 'interact_with_stonecutter':'石切台を使った回数',
+ 'interact_with_anvil':'金床を使った回数',
+ 'inspect_dispenser':'ディスペンサーを開けた回数',
+ 'inspect_dropper':'ドロッパーを開けた回数',
+ 'inspect_hopper':'ホッパーを開けた回数',
+ 'inspect_crafter':'自動作業台を開けた回数',
+ 'inspect_shelf':'棚を開けた回数',
+ 'open_chest':'チェストを開けた回数','open_enderchest':'エンダーチェストを開けた回数',
+ 'open_shulker_box':'シュルカーボックスを開けた回数',
+ 'open_barrel':'樽を開けた回数','open_vault':'宝物庫を開けた回数',
+ 'trigger_trapped_chest':'トラップチェストを作動させた回数',
+ 'play_noteblock':'音符ブロックを鳴らした回数',
+ 'tune_noteblock':'音符ブロックを調律した回数',
+ 'play_record':'音楽ディスクを再生した回数',
+ 'pot_flower':'植木鉢に植えた回数','enchant_item':'エンチャントした回数',
+ 'sleep_in_bed':'ベッドで寝た回数','raid_trigger':'襲撃を発生させた回数',
+ 'raid_win':'襲撃に勝った回数','bell_ring':'鐘を鳴らした回数',
+ 'target_hit':'的に当てた回数','jump':'ジャンプ回数',
+ 'drop':'アイテムを捨てた回数',
+ 'time_since_death':'最後の死亡からの時間','time_since_rest':'最後に寝てからの時間',
+ 'interact_with_chiseled_bookshelf':'模様入りの本棚を使った回数',
+ 'interact_with_crafter':'自動作業台を使った回数',
+ 'interact_with_copper_golem_statue':'カッパーゴーレムの像を使った回数'
+});
 const cmKey=k=>/_one_cm$/.test(k);
 const WIKI_TEXTURE_ALIAS={
  'lapis_ore':'Lapis_Lazuli_Ore','deepslate_lapis_ore':'Deepslate_Lapis_Lazuli_Ore',
@@ -504,7 +563,10 @@ function englishFallback(id){return id.replace(/_/g,' ')}
 function resolveIdentity(category,key){
  setupRegistry();
  const full=String(key),slug=full.replace(/^[^:]+:/,'');
- if(category==='minecraft:custom')return {name:japanese[slug]||englishFallback(slug),slug:null,icon:null};
+ if(category==='minecraft:custom'){
+  const idName=japanese[slug]||(/_one_cm$/.test(slug)?'移動距離（新しい手段）':/^(interact_with_|inspect_|open_)/.test(slug)?'設備の利用回数（新しい統計）':'その他の行動記録');
+  return {name:idName,slug:null,icon:null};
+ }
  if(category==='minecraft:killed'||category==='minecraft:killed_by'){
   const fromSpawn=registry.get(slug+'_spawn_egg')?.jp||'';
   const name=mobNames[slug]||fromSpawn.replace(/のスポーンエッグ$|スポーンエッグ$/,'')||englishFallback(slug);
