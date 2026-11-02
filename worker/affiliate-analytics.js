@@ -231,7 +231,7 @@ export default {
    if(!await auth(request,env))return json({error:'Unauthorized'},401);
    if(!env.MLG_SQL)return json({error:'Analytics SQL binding is unavailable'},503);
    try{
-    const result=await env.MLG_SQL.query({query:`SELECT blob2 AS grade, COUNT() AS samples, SUM(_sample_interval) AS approximate_submissions, AVG(double1) AS average_score, MAX(double1) AS max_score FROM ${DATASET} WHERE blob1 = 'world_score' AND timestamp >= NOW() - INTERVAL '90' DAY GROUP BY blob2 ORDER BY average_score DESC LIMIT 30`});
+    const result=await env.MLG_SQL.query({query:`SELECT blob2 AS grade, COUNT() AS samples, COUNT() AS approximate_submissions, AVG(double1) AS average_score, APPROX_MAX(double1) AS max_score FROM ${DATASET} WHERE blob1 = 'world_score' AND timestamp >= NOW() - INTERVAL '90' DAY GROUP BY blob2 ORDER BY average_score DESC LIMIT 30`});
     return json({status:'collecting',sampled:true,rows:result.data||[],updatedAt:new Date().toISOString()});
    }catch(err){return json({error:'ランキング集計を読み込めませんでした'},503)}
   }
