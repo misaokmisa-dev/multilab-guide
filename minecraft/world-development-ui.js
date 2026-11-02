@@ -237,7 +237,7 @@ function calculate(data){
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('ワールドファイルをドロップするか、クリックして選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
 const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='採点中…';
-try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldStatsShow?.(data,r);void submitAnonymizedScore(r,current)}
+try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldScoreHistory?.save(r);window.mlgWorldStatsShow?.(data,r);void submitAnonymizedScore(r,current)}
 catch(e){error('読み込めませんでした。'+(e instanceof SyntaxError?'JSON形式を確認してください。':(e.message||'ファイルをご確認ください。')))}
 finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を採点する'}}
 function render(r){
