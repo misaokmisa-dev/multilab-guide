@@ -90,3 +90,20 @@
 .ranking-page .rank-item{min-height:422px}
 .ranking-page.ranking-pc .rank-item,.ranking-page.ranking-laptop .rank-item{min-height:466px}
 @media(max-width:680px){.ranking-page .rank-feature-list{min-height:73px;gap:3px}.ranking-page .rank-feature-row{grid-template-columns:43px minmax(0,1fr);gap:4px;padding:4px 5px}.ranking-page .rank-feature-row dt{font-size:9px}.ranking-page .rank-feature-row dd{font-size:10px}.ranking-page .rank-item{min-height:421px}.ranking-page.ranking-pc .rank-item,.ranking-page.ranking-laptop .rank-item{min-height:455px}}
+
+
+/* product-photo-provenance 2026-11-02: preserve actual manufacturer product photography */
+.ranking-page .rank-image{min-width:0;min-height:168px}
+.ranking-page .rank-image-link{display:flex;align-items:center;justify-content:center;width:100%;min-height:154px}
+.ranking-page .rank-product-photo{
+ display:block;width:min(100%,230px);height:172px;max-height:172px;max-width:100%;
+ object-fit:contain;object-position:center;background:#fff;
+ border-radius:7px;
+}
+.ranking-page .rank-product-photo[hidden],.ranking-page .rank-photo-notice[hidden]{display:none!important}
+.ranking-page .rank-photo-notice{display:flex;justify-content:center;align-items:center;min-height:145px;padding:12px;line-height:1.7;font-size:12px;text-align:center;color:#63717c;border:1px dashed #c1ccd6;border-radius:10px;background:#f8fafc}
+.ranking-page .rank-official-image-source{display:block;max-width:100%;margin:5px 0 1px;font-size:10px;line-height:1.5;color:#426782!important;text-align:center;text-decoration:underline;text-underline-offset:2px}
+.ranking-page .rank-external-price-link{display:inline-block;color:#165db4!important;font-size:12px;font-weight:800;text-decoration:underline;text-underline-offset:2px;margin:5px 0 3px}
+.ranking-page .rank-shop-rating{display:block}
+.ranking-page .rank-image-link:focus-visible,.ranking-page .rank-official-image-source:focus-visible,.ranking-page .rank-external-price-link:focus-visible{outline:3px solid #ee9c36;outline-offset:2px}
+@media(max-width:680px){.ranking-page .rank-product-photo{width:min(100%,170px);height:135px;max-height:135px}.ranking-page .rank-photo-notice{min-height:115px}}
