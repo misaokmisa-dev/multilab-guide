@@ -110,6 +110,12 @@ body.ml-body .ml-mini-grid--reading .ml-mini span{font-size:12px;line-height:1.4
  font-variant-numeric:tabular-nums;letter-spacing:-.04em;text-shadow:0 0 20px #01e42755;
  white-space:nowrap;text-align:center
 }
+.ml-world-score-preview .ml-world-score-ranking{
+ display:block;min-height:0;margin-top:3px;color:#fff68a!important;
+ font-size:13px!important;font-weight:950;line-height:1.5;text-align:center;
+ text-shadow:0 0 11px #dcff5b60;
+}
+.ml-world-score-preview .ml-world-score-ranking:empty{display:none}
 .ml-world-score-desc{
  display:block;width:100%;max-width:780px;color:#e4f7e6!important;
  font-size:14px;line-height:1.7;margin:0!important;
