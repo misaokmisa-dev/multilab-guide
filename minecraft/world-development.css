@@ -282,3 +282,69 @@ body.wd-body a{text-underline-offset:4px}
 .wd-death-unknown-text small{font-size:10px;line-height:1.65;color:#917f71}
 .wd-death-note{font-size:11px;line-height:1.75;margin:0;padding:12px 17px;color:#8e7666;background:#fffaf7}
 @media(max-width:600px){.wd-death-head{padding:13px}.wd-death-items .wd-stat-row{padding:10px}.wd-death-note{padding:10px 12px}.wd-death-head h4{font-size:15px}}
+
+
+/* Global Ranking teaser and color-coded rarity system / 2026-11-02 */
+.wd-leaderboard{align-self:stretch}
+.wd-leaderboard-panel{position:relative;isolation:isolate;overflow:hidden;padding:28px 23px 24px;min-height:425px;border-radius:19px;background:radial-gradient(ellipse at 83% 2%,#7a67ff32 0,transparent 48%),linear-gradient(148deg,#0c172c,#18213d 58%,#0b192c);border:1px solid #46527a;color:#f4f6ff;box-shadow:0 18px 38px #0b142b28}
+.wd-leaderboard-panel::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;background-image:linear-gradient(#adbeff0e 1px,transparent 1px),linear-gradient(90deg,#adbeff0e 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(90deg,transparent,#000)}
+.wd-leaderboard-sparks span{position:absolute;color:#cbbeff;text-shadow:0 0 17px #a38cff;opacity:.8}
+.wd-leaderboard-sparks span:nth-child(1){top:18px;right:30px;font-size:23px;animation:wd-twinkle 3s ease-in-out infinite}
+.wd-leaderboard-sparks span:nth-child(2){top:108px;right:10px;font-size:17px;animation:wd-twinkle 2.7s ease-in-out .7s infinite}
+.wd-leaderboard-sparks span:nth-child(3){top:158px;right:51px;font-size:13px;animation:wd-twinkle 3.4s ease-in-out 1.5s infinite}
+.wd-leaderboard-kicker{font-size:9px;font-weight:950;letter-spacing:.15em;color:#bbb4ff;display:flex;justify-content:space-between;align-items:center}
+.wd-leaderboard-lock{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:#7363db25;border:1px solid #9690e34d;font-size:19px;color:#ffd781}
+.wd-leaderboard h2{font-weight:1000;font-size:clamp(26px,3vw,34px);line-height:1.22;letter-spacing:-.055em;margin:13px 0 5px;color:#fff}
+.wd-leaderboard h2 em{font-style:normal;background:linear-gradient(110deg,#a1b5ff,#f0baff 52%,#ffdc8e);color:transparent;background-clip:text;-webkit-background-clip:text}
+.wd-leaderboard-podium{display:flex;align-items:flex-end;justify-content:center;gap:8px;height:115px;margin:10px 0 20px;filter:drop-shadow(0 4px 19px #a4a8ff55)}
+.wd-podium-rank{font:1000 24px/1 ui-monospace,monospace;display:grid;place-items:center;width:74px;border:1px solid #ffffff4d;border-radius:9px 9px 5px 5px;box-shadow:inset 0 0 15px #fff2}
+.wd-podium-rank.rank-two{height:70px;color:#d0e5ff;background:linear-gradient(160deg,#829cc1,#344b86)}
+.wd-podium-rank.rank-one{height:111px;font-size:33px;color:#5c3c0a;background:linear-gradient(145deg,#fff6b8,#ffc04b 70%,#c58421);box-shadow:0 0 30px #ffd55b52,inset 0 0 15px #fff7}
+.wd-podium-rank.rank-three{height:55px;color:#ffd3ba;background:linear-gradient(160deg,#bd7b53,#74455e)}
+.wd-leaderboard-status{display:flex;align-items:center;gap:8px;width:max-content;max-width:100%;padding:8px 11px;border:1px solid #ae9fff55;background:#7167cd2b;border-radius:7px;color:#ded6ff;font:850 10px/1.35 ui-monospace,system-ui,sans-serif;letter-spacing:.035em}
+.wd-status-led{width:7px;height:7px;flex:none;border-radius:50%;background:#c6a3ff;box-shadow:0 0 12px #c6a3ff}
+.wd-leaderboard-panel>p{font-size:12px;font-weight:650;line-height:1.85;color:#d0daec;margin:13px 0 18px}
+.wd-leaderboard-rule{height:1px;background:linear-gradient(90deg,#ffffff00,#a69bff99,#ffffff00);margin:17px 0}
+.wd-leaderboard-micro{font-size:13px;font-weight:950;color:#e5d9ff}
+.wd-leaderboard-caption{display:block;margin-top:6px;font-size:10px;color:#9aaed2;font-weight:700}
+.wd-ranking-entry{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin:30px 0 3px;padding:20px 22px;border:1px solid #d3c8f6;background:linear-gradient(112deg,#f3f0ff 0%,#fff 67%,#f5f2ff);border-radius:14px;box-shadow:0 7px 23px #623db410}
+.wd-ranking-entry-text{flex:1;min-width:230px}
+.wd-ranking-entry-tag{font:900 10px/1.3 ui-monospace,system-ui,sans-serif;color:#8769bd;letter-spacing:.12em}
+.wd-ranking-entry h3{font-size:17px;font-weight:1000;color:#382967;letter-spacing:-.04em;margin:5px 0 3px}
+.wd-ranking-entry p{font-size:11px;line-height:1.8;font-weight:650;color:#61577d;margin:0}
+.wd-ranking-submit{display:inline-flex;align-items:center;justify-content:center;gap:13px;padding:13px 18px;border:1px solid #7c5dea;border-radius:9px;background:linear-gradient(105deg,#7658e9,#a65de9);color:#fff;font-weight:950;font-size:13px;box-shadow:0 5px 0 #5640a3,0 9px 25px #9062e33d;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.wd-ranking-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 7px 0 #5640a3,0 14px 30px #9062e344}
+.wd-ranking-submit:disabled{cursor:default;opacity:.72;box-shadow:none}
+.wd-submit-status:empty{display:none}
+.wd-submit-status{flex-basis:100%;font-size:11px;color:#58488d;font-weight:800}
+.wd-result{--tier:#36e678;--tier-light:#baffc3;--tier-dark:#084f21;--tier-glow:#37ff8355;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/cherrygrove-header.jpg")}
+.wd-result.wd-rarity-blue{--tier:#48bbff;--tier-light:#b7edff;--tier-dark:#064e7d;--tier-glow:#41a9ff80;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/CREATE_BuildAlmostAnything.png")}
+.wd-result.wd-rarity-purple{--tier:#c47aff;--tier-light:#f1d4ff;--tier-dark:#6a1c9d;--tier-glow:#ac5cffaa;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/SURVIVE.png")}
+.wd-result.wd-rarity-gold{--tier:#ffd65c;--tier-light:#fff2ba;--tier-dark:#895204;--tier-glow:#ffcd52af;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Tricky-Trials_1280x768.jpg")}
+.wd-result.wd-rarity-red{--tier:#ff5e6b;--tier-light:#ffd4a1;--tier-dark:#8d1a25;--tier-glow:#ff3b4caa;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Nether-Update_1280x768.jpg")}
+.wd-result .wd-scorecard{min-height:345px;border:2px solid var(--tier);box-shadow:0 0 0 1px var(--tier-glow),0 16px 48px #0b122e38,0 0 40px var(--tier-glow);background:#071416;transition:border-color .25s,box-shadow .25s}
+.wd-result .wd-scorecard::before{background-image:var(--tier-scene);background-position:center 47%;background-size:cover;filter:saturate(1.1) contrast(1.05);transform:scale(1.04);animation:wd-scene-in 1.3s ease-out both}
+.wd-result .wd-scorecard::after{background:linear-gradient(101deg,#071015f7 0%,#071015df 44%,#07101591 75%,#071015a8 100%),linear-gradient(0deg,#06101fd9,transparent 40%)}
+.wd-result .wd-scorecard-top{color:var(--tier-light);text-shadow:0 0 12px var(--tier-glow)}
+.wd-result .wd-scorecard-top span:last-child{border-color:var(--tier)}
+.wd-result .wd-score-value{color:var(--tier-light);text-shadow:0 0 18px var(--tier-glow),0 0 46px var(--tier-glow);animation:wd-score-reveal .85s cubic-bezier(.2,1.5,.3,1) both}
+.wd-result .wd-score-value small{color:#fff}
+.wd-result .wd-scorecard-world{color:#fff;text-shadow:0 3px 14px #0009}
+.wd-result .wd-result-rank{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:5px;padding:12px 15px;border:2px solid var(--tier);border-radius:9px;color:var(--tier-light);background:linear-gradient(135deg,#0a142ddf,#17202fe8);box-shadow:0 0 13px var(--tier-glow),inset 0 0 16px var(--tier-glow),0 5px 0 #071015;font-size:clamp(13px,1.6vw,17px);font-weight:1000;letter-spacing:.015em;text-shadow:0 0 11px var(--tier-glow);animation:wd-rarity-pop .75s .16s both,wd-rarity-glow 3s 1.2s ease-in-out infinite}
+.wd-result .wd-result-rank::before,.wd-result .wd-result-rank::after{content:"✦";font-size:15px;color:var(--tier);text-shadow:0 0 14px var(--tier-glow);animation:wd-twinkle 2.8s infinite}
+.wd-result .wd-result-rank::after{animation-delay:.8s}
+.wd-result.wd-rarity-gold .wd-result-rank{background:linear-gradient(135deg,#57360de8,#a67116a8,#1f170ce8);color:#fff4b5}
+.wd-result.wd-rarity-red .wd-result-rank{background:linear-gradient(135deg,#500c1aed,#ad1a23c8,#150b18ed);color:#ffdee0}
+.wd-result .wd-meter>div{background:linear-gradient(90deg,var(--tier-dark),var(--tier),var(--tier-light));box-shadow:0 0 15px var(--tier-glow)}
+.wd-result .wd-stats-grid .wd-stat-amount b{color:var(--tier-dark)}
+.wd-result .wd-stats-grid .wd-stat-pct{color:var(--tier-dark);border-color:var(--tier-glow);background:color-mix(in srgb,var(--tier) 11%,white)}
+.wd-result .wd-stats-grid .wd-stat-track>div{background:linear-gradient(90deg,var(--tier-dark),var(--tier))}
+.wd-result.wd-rarity-red .wd-stats-grid .wd-stat{border-color:#f2c6c8}
+.wd-result.wd-rarity-gold .wd-stats-grid .wd-stat{border-color:#eddcb2}
+@keyframes wd-twinkle{0%,100%{opacity:.35;transform:scale(.85)}50%{opacity:1;transform:scale(1.1)}}
+@keyframes wd-score-reveal{from{opacity:.2;transform:translateY(18px) scale(.9);filter:blur(6px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes wd-rarity-pop{0%{opacity:0;transform:translateY(20px) scale(.74)}70%{opacity:1;transform:translateY(-3px) scale(1.07)}100%{opacity:1;transform:none}}
+@keyframes wd-rarity-glow{0%,100%{box-shadow:0 0 9px var(--tier-glow),inset 0 0 10px var(--tier-glow)}50%{box-shadow:0 0 26px var(--tier-glow),inset 0 0 24px var(--tier-glow)}}
+@keyframes wd-scene-in{from{opacity:.4;transform:scale(1.13)}to{opacity:1;transform:scale(1.04)}}
+@media(max-width:700px){.wd-leaderboard-panel{min-height:0}.wd-ranking-entry{padding:15px}.wd-ranking-submit{width:100%}.wd-result .wd-scorecard{min-height:265px;padding:22px 18px}.wd-result .wd-score-value{font-size:clamp(37px,8vw,65px)}.wd-result .wd-result-rank{font-size:13px;padding:10px 12px}}
+@media(prefers-reduced-motion:reduce){.wd-result .wd-score-value,.wd-result .wd-result-rank,.wd-result .wd-scorecard::before,.wd-leaderboard-sparks span,.wd-result .wd-result-rank::before,.wd-result .wd-result-rank::after{animation:none!important;transition:none!important}}
