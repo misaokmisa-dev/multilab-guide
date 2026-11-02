@@ -586,40 +586,78 @@ function collectStats(stats){
  const categories=[];
  for(const [cat,all] of Object.entries(stats||{})){
   if(!all||typeof all!=='object'||Array.isArray(all))continue;
-  const entries=Object.entries(all).filter(([k,v])=>typeof v==='number'&&Number.isFinite(v)).map(([key,value])=>({
-   key,value,cat,name:prettyKey(key),
-   formatted:displayValue(cat,key,value),
-   search:(key+' '+prettyKey(key)+' '+(titles[cat]||cat)).toLocaleLowerCase()
-  })).sort((a,b)=>b.value-a.value||a.key.localeCompare(b.key));
+  const entries=Object.entries(all).filter(([k,v])=>typeof v==='number'&&Number.isFinite(v)).map(([key,value])=>{
+   const identity=resolveIdentity(cat,key);
+   return {key,value,cat,name:identity.name,slug:identity.slug,icon:identity.icon,
+    formatted:displayValue(cat,key,value),
+    search:(key+' '+identity.name+' '+(titles[cat]||cat)).normalize('NFKC').toLocaleLowerCase()
+   };
+  }).sort((a,b)=>b.value-a.value||a.key.localeCompare(b.key));
   if(entries.length)categories.push({name:cat,title:titles[cat]||cat,count:entries.length,entries});
  }
- categories.sort((a,b)=>{const order=Object.keys(titles);const i=order.indexOf(a.name),j=order.indexOf(b.name);return (i<0?999:i)-(j<0?999:j)});
+ categories.sort((a,b)=>{
+  const order=Object.keys(titles),i=order.indexOf(a.name),j=order.indexOf(b.name);
+  return (i<0?999:i)-(j<0?999:j);
+ });
  return categories;
 }
 let indexed=[];
+function renderStatsRow(item){
+ const row=document.createElement('div');row.className='wd-stat-row';
+ const left=document.createElement('div');left.className='wd-stat-entry';
+ if(item.icon){
+  const icon=document.createElement('span');icon.className='wd-stat-icon';
+  const img=document.createElement('img');img.src=item.icon.src;
+  img.width=37;img.height=37;img.alt=item.name+'のMinecraftゲーム画像';
+  img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';
+  const secondary=item.icon.fallback;
+  img.addEventListener('error',()=>{
+   if(secondary&&img.src!==secondary){img.src=secondary;return}
+   img.remove();icon.textContent='▣';icon.classList.add('wd-stat-icon-missing');
+   icon.title='画像を取得できませんでした';
+  });
+  icon.append(img);left.append(icon);
+ }
+ const col=document.createElement('div');col.className='wd-stat-description';
+ let label;
+ if(item.slug){
+  label=document.createElement('a');label.href='/minecraft/strategy/items/detail/'+encodeURIComponent(item.slug)+'.html';
+  label.className='wd-stat-item-link';
+ }else label=document.createElement('b');
+ label.textContent=item.name;
+ const code=document.createElement('small');code.textContent=item.key;
+ col.append(label,code);left.append(col);
+ const n=document.createElement('strong');n.className='wd-stat-number';n.textContent=item.formatted;
+ row.append(left,n);return row;
+}
 function displayGroups(query){
- const list=$('wd-stat-groups'),fragment=document.createDocumentFragment(),needle=query.trim().toLocaleLowerCase();
+ const list=$('wd-stat-groups'),fragment=document.createDocumentFragment(),needle=query.trim().normalize('NFKC').toLocaleLowerCase();
  let visible=0;
  for(const group of indexed){
   const entries=needle?group.entries.filter(x=>x.search.includes(needle)):group.entries;
   if(!entries.length)continue;
   visible+=entries.length;
-  const details=document.createElement('details');details.className='wd-stat-group';details.open=!!needle||group.name==='minecraft:custom';
+  const details=document.createElement('details');details.className='wd-stat-group';
+  const startOpen=!!needle||group.name==='minecraft:custom';
+  details.open=startOpen;
   const summary=document.createElement('summary');summary.className='wd-stat-group-head';
   const title=document.createElement('strong');title.textContent=group.title;
   const amount=document.createElement('span');amount.textContent=fmt(entries.length)+' 項目';
   const arrow=document.createElement('span');arrow.className='wd-stat-group-arrow';arrow.textContent='⌄';
   summary.append(title,amount,arrow);
   const items=document.createElement('div');items.className='wd-stat-items';
-  for(const item of entries){
-   const row=document.createElement('div');row.className='wd-stat-row';
-   const col=document.createElement('div');col.className='wd-stat-description';
-   const name=document.createElement('b');name.textContent=item.name;
-   const code=document.createElement('small');code.textContent=item.key;
-   col.append(name,code);
-   const n=document.createElement('strong');n.className='wd-stat-number';n.textContent=item.formatted;
-   row.append(col,n);items.append(row);
-  }
+  // Build image-backed rows only when expanded. No unnecessary hundreds of
+  // network image requests during initial scoring or when sections are closed.
+  let mounted=false;
+  const fill=()=>{
+   if(mounted)return;
+   mounted=true;
+   const batch=document.createDocumentFragment();
+   for(const item of entries)batch.append(renderStatsRow(item));
+   items.append(batch);
+  };
+  details.addEventListener('toggle',()=>{if(details.open)fill()});
+  if(startOpen)fill();
   details.append(summary,items);fragment.append(details);
  }
  list.replaceChildren(fragment);$('wd-stat-empty').hidden=visible>0;
