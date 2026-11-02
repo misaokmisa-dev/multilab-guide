@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Minecraft ワールド採点｜ワールド発展度診断 | MULTI LAB GUIDE</title>
-<meta name="description" content="あなたのMinecraftワールドの発展度をスコア化。Java版のワールドファイル（statsのJSON）から診断、称号とスコアカードをXでシェア。">
+<title>Minecraft ワールド採点｜ワールド発展度採点 | MULTI LAB GUIDE</title>
+<meta name="description" content="あなたのMinecraftワールドの発展度をスコア化。Java版のワールドファイル（statsのJSON）から採点、称号とスコアカードをXでシェア。">
 <link rel="canonical" href="https://mlabg.com/minecraft/world-development.html">
 <link rel="icon" type="image/png" href="/favicon.png?v=20261026">
-<meta property="og:title" content="Minecraft ワールド採点｜ワールド発展度診断">
+<meta property="og:title" content="Minecraft ワールド採点｜ワールド発展度採点">
 <meta property="og:description" content="自分のワールドをスコアでチェック。結果を友達と比べよう！">
 <meta property="og:type" content="website"><meta property="og:url" content="https://mlabg.com/minecraft/world-development.html">
 <meta property="og:image" content="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/cherrygrove-header.jpg">
@@ -45,8 +45,8 @@
 <a class="mlg-site-context-link" href="/minecraft/">マイクラTOP</a>
 <a class="mlg-site-context-link" href="/minecraft/strategy/">攻略情報</a>
 <a class="mlg-site-context-link" href="/minecraft/mod-ranking">人気MOD</a>
-<a class="mlg-site-context-link" href="/minecraft/mod-diagnosis.html">MOD診断</a>
-<a class="mlg-site-context-link" href="/minecraft/server.html">サーバー診断</a>
+<a class="mlg-site-context-link" href="/minecraft/mod-diagnosis.html">MOD採点</a>
+<a class="mlg-site-context-link" href="/minecraft/server.html">サーバー採点</a>
 <a class="mlg-site-context-link" href="/minecraft/mods/">MODガイド</a>
 <a class="mlg-site-context-link" href="/minecraft/server.html#articles">解説記事</a>
 </nav></div></header>
@@ -55,12 +55,12 @@
 <span class="as-slot-label">広告</span>
 <div class="as-ad-content"><script src="/top-ad-loader.js"></script></div>
 </aside>
-<nav class="wd-crumb" aria-label="パンくず"><a href="/minecraft/">Minecraft</a><span>›</span><a href="/minecraft/strategy/">攻略情報</a><span>›</span><span>ワールド発展度診断</span></nav>
+<nav class="wd-crumb" aria-label="パンくず"><a href="/minecraft/">Minecraft</a><span>›</span><a href="/minecraft/strategy/">攻略情報</a><span>›</span><span>ワールド発展度採点</span></nav>
 <section class="wd-hero" aria-labelledby="wd-title">
 <div class="wd-hero-copy"><div class="wd-kicker">MINECRAFT / WORLD SCORE</div>
 <h1 id="wd-title">Minecraft<br><em>ワールド採点</em></h1>
 <p class="wd-hero-sub">何もない世界から、どこまで来た？<br>あなたのワールドをスコアにしよう。</p>
-<a class="wd-primary" href="#start">発展度を診断する <span class="wd-arrow" aria-hidden="true">↗</span></a>
+<a class="wd-primary" href="#start">発展度を採点する <span class="wd-arrow" aria-hidden="true">↗</span></a>
 <div class="wd-hero-tiny"><span>無料</span><span>アカウント不要</span><span>Java版対応</span></div>
 </div>
 <div class="wd-board" aria-label="ワールドスコアプレビュー">
@@ -73,7 +73,7 @@
 <div class="wd-underhero"><span class="wd-mini-label"><i></i> WORLD ANALYZER / JAVA EDITION</span><span>スコアは最大 100,000 pt</span></div>
 <div class="wd-main" id="start">
 <section class="wd-panel wd-form-panel" aria-labelledby="wd-form-title">
-<div class="wd-form-head"><span class="wd-step-number">01</span><div><div class="wd-overline">START YOUR SCAN</div><h2 id="wd-form-title">ワールドを診断する</h2></div></div>
+<div class="wd-form-head"><span class="wd-step-number">01</span><div><div class="wd-overline">START YOUR SCAN</div><h2 id="wd-form-title">ワールドを採点する</h2></div></div>
 <div class="wd-form-body">
 <div class="wd-display-name-field">
 <div class="wd-display-name-head">
@@ -95,7 +95,7 @@
 <input id="stats" type="file" accept=".json,application/json" hidden aria-label="統計JSONを直接選択">
 <div id="folder-picked-note" class="wd-folder-feedback" role="status" aria-live="polite"></div>
 <div id="player-select-box" class="wd-player-choice" hidden>
-<label for="player-file-list">どのワールド・プレイヤーを診断する？</label>
+<label for="player-file-list">どのワールド・プレイヤーを採点する？</label>
 <select id="player-file-list" class="wd-input"></select>
 <span>データが複数ある場合は、対象を選択できます。</span>
 </div>
@@ -116,7 +116,7 @@
 </div>
 </details>
 </div>
-<div class="wd-form-foot"><button id="calculate" type="button" class="wd-primary"><span class="wd-cta-label">発展度を診断する</span><span class="wd-arrow" aria-hidden="true">↗</span></button><span class="wd-form-note">ファイル本体は送信しません</span></div>
+<div class="wd-form-foot"><button id="calculate" type="button" class="wd-primary"><span class="wd-cta-label">発展度を採点する</span><span class="wd-arrow" aria-hidden="true">↗</span></button><span class="wd-form-note">ファイル本体は送信しません</span></div>
 <div id="status" class="wd-error" role="status" aria-live="polite"></div>
 </div>
 </section>
@@ -139,7 +139,7 @@
 <div class="as-ad-content"><script src="https://adm.shinobi.jp/s/8f484decc94c10e43e237e6221290bc5"></script></div>
 </aside>
 <section class="wd-result" id="result" aria-live="polite" hidden>
-<div class="wd-result-head"><b>診断結果が出ました！</b><small>WORLD DEVELOPMENT RESULT</small></div>
+<div class="wd-result-head"><b>採点結果が出ました！</b><small>WORLD DEVELOPMENT RESULT</small></div>
 <div class="wd-scorecard wd-rarity-green" id="score-card">
 <div class="wd-scorecard-top"><span>★ WORLD SCORE / MULTI LAB GUIDE</span><span>RESULT</span></div>
 <div class="wd-rarity-eyebrow" id="wd-rarity-eyebrow">COMMON / WORLD RARITY</div>
@@ -419,10 +419,10 @@ function calculate(data){
 }
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('ワールドファイルをドロップするか、クリックして選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
-const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='診断中…';
+const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='採点中…';
 try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldStatsShow?.(data,r);void submitAnonymizedScore(r,current)}
 catch(e){error('読み込めませんでした。'+(e instanceof SyntaxError?'JSON形式を確認してください。':(e.message||'ファイルをご確認ください。')))}
-finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を診断する'}}
+finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を採点する'}}
 function render(r){
 const tier=rarityForScore(r.score),panel=$('result'),scoreCard=$('score-card');
 for(const t of rarityTiers){panel.classList.remove('wd-rarity-'+t.key);scoreCard.classList.remove('wd-rarity-'+t.key)}
@@ -473,7 +473,7 @@ $('save-card').addEventListener('click',async()=>{
   if(!window.htmlToImage?.toPng)throw Error('画像保存機能を読み込めませんでした。ページを再読み込みしてお試しください。');
   await document.fonts.ready;
   const width=card.getBoundingClientRect().width;
-  if(!width)throw Error('診断結果が表示されていません。');
+  if(!width)throw Error('採点結果が表示されていません。');
   // Reuse the full-resolution visible node, not a newly constructed canvas.
   const uri=await window.htmlToImage.toPng(card,{
    cacheBust:true,pixelRatio:2,
@@ -482,7 +482,7 @@ $('save-card').addEventListener('click',async()=>{
   });
   const link=document.createElement('a');link.href=uri;link.download='minecraft-world-score.png';
   document.body.append(link);link.click();link.remove();
-  status.textContent='画面の診断結果カードをPNGで保存しました。';
+  status.textContent='画面の採点結果カードをPNGで保存しました。';
  }catch(e){
   console.error('Minecraft scorecard PNG export failed',e);
   status.textContent='画像保存に失敗しました。ページを再読み込みしてお試しください。';
