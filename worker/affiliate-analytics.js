@@ -145,7 +145,7 @@ export default {
    }catch(e){return json({ok:false,message:'Invalid JSON'},400)}
    const caps=[60000,15000,10000,8000,7000];
    const goodInteger=(n,max)=>Number.isSafeInteger(n)&&n>=0&&n<=max;
-   if(body?.version!=='wd-score-v2'||!Array.isArray(body.points)||body.points.length!==5
+   if(!['wd-score-v2','wd-score-v3'].includes(body?.version)||!Array.isArray(body.points)||body.points.length!==5
      ||!body.points.every((p,i)=>goodInteger(p,caps[i]))
      ||!goodInteger(body.score,100000)||body.points.reduce((a,b)=>a+b,0)!==body.score
      ||!goodInteger(body.placed,1000000000)
@@ -157,7 +157,7 @@ export default {
    if(body.grade!==expected)return json({ok:false,message:'スコアと称号が一致しません'},400);
    try{
     env.MLG_EVENTS.writeDataPoint({
-     blobs:['world_score',body.grade,'wd-score-v2',new Date().toISOString().slice(0,10)],
+     blobs:['world_score',body.grade,body.version,new Date().toISOString().slice(0,10)],
      doubles:[body.score,...body.points,body.placed,body.hours,body.distance,1],
      indexes:['world_score']
     });
