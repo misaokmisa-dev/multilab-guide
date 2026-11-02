@@ -7,9 +7,9 @@
   const meta = {
     'gaming-pc.html': {name:'ゲーミングPC',fields:['CPU','GPU','メモリ']},
     'gaming-laptop.html': {name:'ゲーミングノートPC',fields:['CPU','GPU','メモリ','画面Hz']},
-    'monitors.html': {name:'ゲーミングモニター',fields:['サイズ','解像度','Hz']},
+    'monitors.html': {name:'ゲーミングモニター',fields:['サイズ','解像度','Hz','タイプ']},
     'mice.html': {name:'ゲーミングマウス',fields:['重量','接続','特長']},
-    'keyboards.html': {name:'ゲーミングキーボード',fields:['配列','サイズ','機能']},
+    'keyboards.html': {name:'ゲーミングキーボード',fields:['配列','サイズ','スイッチ','機能','タイプ']},
     'audio.html': {name:'ヘッドセット・イヤホン',fields:['接続','特長','マイク']}
   };
   const esc = value => String(value == null ? '' : value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -131,7 +131,7 @@
       const sp=specs(card);
       const price=card.querySelector('.rank-price-number')?.textContent.trim()||'掲載なし';
       const cells=config.fields.map(field=>'<td>'+esc(sp[field]||'—')+'</td>').join('');
-      return '<tr'+(i>=5?' hidden':'')+'><th scope="row" class="mlg-compare-item"><small>'+esc(i+1)+'位</small>'+esc(name)+'</th>'+cells+'<td class="mlg-compare-price">'+esc(price)+'</td><td><a class="mlg-compare-detail" href="#mlg-product-'+(i+1)+'" data-mlg-funnel="compare-to-product">詳細を見る ↓</a></td></tr>';
+      return '<tr'+(i>=5?' hidden':'')+'><th scope="row" class="mlg-compare-item"><small>'+esc(i+1)+'位</small>'+esc(name)+'</th>'+cells+'<td class="mlg-compare-price">'+esc(price)+'</td><td><a class="mlg-compare-detail" href="#mlg-product-'+(i+1)+'" data-mlg-funnel="compare-to-product-'+(i+1)+'">詳細を見る ↓</a></td></tr>';
     }).join('');
     section.innerHTML='<div class="mlg-compare-head"><div><span class="mlg-guide-kicker">SPEC COMPARISON / '+esc(config.name)+'</span><h2 id="mlg-compare-title">人気TOP10をスペックでまとめて比較</h2></div><a href="#ranking">商品の詳細・画像は下のランキングへ ↓</a></div><div class="mlg-compare-scroll" role="region" aria-label="'+esc(config.name)+'の商品比較表" tabindex="0"><table class="mlg-compare-table"><caption>'+esc(config.name)+'のランキング掲載10商品比較</caption><thead><tr><th scope="col">順位・商品</th>'+config.fields.map(f=>'<th scope="col">'+esc(f)+'</th>').join('')+'<th scope="col">掲載参考価格</th><th scope="col">詳細</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+(cards.length>5?'<button type="button" class="mlg-compare-more" aria-expanded="false">残り'+(cards.length-5)+'商品も比較する ↓</button>':'')+'<p class="mlg-compare-note">価格はサイト掲載の参考価格です（未掲載は「掲載なし」）。Amazonの現在価格・在庫を表すものではありません。詳しい仕様は各商品ページをご確認ください。</p>';
     const btn=section.querySelector('.mlg-compare-more');
