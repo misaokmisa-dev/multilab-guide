@@ -319,9 +319,9 @@ body.wd-body a{text-underline-offset:4px}
 .wd-submit-status{flex-basis:100%;font-size:11px;color:#58488d;font-weight:800}
 .wd-result{--tier:#36e678;--tier-light:#baffc3;--tier-dark:#084f21;--tier-glow:#37ff8355;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/cherrygrove-header.jpg")}
 .wd-result.wd-rarity-blue{--tier:#48bbff;--tier-light:#b7edff;--tier-dark:#064e7d;--tier-glow:#41a9ff80;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/CREATE_BuildAlmostAnything.png")}
-.wd-result.wd-rarity-purple{--tier:#c47aff;--tier-light:#f1d4ff;--tier-dark:#6a1c9d;--tier-glow:#ac5cffaa;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/SURVIVE.png")}
-.wd-result.wd-rarity-gold{--tier:#ffd65c;--tier-light:#fff2ba;--tier-dark:#895204;--tier-glow:#ffcd52af;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Tricky-Trials_1280x768.jpg")}
-.wd-result.wd-rarity-red{--tier:#ff5e6b;--tier-light:#ffd4a1;--tier-dark:#8d1a25;--tier-glow:#ff3b4caa;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Nether-Update_1280x768.jpg")}
+.wd-result.wd-rarity-purple{--tier:#c47aff;--tier-light:#f1d4ff;--tier-dark:#6a1c9d;--tier-glow:#ac5cffaa;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Tricky-Trials_1280x768.jpg")}
+.wd-result.wd-rarity-gold{--tier:#ffd65c;--tier-light:#fff2ba;--tier-dark:#895204;--tier-glow:#ffcd52af;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Nether-Update_1280x768.jpg")}
+.wd-result.wd-rarity-red{--tier:#ff5e6b;--tier-light:#ffd4a1;--tier-dark:#8d1a25;--tier-glow:#ff3b4caa;--tier-scene:url("https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/enderdragon-ingame.jpg")}
 .wd-result .wd-scorecard{min-height:345px;border:2px solid var(--tier);box-shadow:0 0 0 1px var(--tier-glow),0 16px 48px #0b122e38,0 0 40px var(--tier-glow);background:#071416;transition:border-color .25s,box-shadow .25s}
 .wd-result .wd-scorecard::before{background-image:var(--tier-scene);background-position:center 47%;background-size:cover;filter:saturate(1.1) contrast(1.05);transform:scale(1.04);animation:wd-scene-in 1.3s ease-out both}
 .wd-result .wd-scorecard::after{background:linear-gradient(101deg,#071015f7 0%,#071015df 44%,#07101591 75%,#071015a8 100%),linear-gradient(0deg,#06101fd9,transparent 40%)}
@@ -354,3 +354,17 @@ body.wd-body a{text-underline-offset:4px}
 .wd-result.wd-rarity-gold .wd-scorecard::before{filter:saturate(1.28) contrast(1.04)}
 .wd-result.wd-rarity-purple .wd-scorecard::before{filter:saturate(1.18) contrast(1.08)}
 @media(max-width:550px){.wd-rarity-eyebrow{font-size:9px;letter-spacing:.06em}}
+
+/* Score breakdown: each category independently signals how close it is to its own maximum. */
+.wd-result .wd-stats-grid .wd-stat.wd-stat-tier-green{--part:#179e43;--part-bright:#4fe486;--part-border:#a6e9bd;--part-pale:#e9fff0;--part-glow:#20c45622}
+.wd-result .wd-stats-grid .wd-stat.wd-stat-tier-blue{--part:#147bc4;--part-bright:#55bcff;--part-border:#a8d9fc;--part-pale:#eaf6ff;--part-glow:#168dff24}
+.wd-result .wd-stats-grid .wd-stat.wd-stat-tier-purple{--part:#8733cc;--part-bright:#c57bff;--part-border:#d9b4f6;--part-pale:#f7ecff;--part-glow:#a55bef29}
+.wd-result .wd-stats-grid .wd-stat.wd-stat-tier-gold{--part:#a4680a;--part-bright:#ffce58;--part-border:#edcf88;--part-pale:#fffae8;--part-glow:#e5ac222e}
+.wd-result .wd-stats-grid .wd-stat.wd-stat-tier-red{--part:#c1263d;--part-bright:#ff6673;--part-border:#f1a4ad;--part-pale:#fff0f1;--part-glow:#f23b532b}
+.wd-result .wd-stats-grid .wd-stat[class*="wd-stat-tier-"]{border:1.5px solid var(--part-border);background:linear-gradient(150deg,#fff 27%,var(--part-pale) 100%);box-shadow:0 3px 18px var(--part-glow);transition:border-color .3s,box-shadow .3s}
+.wd-result .wd-stats-grid .wd-stat[class*="wd-stat-tier-"] .wd-stat-amount b{color:var(--part);text-shadow:0 2px 10px var(--part-glow)}
+.wd-result .wd-stats-grid .wd-stat[class*="wd-stat-tier-"] .wd-stat-pct{background:var(--part-pale);color:var(--part);border-color:var(--part-border)}
+.wd-result .wd-stats-grid .wd-stat[class*="wd-stat-tier-"] .wd-stat-track>div{background:linear-gradient(90deg,var(--part),var(--part-bright));box-shadow:0 0 8px var(--part-glow)}
+.wd-result .wd-stats-grid .wd-stat[class*="wd-stat-tier-"] .wd-stat-label{color:var(--part)}
+/* The podium is a decorative silhouette until real rankings are published. */
+.wd-leaderboard .wd-podium-rank{font-size:0}
