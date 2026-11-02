@@ -8,6 +8,11 @@ const maxValues=[35000,20000,20000,15000,10000];
 function total(o){return Object.values(o||{}).reduce((a,n)=>a+(typeof n==='number'&&Number.isFinite(n)&&n>0?n:0),0)}
 function normalize(n,target,max){return Math.round(Math.min(max,Math.log1p(Math.max(0,n))/Math.log1p(target)*max))}
 function error(s){$('status').textContent=s}
+$('wd-copy-path').addEventListener('click',async()=>{
+const path=$('wd-saves-path').textContent,btn=$('wd-copy-path');
+try{await navigator.clipboard.writeText(path);btn.textContent='コピー済み';setTimeout(()=>{btn.textContent='コピー'},2000)}
+catch(e){window.prompt('このパスをコピーして Windows の「ファイル名を指定して実行」に貼り付けてください',path)}
+});
 function setFile(next){file=next||null;const zone=$('stats-drop'),name=$('stats-filename'),meta=$('stats-meta');zone.classList.toggle('is-selected',!!file);name.textContent=file?file.name:'統計ファイルを選択';meta.textContent=file?'ファイルを読み込みました':'クリック または ドラッグ＆ドロップ'}
 $('stats').addEventListener('change',e=>setFile(e.target.files[0]));
 for(const event of ['dragenter','dragover']){$('stats-drop').addEventListener(event,e=>{e.preventDefault();$('stats-drop').classList.add('is-over')})}
