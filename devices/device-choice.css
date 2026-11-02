@@ -69,3 +69,10 @@
 .dv-body .rank-comparison-price .rank-price-small{display:flex;flex-wrap:wrap;align-items:center;gap:3px;font-size:11px}
 .dv-body .rank-comparison-price .rank-price-small a{font-size:11px;color:#865016;font-weight:850;text-decoration:underline;text-underline-offset:2px}
 .dv-body .rank-comparison-price .rank-price-different-model{display:block;font-size:10px;line-height:1.6;color:#80532b;margin-top:7px;font-weight:750}
+
+/* Inline shortcuts for the relocated buying guides and dynamically generated comparison. */
+.dv-body .mlg-rank-shortcuts{display:flex;align-items:center;flex-wrap:wrap;gap:8px 11px;margin:2px 0 12px}
+.dv-body .mlg-rank-shortcuts a{display:inline-flex;align-items:center;justify-content:center;min-height:39px;padding:8px 13px;border:1px solid #a6c8e9;border-radius:8px;background:#e9f3ff;color:#164d93!important;text-decoration:none!important;font-weight:850;font-size:12px;line-height:1.4;transition:background .15s,border-color .15s}
+.dv-body .mlg-rank-shortcuts a:hover{background:#d2e8ff;border-color:#458bd6}
+.dv-body #criteria,.dv-body #mlg-compare,.dv-body .rank-item[id^="mlg-product-"]{scroll-margin-top:92px}
+@media(max-width:600px){.dv-body .mlg-rank-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.dv-body .mlg-rank-shortcuts a{padding:8px 7px;font-size:11px}.dv-body .mlg-rank-shortcuts a:first-child{grid-column:1/-1}}
