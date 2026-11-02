@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="/ad-system.css">
 <script defer src="/ad-config.js"></script>
 <script defer src="/ad-system.js"></script>
-<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102displayname1">
+<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102statshighlight2">
 <style>
 .wd-breakdown-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:22px 0 11px;padding:0 3px}
 .wd-breakdown-head h3{font-size:clamp(18px,2.5vw,22px);font-weight:1000;letter-spacing:-.04em;color:#1b482b;margin:0}
@@ -878,10 +878,16 @@ function displayGroups(query){
   const startOpen=!!needle||group.name==='minecraft:custom'||group.name==='minecraft:mined';
   details.open=startOpen;
   const summary=document.createElement('summary');summary.className='wd-stat-group-head';
+  const symbol=document.createElement('span');symbol.className='wd-stat-group-symbol';symbol.setAttribute('aria-hidden','true');symbol.textContent='✦';
+  const titleWrap=document.createElement('span');titleWrap.className='wd-stat-group-heading';
+  const small=document.createElement('small');small.className='wd-stat-group-kicker';small.textContent='WORLD RECORD / STATISTICS';
   const title=document.createElement('strong');title.textContent=group.title;
-  const amount=document.createElement('span');amount.textContent=fmt(entries.length)+' 項目';
-  const arrow=document.createElement('span');arrow.className='wd-stat-group-arrow';arrow.textContent='⌄';
-  summary.append(title,amount,arrow);
+  titleWrap.append(small,title);
+  const amount=document.createElement('span');amount.className='wd-stat-group-count';amount.textContent=fmt(entries.length)+' 項目';
+  const arrow=document.createElement('span');arrow.className='wd-stat-group-arrow';arrow.setAttribute('aria-hidden','true');arrow.textContent='⌄';
+  summary.append(symbol,titleWrap,amount,arrow);
+  const accent=document.createElement('div');accent.className='wd-stat-group-accent';accent.setAttribute('aria-hidden','true');
+  for(let i=0;i<10;i++)accent.append(document.createElement('i'));
   const items=document.createElement('div');items.className='wd-stat-items';
   // Build image-backed rows only when expanded. No unnecessary hundreds of
   // network image requests during initial scoring or when sections are closed.
@@ -895,7 +901,7 @@ function displayGroups(query){
   };
   details.addEventListener('toggle',()=>{if(details.open)fill()});
   if(startOpen)fill();
-  details.append(summary,items);fragment.append(details);
+  details.append(summary,accent,items);fragment.append(details);
  }
  list.replaceChildren(fragment);$('wd-stat-empty').hidden=visible>0;
 }
