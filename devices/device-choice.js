@@ -165,8 +165,8 @@
   const run=()=>{
     if(isHub)hub();else rank();
     // Anchors generated after DOM parsing need an explicit initial scroll.
-    if(location.hash==='#mlg-compare'){
-      requestAnimationFrame(()=>document.getElementById('mlg-compare')?.scrollIntoView({block:'start'}));
+    if(/^#mlg-(?:compare|product-\d+)$/.test(location.hash)){
+      requestAnimationFrame(()=>document.getElementById(location.hash.slice(1))?.scrollIntoView({block:'start'}));
     }
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
