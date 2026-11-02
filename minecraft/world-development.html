@@ -748,7 +748,7 @@ function densityProfile(value,hours,perHour){
 function timeProfile(hours){
  const play=Math.max(0,Number(hours)||0);
  const stage=play>=30000?4:play>=10000?3:play>=3000?2:play>=500?1:0;
- return {stage,label:['序盤','継続プレイ','長期プレイ','超長期プレイ','伝説級の累計時間'][stage],note:'累計プレイ時間'};
+ return {stage,label:['積み重ね中','継続プレイ','長期プレイ','超長期プレイ','伝説級の累計時間'][stage],note:'累計プレイ時間'};
 }
 function dayProfile(days,hours){
  const play=Math.max(0,Number(hours)||0);
