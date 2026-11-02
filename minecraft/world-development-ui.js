@@ -123,21 +123,6 @@ async function scanWorldHandle(root){
   }
   return found;
 }
-$('pick-world-folder').addEventListener('click',()=>{
-  error('');
-  if(typeof window.showDirectoryPicker!=='function'){$('world-folder-fallback').click();return}
-  // The picker can remember this site's most recently selected directory;
-  // web pages cannot force the dialog to an arbitrary local filesystem path.
-  window.showDirectoryPicker({id:'mlg-world-folder',mode:'read'})
-    .then(async handle=>{
-      $('folder-picked-note').textContent='フォルダ内を確認しています…';
-      const items=await scanWorldHandle(handle);
-      await selectCandidates(items);
-    }).catch(e=>{
-      if(e.name==='AbortError'){$('folder-picked-note').textContent='';return}
-      error('フォルダを読み取れませんでした。「ファイル一覧から選ぶ（.json）」をご利用ください。');
-    });
-});
 // Windows/Edge/Chrome may otherwise reopen the last directory chosen for an
 // unrelated file picker (such as the removed region .mca analyzer).
 // A dedicated picker id starts in Documents the first time, then remembers
@@ -171,7 +156,6 @@ async function openStatsJsonPicker(){
   error('JSONファイルの選択に失敗しました。もう一度お試しください。');
  }
 }
-$('pick-folder-basic').addEventListener('click',openStatsJsonPicker);
 $('world-folder-fallback').addEventListener('change',async e=>{
   const files=Array.from(e.target.files||[]);
   const found=files.filter(x=>/(?:^|\/)(?:players\/stats|stats)\/[^/]+\.json$/i.test(x.webkitRelativePath||'')).map(x=>{
@@ -185,7 +169,6 @@ $('world-folder-fallback').addEventListener('change',async e=>{
   await selectCandidates(found);
   e.target.value='';
 });
-$('pick-json-file').addEventListener('click',openStatsJsonPicker);
 
 const dropZone=$('stats-drop');
 async function acceptStatsFile(incoming){
@@ -318,20 +301,32 @@ $('wd-world-display-name').addEventListener('input',()=>{
 $('calculate').addEventListener('click',run);
 $('share').addEventListener('click',()=>{if(shareText){const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(shareText);window.open(url,'_blank','noopener,noreferrer')}});
 $('copy').addEventListener('click',async()=>{if(!shareText)return;try{await navigator.clipboard.writeText(shareText);$('copy').textContent='コピーしました';setTimeout(()=>$('copy').textContent='テキストをコピー',2200)}catch(e){$('copy').textContent='コピーに失敗しました'}});
-function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}
-$('save-card').addEventListener('click',()=>{if(!lastResult)return;const r=lastResult;const c=document.createElement('canvas');c.width=1200;c.height=630;const g=c.getContext('2d');if(!g)return;
-const tier=rarityForScore(r.score);const bg=g.createLinearGradient(0,0,1200,630);bg.addColorStop(0,tier.dark);bg.addColorStop(.6,'#101724');bg.addColorStop(1,tier.dark);g.fillStyle=bg;g.fillRect(0,0,1200,630);
-for(let x=0;x<1200;x+=34){for(let y=0;y<630;y+=34){if((x/34+y/34)%5===0){g.fillStyle='#81ed8e0b';g.fillRect(x,y,30,30)}}}
-g.strokeStyle=tier.c;g.lineWidth=3;roundRect(g,32,32,1136,566,22);g.stroke();
-g.fillStyle=tier.light;g.font='900 24px system-ui,sans-serif';g.textAlign='left';g.fillText('MULTI LAB GUIDE   /   WORLD SCORE',80,103);
-g.fillStyle='#fff';g.font='900 58px system-ui,sans-serif';g.fillText('ワールド発展度',80,193);
-g.font='700 29px system-ui,sans-serif';g.fillStyle='#d8f4de';const worldName=r.world.length>23?r.world.slice(0,23)+'…':r.world;g.fillText(worldName,83,251);
-g.textAlign='left';g.fillStyle=tier.c;g.font='900 105px ui-monospace,monospace';g.fillText(format(r.score)+' pt',70,395);
-g.fillStyle='#e8fce7';g.font='900 22px system-ui,sans-serif';g.fillText('/ 100,000 pt',90,436);
-g.fillStyle=tier.c;roundRect(g,80,465,360,66,13);g.fill();g.fillStyle=tier.dark;g.font='900 27px system-ui,sans-serif';g.fillText(r.grade,102,508);
-g.fillStyle='#bbdbcb';g.font='700 19px system-ui,sans-serif';g.fillText('mlabg.com/minecraft/world-development.html',80,570);
-g.textAlign='right';g.fillStyle='#ffffff23';g.font='900 400px system-ui,sans-serif';g.fillText('✦',1140,425);
-c.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='minecraft-world-score.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)},'image/png')});
+// Export the *actual displayed result card*: DOM styles, tier-specific
+// official scene, glowing score, and rank. Do not redraw a different template.
+$('save-card').addEventListener('click',async()=>{
+ if(!lastResult)return;
+ const button=$('save-card'),status=$('wd-export-status'),card=$('score-card');
+ const original=button.textContent;button.disabled=true;button.textContent='画像を作成中…';
+ status.textContent='';
+ try{
+  if(!window.htmlToImage?.toPng)throw Error('画像保存機能を読み込めませんでした。ページを再読み込みしてお試しください。');
+  await document.fonts.ready;
+  const width=card.getBoundingClientRect().width;
+  if(!width)throw Error('診断結果が表示されていません。');
+  // Reuse the full-resolution visible node, not a newly constructed canvas.
+  const uri=await window.htmlToImage.toPng(card,{
+   cacheBust:true,pixelRatio:2,
+   backgroundColor:'#08141a',skipFonts:true,
+   style:{animation:'none'}
+  });
+  const link=document.createElement('a');link.href=uri;link.download='minecraft-world-score.png';
+  document.body.append(link);link.click();link.remove();
+  status.textContent='画面の診断結果カードをPNGで保存しました。';
+ }catch(e){
+  console.error('Minecraft scorecard PNG export failed',e);
+  status.textContent='画像保存に失敗しました。ページを再読み込みしてお試しください。';
+ }finally{button.disabled=false;button.textContent=original}
+});
 // Submit only score summaries. File paths, raw JSON and world names are never sent.
 const submittedInPage=new Set();
 async function submitAnonymizedScore(r,statsFile){
