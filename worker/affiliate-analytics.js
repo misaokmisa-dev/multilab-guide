@@ -17,6 +17,28 @@ async function auth(request,env) {
 export default {
  async fetch(request,env,ctx) {
   const url=new URL(request.url);
+  // Same-origin proxy for the five fixed official Minecraft result backgrounds.
+  // It prevents browser canvas-export CORS failures; tier values are allowlisted,
+  // never used to fetch an arbitrary user-supplied URL.
+  if(url.pathname==='/api/world-score-scene') {
+   if(request.method!=='GET')return json({error:'Method not allowed'},405);
+   const scenes={
+    green:'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/cherrygrove-header.jpg',
+    blue:'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/CREATE_BuildAlmostAnything.png',
+    purple:'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Tricky-Trials_1280x768.jpg',
+    gold:'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Nether-Update_1280x768.jpg',
+    red:'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/enderdragon-ingame.jpg'
+   };
+   const tier=url.searchParams.get('tier');
+   if(!Object.prototype.hasOwnProperty.call(scenes,tier))return json({error:'Unknown scene'},400);
+   try {
+    const origin=await fetch(scenes[tier],{headers:{accept:'image/*'},signal:AbortSignal.timeout(10000),cf:{cacheEverything:true,cacheTtl:86400}});
+    if(!origin.ok)throw Error('Minecraft image unavailable');
+    const type=origin.headers.get('content-type')||'';
+    if(!/^image\/(?:png|jpeg|webp)$/i.test(type.split(';')[0]))throw Error('Invalid image type');
+    return new Response(origin.body,{status:200,headers:{'content-type':type,'cache-control':'public, max-age=86400','x-content-type-options':'nosniff'}});
+   } catch(_) {return json({error:'Minecraft image temporarily unavailable'},502)}
+  }
   if(url.pathname==='/api/roblox-icon') {
    if(request.method!=='GET')return json({error:'Method not allowed'},405);
    const uid=url.searchParams.get('universeId')||'';
