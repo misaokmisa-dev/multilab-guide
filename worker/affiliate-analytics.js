@@ -197,7 +197,7 @@ export default {
     const score=Number(rawScore);
     if(!Number.isSafeInteger(score)||score>100000)
       return json({error:'点数が範囲外です'},400);
-    if(!env.MLG_SQL)return json({status:'unavailable',message:'集計データに接続できません'},503);
+    if(!env.MLG_SQL)return json({status:'unavailable',message:'集計データに接続できません',debug:url.searchParams.has('diagnose')?'SQL binding is missing':undefined},url.searchParams.has('diagnose')?200:503);
     try{
       const result=await env.MLG_SQL.query({query:`SELECT
         SUM(_sample_interval) AS submissions,
@@ -223,6 +223,7 @@ export default {
       return json({...common,status:'ready',topPercent:Math.round(topPercent*10)/10,
         updatedAt:new Date().toISOString()});
     }catch(err){
+      if(url.searchParams.has('diagnose'))return json({status:'query_error',debug:String(err?.message||err).slice(0,450),retryable:!!err?.retryable});
       return json({status:'unavailable',message:'現在スコア比較を取得できません'},503);
     }
   }
