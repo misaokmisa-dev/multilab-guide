@@ -161,6 +161,12 @@
     if(page==='gaming-pc.html'||page==='gaming-laptop.html')heading.before(diagnosisBanner(false));
     heading.before(compare(page,cards));
   }
-  const run=()=>{if(isHub)hub();else rank();};
+  const run=()=>{
+    if(isHub)hub();else rank();
+    // Anchors generated after DOM parsing need an explicit initial scroll.
+    if(location.hash==='#mlg-compare'){
+      requestAnimationFrame(()=>document.getElementById('mlg-compare')?.scrollIntoView({block:'start'}));
+    }
+  };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
 })();
