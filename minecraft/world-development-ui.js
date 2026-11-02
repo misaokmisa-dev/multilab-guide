@@ -236,10 +236,10 @@ function calculate(data){
 }
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('ワールドファイルをドロップするか、クリックして選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
-const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='診断中…';
+const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='採点中…';
 try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldStatsShow?.(data,r);void submitAnonymizedScore(r,current)}
 catch(e){error('読み込めませんでした。'+(e instanceof SyntaxError?'JSON形式を確認してください。':(e.message||'ファイルをご確認ください。')))}
-finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を診断する'}}
+finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を採点する'}}
 function render(r){
 const tier=rarityForScore(r.score),panel=$('result'),scoreCard=$('score-card');
 for(const t of rarityTiers){panel.classList.remove('wd-rarity-'+t.key);scoreCard.classList.remove('wd-rarity-'+t.key)}
@@ -290,7 +290,7 @@ $('save-card').addEventListener('click',async()=>{
   if(!window.htmlToImage?.toPng)throw Error('画像保存機能を読み込めませんでした。ページを再読み込みしてお試しください。');
   await document.fonts.ready;
   const width=card.getBoundingClientRect().width;
-  if(!width)throw Error('診断結果が表示されていません。');
+  if(!width)throw Error('採点結果が表示されていません。');
   // Reuse the full-resolution visible node, not a newly constructed canvas.
   const uri=await window.htmlToImage.toPng(card,{
    cacheBust:true,pixelRatio:2,
@@ -299,7 +299,7 @@ $('save-card').addEventListener('click',async()=>{
   });
   const link=document.createElement('a');link.href=uri;link.download='minecraft-world-score.png';
   document.body.append(link);link.click();link.remove();
-  status.textContent='画面の診断結果カードをPNGで保存しました。';
+  status.textContent='画面の採点結果カードをPNGで保存しました。';
  }catch(e){
   console.error('Minecraft scorecard PNG export failed',e);
   status.textContent='画像保存に失敗しました。ページを再読み込みしてお試しください。';
