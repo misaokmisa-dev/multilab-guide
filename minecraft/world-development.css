@@ -129,3 +129,36 @@ body.wd-body a{text-underline-offset:4px}
 .wd-find-more code{font:700 11px ui-monospace,monospace}
 .wd-guide-aside-note{font-size:11px;line-height:1.6;color:#718579;margin:12px 0 0;border-top:1px solid #edf2ed;padding-top:12px}
 @media(max-width:560px){.wd-find-guide{padding:14px 12px}.wd-find-header{gap:7px}.wd-find-header strong{font-size:13px}.wd-find-platform{margin-left:0}.wd-find-path{margin-left:0}.wd-find-more{margin-left:0}.wd-find-steps li b{font-size:12px}.wd-find-steps li span:not(.wd-find-num){font-size:11px}}
+
+/* One-click world folder import: focus on a single visible primary action */
+.wd-world-picker{margin-bottom:8px}
+.wd-world-folder-btn{appearance:none;text-align:left;min-height:122px;border-color:#8acb99;cursor:pointer;position:relative;display:flex}
+.wd-world-folder-btn .wd-drop-title{font-size:clamp(16px,2vw,21px)}
+.wd-world-folder-btn .wd-drop-sub{color:#53765e;font-size:12px}
+.wd-world-folder-btn .wd-drop-symbol{color:#157b38;background:#d8f8de;font-size:30px}
+.wd-world-folder-btn .wd-folder-button-arrow{flex:none;align-self:center;color:#1b8e41;font-size:31px;font-weight:900;margin-left:auto;transition:transform .2s}
+.wd-world-folder-btn:hover .wd-folder-button-arrow{transform:translate(3px,-3px)}
+.wd-world-folder-btn:focus-visible{outline:3px solid #1bc44d;outline-offset:3px}
+.wd-folder-feedback:empty{display:none}
+.wd-folder-feedback{margin-top:8px;font-size:12px;color:#1f8a3c;font-weight:800}
+.wd-picker-alternatives{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:12px 0 10px;color:#a4b3a6;font-size:12px}
+.wd-simple-link{background:none;border:0;padding:2px 0;cursor:pointer!important;color:#386647;font-size:11px!important;text-decoration:underline;text-decoration-color:#acc6b0;text-underline-offset:3px;font-weight:750}
+.wd-simple-link:hover{color:#07982c;text-decoration-color:#07982c}
+.wd-folder-help{padding:0!important;margin-top:16px;border:1px solid #d5e6d6!important;border-radius:11px;background:#f6faf6}
+.wd-folder-help>summary{display:flex;align-items:center;gap:8px;cursor:pointer;padding:13px 14px;color:#244f32;font-size:12px;font-weight:900;list-style:none}
+.wd-folder-help>summary::-webkit-details-marker{display:none}
+.wd-folder-help>summary:after{content:"⌄";margin-left:auto;color:#1e9340;font-size:18px;line-height:1}
+.wd-folder-help[open]>summary:after{transform:rotate(180deg)}
+.wd-folder-help>summary .wd-find-question{height:22px;width:22px;border-radius:6px;font-size:13px}
+.wd-folder-help>summary .wd-find-platform{margin-left:0;white-space:nowrap}
+.wd-folder-help-body{border-top:1px solid #dceadd;padding:14px 16px 17px}
+.wd-folder-help-body>p{font-size:12px;color:#526d5b;line-height:1.8;margin:0 0 10px}
+.wd-folder-help-body .wd-find-path{margin:4px 0 12px}
+.wd-folder-help-body .wd-find-more{margin-left:0}
+.wd-folder-help-body kbd{background:#fff;border:1px solid #c5dacb;border-radius:4px;padding:2px 5px;font:800 11px ui-monospace,Consolas,monospace}
+.wd-player-choice{padding:14px;background:#f0faf1;border:1px solid #b9dfc3;border-radius:10px;margin-top:14px}
+.wd-player-choice[hidden]{display:none}
+.wd-player-choice label{font-weight:950;font-size:13px;color:#1b5c2d;display:block;margin-bottom:7px}
+.wd-player-choice select{height:45px;background:#fff;cursor:pointer;font-size:13px}
+.wd-player-choice>span{display:block;color:#587361;font-size:11px;margin-top:8px}
+@media(max-width:560px){.wd-world-folder-btn{padding:15px;gap:13px;min-height:108px}.wd-world-folder-btn .wd-drop-symbol{width:48px;height:48px}.wd-world-folder-btn .wd-drop-title{font-size:15px}.wd-world-folder-btn .wd-folder-button-arrow{font-size:22px}.wd-folder-help>summary{padding:12px 10px;gap:6px}.wd-folder-help-body{padding:13px 11px}}
