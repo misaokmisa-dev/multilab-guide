@@ -403,3 +403,12 @@ body.wd-body a{text-underline-offset:4px}
 @media(max-width:600px){.wd-insights-title{flex-wrap:wrap}.wd-activity-legend{font-size:10px}.wd-insight-card{min-height:139px}.wd-activity-rating{gap:5px}.wd-activity-chip{font-size:9px}.wd-activity-ticks{min-width:55px}.wd-death-head{min-height:84px}.wd-death-emblem{width:45px;height:45px;font-size:30px}.wd-death-head>strong{font-size:21px}.wd-death-head h4{font-size:17px}}
 @media(prefers-reduced-motion:reduce){.wd-death-emblem{animation:none}}
 .wd-ad-mosaic{margin:28px auto 30px;justify-content:center}
+
+/* Optional result-display name, positioned immediately above world file selection. */
+.wd-display-name-field{margin:0 0 20px}
+.wd-display-name-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 8px}
+.wd-display-name-head label{font-size:13px;color:#183623;font-weight:900}
+.wd-name-optional{display:inline-block;margin-left:4px;padding:2px 5px;border-radius:4px;background:#eff6ef;color:#769281;font-size:10px;font-weight:800;vertical-align:1px}
+.wd-display-name-note{font-size:10px;color:#708575;font-weight:750;white-space:nowrap}
+.wd-display-name-input{background:#fff;min-width:0}
+@media(max-width:500px){.wd-display-name-field{margin-bottom:17px}.wd-display-name-head label{font-size:12px}}
