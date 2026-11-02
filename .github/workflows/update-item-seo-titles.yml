@@ -7,6 +7,7 @@ on:
       - '.github/workflows/update-item-seo-titles.yml'
       - 'scripts/update_item_seo_titles.py'
       - 'scripts/normalize_minecraft_titles.py'
+      - 'scripts/normalize_minecraft_navigation.py'
       - 'scripts/update_item_english_names.py'
       - 'minecraft/strategy/items/items-data.js'
       - 'minecraft/strategy/items/items-2026-data.js'
@@ -42,6 +43,7 @@ jobs:
             python scripts/update_item_seo_titles.py
             python scripts/update_item_english_names.py
             python scripts/normalize_minecraft_titles.py
+            python scripts/normalize_minecraft_navigation.py
             git add -A -- minecraft sitemap.xml
             if git diff --cached --quiet; then
               echo "All Minecraft SEO titles, item names, and sitemap entries are current"
