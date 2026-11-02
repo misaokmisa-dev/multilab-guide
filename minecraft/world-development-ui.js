@@ -13,11 +13,109 @@ const path=$('wd-saves-path').textContent,btn=$('wd-copy-path');
 try{await navigator.clipboard.writeText(path);btn.textContent='コピー済み';setTimeout(()=>{btn.textContent='コピー'},2000)}
 catch(e){window.prompt('このパスをコピーして Windows の「ファイル名を指定して実行」に貼り付けてください',path)}
 });
-function setFile(next){file=next||null;const zone=$('stats-drop'),name=$('stats-filename'),meta=$('stats-meta');zone.classList.toggle('is-selected',!!file);name.textContent=file?file.name:'統計ファイルを選択';meta.textContent=file?'ファイルを読み込みました':'クリック または ドラッグ＆ドロップ'}
-$('stats').addEventListener('change',e=>setFile(e.target.files[0]));
-for(const event of ['dragenter','dragover']){$('stats-drop').addEventListener(event,e=>{e.preventDefault();$('stats-drop').classList.add('is-over')})}
-for(const event of ['dragleave','drop']){$('stats-drop').addEventListener(event,e=>{e.preventDefault();$('stats-drop').classList.remove('is-over')})}
-$('stats-drop').addEventListener('drop',e=>{const f=e.dataTransfer?.files?.[0];if(f){if(!f.name.toLowerCase().endsWith('.json'))return error('JSON形式のファイルを選択してください');setFile(f);error('')}});
+let candidates=[];
+function pickedFile(item){
+  file=item.file;
+  const zone=$('pick-world-folder');
+  zone.classList.add('is-selected');
+  $('stats-filename').textContent=item.world && item.world!=='stats' ? item.world+' を読み込みました' : '統計データを読み込みました';
+  $('stats-meta').textContent='統計ファイル：'+item.file.name+' ／ 読み込み完了';
+  $('folder-picked-note').textContent='✓ 統計データが見つかりました';
+  if(item.world && item.world!=='stats' && item.world!=='players' && !$('world').value.trim())$('world').value=item.world;
+  error('');
+}
+async function selectCandidates(found){
+  candidates=found.filter(x=>x.file && x.file.name.toLowerCase().endsWith('.json') && x.file.size<=MAX_FILE);
+  candidates.sort((a,b)=>b.file.lastModified-a.file.lastModified);
+  if(!candidates.length){
+    $('folder-picked-note').textContent='';
+    error('統計データが見つかりませんでした。遊んでいるワールドのフォルダを選んでください。');
+    $('file-help').open=true;return;
+  }
+  const box=$('player-select-box'),select=$('player-file-list');
+  box.hidden=candidates.length<=1;
+  select.replaceChildren();
+  candidates.forEach((item,i)=>{
+    const opt=document.createElement('option');
+    opt.value=String(i);opt.textContent=(item.world||'ワールド')+' / '+item.file.name.slice(0,8)+'…';
+    select.append(opt);
+  });
+  pickedFile(candidates[0]);
+  await run();
+}
+async function tryDirectory(parent,name){
+  try{return await parent.getDirectoryHandle(name)}catch(e){if(e.name==='NotFoundError'||e.name==='TypeMismatchError')return null;throw e}
+}
+async function readStatsFromDirectory(statsDir,world,items){
+  if(!statsDir)return;
+  let n=0;
+  for await(const item of statsDir.values()){
+    if(item.kind!=='file'||!item.name.toLowerCase().endsWith('.json'))continue;
+    if(++n>250)break;
+    try{const selected=await item.getFile();items.push({file:selected,world:world||'ワールド'})}catch(e){}
+  }
+}
+async function scanWorldHandle(root){
+  const found=[];
+  const candidatesToVisit=[root];
+  if(root.name==='.minecraft'){
+    const saves=await tryDirectory(root,'saves');
+    if(saves)candidatesToVisit.push(saves);
+  }
+  if(root.name==='saves'||root.name==='.minecraft'){
+    const saves=candidatesToVisit[candidatesToVisit.length-1];
+    let count=0;
+    for await (const item of saves.values()){
+      if(item.kind==='directory'&&++count<=100)candidatesToVisit.push(item);
+    }
+  }
+  for(const dir of candidatesToVisit){
+    if(dir.name==='stats')await readStatsFromDirectory(dir,'ワールド',found);
+    const legacy=await tryDirectory(dir,'stats');
+    await readStatsFromDirectory(legacy,dir.name,found);
+    const players=await tryDirectory(dir,'players');
+    if(players)await readStatsFromDirectory(await tryDirectory(players,'stats'),dir.name,found);
+  }
+  return found;
+}
+$('pick-world-folder').addEventListener('click',()=>{
+  error('');
+  if(typeof window.showDirectoryPicker!=='function'){$('world-folder-fallback').click();return}
+  // The picker can remember this site's most recently selected directory;
+  // web pages cannot force the dialog to an arbitrary local filesystem path.
+  window.showDirectoryPicker({id:'mlg-world-folder',mode:'read'})
+    .then(async handle=>{
+      $('folder-picked-note').textContent='フォルダ内を確認しています…';
+      const items=await scanWorldHandle(handle);
+      await selectCandidates(items);
+    }).catch(e=>{
+      if(e.name==='AbortError'){$('folder-picked-note').textContent='';return}
+      error('フォルダを読み取れませんでした。「フォルダ選択が開かない場合」をお試しください。');
+    });
+});
+$('pick-folder-basic').addEventListener('click',()=>{$('world-folder-fallback').click()});
+$('world-folder-fallback').addEventListener('change',async e=>{
+  const files=Array.from(e.target.files||[]);
+  const found=files.filter(x=>/(?:^|\/)(?:players\/stats|stats)\/[^/]+\.json$/i.test(x.webkitRelativePath||'')).map(x=>{
+    const parts=x.webkitRelativePath.split('/');
+    const statsIndex=parts.lastIndexOf('stats');
+    const guess=parts[statsIndex-1]==='players'?parts[statsIndex-2]:parts[statsIndex-1];
+    return {file:x,world:guess||'ワールド'};
+  });
+  await selectCandidates(found);
+  e.target.value='';
+});
+$('pick-json-file').addEventListener('click',()=>{$('stats').click()});
+$('stats').addEventListener('change',async e=>{
+  const selected=e.target.files[0];if(!selected)return;
+  $('player-select-box').hidden=true;
+  pickedFile({file:selected,world:$('world').value.trim()});
+  await run();
+});
+$('player-file-list').addEventListener('change',async e=>{
+  const selected=candidates[Number(e.target.value)];
+  if(selected){pickedFile(selected);await run()}
+});
 function calculate(data){const stats=data.stats;if(!stats||typeof stats!=='object'||Array.isArray(stats))throw Error('Minecraftの統計ファイルを選んでください。');
 const used=stats['minecraft:used']||{},mined=stats['minecraft:mined']||{},crafted=stats['minecraft:crafted']||{},custom=stats['minecraft:custom']||{};
 const notBlocks=/(?:pickaxe|axe|shovel|hoe|sword|bow|crossbow|trident|shield|bucket|fishing_rod|shears|flint_and_steel|food|apple|bread|beef|porkchop|chicken|carrot|potato|stew|potion|ender_pearl|spawn_egg|bone_meal|map|compass|clock|firework|elytra|boat|minecart)/;
