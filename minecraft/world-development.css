@@ -238,3 +238,26 @@ body.wd-body a{text-underline-offset:4px}
 .wd-stats-grid .wd-stat b{font-size:clamp(18px,2vw,25px);letter-spacing:-.055em}
 @media(max-width:1000px){.wd-insights-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.wd-insights-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.wd-insight-card{padding:15px 12px;min-height:120px;gap:7px}.wd-insight-label{font-size:12px}.wd-insight-value{font-size:clamp(17px,4.8vw,24px)}.wd-insight-note{font-size:10px}.wd-fullstats{padding:19px 14px}.wd-day-help{gap:10px;padding:13px}.wd-day-help-text{min-width:0;flex:1 1 190px}.wd-level-input{width:100%}.wd-level-status{margin-left:0}.wd-stat-row{padding:10px 10px}.wd-stat-group-head{padding:13px 12px}.wd-fullstats-sub{display:none}.wd-insights-title{align-items:center}.wd-insights-title h2{font-size:25px}.wd-insights-tag{font-size:9px}.wd-stat-number{font-size:12px}.wd-stat-description b{font-size:11px}.wd-stat-description small{font-size:9px}}
+
+/* World score v3: explicit pt/full marks + actual Minecraft item portraits */
+.wd-stats-grid .wd-stat{display:flex;flex-direction:column;gap:11px;justify-content:space-between;min-height:128px;padding:17px 14px;background:linear-gradient(155deg,#fff 0%,#fbfffb 100%);border-color:#cde6d1}
+.wd-stat-header{display:flex;align-items:start;gap:5px;justify-content:space-between}
+.wd-stats-grid .wd-stat-label{display:block;font-size:12px;font-weight:920;color:#355e40;line-height:1.5;margin:0}
+.wd-stats-grid .wd-stat-pct{display:inline-flex;align-items:center;justify-content:center;min-width:35px;padding:3px 6px;background:#e6f8e7;color:#0b8730;border:1px solid #c5ebc8;border-radius:5px;font:900 10px/1.3 ui-monospace,monospace;margin:0}
+.wd-stat-amount{display:flex;flex-direction:column;gap:4px}
+.wd-stats-grid .wd-stat-amount b{display:block;font:950 clamp(18px,2vw,25px)/1.2 ui-monospace,Consolas,monospace;letter-spacing:-.05em;color:#176d34;white-space:normal;overflow-wrap:anywhere}
+.wd-stat-amount>span{display:block;font-size:11px;font-weight:760;color:#6a806e;white-space:normal;line-height:1.4}
+.wd-stat-track{height:7px;background:#e0eee3;border-radius:50px;overflow:hidden;flex:none}
+.wd-stat-track>div{background:linear-gradient(90deg,#0aaf39,#59e578);height:100%;border-radius:99px}
+.wd-stat-row{min-height:64px;gap:14px}
+.wd-stat-entry{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.wd-stat-icon{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:9px;background:#eaf5eb;border:1px solid #d6e7d7;overflow:hidden}
+.wd-stat-icon img{display:block;max-width:39px;max-height:39px;width:39px;height:39px;object-fit:contain;image-rendering:pixelated}
+.wd-stat-icon-missing{color:#90aa95;font-size:20px}
+.wd-stat-description{flex:1;min-width:0}
+.wd-stat-description .wd-stat-item-link{display:block;font-size:13px;font-weight:900;color:#234d2e;text-decoration:none;line-height:1.45}
+.wd-stat-description .wd-stat-item-link:hover{color:#047d24;text-decoration:underline}
+.wd-stat-description b{font-size:13px}
+.wd-stat-description small{margin-top:3px;font-size:10px;line-height:1.5;overflow-wrap:anywhere;color:#83958a}
+.wd-stat-row .wd-stat-number{flex:none;white-space:nowrap;font-size:13px}
+@media(max-width:650px){.wd-stats-grid .wd-stat{min-height:116px;padding:13px 11px}.wd-stats-grid .wd-stat-label{font-size:11px}.wd-stats-grid .wd-stat-amount b{font-size:clamp(17px,4vw,22px)}.wd-stat-amount>span{font-size:10px}.wd-stat-row{gap:8px}.wd-stat-entry{gap:8px}.wd-stat-icon{width:39px;height:39px;border-radius:7px}.wd-stat-icon img{width:33px;height:33px}.wd-stat-description .wd-stat-item-link,.wd-stat-description b{font-size:12px}.wd-stat-description small{font-size:9px}.wd-stat-row .wd-stat-number{font-size:11px}}
