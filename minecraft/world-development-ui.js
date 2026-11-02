@@ -24,7 +24,11 @@ function revealScore(score){
  scoreAnimation=requestAnimationFrame(frame);
 }
 function total(o){return Object.values(o||{}).reduce((a,n)=>a+(typeof n==='number'&&Number.isFinite(n)&&n>0?Math.min(n,1e9):0),0)}
-function growth(value,scale,max){return Math.round(max*-Math.expm1(-Math.max(0,value)/scale))}
+// Stricter, non-inflating scoring: 400 h play should never max out decor.
+function extreme(value,scale,max){
+ const n=Math.max(0,Number(value)||0);
+ return Math.min(max-1,Math.floor(max*n/(n+scale)));
+}
 // Stats record use events, not surviving buildings. Distinguish construction
 // from time, tool use, mining and crafting; require many placed blocks for high ranks.
 const terrainNames=new Set(['dirt','grass_block','coarse_dirt','rooted_dirt','sand','red_sand','gravel','netherrack','soul_sand','soul_soil','clay','mud','moss_block','snow','snow_block','ice','packed_ice','powder_snow','farmland']);
@@ -220,11 +224,11 @@ function calculate(data){
  const distance=movement.reduce((n,k)=>n+(typeof custom[k]==='number'&&custom[k]>0?Math.min(custom[k],1e11):0),0)/100000;
  const ticks=Number(custom['minecraft:play_time']??custom['minecraft:play_one_minute']??0);
  const hours=Math.max(0,Math.min(Number.isFinite(ticks)?ticks:0,1e10)/72000);
- const construction=growth(weighted,180000,60000);
- const variety=Math.round(growth(diversity,70,15000)*Math.min(1,weighted/90000));
- const details=Math.round(growth(decor,8000,10000)*Math.min(1,weighted/22000));
- const resources=growth(crafts,130000,5000)+growth(minedTotal,250000,3000);
- const exploration=growth(distance,8000,4000)+growth(hours,2500,3000);
+ const construction=extreme(weighted,700000,60000);
+ const variety=Math.floor(extreme(diversity,180,15000)*Math.min(1,weighted/250000));
+ const details=Math.floor(extreme(decor,220000,10000)*Math.min(1,weighted/300000));
+ const resources=extreme(crafts,550000,5000)+extreme(minedTotal,2500000,3000);
+ const exploration=extreme(distance,5000,4000)+extreme(hours,3200,3000);
  const points=[construction,variety,details,resources,exploration];
  const score=Math.min(100000,points.reduce((a,b)=>a+b,0)),grade=levels.find(a=>score>=a[0])[1];
  return {score,grade,points,placed,distance,hours,world:activeWorldName};
@@ -232,7 +236,7 @@ function calculate(data){
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('ワールドファイルをドロップするか、クリックして選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
 const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='診断中…';
-try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldStatsShow?.(data,r)}
+try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldStatsShow?.(data,r);void submitAnonymizedScore(r,current)}
 catch(e){error('読み込めませんでした。'+(e instanceof SyntaxError?'JSON形式を確認してください。':(e.message||'ファイルをご確認ください。')))}
 finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を診断する'}}
 function render(r){
@@ -242,8 +246,6 @@ panel.classList.add('wd-rarity-'+tier.key);scoreCard.classList.add('wd-rarity-'+
 $('wd-rarity-eyebrow').textContent='✦ '+tier.label+' ✦';
 $('result-name').textContent=r.world;revealScore(r.score);
 $('grade').textContent=r.grade;$('grade').setAttribute('aria-label',tier.label+' '+r.grade);
-const submit=$('wd-submit-score');submit.disabled=false;submit.textContent='ランキング集計に参加する ↗';
-$('wd-submit-status').textContent='';
 $('result-note').textContent='建築関連ブロック使用 約'+format(r.placed)+'回 · プレイ '+format(r.hours)+'時間（建築活動を重視した推定値）';
 $('meter-fill').style.width=(r.score/100000*100)+'%';
 const container=$('metrics');container.replaceChildren();
@@ -284,23 +286,20 @@ g.fillStyle=tier.c;roundRect(g,80,465,360,66,13);g.fill();g.fillStyle=tier.dark;
 g.fillStyle='#bbdbcb';g.font='700 19px system-ui,sans-serif';g.fillText('mlabg.com/minecraft/world-development.html',80,570);
 g.textAlign='right';g.fillStyle='#ffffff23';g.font='900 400px system-ui,sans-serif';g.fillText('✦',1140,425);
 c.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='minecraft-world-score.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)},'image/png')});
-// Ranking participation is opt-in. File contents, world names and user identifiers are not uploaded.
-$('wd-submit-score').addEventListener('click',async()=>{
- const result=lastResult,button=$('wd-submit-score'),status=$('wd-submit-status');
- if(!result||button.disabled)return;
- button.disabled=true;button.textContent='集計に送信しています…';
- const payload={version:'wd-score-v2',score:result.score,grade:result.grade,
-  points:result.points.map(x=>Math.round(x)),placed:Math.round(result.placed),
-  hours:Math.round(result.hours*100)/100,distance:Math.round(result.distance*100)/100};
+// Submit only score summaries. File paths, raw JSON and world names are never sent.
+const submittedInPage=new Set();
+async function submitAnonymizedScore(r,statsFile){
+ const signature=[statsFile.name,statsFile.size,statsFile.lastModified,r.score].join(':');
+ if(submittedInPage.has(signature))return;
+ submittedInPage.add(signature);
+ const payload={version:'wd-score-v3',score:r.score,grade:r.grade,
+  points:r.points.map(Math.round),placed:Math.round(r.placed),
+  hours:Math.round(r.hours*100)/100,distance:Math.round(r.distance*100)/100};
  try{
-  const response=await fetch('/api/world-score-submit',{method:'POST',
+  const res=await fetch('/api/world-score-submit',{method:'POST',
    headers:{'content-type':'application/json'},credentials:'same-origin',
    cache:'no-store',body:JSON.stringify(payload)});
-  const data=await response.json();
-  if(!response.ok||!data.ok)throw Error(data.message||'送信できませんでした');
-  button.textContent='ランキング集計に参加済み ✓';
-  status.textContent='集計に参加しました。ランキング公開後の表示順位を保証するものではありません。';
- }catch(e){button.disabled=false;button.textContent='送信をもう一度試す ↗';
-  status.textContent='集計に送信できませんでした。通信環境をご確認ください。';}
-});
+  if(!res.ok)submittedInPage.delete(signature);
+ }catch(_){submittedInPage.delete(signature)}
+}
 })();
