@@ -216,7 +216,8 @@ if(!legal&&!client&&(campaigns.length||video)){
       const top=slot("as-slot as-top",topId,mobile?320:728,mobile?100:90);
       main.prepend(top);
     }
-    if (!main.querySelector(".as-slot.as-inline-single,.as-mosaic,.mlg-ad-block")) {
+    // A footer ad mosaic is not a substitute for an in-content ad.
+    if (!main.querySelector(".as-slot.as-inline-single,.mlg-ad-block")) {
       const inline=slot("as-slot as-inline-single","8f484decc94c10e43e237e6221290bc5",300,250);
       const target=main.querySelector("#ency-detail") ||
         main.querySelector("#ency-results")?.closest("section") ||
