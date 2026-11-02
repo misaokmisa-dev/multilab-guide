@@ -238,6 +238,13 @@ $('player-file-list').addEventListener('change',async e=>{
   const selected=candidates[Number(e.target.value)];
   if(selected){pickedFile(selected);await run()}
 });
+function resolveWorldLabel(){
+ const entered=$('wd-world-display-name')?.value?.trim().replace(/[\x00-\x1f\x7f]/g,'').slice(0,40)||'';
+ return entered||activeWorldName;
+}
+function buildShareText(r){
+ return '🌍 マイクラ ワールド発展度\n「'+r.world+'」\n🏆 '+format(r.score)+' / 100,000 pt\n称号：'+r.grade+'\n\nあなたのワールドは何点？\n#マイクラ #ワールド発展度\nhttps://mlabg.com/minecraft/world-development.html';
+}
 function calculate(data){
  const stats=data.stats;
  if(!stats||typeof stats!=='object'||Array.isArray(stats))throw Error('Minecraftのワールドファイル（stats内の.json）を選んでください。');
@@ -264,7 +271,7 @@ function calculate(data){
  const exploration=extreme(distance,5000,4000)+extreme(hours,3200,3000);
  const points=[construction,variety,details,resources,exploration];
  const score=Math.min(100000,points.reduce((a,b)=>a+b,0)),grade=levels.find(a=>score>=a[0])[1];
- return {score,grade,points,placed,distance,hours,world:activeWorldName};
+ return {score,grade,points,placed,distance,hours,world:resolveWorldLabel()};
 }
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('ワールドファイルをドロップするか、クリックして選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
@@ -299,9 +306,15 @@ r.points.forEach((n,i)=>{
   const fill=document.createElement('div');fill.style.width=Math.min(100,n/full*100)+'%';bar.append(fill);
   c.append(header,amount,bar);container.append(c);
 });
-shareText='🌍 マイクラ ワールド発展度\n「'+r.world+'」\n🏆 '+format(r.score)+' / 100,000 pt\n称号：'+r.grade+'\n\nあなたのワールドは何点？\n#マイクラ #ワールド発展度\nhttps://mlabg.com/minecraft/world-development.html';
+shareText=buildShareText(r);
 $('result').hidden=false;$('result').scrollIntoView({behavior:'smooth',block:'start'});
 }
+$('wd-world-display-name').addEventListener('input',()=>{
+ if(!lastResult)return;
+ lastResult.world=resolveWorldLabel();
+ $('result-name').textContent=lastResult.world;
+ shareText=buildShareText(lastResult);
+});
 $('calculate').addEventListener('click',run);
 $('share').addEventListener('click',()=>{if(shareText){const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(shareText);window.open(url,'_blank','noopener,noreferrer')}});
 $('copy').addEventListener('click',async()=>{if(!shareText)return;try{await navigator.clipboard.writeText(shareText);$('copy').textContent='コピーしました';setTimeout(()=>$('copy').textContent='テキストをコピー',2200)}catch(e){$('copy').textContent='コピーに失敗しました'}});
