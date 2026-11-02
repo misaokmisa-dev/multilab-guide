@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/cherrygrove-header.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/global-site-header.css?v=20261027a">
-<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102rankings1">
+<link rel="stylesheet" href="/minecraft/world-development.css?v=20261102itemtiers2">
 <style>
 .wd-breakdown-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:22px 0 11px;padding:0 3px}
 .wd-breakdown-head h3{font-size:clamp(18px,2.5vw,22px);font-weight:1000;letter-spacing:-.04em;color:#1b482b;margin:0}
@@ -115,7 +115,7 @@
 <div class="wd-leaderboard-sparks" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span></div>
 <div class="wd-leaderboard-kicker">GLOBAL WORLD RANKINGS <span class="wd-leaderboard-lock" aria-hidden="true">♛</span></div>
 <h2>全世界<br><em>ランキング</em></h2>
-<div class="wd-leaderboard-podium" aria-label="ランキング表彰台のイメージ。現在はランキング準備中"><span class="wd-podium-rank rank-two">2位</span><span class="wd-podium-rank rank-one">1位</span><span class="wd-podium-rank rank-three">3位</span></div>
+<div class="wd-leaderboard-podium" aria-hidden="true"><span class="wd-podium-rank rank-two"></span><span class="wd-podium-rank rank-one"></span><span class="wd-podium-rank rank-three"></span></div>
 <div class="wd-leaderboard-status"><span class="wd-status-led"></span>COMING SOON / 後日公開</div>
 <p>世界中のプレイヤーのワールドスコアを集計中。データが十分に集まり次第、総合ランキングを公開します。</p>
 <div class="wd-leaderboard-rule"></div>
@@ -429,7 +429,9 @@ $('meter-fill').style.width=(r.score/100000*100)+'%';
 const container=$('metrics');container.replaceChildren();
 r.points.forEach((n,i)=>{
   const full=maxValues[i],pct=full?Math.round(n/full*100):0,c=document.createElement('div');
-  c.className='wd-stat';c.setAttribute('aria-label',statNames[i]+': '+format(n)+' pt / '+format(full)+' pt 満点');
+  const partTier=pct>=80?'red':pct>=60?'gold':pct>=40?'purple':pct>=20?'blue':'green';
+  c.className='wd-stat wd-stat-tier-'+partTier;
+  c.setAttribute('aria-label',statNames[i]+': '+format(n)+' pt / '+format(full)+' pt 満点（達成率 '+pct+'%）');
   const header=document.createElement('div');header.className='wd-stat-header';
   const title=document.createElement('span');title.className='wd-stat-label';title.textContent=statNames[i];
   const percent=document.createElement('span');percent.className='wd-stat-pct';percent.textContent=pct+'%';
