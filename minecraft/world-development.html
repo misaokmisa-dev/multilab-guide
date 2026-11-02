@@ -14,7 +14,9 @@
 <link rel="stylesheet" href="/ad-system.css">
 <script defer src="/ad-config.js"></script>
 <script defer src="/ad-system.js"></script>
+<script defer src="/affiliate-tracker.js?v=20261031funnelviews"></script>
 <link rel="stylesheet" href="/minecraft/world-development.css?v=20261102statshighlight3">
+<link rel="stylesheet" href="/minecraft/device-discovery.css?v=20261102legibility04">
 <style>
 .wd-breakdown-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:22px 0 11px;padding:0 3px}
 .wd-breakdown-head h3{font-size:clamp(18px,2.5vw,22px);font-weight:1000;letter-spacing:-.04em;color:#1b482b;margin:0}
@@ -64,7 +66,7 @@
 <div class="wd-hero-tiny"><span>無料</span><span>アカウント不要</span><span>Java版対応</span></div>
 </div>
 <div class="wd-board" aria-label="ワールドスコアプレビュー">
-<div class="wd-board-top"><span>WORLD STATUS</span><span class="wd-online"><i aria-hidden="true"></i> READY</span></div>
+<div class="wd-board-top"><span>WORLD SCORE</span><span class="wd-online"><i aria-hidden="true"></i> READY</span></div>
 <div class="wd-board-caption">YOUR WORLD SCORE</div>
 <div class="wd-board-number">--,---<small>pt</small></div><div class="wd-board-block" aria-hidden="true"></div>
 <div class="wd-board-rule"></div><div class="wd-board-bottom"><span>LEVEL / UNKNOWN</span><div class="wd-board-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
@@ -156,6 +158,29 @@
 <button class="wd-outline" type="button" id="copy">テキストをコピー</button>
 <span id="wd-export-status" class="wd-export-status" role="status" aria-live="polite"></span>
 </div>
+</section>
+<section class="mlg-device-scout wd-pc-scout" aria-labelledby="wd-pc-scout-title">
+  <div class="mlg-device-scout__hero">
+    <img class="mlg-device-scout__image" src="https://www.coolermaster.com/on/demandware.static/-/Sites-cooler-master-main/default/dwe15790b9/Assets/td5-pro-gaming-pc/large/td5-pro-gallery-01.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="650" height="650" onerror="this.hidden=true">
+    <div class="mlg-device-scout__rays" aria-hidden="true"></div>
+    <div class="mlg-device-scout__inner">
+      <span class="mlg-device-scout__eyebrow">✦ MINECRAFT × GAMING PC ✦</span>
+      <h2 id="wd-pc-scout-title">マイクラ向け <em>コスパ最強PC</em></h2>
+      <p class="mlg-device-scout__description">影MOD・大型MODでも快適に遊びたい人へ。価格とGPU・CPU・メモリを比較して、自分に合うゲーミングPCを探せます。</p>
+      <div class="mlg-device-scout__buttons">
+        <div class="mlg-device-scout__button-wrap">
+          <a href="/devices/gaming-pc.html" class="mlg-device-scout__primary" data-mlg-funnel="world-score-pc-ranking">ゲーミングPC売れ筋TOP10を見る<span class="mlg-device-scout__arrow" aria-hidden="true">➜</span></a>
+        </div>
+        <a href="/devices/pc-diagnosis.html#diagnosis" class="mlg-device-scout__secondary" data-mlg-funnel="world-score-pc-diagnosis">無料8問でおすすめスペックを診断<span class="mlg-device-scout__arrow" aria-hidden="true">➜</span></a>
+      </div>
+      <small class="mlg-device-scout__credit">画像：Cooler Master公式「TD5 Pro Gaming PC」。掲載PCはイメージです。</small>
+    </div>
+  </div>
+  <div class="mlg-device-scout__issues" aria-label="遊び方に合うゲーミングPCを探す">
+    <a href="/devices/gaming-pc.html" data-mlg-funnel="world-score-pc-shader"><span class="mlg-device-scout__issue-icon">高画質・影MOD</span><strong>影MODでも快適に遊びたい</strong><small>GPU・VRAMと価格をチェック</small><b>売れ筋PCを比較 →</b></a>
+    <a href="/devices/pc-diagnosis.html#diagnosis" data-mlg-funnel="world-score-pc-mods"><span class="mlg-device-scout__issue-icon">大型MODパック</span><strong>必要なPCスペックを知りたい</strong><small>CPU・メモリの目安を簡単診断</small><b>8問で調べる →</b></a>
+    <a href="/devices/gaming-laptop.html" data-mlg-funnel="world-score-pc-laptop"><span class="mlg-device-scout__issue-icon">省スペース</span><strong>ノートPCも検討したい</strong><small>ゲーミングノートの売れ筋を比較</small><b>ノートPCを見る →</b></a>
+  </div>
 </section>
 <section class="wd-insights" id="world-insights" aria-labelledby="wd-insights-heading" hidden>
 <div class="wd-insights-title"><div><span class="wd-overline">WORLD DATA / PLAYER STATS</span><h2 id="wd-insights-heading">ワールドの記録</h2><p class="wd-activity-legend">評価基準を厳格化。各記録はプレイ時間あたりの活動密度で判定し、金・赤は長時間にわたる極めて高い活動量でのみ到達します。世界順位ではありません。死亡回数の赤は「危険」を示します。</p></div><span class="wd-insights-tag">JAVA EDITION</span></div>
