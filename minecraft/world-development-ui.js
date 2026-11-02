@@ -197,7 +197,7 @@ function calculate(data){
    if(!block.terrain&&value>=12)diversity++;
    if(block.detail)decor+=count;
  }
- const crafts=total(crafted),minedTotal=total(mined);
+ const crafts=total(Object.fromEntries(Object.entries(crafted).filter(([key])=>!['minecraft:air','minecraft:cave_air','minecraft:void_air'].includes(key)))),minedTotal=total(mined);
  const movement=['minecraft:walk_one_cm','minecraft:sprint_one_cm','minecraft:swim_one_cm','minecraft:fly_one_cm','minecraft:aviate_one_cm','minecraft:boat_one_cm','minecraft:minecart_one_cm'];
  const distance=movement.reduce((n,k)=>n+(typeof custom[k]==='number'&&custom[k]>0?Math.min(custom[k],1e11):0),0)/100000;
  const ticks=Number(custom['minecraft:play_time']??custom['minecraft:play_one_minute']??0);
