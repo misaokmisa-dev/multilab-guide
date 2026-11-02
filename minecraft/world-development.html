@@ -25,6 +25,7 @@
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js"></script>
 <script defer src="/site-language.js?v=20261028full"></script>
+<script defer src="/minecraft/world-score-history.js?v=20261102a"></script>
 
 
 <script defer src="/minecraft/strategy/items/items-data.js?v=20261029a"></script>
@@ -65,10 +66,10 @@
 <a class="wd-primary" href="#start">発展度を採点する <span class="wd-arrow" aria-hidden="true">↗</span></a>
 <div class="wd-hero-tiny"><span>無料</span><span>アカウント不要</span><span>Java版対応</span></div>
 </div>
-<div class="wd-board" aria-label="ワールドスコアプレビュー">
-<div class="wd-board-top"><span>WORLD SCORE</span><span class="wd-online"><i aria-hidden="true"></i> READY</span></div>
-<div class="wd-board-number">--,---<small>pt</small></div><div class="wd-board-block" aria-hidden="true"></div>
-<div class="wd-board-rule"></div><div class="wd-board-bottom"><span>LEVEL / UNKNOWN</span><div class="wd-board-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="wd-board" data-mlg-personal-score aria-label="あなたの前回の採点結果">
+<div class="wd-board-top"><span>あなたの点数</span><span class="wd-online"><i aria-hidden="true"></i> READY</span></div>
+<div class="wd-board-number"><span data-mlg-score-number>--,---</span><small>pt</small></div><div class="wd-board-block" aria-hidden="true"></div>
+<div class="wd-board-rule"></div><div class="wd-board-bottom"><span data-mlg-score-grade>未採点</span><div class="wd-board-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
 </div>
 </section>
 <div class="wd-underhero"><span class="wd-mini-label"><i></i> WORLD ANALYZER / JAVA EDITION</span><span>スコアは最大 100,000 pt</span></div>
@@ -444,7 +445,7 @@ function calculate(data){
 async function run(){error('');$('result').hidden=true;const current=file||$('stats').files[0];if(!current)return error('ワールドファイルをドロップするか、クリックして選択してください。');
 if(current.size>MAX_FILE)return error('5MB以下のJSONファイルを選択してください。');
 const button=$('calculate');button.disabled=true;button.querySelector('.wd-cta-label').textContent='採点中…';
-try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldStatsShow?.(data,r);void submitAnonymizedScore(r,current)}
+try{const data=JSON.parse(await current.text());const r=calculate(data);lastResult=r;render(r);window.mlgWorldScoreHistory?.save(r);window.mlgWorldStatsShow?.(data,r);void submitAnonymizedScore(r,current)}
 catch(e){error('読み込めませんでした。'+(e instanceof SyntaxError?'JSON形式を確認してください。':(e.message||'ファイルをご確認ください。')))}
 finally{button.disabled=false;button.querySelector('.wd-cta-label').textContent='発展度を採点する'}}
 function render(r){
