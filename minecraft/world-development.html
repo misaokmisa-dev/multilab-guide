@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/global-site-header.css?v=20261027a">
 <link rel="stylesheet" href="/minecraft/world-development.css?v=20261102folderpick1">
 <script defer src="/site-language.js?v=20261028full"></script>
-<script defer src="/minecraft/world-development-ui.js?v=20261102folderpick1"></script>
+<script defer src="/minecraft/world-development-ui.js?v=20261102autoname1"></script>
 <script defer src="/minecraft/world-region-analyzer.js?v=20261102a"></script>
 </head><body class="wd-body">
 <header class="mlg-site-header" data-section="minecraft">
@@ -57,12 +57,6 @@
 <section class="wd-panel wd-form-panel" aria-labelledby="wd-form-title">
 <div class="wd-form-head"><span class="wd-step-number">01</span><div><div class="wd-overline">START YOUR SCAN</div><h2 id="wd-form-title">ワールドを診断する</h2></div></div>
 <div class="wd-form-body">
-<div class="wd-row">
-<label class="wd-field" for="world"><span class="wd-field-head"><span class="wd-field-label">ワールド名</span><span class="wd-opt">任意</span></span><input class="wd-input" id="world" type="text" maxlength="40" placeholder="例：はじめてのサバイバル"></label>
-<div class="wd-field"><span class="wd-field-head"><span class="wd-field-label">エディション</span></span><div class="wd-edition">Minecraft Java Edition</div></div>
-</div>
-<label class="wd-field" for="seed"><span class="wd-field-head"><span class="wd-field-label">シード値</span><span class="wd-opt">任意</span></span><input class="wd-input" id="seed" type="text" maxlength="100" placeholder="ワールドのシード値"></label>
-<div class="wd-divider"></div>
 <div class="wd-field wd-world-picker">
 <span class="wd-field-head"><span class="wd-field-label">ワールドを読み込む</span><span class="wd-opt">Java版</span></span>
 <button class="wd-drop wd-world-folder-btn" id="pick-world-folder" type="button" aria-label="Minecraftのワールドフォルダを選択">
@@ -104,9 +98,9 @@
 <aside class="wd-guide" aria-label="診断ガイド">
 <div class="wd-panel wd-guide-box">
 <h2 class="wd-guide-title">診断までの3ステップ</h2>
-<div class="wd-guide-step"><div class="wd-guide-ico">1</div><div><b>ワールド名を入力</b><span>好きな名前でOK</span></div></div>
-<div class="wd-guide-step"><div class="wd-guide-ico">2</div><div><b>ワールドフォルダを選択</b><span>統計データは自動で見つけます</span></div></div>
-<div class="wd-guide-step"><div class="wd-guide-ico">3</div><div><b>スコアをチェック</b><span>結果カードをXでシェア</span></div></div>
+<div class="wd-guide-step"><div class="wd-guide-ico">1</div><div><b>ワールドフォルダを選択</b><span>ワールド名も自動で取得</span></div></div>
+<div class="wd-guide-step"><div class="wd-guide-ico">2</div><div><b>スコアを確認</b><span>ファイルを探さず、そのまま診断</span></div></div>
+<div class="wd-guide-step"><div class="wd-guide-ico">3</div><div><b>Xでシェア</b><span>結果カードを友達と比較</span></div></div>
 <p class="wd-guide-aside-note">通常はワールドフォルダを選ぶだけで診断できます。</p>
 </div>
 <div class="wd-side-mini"><small>YOUR WORLD. YOUR RECORD.</small><b>世界を育てた<br>その記録を、数字に。</b><p>あなたのワールドは、どのランク？</p></div>
