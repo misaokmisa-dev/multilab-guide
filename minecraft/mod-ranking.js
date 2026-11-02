@@ -13,6 +13,52 @@ const updated = document.getElementById("md-updated");
 const pagers = [document.getElementById("md-pagination-top"),document.getElementById("md-pagination-bottom")].filter(Boolean);
 const summary = document.getElementById("md-page-summary");
 const searchClear = document.getElementById("md-search-clear");
+const versionSelect=document.getElementById("md-version");
+const loaderSelect=document.getElementById("md-loader");
+const filterClear=document.getElementById("md-filter-clear");
+const filterStatus=document.getElementById("md-filter-status");
+const compatCache=new Map();
+const compatReady=new Set();
+const compatPending=new Map();
+const compatErrors=new Map();
+const allowedLoaders=new Set(["","fabric","forge","neoforge","quilt"]);
+function getVersion(){return versionSelect&&versionSelect.value?versionSelect.value:"";}
+function getLoader(){return loaderSelect&&loaderSelect.value?loaderSelect.value:"";}
+function isNarrowed(){return !!(search.value.trim()||getLoader()||getVersion());}
+function loadCompatibility(key){
+ if(compatReady.has(key))return Promise.resolve();
+ if(compatPending.has(key))return compatPending.get(key);
+ compatErrors.delete(key);
+ const unique=[...new Set((source[key]||[]).map(p=>p.slug).filter(Boolean))];
+ const groups=[];
+ for(let i=0;i<unique.length;i+=25)groups.push(unique.slice(i,i+25));
+ const promise=Promise.all(groups.map(async ids=>{
+  const url="https://api.modrinth.com/v2/projects?ids="+encodeURIComponent(JSON.stringify(ids));
+  const response=await fetch(url,{headers:{"Accept":"application/json"}});
+  if(!response.ok)throw Error("Modrinth: HTTP "+response.status);
+  const projects=await response.json();
+  if(!Array.isArray(projects))throw Error("Modrinth: invalid project list");
+  return projects;
+ })).then(groups=>{
+  const metadata=new Map();
+  groups.flat().forEach(p=>{
+   if(p&&typeof p.slug==="string"&&Array.isArray(p.game_versions)){
+    metadata.set(p.slug.toLowerCase(),new Set(p.game_versions));
+   }
+  });
+  compatCache.set(key,metadata);
+  compatReady.add(key);
+  compatErrors.delete(key);
+ }).catch(e=>{
+  compatErrors.set(key,String(e&&e.message||e));
+ }).finally(()=>{
+  compatPending.delete(key);
+  if(category===key)render();
+ });
+ compatPending.set(key,promise);
+ return promise;
+}
+
 const anchor = document.getElementById("ranking");
 if (!snapshot || !list || !search) return;
 const source = snapshot.lists;
@@ -36,17 +82,28 @@ const urlState=()=>{
  const category=Object.prototype.hasOwnProperty.call(source,requested)?requested:"all";
  const rawPage=Number(params.get("page"));
  const page=Number.isInteger(rawPage)?Math.max(1,Math.min(5,rawPage)):1;
- return {category,page,q:params.get("q")||""};
+ return {category,page,q:params.get("q")||"",
+  loader:allowedLoaders.has(params.get("loader"))?params.get("loader")||"":"",
+  version:params.get("version")||""};
 };
 const initial=urlState();
 let category=initial.category,page=initial.page;
 search.value=initial.q;
+if(loaderSelect)loaderSelect.value=initial.loader;
+if(versionSelect&&[...versionSelect.options].some(o=>o.value===initial.version))versionSelect.value=initial.version;
 
 function filtered(){
- const q=search.value.toLocaleLowerCase("ja").trim();
- const entries=source[category]||[];
- return entries.map((item,rank)=>({item,rank:rank+1})).filter(({item})=>!q||
-  [item.title,item.description,item.slug].join(" ").toLocaleLowerCase("ja").includes(q));
+ const q=search.value.toLocaleLowerCase("ja").trim(),loader=getLoader(),version=getVersion();
+ const metadata=version?compatCache.get(category):null;
+ return (source[category]||[]).map((item,rank)=>({item,rank:rank+1})).filter(({item})=>{
+  if(q&&![item.title,item.description,item.slug].join(" ").toLocaleLowerCase("ja").includes(q))return false;
+  if(loader&&!(item.loaders||[]).includes(loader))return false;
+  if(version){
+   const supported=metadata?.get(String(item.slug).toLowerCase());
+   if(!supported||!supported.has(version))return false;
+  }
+  return true;
+ });
 }
 function writeUrl(mode){
  if(!window.history||!window.location)return;
@@ -55,6 +112,8 @@ function writeUrl(mode){
  if(page>1)url.searchParams.set("page",String(page));else url.searchParams.delete("page");
  const q=search.value.trim();
  if(q)url.searchParams.set("q",q);else url.searchParams.delete("q");
+ if(getLoader())url.searchParams.set("loader",getLoader());else url.searchParams.delete("loader");
+ if(getVersion())url.searchParams.set("version",getVersion());else url.searchParams.delete("version");
  try{window.history[mode==="push"?"pushState":"replaceState"](null,"",url.pathname+url.search+url.hash)}catch(e){}
 }
 function button(text,cls,disabled,click,aria){
@@ -87,7 +146,11 @@ function renderPager(target,total,current){
  target.append(layout);
 }
 function render(){
- const entries=filtered();
+ const version=getVersion();
+ const waiting=!!version&&!compatReady.has(category)&&!compatErrors.has(category);
+ if(waiting&&!compatPending.has(category))loadCompatibility(category);
+ const problem=!!version&&compatErrors.has(category);
+ const entries=waiting||problem?[]:filtered();
  const total=entries.length,pages=Math.max(1,Math.ceil(total/pageSize));
  page=Math.max(1,Math.min(page,pages));
  tabs.forEach(tab=>{
@@ -100,14 +163,24 @@ function render(){
  if(summary)summary.textContent=descriptions[category];
  const first=(page-1)*pageSize;
  const current=entries.slice(first,first+pageSize);
- count.textContent=search.value.trim()
-  ? labels[category]+"：検索結果 "+total+"件｜"+(total?first+1:0)+"〜"+Math.min(first+pageSize,total)+"件を表示"
-  : labels[category]+"：100位まで｜"+(first+1)+"〜"+Math.min(first+pageSize,total)+"位を表示";
+ count.textContent=waiting?"Modrinthから対応バージョンを取得中…":problem?"バージョン情報を取得できませんでした":
+  isNarrowed()?labels[category]+"：条件に一致 "+total+"件｜"+(total?first+1:0)+"〜"+Math.min(first+pageSize,total)+"件を表示（元の順位のまま）":
+  labels[category]+"：100位まで｜"+(first+1)+"〜"+Math.min(first+pageSize,total)+"位を表示";
+ if(filterClear)filterClear.hidden=!isNarrowed();
+ if(filterStatus)filterStatus.textContent=waiting?"Modrinthの公式データを確認しています。":
+  problem?"対応バージョンの確認に失敗しました。通信状況を確認して「再試行」を押してください。":
+  version?"Modrinthの各MODの公開対応バージョン一覧で絞り込み中。ローダーとの組み合わせは公式配布ページで最終確認してください。":
+  getLoader()?"ローダーはランキング取得時点のModrinth情報で絞り込み中。バージョン別の対応は公式配布ページで確認してください。":
+  "カテゴリ・Minecraftバージョン・ローダーを組み合わせて探せます。";
  if(updated)updated.textContent="Modrinthの累計DL数｜"+snapshot.asOf.replaceAll("-","/")+" 取得";
  if(searchClear)searchClear.hidden=!search.value.trim();
  pagers.forEach(p=>renderPager(p,total,page));
  list.replaceChildren();
- if(!current.length){list.append(el("li","md-no-results","該当するMODはありません。検索語を変えてください。"));return;}
+ if(!current.length){
+  const box=el("li","md-no-results",waiting?"対応バージョンを読み込み中です…":problem?"Modrinthに接続できません。条件を変えるか再試行してください。":"一致するMODがありません。条件を変えてお試しください。");
+  if(problem){const retry=button("再試行","md-retry-button",false,()=>{compatErrors.delete(category);render();});box.append(retry);}
+  list.append(box);return;
+ }
  current.forEach(({item:p,rank})=>{
   const li=el("li","md-mod-item");
   li.dataset.rank=String(rank);
@@ -123,6 +196,7 @@ function render(){
   const badges=el("div","md-mod-tags");
   (p.loaders||[]).slice(0,3).forEach(v=>badges.append(el("span","",v==="neoforge"?"NeoForge":v==="fabric"?"Fabric":v==="forge"?"Forge":"Quilt")));
   if(p.categories?.includes("library"))badges.append(el("span","","前提ライブラリ"));
+  if(version)badges.append(el("span","md-mod-version-badge",version+" 対応候補"));
   content.append(badges);
   const row=el("div","md-mod-actions");
   const dl=el("span","md-mod-dl");
@@ -159,9 +233,20 @@ tabs.forEach((t,i)=>{
  });
 });
 search.addEventListener("input",()=>{page=1;writeUrl("replace");render()});
+if(loaderSelect)loaderSelect.addEventListener("change",()=>{page=1;writeUrl("push");render()});
+if(versionSelect)versionSelect.addEventListener("change",()=>{page=1;writeUrl("push");render()});
+if(filterClear)filterClear.addEventListener("click",()=>{
+ search.value="";
+ if(loaderSelect)loaderSelect.value="";
+ if(versionSelect)versionSelect.value="";
+ page=1;writeUrl("push");render();
+});
 if(searchClear)searchClear.addEventListener("click",()=>{search.value="";page=1;writeUrl("replace");render();search.focus()});
 window.addEventListener("popstate",()=>{
- const state=urlState();category=state.category;page=state.page;search.value=state.q;render();
+ const state=urlState();category=state.category;page=state.page;search.value=state.q;
+ if(loaderSelect)loaderSelect.value=state.loader;
+ if(versionSelect)versionSelect.value=[...versionSelect.options].some(o=>o.value===state.version)?state.version:"";
+ render();
 });
 render();
 })();
