@@ -490,9 +490,8 @@ $('save-card').addEventListener('click',async()=>{
   if(!width)throw Error('診断結果が表示されていません。');
   // Reuse the full-resolution visible node, not a newly constructed canvas.
   const uri=await window.htmlToImage.toPng(card,{
-   cacheBust:true,pixelRatio:Math.min(3,Math.max(2,1200/width)),
+   cacheBust:true,pixelRatio:2,
    backgroundColor:'#08141a',skipFonts:true,
-   canvasWidth:Math.max(1200,Math.round(width*2)),
    style:{animation:'none'}
   });
   const link=document.createElement('a');link.href=uri;link.download='minecraft-world-score.png';
