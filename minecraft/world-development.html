@@ -360,7 +360,7 @@ function calculate(data){
    if(!block.terrain&&value>=12)diversity++;
    if(block.detail)decor+=count;
  }
- const crafts=total(crafted),minedTotal=total(mined);
+ const crafts=total(Object.fromEntries(Object.entries(crafted).filter(([key])=>!['minecraft:air','minecraft:cave_air','minecraft:void_air'].includes(key)))),minedTotal=total(mined);
  const movement=['minecraft:walk_one_cm','minecraft:walked_one_cm','minecraft:sprint_one_cm','minecraft:swim_one_cm','minecraft:walk_under_water_one_cm','minecraft:walk_on_water_one_cm','minecraft:climb_one_cm','minecraft:crouch_one_cm','minecraft:fly_one_cm','minecraft:aviate_one_cm','minecraft:boat_one_cm','minecraft:minecart_one_cm','minecraft:horse_one_cm','minecraft:pig_one_cm','minecraft:strider_one_cm','minecraft:happy_ghast_one_cm','minecraft:nautilus_one_cm'];
  const distance=movement.reduce((n,k)=>n+(typeof custom[k]==='number'&&custom[k]>0?Math.min(custom[k],1e11):0),0)/100000;
  const ticks=Number(custom['minecraft:play_time']??custom['minecraft:play_one_minute']??0);
@@ -465,6 +465,13 @@ const WIKI_TEXTURE_ALIAS={
  'emerald_block':'Block_of_Emerald','quartz_block':'Block_of_Quartz',
  'redstone_block':'Block_of_Redstone','hay_block':'Hay_Bale'
 };
+const blockOnlyCrops={
+ 'potatoes':{name:'ジャガイモ（作物）',texture:'potatoes_stage3',related:'potato'},
+ 'carrots':{name:'ニンジン（作物）',texture:'carrots_stage3',related:'carrot'},
+ 'beetroots':{name:'ビートルート（作物）',texture:'beetroots_stage3',related:'beetroot'},
+ 'wheat':{name:'小麦（作物）',texture:'wheat_stage7',related:'wheat'}
+};
+const invisibleStatsIds=new Set(['minecraft:air','minecraft:cave_air','minecraft:void_air']);
 const mobNames={
  'ender_dragon':'エンダードラゴン','wither':'ウィザー',
  'iron_golem':'アイアンゴーレム','snow_golem':'スノーゴーレム','player':'プレイヤー',
@@ -501,7 +508,16 @@ function resolveIdentity(category,key){
  if(category==='minecraft:killed'||category==='minecraft:killed_by'){
   const fromSpawn=registry.get(slug+'_spawn_egg')?.jp||'';
   const name=mobNames[slug]||fromSpawn.replace(/のスポーンエッグ$|スポーンエッグ$/,'')||englishFallback(slug);
-  return {name,slug:null,icon:null};
+  // The Minecraft Wiki EntitySprite files depict actual in-game mobs, not
+  // spawn eggs or unrelated object textures. The wiki sprite filename convention
+  // uses hyphens for entity IDs such as ender_dragon -> ender-dragon.
+  const spriteId=slug.replace(/_/g,'-');
+  return {name,slug:null,icon:full.startsWith('minecraft:')?{src:'https://minecraft.wiki/images/EntitySprite_'+encodeURIComponent(spriteId)+'.png'}:null};
+ }
+ const crop=full.startsWith('minecraft:')?blockOnlyCrops[slug]:null;
+ if(crop){
+  return {name:crop.name,slug:registry.has(crop.related)?crop.related:null,
+   icon:{src:textureAsset('1.21.11','block',crop.texture)}};
  }
  const item=full.startsWith('minecraft:')?registry.get(slug):null;
  return {name:item?.jp||englishFallback(slug),slug:item?.slug||null,icon:item?resolveIcon(item):null};
@@ -562,7 +578,7 @@ function makeCards(r){
   ['建築関連ブロック',fmt(r.placed)+' 回','建築向けブロックの使用記録'],
   ['アイテム・ブロック使用',fmt(sum(currentStats?.['minecraft:used']))+' 回','道具・食料などの使用も含む'],
   ['採掘したブロック',fmt(sum(currentStats?.['minecraft:mined']))+' 個','採掘統計の合計'],
-  ['クラフトした数',fmt(sum(currentStats?.['minecraft:crafted']))+' 個','クラフト統計の合計'],
+  ['クラフトした数',fmt(sum(Object.fromEntries(Object.entries(currentStats?.['minecraft:crafted']||{}).filter(([key])=>!invisibleStatsIds.has(key)))))+' 個','クラフト統計の合計（無効な空気IDは除外）'],
   ['移動距離',fmt(r.distance)+' km','歩行・ダッシュなどの記録'],
   ['ジャンプ',fmt(get(c,'jump'))+' 回','ジャンプした回数'],
   ['死亡回数',fmt(get(c,'deaths'))+' 回','プレイヤーの死亡回数'],
@@ -593,7 +609,7 @@ function collectStats(stats){
  const categories=[];
  for(const [cat,all] of Object.entries(stats||{})){
   if(!all||typeof all!=='object'||Array.isArray(all))continue;
-  const entries=Object.entries(all).filter(([k,v])=>typeof v==='number'&&Number.isFinite(v)).map(([key,value])=>{
+  const entries=Object.entries(all).filter(([k,v])=>!invisibleStatsIds.has(k)&&typeof v==='number'&&Number.isFinite(v)).map(([key,value])=>{
    const identity=resolveIdentity(cat,key);
    return {key,value,cat,name:identity.name,slug:identity.slug,icon:identity.icon,
     formatted:displayValue(cat,key,value),
