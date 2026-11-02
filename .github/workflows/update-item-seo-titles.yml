@@ -12,6 +12,7 @@ on:
       - 'minecraft/strategy/items/items-2026-data.js'
       - 'minecraft/strategy/items/recipes-data.js'
       - 'minecraft/strategy/items/recipes-2026-data.js'
+      - 'minecraft/**/*.html'
 
 permissions:
   contents: write
@@ -22,6 +23,8 @@ concurrency:
 
 jobs:
   titles:
+    # Prevent a second run on the bot's own normalized HTML commit.
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
