@@ -287,3 +287,28 @@
 .ranking-page .rank-order-disclosure strong{color:#173e61;font-weight:950}
 .ranking-page .rank-order-disclosure b{font-weight:950}
 @media(max-width:680px){.ranking-page .rank-order-disclosure{font-size:11px;padding:11px 12px;margin:8px auto 14px}}
+
+
+/* 2026-11-03 verified domestic PC comparison pricing disclosure */
+.ranking-page .rank-price-clarification{
+ margin:7px 0 0;
+ padding:7px 9px;
+ border:1px solid #f2d2a3;
+ border-radius:8px;
+ background:#fff9ed;
+ color:#5b4626;
+ font-size:11px;
+ line-height:1.6;
+ overflow-wrap:anywhere;
+}
+.ranking-page .rank-price-clarification strong{
+ color:#a12f1f;
+ font-weight:900;
+}
+.ranking-page .rank-market-price[data-price-kind="comparison"] .rank-price-source{
+ color:#a14d13;
+ font-weight:800;
+}
+@media(max-width:680px){
+ .ranking-page .rank-price-clarification{font-size:10px;padding:7px 8px}
+}
