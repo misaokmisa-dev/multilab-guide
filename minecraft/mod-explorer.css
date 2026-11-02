@@ -310,3 +310,113 @@
  .md-mod-next-grid{grid-template-columns:1fr}
  .md-mod-server-link{width:100%}
 }
+
+
+/* 2026-11-02 PC COMPARISON MEGA CTA
+ * Animated impact rays, moving shine and gold neon accents.
+ * All motion is transform/opacity only to avoid layout shifts.
+ */
+.md-pc-cta-stage{
+ position:relative;isolation:isolate;overflow:hidden;
+ display:grid;place-items:center;
+ width:100%;max-width:100%;
+ padding:clamp(18px,3vw,31px);
+ margin:21px 0 28px;border-radius:22px;
+ background:radial-gradient(ellipse at 50% 45%,#28743b 0%,#145332 45%,#0b271d 100%);
+ border:2px solid #ddc267;
+ box-shadow:0 7px 24px rgba(11,64,28,.15),inset 0 0 0 1px #f5e8ab2a;
+}
+.md-pc-cta-stage::before{
+ content:"";pointer-events:none;position:absolute;inset:0;
+ background:radial-gradient(ellipse at center,#dbff7957 0%,transparent 58%);
+ opacity:.72;animation:mdPcBackdrop 2.5s ease-in-out infinite alternate;
+}
+.md-pc-cta-stage::after{
+ content:"";pointer-events:none;position:absolute;inset:7px;border-radius:14px;
+ border:1px solid #f5da7388;box-shadow:0 0 14px #ffe17b30,inset 0 0 16px #ffe17b20;
+}
+.md-pc-cta-rays{
+ position:absolute;inset:-70%;pointer-events:none;z-index:0;
+ background:repeating-conic-gradient(from 0deg at 50% 50%,
+  transparent 0deg 8deg,#fff2a6b5 8deg 10deg,
+  transparent 10deg 17deg,#eaff8f74 17deg 20deg,
+  transparent 20deg 26deg);
+ -webkit-mask-image:radial-gradient(ellipse at center,transparent 0 16%,#000 27% 76%,transparent 88%);
+ mask-image:radial-gradient(ellipse at center,transparent 0 16%,#000 27% 76%,transparent 88%);
+ opacity:.62;animation:mdPcRaysTurn 16s linear infinite;
+}
+.md-pc-cta-stars{position:absolute;inset:0;z-index:1;pointer-events:none}
+.md-pc-cta-stars span{
+ position:absolute;color:#fff6a4;text-shadow:0 0 7px #fff8c8,0 0 18px #f5d247;
+ font-size:clamp(12px,1.9vw,25px);animation:mdPcTwinkle 2.2s ease-in-out infinite alternate;
+}
+.md-pc-cta-stars span:nth-child(1){left:5%;top:16%;animation-delay:-.6s}
+.md-pc-cta-stars span:nth-child(2){right:7%;top:14%;animation-delay:-1.4s}
+.md-pc-cta-stars span:nth-child(3){right:4%;bottom:9%;animation-delay:-.2s}
+.md-pc-cta-stars span:nth-child(4){left:7%;bottom:9%;animation-delay:-1.8s}
+.md-pc-cta{
+ position:relative;z-index:2;overflow:hidden;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;
+ width:min(900px,100%);min-height:162px;
+ padding:23px clamp(18px,4vw,44px);
+ border-radius:17px;border:3px solid #ffea8c;
+ text-decoration:none!important;text-align:center;
+ color:#113a22!important;
+ background:linear-gradient(124deg,#edff65 0%,#56fa63 38%,#01e427 63%,#abff56 100%);
+ box-shadow:0 0 0 3px #155631,0 0 0 6px #ffe97a80,0 0 38px #fff07a8c,0 12px 26px #041d1580;
+ animation:mdPcHeartbeat 2.5s ease-in-out infinite;
+ transition:filter .18s ease,transform .18s ease;
+}
+.md-pc-cta::before{
+ content:"";position:absolute;pointer-events:none;z-index:0;
+ width:30%;height:240%;left:-66%;top:-70%;transform:rotate(23deg);
+ background:linear-gradient(90deg,transparent,#ffffff00,#fffdeab8,#ffffff00,transparent);
+ animation:mdPcShine 4s ease-in-out infinite;
+}
+.md-pc-cta > *{position:relative;z-index:1}
+.md-pc-cta-topline{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
+.md-pc-cta-badge{
+ display:inline-flex;align-items:center;justify-content:center;
+ padding:6px 18px;border-radius:99px;
+ background:linear-gradient(100deg,#fff7cb,#ffce49,#fff2ac);
+ color:#4a3400!important;box-shadow:0 2px 7px #b97e426b,0 0 13px #fffbdc;
+ font-size:clamp(11px,1.4vw,13px);font-weight:950;letter-spacing:.04em;
+}
+.md-pc-cta-topline .md-pc-cta-sparkle{color:#fff7cf;text-shadow:0 0 10px #f2ac0f;font-size:18px}
+.md-pc-cta-heading{
+ display:flex;align-items:center;justify-content:center;gap:14px;
+ width:100%;font-size:clamp(18px,2.7vw,30px);font-weight:950;
+ line-height:1.35;letter-spacing:-.025em;color:#103924!important;
+ text-shadow:0 1px 0 #f0ffd6a0;overflow-wrap:anywhere;
+}
+.md-pc-cta-arrow{font-size:clamp(24px,3.1vw,36px);line-height:1;flex:none;animation:mdPcArrow 1.2s ease-in-out infinite alternate}
+.md-pc-cta-caption{font-size:clamp(12px,1.5vw,15px);font-weight:850;color:#205b30!important;line-height:1.55}
+.md-pc-cta:hover{transform:translateY(-3px) scale(1.012);filter:saturate(1.2) brightness(1.04)}
+.md-pc-cta:active{transform:translateY(0) scale(.994)}
+.md-pc-cta:focus-visible{outline:4px solid #fff;outline-offset:8px}
+@keyframes mdPcRaysTurn{to{transform:rotate(360deg)}}
+@keyframes mdPcBackdrop{to{opacity:1}}
+@keyframes mdPcTwinkle{from{transform:scale(.75);opacity:.48}to{transform:scale(1.22);opacity:1}}
+@keyframes mdPcHeartbeat{
+ 0%,100%{box-shadow:0 0 0 3px #155631,0 0 0 6px #ffe97a80,0 0 25px #fff07a70,0 12px 26px #041d1580}
+ 50%{box-shadow:0 0 0 3px #155631,0 0 0 6px #ffe97ad5,0 0 45px #ffeb7edf,0 12px 28px #041d1580}
+}
+@keyframes mdPcShine{
+ 0%,18%{left:-66%;opacity:0}
+ 27%{opacity:1}
+ 58%,100%{left:140%;opacity:0}
+}
+@keyframes mdPcArrow{to{transform:translateX(7px)}}
+@media(max-width:680px){
+ .md-pc-cta-stage{padding:14px 11px;margin:16px 0 22px;border-radius:16px}
+ .md-pc-cta-stage::after{inset:5px;border-radius:12px}
+ .md-pc-cta{min-height:156px;padding:20px 13px;gap:10px;border-width:2px;border-radius:12px}
+ .md-pc-cta-heading{gap:5px;line-height:1.4}
+ .md-pc-cta-arrow{font-size:22px}
+ .md-pc-cta-stars span:nth-child(2),.md-pc-cta-stars span:nth-child(4){display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .md-pc-cta-stage::before,.md-pc-cta-rays,.md-pc-cta-stars span,
+ .md-pc-cta,.md-pc-cta::before,.md-pc-cta-arrow{animation:none!important}
+ .md-pc-cta{transition:none}
+}
