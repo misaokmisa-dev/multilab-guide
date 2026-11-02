@@ -80,15 +80,15 @@
 <button type="button" id="pick-folder-basic" class="wd-simple-link">フォルダ選択が開かない場合</button>
 <button type="button" id="pick-json-file" class="wd-simple-link wd-visually-hidden-control" tabindex="-1">ファイルを直接選ぶ</button>
 </div>
-<details class="wd-find-guide wd-folder-help" id="file-help">
+<details class="wd-find-guide wd-folder-help" id="file-help" open>
 <summary><span class="wd-find-question" aria-hidden="true">?</span><span>ワールドフォルダの場所がわからない</span><span class="wd-find-platform">Windows</span></summary>
 <div class="wd-folder-help-body">
 <p>Windowsなら <kbd>Win</kbd> + <kbd>R</kbd> を押して、次の場所を開いてください。</p>
 <div class="wd-find-path"><code id="wd-saves-path">%appdata%&#92;.minecraft&#92;saves</code><button id="wd-copy-path" type="button">コピー</button></div>
-<div class="wd-path-label">統計ファイルの場所</div>
-<div class="wd-folder-route"><span>ワールド名のフォルダ</span><b>→</b><span>stats</span><b>→</b><span>UUID.json</span></div>
-<div class="wd-path-caption">26.1以降</div>
-<div class="wd-folder-route"><span>ワールド名のフォルダ</span><b>→</b><span>players</span><b>→</b><span>stats</span><b>→</b><span>UUID.json</span></div>
+<div class="wd-path-label">統計ファイルの場所（26.1以降）</div>
+<div class="wd-folder-route"><span>ワールド名</span><b>→</b><span>players</span><b>→</b><span>stats</span><b>→</b><span>UUID.json</span></div>
+<div class="wd-path-caption">1.21.11以前</div>
+<div class="wd-folder-route"><span>ワールド名</span><b>→</b><span>stats</span><b>→</b><span>UUID.json</span></div>
 <p class="wd-route-hint">最後の <b>.json</b> ファイルを上の枠へドラッグ＆ドロップ。</p>
 <details class="wd-find-more"><summary>Mac・サーバーの場合</summary>
 <p><b>Mac：</b><code>~/Library/Application Support/minecraft/saves</code><br>
