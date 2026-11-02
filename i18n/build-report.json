@@ -1,9 +1,9 @@
 {
-  "source_segments": 6378,
+  "source_segments": 6379,
   "translated": {
-    "en": 6324,
-    "ko": 6325,
-    "zh": 6321
+    "en": 6325,
+    "ko": 6326,
+    "zh": 6322
   },
   "generator": "offline Argos Translate"
 }
