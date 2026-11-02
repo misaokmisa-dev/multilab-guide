@@ -348,3 +348,9 @@ body.wd-body a{text-underline-offset:4px}
 @keyframes wd-scene-in{from{opacity:.4;transform:scale(1.13)}to{opacity:1;transform:scale(1.04)}}
 @media(max-width:700px){.wd-leaderboard-panel{min-height:0}.wd-ranking-entry{padding:15px}.wd-ranking-submit{width:100%}.wd-result .wd-scorecard{min-height:265px;padding:22px 18px}.wd-result .wd-score-value{font-size:clamp(37px,8vw,65px)}.wd-result .wd-result-rank{font-size:13px;padding:10px 12px}}
 @media(prefers-reduced-motion:reduce){.wd-result .wd-score-value,.wd-result .wd-result-rank,.wd-result .wd-scorecard::before,.wd-leaderboard-sparks span,.wd-result .wd-result-rank::before,.wd-result .wd-result-rank::after{animation:none!important;transition:none!important}}
+
+.wd-rarity-eyebrow{display:inline-flex;align-items:center;gap:8px;margin:16px 0 4px;padding:5px 10px;border:1px solid var(--tier);background:color-mix(in srgb,var(--tier) 14%,#040c15);color:var(--tier-light);border-radius:6px;font:950 10px/1.35 ui-monospace,Consolas,monospace;letter-spacing:.13em;text-shadow:0 0 10px var(--tier-glow);box-shadow:0 0 16px var(--tier-glow)}
+.wd-result.wd-rarity-red .wd-scorecard::before{filter:saturate(1.32) contrast(1.08)}
+.wd-result.wd-rarity-gold .wd-scorecard::before{filter:saturate(1.28) contrast(1.04)}
+.wd-result.wd-rarity-purple .wd-scorecard::before{filter:saturate(1.18) contrast(1.08)}
+@media(max-width:550px){.wd-rarity-eyebrow{font-size:9px;letter-spacing:.06em}}
