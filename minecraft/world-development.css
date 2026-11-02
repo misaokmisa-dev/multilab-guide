@@ -451,3 +451,6 @@ body.wd-body a{text-underline-offset:4px}
 .wd-export-status{flex:0 0 100%;font-size:11px;line-height:1.5;font-weight:800;color:#49684d;margin-top:2px}
 .wd-export-status:empty{display:none}
 .wd-share-actions button:disabled{opacity:.7;cursor:progress}
+
+/* Keep the colored hazard-like marker visible even before opening a category. */
+.wd-stat-group:not([open]) .wd-stat-group-head::after{content:"";position:absolute;bottom:0;left:0;right:0;height:5px;background:repeating-linear-gradient(90deg,#7568ef 0 36px,#4068b8 36px 62px,#34285d 62px 67px);pointer-events:none}
