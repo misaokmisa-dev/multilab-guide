@@ -445,3 +445,9 @@ body.wd-body a{text-underline-offset:4px}
  .wd-stat-group-head .wd-stat-group-arrow{height:23px;width:23px;font-size:19px!important}
 }
 @media(prefers-reduced-motion:reduce){.wd-stat-group-symbol{animation:none}}
+
+
+/* PNG screenshot status beside scorecard share actions */
+.wd-export-status{flex:0 0 100%;font-size:11px;line-height:1.5;font-weight:800;color:#49684d;margin-top:2px}
+.wd-export-status:empty{display:none}
+.wd-share-actions button:disabled{opacity:.7;cursor:progress}
