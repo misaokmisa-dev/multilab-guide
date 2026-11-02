@@ -200,22 +200,20 @@ export default {
     if(!env.MLG_SQL)return json({status:'unavailable',message:'集計データに接続できません',debug:url.searchParams.has('diagnose')?'SQL binding is missing':undefined},url.searchParams.has('diagnose')?200:503);
     try{
       const result=await env.MLG_SQL.query({query:`SELECT
-        SUM(_sample_interval) AS submissions,
-        COUNT() AS sampled_rows,
-        SUM(if(double1 > ${score}, _sample_interval, 0)) AS higher,
-        SUM(if(double1 = ${score}, _sample_interval, 0)) AS tied
+        COUNT() AS submissions,
+        countIf(double1 > ${score}) AS higher,
+        countIf(double1 = ${score}) AS tied
         FROM ${DATASET}
         WHERE blob1 = 'world_score'
         AND timestamp >= NOW() - INTERVAL '90' DAY`});
       const row=result.data?.[0]||{};
       const total=Number(row.submissions||0);
-      const rawRows=Number(row.sampled_rows||0);
       const higher=Number(row.higher||0);
       const tied=Number(row.tied||0);
-      if(![total,rawRows,higher,tied].every(n=>Number.isFinite(n)&&n>=0)||higher+tied>total+0.01)
+      if(![total,higher,tied].every(n=>Number.isFinite(n)&&n>=0)||higher+tied>total+0.01)
         throw Error('Bad aggregate');
       const common={periodDays:90,submissions:Math.round(total),sampled:true,comparison:'submissions',minimumSamples:10};
-      if(total<10||rawRows<10)
+      if(total<10)
         return json({...common,status:'insufficient',message:'比較に必要な採点結果を集計中'});
       // Mid-rank for ties, so identical scores receive the same fair percentile.
       const topPercent=Math.max(0,Math.min(100,(higher+tied/2)/total*100));
