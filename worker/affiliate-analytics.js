@@ -144,15 +144,10 @@ export default {
     return json({error:'Robloxの最新データを取得できませんでした'},503);
    }
   }
-  // Minecraft World Score: explicit, privacy-preserving leaderboard pre-entry.
-  // This Analytics Engine dataset records only summarized numeric scores.
-  if(url.pathname==='/api/world-score-status') {
-   if(request.method!=='GET')return json({error:'Method not allowed'},405);
-   return json({status:'collecting',rankingPublished:false,message:'集計中 / ランキングは後日公開'});
-  }
+  // Minecraft World Score: anonymous statistics retained for 90-day percentile comparison.
   if(url.pathname==='/api/world-score-submit') {
    if(request.method!=='POST')return json({ok:false,message:'Method not allowed'},405);
-   if(!env.MLG_EVENTS)return json({ok:false,message:'ランキング集計の受付が準備中です'},503);
+   if(!env.MLG_EVENTS)return json({ok:false,message:'点数比較データの受付が準備中です'},503);
    const origin=request.headers.get('origin');
    if(origin!==url.origin)return json({ok:false,message:'Forbidden'},403);
    const contentType=request.headers.get('content-type')||'';
@@ -224,7 +219,7 @@ export default {
       return json({status:'unavailable',message:'現在スコア比較を取得できません'},503);
     }
   }
-  // Score samples are not publicly ranked until validation / abuse controls are ready.
+  // Private aggregate diagnostics only; no public leaderboard.
   if(url.pathname==='/api/world-score-admin') {
    if(request.method!=='GET')return json({error:'Method not allowed'},405);
    if(!await auth(request,env))return json({error:'Unauthorized'},401);
