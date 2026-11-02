@@ -29,7 +29,7 @@ body.wd-body a{text-underline-offset:4px}
 .wd-board-top,.wd-board-bottom{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px}.wd-board-top{font-size:10px;font-weight:950;letter-spacing:.16em;color:#c2e8c9}
 .wd-online{display:flex;align-items:center;gap:7px;border:1px solid #80ffa144;color:#94ffaf;padding:5px 8px;border-radius:5px;font-size:10px;letter-spacing:.07em}.wd-online i{display:block;width:6px;height:6px;border-radius:50%;background:#2af94e;box-shadow:0 0 9px #2af94e}
 .wd-board-caption{position:relative;color:#a4c9aa;font-size:12px;font-weight:900;margin-top:37px;letter-spacing:.09em}
-.wd-board-number{position:relative;font:1000 clamp(44px,5.1vw,69px)/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;color:#fff;letter-spacing:-.06em;margin:4px 0 8px;text-shadow:0 3px 20px #17ee4244}
+.wd-board-number{position:relative;font:1000 clamp(44px,5.1vw,69px)/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;color:#fff;letter-spacing:-.06em;margin:49px 0 8px;text-shadow:0 3px 20px #17ee4244}
 .wd-board-number small{font-size:13px;letter-spacing:0;margin-left:8px;color:#b3d7ba}.wd-board-rule{height:1px;background:#739d7b55;margin:20px 0 17px}
 .wd-board-bottom span{color:#95b7a2;font-size:10px;font-weight:900;letter-spacing:.11em}
 .wd-board-bars{display:flex;gap:5px;align-items:end}.wd-board-bars i{width:14px;border-radius:3px 3px 0 0;display:block;background:linear-gradient(#a6ff9c,#39a95f);height:13px;opacity:.72}.wd-board-bars i:nth-child(2){height:21px}.wd-board-bars i:nth-child(3){height:27px}.wd-board-bars i:nth-child(4){height:18px}.wd-board-bars i:nth-child(5){height:34px}
