@@ -166,7 +166,7 @@ if(!legal&&!client&&(campaigns.length||video)){
       frame.setAttribute("scrolling", "no");
       frame.setAttribute("sandbox", "allow-scripts allow-popups allow-popups-to-escape-sandbox");
       frame.referrerPolicy = "strict-origin-when-cross-origin";
-      frame.loading = name.includes("as-rail") ? "eager" : "lazy";
+      frame.loading = /as-(?:top|rail|fixed-bottom)/.test(name) ? "eager" : "lazy";
       frame.className = "mlg-auto-ninja-frame";
       const signal = "mlg-ad-" + id + "-" + name.replace(/\s+/g,"-");
       const contents = '<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;overflow:hidden;background:transparent}img,iframe,ins{max-width:100%}</style></head><body>' +
