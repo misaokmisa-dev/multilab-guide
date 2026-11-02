@@ -192,7 +192,7 @@ export default {
   if(url.pathname==='/api/world-score-percentile') {
     if(request.method!=='GET')return json({error:'Method not allowed'},405);
     const rawScore=url.searchParams.get('score');
-    if(rawScore===null||!/^(?:0|[1-9]\\d{0,5})$/.test(rawScore))
+    if(rawScore===null||!/^(?:0|[1-9][0-9]{0,5})$/.test(rawScore))
       return json({error:'0〜100,000の点数を指定してください'},400);
     const score=Number(rawScore);
     if(!Number.isSafeInteger(score)||score>100000)
