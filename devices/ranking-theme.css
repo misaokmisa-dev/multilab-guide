@@ -354,3 +354,31 @@
   .ranking-page .rank-details.rank-price-priority .rank-price-source{font-size:9px;white-space:normal}
   .ranking-page .rank-details.rank-price-priority .rank-price-small{font-size:9px}
 }
+
+
+/* Price-first visual ordering safety net: works on older deployed card markup, too. */
+.ranking-page .rank-item .rank-details > h3{order:0;min-height:0}
+.ranking-page .rank-item .rank-details > .rank-amazon-meta{
+  order:1;min-height:0;margin:0 0 7px;padding:8px 9px;
+  border-radius:8px;border:1px solid #e1e8f1;background:#f8fafc;
+  gap:3px;
+}
+.ranking-page .rank-item .rank-details > .rank-amazon-meta .rank-price-row{
+  display:flex;flex-direction:column;align-items:flex-start;gap:1px;
+}
+.ranking-page .rank-item .rank-details > .rank-amazon-meta .rank-price-row .rank-price-source{
+  order:-1;font-size:10px;
+}
+.ranking-page .rank-item .rank-details > .rank-amazon-meta.rank-no-price{
+  opacity:1;background:#f6f9fd;
+}
+.ranking-page .rank-item .rank-details > .rank-amazon-meta.rank-no-price .rank-shop-price{
+  font-size:13px;color:#43566e;
+}
+.ranking-page .rank-item .rank-details > .rank-amazon-review{order:2;min-height:0;margin:0 0 7px;padding:4px 0 7px}
+.ranking-page .rank-item .rank-details > .rank-feature-list{order:3;margin-top:0}
+.ranking-page .rank-item .rank-details > .amazon-cta{order:4}
+@media(max-width:680px){
+  .ranking-page .rank-item .rank-details > h3{min-height:0}
+  .ranking-page .rank-item .rank-details > .rank-amazon-meta{padding:7px 6px}
+}
