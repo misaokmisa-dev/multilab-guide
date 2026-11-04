@@ -382,3 +382,13 @@
   .ranking-page .rank-item .rank-details > h3{min-height:0}
   .ranking-page .rank-item .rank-details > .rank-amazon-meta{padding:7px 6px}
 }
+
+/* Unified price panel: retain the existing comparison-price beige for all price states. */
+.ranking-page .rank-details.rank-price-priority .rank-amazon-meta.rank-priority-price,
+.ranking-page .rank-details.rank-price-priority .rank-amazon-meta[data-price-kind="comparison"],
+.ranking-page .rank-details.rank-price-priority .rank-amazon-meta.rank-no-price,
+.ranking-page .rank-item .rank-details > .rank-amazon-meta,
+.ranking-page .rank-item .rank-details > .rank-amazon-meta.rank-no-price{
+  background:#fffaf2;
+  border-color:#f0dec2;
+}
