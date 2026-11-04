@@ -1,0 +1,3 @@
+# Explicitly serve authorized ad sellers as plain text for Google ads.txt crawlers.
+/ads.txt
+  Content-Type: text/plain; charset=utf-8
