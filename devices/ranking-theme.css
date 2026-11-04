@@ -383,12 +383,12 @@
   .ranking-page .rank-item .rank-details > .rank-amazon-meta{padding:7px 6px}
 }
 
-/* Unified price panel: retain the existing comparison-price beige for all price states. */
+/* All price cards use the light blue-gray background of the original 参考掲載価格 card. */
 .ranking-page .rank-details.rank-price-priority .rank-amazon-meta.rank-priority-price,
 .ranking-page .rank-details.rank-price-priority .rank-amazon-meta[data-price-kind="comparison"],
 .ranking-page .rank-details.rank-price-priority .rank-amazon-meta.rank-no-price,
 .ranking-page .rank-item .rank-details > .rank-amazon-meta,
 .ranking-page .rank-item .rank-details > .rank-amazon-meta.rank-no-price{
-  background:#fffaf2;
-  border-color:#f0dec2;
+  background:#f8fafc;
+  border-color:#e1e8f1;
 }
