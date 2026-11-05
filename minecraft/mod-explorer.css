@@ -201,23 +201,23 @@
  letter-spacing:.02em;line-height:1;
 }
 .md-rank-switcher .md-tab-top100 strong{font-size:13px;font-weight:950}
-.md-rank-switcher .md-tab:not([aria-selected="true"]):hover{
+.md-rank-switcher .md-tab:not([aria-current="page"]):hover{
  background:#fff;border-color:var(--md-tab-dark);
  box-shadow:0 4px 12px #214a3525;transform:translateY(-1px);
 }
-.md-rank-switcher .md-tab[aria-selected="true"]{
+.md-rank-switcher .md-tab[aria-current="page"]{
  background:linear-gradient(125deg,var(--md-tab-dark),var(--md-tab-border));
  border-color:var(--md-tab-dark);color:#fff;
  box-shadow:0 3px 8px rgba(12,49,30,.23), inset 0 0 0 1px #ffffff36;
 }
-.md-rank-switcher .md-tab[aria-selected="true"]::after{
+.md-rank-switcher .md-tab[aria-current="page"]::after{
  content:"";position:absolute;inset:auto 12px -2px;
  height:4px;border-radius:4px 4px 0 0;background:#f9d87c;
 }
-.md-rank-switcher .md-tab[aria-selected="true"] .md-tab-symbol{
+.md-rank-switcher .md-tab[aria-current="page"] .md-tab-symbol{
  color:var(--md-tab-dark);background:#fff;border-color:#fff;
 }
-.md-rank-switcher .md-tab[aria-selected="true"] .md-tab-top100{
+.md-rank-switcher .md-tab[aria-current="page"] .md-tab-top100{
  background:#ffffff29;border:1px solid #ffffff60;color:#fff;
  padding:5px 6px;
 }
@@ -251,11 +251,11 @@
    padding:4px 5px;font-size:9px;line-height:1;
  }
  .md-rank-switcher .md-tab-top100 strong{font-size:11px}
- .md-rank-switcher .md-tab[aria-selected="true"] .md-tab-top100{padding:3px 4px}
+ .md-rank-switcher .md-tab[aria-current="page"] .md-tab-top100{padding:3px 4px}
 }
 @media(prefers-reduced-motion:reduce){
  .md-rank-switcher .md-tab{transition:none}
- .md-rank-switcher .md-tab:not([aria-selected="true"]):hover{transform:none}
+ .md-rank-switcher .md-tab:not([aria-current="page"]):hover{transform:none}
 }
 
 /* 2026-11-02 Bing entry-page improvement: concise, crawlable selection guidance */
@@ -420,3 +420,10 @@
  .md-pc-cta,.md-pc-cta::before,.md-pc-cta-arrow{animation:none!important}
  .md-pc-cta{transition:none}
 }
+
+/* Standalone category URLs and in-ranking pagination target (2026-11-06). */
+.md-rank-switcher .md-tab{text-decoration:none}
+.md-rank-switcher .md-tab:visited{color:#153d27}
+.md-rank-switcher .md-tab[aria-current="page"]:visited{color:#fff}
+#mod-categories,.md-pagination-top{scroll-margin-top:110px}
+@media(max-width:650px){#mod-categories,.md-pagination-top{scroll-margin-top:95px}}
