@@ -6,6 +6,22 @@
 "use strict";
 const snapshot = window.MLG_MOD_DATA;
 const tabs = [...document.querySelectorAll("[data-mod-tab]")];
+const categoryPaths = {
+ all: "/minecraft/mod-ranking",
+ play: "/minecraft/mod-ranking-adventure.html",
+ utility: "/minecraft/mod-ranking-utility.html"
+};
+const currentPath = window.location.pathname;
+const pageCategory = currentPath.endsWith("/mod-ranking-adventure.html") ? "play"
+ : currentPath.endsWith("/mod-ranking-utility.html") ? "utility" : "all";
+// Preserve older category= bookmarks by redirecting them to the matching standalone page.
+const legacyUrl = new URL(window.location.href);
+const legacyCategory = legacyUrl.searchParams.get("category");
+if(legacyCategory && Object.prototype.hasOwnProperty.call(categoryPaths,legacyCategory)){
+ legacyUrl.searchParams.delete("category");
+ window.location.replace(categoryPaths[legacyCategory] + legacyUrl.search + legacyUrl.hash);
+ return;
+}
 const list = document.getElementById("md-mod-list");
 const search = document.getElementById("md-search");
 const count = document.getElementById("md-mod-count");
@@ -77,8 +93,7 @@ const el=(tag,cls,value)=>{
 };
 const urlState=()=>{
  const params=new URLSearchParams(window.location.search);
- const requested=params.get("category");
- const category=Object.prototype.hasOwnProperty.call(source,requested)?requested:"all";
+ const category=pageCategory;
  const rawPage=Number(params.get("page"));
  const page=Number.isInteger(rawPage)?Math.max(1,Math.min(5,rawPage)):1;
  return {category,page,q:params.get("q")||"",
@@ -107,7 +122,7 @@ function filtered(){
 function writeUrl(mode){
  if(!window.history||!window.location)return;
  const url=new URL(window.location.href);
- url.searchParams.set("category",category);
+ url.searchParams.delete("category");
  if(page>1)url.searchParams.set("page",String(page));else url.searchParams.delete("page");
  const q=search.value.trim();
  if(q)url.searchParams.set("q",q);else url.searchParams.delete("q");
@@ -154,8 +169,7 @@ function render(){
  page=Math.max(1,Math.min(page,pages));
  tabs.forEach(tab=>{
   const yes=tab.dataset.modTab===category;
-  tab.setAttribute("aria-selected",String(yes));
-  tab.tabIndex=yes?0:-1;
+  if(yes)tab.setAttribute("aria-current","page");else tab.removeAttribute("aria-current");
  });
  const panel=document.getElementById("md-ranking-panel");
  if(panel)panel.setAttribute("aria-labelledby","md-tab-"+category);
@@ -215,21 +229,15 @@ function go(value){
  page=next;
  writeUrl("push");
  render();
+ // 1–5 pages: scroll to the actual MOD list, not the page or promo section top.
+ const topPager=document.getElementById("md-pagination-top");
+ if(topPager){
+  requestAnimationFrame(()=>{
+   const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+   topPager.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+  });
+ }
 }
-function switchTab(next,focus){
- if(!Object.prototype.hasOwnProperty.call(source,next))return;
- category=next;page=1;
- writeUrl("push");render();
- if(focus){const tab=tabs.find(t=>t.dataset.modTab===next);if(tab)tab.focus();}
-}
-tabs.forEach((t,i)=>{
- t.addEventListener("click",()=>switchTab(t.dataset.modTab,false));
- t.addEventListener("keydown",ev=>{
-  if(ev.key!=="ArrowLeft"&&ev.key!=="ArrowRight")return;
-  ev.preventDefault();
-  switchTab(tabs[(i+(ev.key==="ArrowRight"?1:tabs.length-1))%tabs.length].dataset.modTab,true);
- });
-});
 search.addEventListener("input",()=>{page=1;writeUrl("replace");render()});
 if(loaderSelect)loaderSelect.addEventListener("change",()=>{page=1;writeUrl("push");render()});
 if(versionSelect)versionSelect.addEventListener("change",()=>{page=1;writeUrl("push");render()});
@@ -241,7 +249,7 @@ if(filterClear)filterClear.addEventListener("click",()=>{
 });
 if(searchClear)searchClear.addEventListener("click",()=>{search.value="";page=1;writeUrl("replace");render();search.focus()});
 window.addEventListener("popstate",()=>{
- const state=urlState();category=state.category;page=state.page;search.value=state.q;
+ const state=urlState();page=state.page;search.value=state.q;
  if(loaderSelect)loaderSelect.value=state.loader;
  if(versionSelect)versionSelect.value=[...versionSelect.options].some(o=>o.value===state.version)?state.version:"";
  render();
