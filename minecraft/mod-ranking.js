@@ -59,7 +59,6 @@ function loadCompatibility(key){
  return promise;
 }
 
-const anchor = document.getElementById("ranking");
 if (!snapshot || !list || !search) return;
 const source = snapshot.lists;
 const labels = {all:"総合",utility:"便利・軽量化MOD",play:"遊ぶ・冒険MOD"};
@@ -128,7 +127,7 @@ function renderPager(target,total,current){
  const pages=Math.max(1,Math.ceil(total/pageSize));
  target.setAttribute("aria-label","ランキングのページ切替");
  const layout=el("div","md-page-controls");
- layout.append(button("← 前へ","md-page-prev",current<=1,()=>go(current-1,true),"前の20位を表示"));
+ layout.append(button("← 前へ","md-page-prev",current<=1,()=>go(current-1),"前の20位を表示"));
  const numbers=el("div","md-page-numbers");
  for(let i=1;i<=pages;i++){
   const first=(i-1)*pageSize+1,last=Math.min(i*pageSize,total);
@@ -138,11 +137,11 @@ function renderPager(target,total,current){
   if(i===current)b.setAttribute("aria-current","page");
   const small=el("span","md-page-range",first+"–"+last);
   b.append(small);
-  b.addEventListener("click",()=>go(i,true));
+  b.addEventListener("click",()=>go(i));
   numbers.append(b);
  }
  layout.append(numbers);
- layout.append(button("次へ →","md-page-next",current>=pages,()=>go(current+1,true),"次の20位を表示"));
+ layout.append(button("次へ →","md-page-next",current>=pages,()=>go(current+1),"次の20位を表示"));
  target.append(layout);
 }
 function render(){
@@ -209,14 +208,13 @@ function render(){
   list.append(li);
  });
 }
-function go(value,scroll){
+function go(value){
  const max=Math.max(1,Math.ceil(filtered().length/pageSize));
  const next=Math.max(1,Math.min(value,max));
  if(next===page)return;
  page=next;
  writeUrl("push");
  render();
- if(scroll&&anchor)anchor.scrollIntoView({behavior:"smooth",block:"start"});
 }
 function switchTab(next,focus){
  if(!Object.prototype.hasOwnProperty.call(source,next))return;
