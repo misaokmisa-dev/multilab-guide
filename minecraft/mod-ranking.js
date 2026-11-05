@@ -8,12 +8,12 @@ const snapshot = window.MLG_MOD_DATA;
 const tabs = [...document.querySelectorAll("[data-mod-tab]")];
 const categoryPaths = {
  all: "/minecraft/mod-ranking",
- play: "/minecraft/mod-ranking-adventure.html",
- utility: "/minecraft/mod-ranking-utility.html"
+ play: "/minecraft/mod-ranking-adventure",
+ utility: "/minecraft/mod-ranking-utility"
 };
-const currentPath = window.location.pathname;
-const pageCategory = currentPath.endsWith("/mod-ranking-adventure.html") ? "play"
- : currentPath.endsWith("/mod-ranking-utility.html") ? "utility" : "all";
+const currentPath = window.location.pathname.replace(/\.html$/,"");
+const pageCategory = currentPath.endsWith("/mod-ranking-adventure") ? "play"
+ : currentPath.endsWith("/mod-ranking-utility") ? "utility" : "all";
 // Preserve older category= bookmarks by redirecting them to the matching standalone page.
 const legacyUrl = new URL(window.location.href);
 const legacyCategory = legacyUrl.searchParams.get("category");
