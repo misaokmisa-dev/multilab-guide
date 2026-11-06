@@ -259,7 +259,12 @@ export default {
   // AdSense content-quality review: auto-generated item-detail pages have
   // short generic descriptions. Preserve the encyclopedia's usability but
   // temporarily stop monetization and indexing on those detail pages.
-  if(url.pathname.startsWith('/minecraft/strategy/items/detail/')) {
+  const isAutoItemDetail=url.pathname.startsWith('/minecraft/strategy/items/detail/');
+  // The rare-mob index is a substantial comparison guide. Some individual
+  // mob pages are currently short, so keep them usable without indexing or ads.
+  const isBriefRareMobDetail=/^\/minecraft\/strategy\/rare-mobs\/[^/]+(?:\.html)?$/.test(url.pathname)
+    && !/^\/minecraft\/strategy\/rare-mobs\/index(?:\.html)?$/.test(url.pathname);
+  if(isAutoItemDetail || isBriefRareMobDetail) {
     const asset=await env.ASSETS.fetch(request);
     if(asset.status!==200 || !(asset.headers.get('content-type')||'').includes('text/html'))return asset;
     const headers=new Headers(asset.headers);
