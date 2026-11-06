@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#103523">
+<title>【マイクラ】クラッシュログ診断｜latest.log・Crash Reportから原因候補を無料解析 | MULTI LAB GUIDE</title>
+<meta name="description" content="Minecraft Java版のlatest.log・クラッシュレポートをブラウザ内だけで解析。MODの依存不足、バージョン違い、Java、メモリ不足、描画エラーなどの原因候補と修正手順を日本語で表示。ファイル送信なし・無料。">
+<link rel="canonical" href="https://mlabg.com/minecraft/tools/crash-log-analyzer.html">
+<meta property="og:type" content="website"><meta property="og:title" content="【マイクラ】クラッシュログ診断｜MODが起動しない原因候補を無料で調べる"><meta property="og:url" content="https://mlabg.com/minecraft/tools/crash-log-analyzer.html">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/minecraft/portal.css"><link rel="stylesheet" href="/site-unified.css">
+<link rel="stylesheet" href="/global-site-header.css?v=20261027a"><link rel="stylesheet" href="/ad-review.css?v=20261106quality01">
+<link rel="stylesheet" href="/minecraft/tools/crash-log-analyzer.css?v=1">
+<script defer src="/site-language.js?v=20261028full"></script>
+<script defer src="/minecraft/tools/crash-log-analyzer.js?v=1"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Minecraft Java版クラッシュログ診断","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/tools/crash-log-analyzer.html","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"description":"Minecraftのlatest.logやクラッシュレポートに含まれる既知のエラー記述から原因候補と確認手順を端末内で表示する、ルールベースの無料ツール。"}</script>
+</head>
+<body class="cl-body"><header class="cl-top"><a href="/" class="cl-brand">MULTI <strong>LAB</strong> GUIDE</a><nav aria-label="サイトナビ"><a href="/minecraft/">マイクラTOP</a><a href="/minecraft/mod-ranking">人気MOD</a><a href="/minecraft/tools/">便利ツール</a></nav></header>
+<main id="main" class="cl-wrap">
+<nav class="cl-crumb" aria-label="パンくず"><a href="/minecraft/">Minecraft</a> › <a href="/minecraft/tools/">便利ツール</a> › クラッシュログ診断</nav>
+<section class="cl-hero"><div class="cl-kicker">MINECRAFT JAVA / TROUBLESHOOTING</div>
+<h1>マイクラのクラッシュログを<br><span>その場で診断する。</span></h1>
+<p>「起動しない」「MODを入れたら落ちた」――その原因はPCの性能不足とは限りません。<strong>latest.log</strong> または <strong>Crash Report</strong> のエラー記述を端末内で調べ、まず確認したい項目を日本語で整理します。</p>
+<div class="cl-pills"><span>無料・登録不要</span><span>ファイルは送信しません</span><span>Java版向け</span><span>スマホでも解析可</span></div></section>
+<section class="cl-panel cl-upload" aria-labelledby="cl-analyzer-title">
+<h2 id="cl-analyzer-title">1. ログを選んで原因候補を調べる</h2>
+<p>ログ内のエラーや注意メッセージを、既知のパターンと照合します。<strong>原因を自動で断定するものではありません。</strong></p>
+<div class="cl-drop" id="cl-drop"><label for="cl-file"> <span class="cl-drop-icon" aria-hidden="true">⌁</span><strong>latest.log / crash-....txt を選択</strong><small>ドラッグ＆ドロップ、またはクリックでファイルを選択（最大5MB）</small></label><input id="cl-file" type="file" accept=".log,.txt,text/plain"></div>
+<div class="cl-paste"><label for="cl-paste">または、エラー文章を貼り付けて診断</label><textarea id="cl-paste" rows="5" maxlength="200000" placeholder="例：Incompatible mods found! ... や Caused by: ... などを貼り付け"></textarea>
+<div class="cl-actions"><button id="cl-check" type="button">エラーの原因候補を診断</button><button type="button" id="cl-clear" class="cl-secondary">リセット</button></div></div>
+<div id="cl-status" role="status" aria-live="polite" class="cl-status">まだログを読み込んでいません。</div>
+<div id="cl-results" class="cl-results" hidden><h3>診断結果：原因の候補と確認する順番</h3><p id="cl-result-note"></p><div id="cl-findings"></div><div class="cl-actions"><button id="cl-copy" type="button" class="cl-secondary">対処チェックリストをコピー</button></div><p class="cl-footnote">ログ内の単語の一致に基づく候補です。複数のエラーが重なる場合、根本原因とは別のエラーが表示されることがあります。誤診防止のため、個人情報を含む生ログや端末内のファイルは送信・保存しません。</p></div>
+</section>
+<section class="cl-panel" aria-labelledby="cl-where"><h2 id="cl-where">2. ログが見つからないとき</h2>
+<div class="cl-cards"><article><h3>Windows（通常のMinecraftランチャー）</h3><ol><li><kbd>Win</kbd>＋<kbd>R</kbd> を押す。</li><li><code>%appdata%\.minecraft</code> を入力して開く。</li><li>直近のログは <code>logs/latest.log</code>、クラッシュレポートは <code>crash-reports</code> フォルダ内の最新の <code>.txt</code> です。</li></ol><p>起動プロファイルでゲームフォルダを変更した場合は、そちらを確認してください。</p></article>
+<article><h3>Mac・他のランチャー</h3><p>Macの通常の保存場所は <code>~/Library/Application Support/minecraft/</code> です。Modrinth App・CurseForge・Prism Launcherなどは各インスタンスのゲームフォルダから <code>logs</code> や <code>crash-reports</code> を探してください。</p><p><strong>注意：</strong>ファイル名が <code>latest.log.gz</code> の場合は圧縮された過去ログです。展開して <code>.log</code> や <code>.txt</code> を選んでください。</p></article></div></section>
+<section class="cl-panel" aria-labelledby="cl-rules"><h2 id="cl-rules">3. 何を検出できる？</h2><div class="cl-types"><div><strong>MOD依存・ローダー</strong><span>必要なMODが見つからない、対応バージョンが一致しない、読み込みに失敗した</span></div><div><strong>Java実行環境</strong><span>Javaバージョンやクラス形式の非互換性</span></div><div><strong>メモリ不足</strong><span>OutOfMemoryErrorなどの明示的なエラー</span></div><div><strong>描画・GPU</strong><span>GLFW / OpenGL / 描画初期化の失敗</span></div><div><strong>Mixin競合</strong><span>MODがゲーム内部の処理を書き換える際の失敗</span></div><div><strong>アクセス権・接続</strong><span>ファイル権限・サーバーのポート競合・接続エラー</span></div></div>
+<p>これはパターン認識型の診断です。MODの作者名や原因MODを必ず正しく特定できるわけではなく、<strong>PCの交換や有料サーバーの購入を勧める前に、無料の対処から試す</strong>ためのツールです。</p></section>
+<section class="cl-panel" aria-labelledby="cl-next"><h2 id="cl-next">4. 直らないときの次の一手</h2><div class="cl-next-grid">
+<a href="/minecraft/mods/troubleshooting.html"><strong>MOD起動失敗の解決ガイド</strong><span>ゲーム版・依存MOD・ローダーを順に確認する</span></a>
+<a href="/minecraft/mods/lag-fix"><strong>ゲームが重い・カクつく</strong><span>FPS / メモリ / サーバー遅延を切り分ける</span></a>
+<a href="/minecraft/server.html"><strong>友達と遊ぶサーバー容量を診断</strong><span>参加人数やMOD数から必要条件を整理</span></a>
+<a href="/devices/pc-diagnosis.html"><strong>PCの性能を見直す前に</strong><span>推奨スペックを無料で確認する</span></a>
+</div></section>
+<section class="cl-panel cl-faq"><h2>よくある質問と解析の限界</h2>
+<h3>「原因が見つかりません」と出た場合は？</h3><p>エラーメッセージがログに記録されていない場合、既知の文字列に一致しない場合、ファイルのサイズ制限によって末尾が欠けている場合などに起こります。最も新しいログ、または <code>crash-reports</code> の最新ファイルを試し、画面上のエラーメッセージも確認してください。</p>
+<h3>PC性能が足りないと断定できる？</h3><p>できません。<code>OutOfMemoryError</code> のような明示的なメッセージがあっても、原因は割り当て設定、MOD構成、実行環境の問題かもしれません。まず無料でできる設定確認とバックアップを優先します。</p>
+<h3>ファイルがインターネットへアップロードされる？</h3><p>この診断処理では<strong>アップロードしません</strong>。選択ファイルの読み取り・文字列検査・診断結果生成はブラウザ内のJavaScriptで完結し、ログ内容を送るAPI通信も設けていません。ただし通常のページ閲覧によるアクセスログはサイト全体のプライバシーポリシーに従います。ログにはユーザー名やサーバーアドレスなどが入る場合があるため、他者に共有するときは別途確認してください。</p>
+<h3>どこを根拠に判定している？</h3><p>公開されている <a href="https://docs.fabricmc.net/players/troubleshooting/crash-reports" target="_blank" rel="noopener noreferrer">Fabric公式Crash Reports</a>・<a href="https://docs.fabricmc.net/players/troubleshooting/uploading-logs" target="_blank" rel="noopener noreferrer">ログの見つけ方</a>・<a href="https://support.modrinth.com/en/articles/8792916-debugging-minecraft-crashes" target="_blank" rel="noopener noreferrer">Modrinthの問題切り分け解説</a>を参照し、エラーの検出ルールと日本語の確認手順を独自実装しています。AIによる未知の原因推定や実機での再現検証は行いません。2026年11月6日公開。</p></section>
+</main><footer class="cl-footer"><a href="/minecraft/tools/">便利ツール一覧</a><a href="/about.html">運営方針</a><a href="/privacy.html">プライバシー</a><p>© 2026 MULTI LAB GUIDE · Minecraft非公式ツール</p></footer>
+</body></html>

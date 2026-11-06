@@ -1,0 +1,31 @@
+(()=>{'use strict';
+const $=id=>document.getElementById(id),field=$('cl-file'),paste=$('cl-paste'),status=$('cl-status'),results=$('cl-results'),findings=$('cl-findings');
+let raw='',summary='';
+const RULES=[
+{key:'dependency',name:'必要なMOD・依存ライブラリの不足',pattern:/(?:requires (?:the )?mod|depends on|missing (?:required )?(?:dependency|mod)|could not find required mod|mod resolution encountered|requires any version of|requires version|depends on mod)/i,desc:'前提MODが不足している、または必要なバージョンが一致しない可能性があります。',steps:['エラーで示された依存MOD名と要求バージョンを確認する。','MOD作者の配布ページから対応する依存ファイルを入手し、同じMinecraft版・ローダーの環境で試す。','導入前にワールドをバックアップしてから、新しいプロファイルで確認する。']},
+{key:'incompatible',name:'MOD・ローダー・ゲーム版の互換性',pattern:/(?:incompatible mods found|incompatible mod set|mod is incompatible|not compatible with|conflicting mod|mod.*requires.*minecraft|requires.*fabric loader|requires.*neoforge|requires.*forge|mod loading has failed)/i,desc:'ゲーム版とローダー、MODの対応先が異なる可能性があります。',steps:['ゲーム本体のバージョンとFabric・Forge・NeoForgeなどのローダーを確認する。','MOD配布元の対応表で、同じ版・同じローダー用のファイルを選ぶ。','競合が疑われる場合、MODを少数ずつ入れたテスト用環境で比較する。']},
+{key:'java',name:'Java実行環境のバージョン不一致',pattern:/(?:UnsupportedClassVersionError|class file version|compiled by a more recent version|Unsupported Java|requires Java (?:version )?\d+|java runtime.*not supported)/i,desc:'起動時に使っているJavaのバージョンが、対象のゲームやMODの要求と合わない可能性があります。',steps:['起動するMinecraftとMODローダーの推奨Javaバージョンを確認する。','ランチャーのJava実行ファイル設定を見直し、公式の対応ランタイムを使用する。','Javaだけをむやみに更新する前に、既存の起動プロファイルを控える。']},
+{key:'memory',name:'Javaメモリ不足・割り当ての問題',pattern:/(?:OutOfMemoryError|Java heap space|GC overhead limit exceeded|Could not reserve enough space|unable to create native thread)/i,desc:'メモリの割り当て、MOD構成、またはJavaの実行環境が関係している可能性があります。',steps:['ブラウザなどの同時起動アプリを終了し、PCの空きメモリを確認する。','ランチャーの最大ヒープ設定とMODパックの推奨条件を確認する。','MODを減らしたテスト構成で再現するか比較する。PCの買い替えは原因を絞ってから検討する。']},
+{key:'mixin',name:'Mixin適用失敗・MOD間の競合候補',pattern:/(?:mixin apply failed|MixinTransformerError|InvalidMixinException|MixinApplyError|mixins\.json|Mixin apply for mod)/i,desc:'MODがMinecraftの内部処理を変更する際に失敗した可能性があります。ログにMOD名があっても、それだけで責任MODと断定できません。',steps:['エラーにあるMixin名やMOD名を控えて配布元の既知の問題を調べる。','依存MOD・ゲーム版・ローダーを揃え、直前に追加したMODを新しいテスト環境で外して比較する。','競合する複数MODがある場合は半分ずつ無効化する方法で切り分ける。']},
+{key:'graphics',name:'GPU・OpenGL・描画初期化の問題',pattern:/(?:GLFW error|OpenGL error|Failed to create window|renderer.*initializ|Unable to create OpenGL|GLException)/i,desc:'GPUドライバー、描画設定、シェーダーやリソースパックとの組み合わせが原因の可能性があります。',steps:['グラフィックドライバーとMinecraftの対応条件を確認する。','シェーダーや高負荷リソースパックを外したテスト構成で起動する。','PCに複数GPUがある場合、起動に使用されるGPUを確認する。']},
+{key:'access',name:'ファイルへのアクセス権限・書き込みエラー',pattern:/(?:AccessDeniedException|Permission denied|FileSystemException|The process cannot access the file)/i,desc:'ゲームの保存フォルダへのアクセスやファイルの使用中状態が関係する可能性があります。',steps:['Minecraft・ランチャー・関連する編集ツールを終了する。','保存先の空き容量・アクセス権・セキュリティソフトによるブロックを確認する。','ワールドをバックアップしたうえで、別の起動プロファイルで再現するか試す。']},
+{key:'network',name:'サーバー側のポート・接続エラー',pattern:/(?:Address already in use|failed to bind to port|Connection refused|Connection timed out|Failed to verify username)/i,desc:'ポート競合、接続先の停止、認証、通信設定などが関係している可能性があります。',steps:['表示された接続エラーと起動・参加のタイミングを確認する。','サーバーの稼働状況とポート・バージョン・認証設定を確認する。','PCのFPS低下とサーバー通信の失敗を区別して対処する。']}
+];
+function analyze(input){
+ const txt=String(input||'').slice(0,5200000);const matches=RULES.filter(r=>r.pattern.test(txt));
+ if(!matches.length)return {findings:[],note:/error|exception|crash|failed/i.test(txt)?'エラーらしい記述はありますが、登録済みのパターンには一致しませんでした。最も新しいクラッシュレポートも確認してください。':'判定に使える既知のエラー記述が見つかりませんでした。入力したファイルの種類・内容を確認してください。'};
+ return {findings:matches,note:matches.length+'種類の原因候補に該当する記述がありました。上の項目から順番に確認してください。複数ヒットしていても根本原因が複数あるとは限りません。'};
+}
+function render(data){
+ findings.replaceChildren();results.hidden=false;$('cl-result-note').textContent=data.note;
+ if(!data.findings.length){const p=document.createElement('p');p.textContent='ゲームのバージョン・ローダー・依存MODを順に確認してください。';findings.append(p)}
+ for(const r of data.findings){const card=document.createElement('article');card.className='cl-finding';const h=document.createElement('strong');h.textContent=r.name;const sub=document.createElement('small');sub.textContent=r.desc;const ol=document.createElement('ol');for(const v of r.steps){const li=document.createElement('li');li.textContent=v;ol.append(li)}card.append(h,sub,ol);findings.append(card)}
+ summary='Minecraftクラッシュログ診断：'+data.note+'\n'+data.findings.map(r=>'\n【'+r.name+'】\n'+r.steps.map((step,i)=>(i+1)+'. '+step).join('\n')).join('\n')+'\n出典：https://mlabg.com/minecraft/tools/crash-log-analyzer.html';status.textContent='診断が完了しました。';results.scrollIntoView({behavior:'smooth',block:'start'})
+}
+function run(){const v=paste.value.trim()||raw;if(!v){status.textContent='まずテキストを貼り付けるか、ログファイルを選んでください。';results.hidden=true;return}if(v.length<15){status.textContent='ログが短すぎます。エラーを含む文章をもう少し入力してください。';results.hidden=true;return}render(analyze(v))}
+async function readFile(file){if(!file)return;if(file.size>5*1024*1024){status.textContent='5MBを超えるファイルは読み込めません。エラー箇所をテキスト欄に貼り付けてください。';return}if(/\.(?:gz|zip|7z)$/i.test(file.name)){status.textContent='圧縮ファイルには対応していません。展開後の.logまたは.txtを選んでください。';return}try{raw=await file.text();paste.value='';status.textContent=file.name+'（'+Math.ceil(file.size/1024)+'KB）を端末内で読み込みました。';render(analyze(raw))}catch(e){status.textContent='ファイルの読み込みに失敗しました。テキストを貼り付けてください。'}}
+field.addEventListener('change',()=>readFile(field.files[0]));
+const drop=$('cl-drop');drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag')});drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag');readFile(e.dataTransfer.files[0])});
+$('cl-check').addEventListener('click',run);$('cl-clear').addEventListener('click',()=>{raw='';field.value='';paste.value='';status.textContent='まだログを読み込んでいません。';results.hidden=true;summary=''});
+$('cl-copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(summary);status.textContent='チェックリストをコピーしました。'}catch(e){status.textContent='コピーできませんでした。端末のクリップボード許可を確認してください。'}});
+})();
