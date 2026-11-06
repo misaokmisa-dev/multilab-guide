@@ -264,17 +264,24 @@ export default {
   // mob pages are currently short, so keep them usable without indexing or ads.
   const isBriefRareMobDetail=/^\/minecraft\/strategy\/rare-mobs\/[^/]+(?:\.html)?$/.test(url.pathname)
     && !/^\/minecraft\/strategy\/rare-mobs\/index(?:\.html)?$/.test(url.pathname);
-  if(isAutoItemDetail || isBriefRareMobDetail) {
+  // Catalog indexes and categories are useful navigation tools, but they
+  // do not need Google display ads in order to remain publicly accessible.
+  // Keep their SEO indexing; only reference detail pages remain noindex.
+  const isItemCatalog=url.pathname.startsWith('/minecraft/strategy/items/');
+  const noindexReference=isAutoItemDetail || isBriefRareMobDetail;
+  if(isItemCatalog || isBriefRareMobDetail) {
     const asset=await env.ASSETS.fetch(request);
     if(asset.status!==200 || !(asset.headers.get('content-type')||'').includes('text/html'))return asset;
     const headers=new Headers(asset.headers);
-    headers.set('X-Robots-Tag','noindex, follow');
+    if(noindexReference)headers.set('X-Robots-Tag','noindex, follow');
     headers.delete('Content-Length');
     const outgoing=new Response(asset.body,{status:asset.status,statusText:asset.statusText,headers});
-    return new HTMLRewriter()
-      .on('head',{element(element){element.append('<meta name="robots" content="noindex,follow">',{html:true});}})
-      .on('script[src*="pagead2.googlesyndication.com"]',{element(element){element.remove();}})
-      .transform(outgoing);
+    let rewriter=new HTMLRewriter()
+      // Choose *not* to place AdSense code on navigation-only/reference pages.
+      // Never edit the AdSense script itself or hide a rendered Google ad.
+      .on('script[src*="pagead2.googlesyndication.com"]',{element(element){element.remove();}});
+    if(noindexReference)rewriter=rewriter.on('head',{element(element){element.append('<meta name="robots" content="noindex,follow">',{html:true});}});
+    return rewriter.transform(outgoing);
   }
   return env.ASSETS.fetch(request);
  }
