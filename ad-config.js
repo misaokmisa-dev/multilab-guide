@@ -1,5 +1,6 @@
 /* 契約済みの広告を設定してください。未設定時は実際の広告を表示しません。 */
 window.MULTILAB_ADS = {
+  reviewMode: true, // AdSense quality review: suspend dynamically inserted third-party banners
   adsenseClient: "", // AdSense の ca-pub-...。承認後に設定
   adsenseSlots: { inline: "", bottom: "" }, // 手動広告枠（任意）
   gameCampaigns: [
