@@ -1,0 +1,31 @@
+name: AdSense review policy guard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'about.html'
+      - 'privacy.html'
+      - 'sitemap.html'
+      - 'sitemap.xml'
+      - 'ad-config.js'
+      - 'ad-review-gate.js'
+      - 'ad-review.css'
+      - 'interstitial-loader.js'
+      - 'worker/**'
+      - 'wrangler.jsonc'
+      - 'devices/*.html'
+      - 'scripts/adsense_policy_check.py'
+      - '.github/workflows/adsense-policy-check.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify AdSense-related site safeguards
+        run: python3 scripts/adsense_policy_check.py
