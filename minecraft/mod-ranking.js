@@ -256,5 +256,6 @@ window.addEventListener("popstate",()=>{
 });
 render();
 const slot=document.querySelector('.md-mod-lag-preflight');
-if(slot && !document.querySelector('.md-crash-solution')){const a=document.createElement('a');a.href='/minecraft/tools/crash-log-analyzer.html';a.textContent='MOD起動エラーを無料診断 →';a.className='md-crash-solution';slot.insertAdjacentElement('afterend',a)}
+const existing=document.querySelector('.md-crash-solution');if(existing)existing.dataset.mlgFunnel='mod-ranking-to-crash-log-tool';
+if(slot && !existing){const a=document.createElement('a');a.dataset.mlgFunnel='mod-ranking-to-crash-log-tool';a.href='/minecraft/tools/crash-log-analyzer.html';a.textContent='MOD起動エラーを無料診断 →';a.className='md-crash-solution';slot.insertAdjacentElement('afterend',a)}
 })();
