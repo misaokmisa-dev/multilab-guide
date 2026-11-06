@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/update-item-seo-titles.yml'
       - 'scripts/update_item_seo_titles.py'
+      - 'scripts/adsense_review_pass.py'
       - 'scripts/normalize_minecraft_titles.py'
       - 'scripts/normalize_minecraft_navigation.py'
       - 'scripts/update_item_english_names.py'
@@ -44,7 +45,8 @@ jobs:
             python scripts/update_item_english_names.py
             python scripts/normalize_minecraft_titles.py
             python scripts/normalize_minecraft_navigation.py
-            git add -A -- minecraft sitemap.xml
+            python scripts/adsense_review_pass.py
+            git add -A -- minecraft devices roblox index.html about.html privacy.html sitemap.html sitemap.xml
             if git diff --cached --quiet; then
               echo "All Minecraft SEO titles, item names, and sitemap entries are current"
               exit 0
