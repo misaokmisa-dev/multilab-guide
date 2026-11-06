@@ -256,6 +256,20 @@ export default {
     return json({source:'Cloudflare Workers Analytics Engine',days,rows:result.data||[],sampled:true,updatedAt:new Date().toISOString()});
    }catch(err){return json({error:'計測データを読み込めませんでした',detail:String(err.message||err).slice(0,180)},503)}
   }
+  // AdSense content-quality review: auto-generated item-detail pages have
+  // short generic descriptions. Preserve the encyclopedia's usability but
+  // temporarily stop monetization and indexing on those detail pages.
+  if(url.pathname.startsWith('/minecraft/strategy/items/detail/')) {
+    const asset=await env.ASSETS.fetch(request);
+    if(asset.status!==200 || !(asset.headers.get('content-type')||'').includes('text/html'))return asset;
+    const headers=new Headers(asset.headers);
+    headers.set('X-Robots-Tag','noindex, follow');
+    headers.delete('Content-Length');
+    const outgoing=new Response(asset.body,{status:asset.status,statusText:asset.statusText,headers});
+    return new HTMLRewriter()
+      .on('script[src*="pagead2.googlesyndication.com"]',{element(element){element.remove();}})
+      .transform(outgoing);
+  }
   return env.ASSETS.fetch(request);
  }
 };
