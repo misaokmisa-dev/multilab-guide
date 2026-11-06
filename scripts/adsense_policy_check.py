@@ -40,8 +40,6 @@ check("X-Robots-Tag" in worker and "noindexReference" in worker and "isItemCatal
       "Encyclopedia reference-page noindex and ad exclusion are missing")
 check("/minecraft/strategy/items/*" in wrangler["assets"]["run_worker_first"],
       "Encyclopedia ad-exclusion Worker route is missing")
-check("https://www.google.com" not in ads_txt or True,
-      "ads.txt syntax check")
 
 for name in ("about.html", "privacy.html", "sitemap.html"):
     content = (ROOT / name).read_text(encoding="utf-8")
