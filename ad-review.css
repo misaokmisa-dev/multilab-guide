@@ -1,0 +1,20 @@
+/* AdSense review: prevent banners / overlays from obstructing original guides.
+   Editorial articles, tools and labeled affiliate links remain visible. */
+.as-slot,.as-rail,.as-fixed-bottom,.as-mosaic,.as-interstitial,
+.as-rail-right,.as-rail-left,.as-ad-content,.mlg-ad-rail,.mlg-auto-ninja,
+.mlg-ad-placeholder,.mlg-ad-slot{display:none!important}
+html,body{scroll-padding-bottom:0!important}
+body{padding-bottom:0!important}
+/* Original instructional blocks added during the quality review. */
+.mlg-review-guide{max-width:1140px;margin:32px auto 45px;padding:clamp(22px,4vw,38px);border:1px solid #d6e3db;border-radius:18px;background:linear-gradient(135deg,#fff,#f2f8f3);color:#20352a;line-height:1.95;box-shadow:0 8px 22px #173d2810}
+.mlg-review-guide h2{font-size:clamp(21px,2.8vw,27px);margin:0 0 14px;font-weight:850;color:#163e29}
+.mlg-review-guide h3{font-size:18px;margin:22px 0 8px;color:#1e5038}
+.mlg-review-guide p{margin:10px 0 14px;line-height:1.95}
+.mlg-review-guide ul,.mlg-review-guide ol{padding-left:25px;margin:10px 0 18px}
+.mlg-review-guide li{margin:7px 0}
+.mlg-review-guide a{color:#117247;text-decoration:underline;text-underline-offset:3px}
+.mlg-review-guide .mlg-guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:15px;margin-top:18px}
+.mlg-review-guide .mlg-guide-box{border:1px solid #d2e4d7;background:white;border-radius:12px;padding:14px 18px}
+.mlg-review-guide .mlg-guide-box h3{margin:0 0 8px;font-size:16px}
+.mlg-review-guide .mlg-guide-box p{font-size:14px;margin:0}
+@media(max-width:600px){.mlg-review-guide{margin:24px 14px 32px;padding:19px}.mlg-review-guide .mlg-guide-grid{grid-template-columns:1fr}}
