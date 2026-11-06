@@ -5,6 +5,8 @@
  */
 (function () {
   "use strict";
+  // AdSense review: intrusive interstitials are paused site-wide. Keep file for reversible re-enable.
+  return;
   var mobile = /iPhone|iPod|Android.*Mobile/i.test(navigator.userAgent) ||
     window.matchMedia("(max-width: 767px)").matches;
   // Informational pages did not have desktop interstitials; preserve that.
