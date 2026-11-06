@@ -9,8 +9,7 @@
     "run_worker_first": [
       "/api/*",
       "/minecraft/strategy/items/detail/*",
-      "/minecraft/strategy/rare-mobs/*",
-      "/minecraft/strategy/items/*"
+      "/minecraft/strategy/rare-mobs/*"
     ]
   },
   "analytics_engine_datasets": [

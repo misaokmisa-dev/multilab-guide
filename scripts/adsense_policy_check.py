@@ -36,10 +36,13 @@ check("AdSense review" in (ROOT / "interstitial-loader.js").read_text(encoding="
       "Interstitial script lost its review safeguard")
 check(".as-slot" in review_css and "display:none!important" in review_css,
       "Review stylesheet no longer hides intrusive third-party ad containers")
-check("X-Robots-Tag" in worker and "noindexReference" in worker and "isItemCatalog" in worker,
-      "Encyclopedia reference-page noindex and ad exclusion are missing")
-check("/minecraft/strategy/items/*" in wrangler["assets"]["run_worker_first"],
-      "Encyclopedia ad-exclusion Worker route is missing")
+check("X-Robots-Tag" in worker and "isAutoItemDetail" in worker and "isBriefRareMobDetail" in worker,
+      "Reference-page noindex and ad exclusion are missing from the Worker")
+check("/minecraft/strategy/items/detail/*" in wrangler["assets"]["run_worker_first"],
+      "Reference detail route is missing from the Worker")
+for entry in [ROOT / "minecraft/strategy/items/index.html", *(ROOT / "minecraft/strategy/items/category").glob("*.html")]:
+    check("pagead2.googlesyndication.com" not in entry.read_text(encoding="utf-8"),
+          f"Catalog page contains an AdSense request: {entry.relative_to(ROOT)}")
 
 for name in ("about.html", "privacy.html", "sitemap.html"):
     content = (ROOT / name).read_text(encoding="utf-8")
