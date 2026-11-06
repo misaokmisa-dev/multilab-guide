@@ -242,3 +242,9 @@
 .as-fixed-bottom.mlg-auto-ninja{pointer-events:none}
 .as-fixed-bottom.mlg-auto-ninja .as-fixed-bottom-content{width:auto;max-width:100%}
 @media(max-width:760px){.as-slot.as-top.mlg-auto-ninja{width:100%}.mlg-auto-ninja .mlg-auto-ninja-frame{max-width:100%}}
+
+/* AdSense quality review: prioritize usable content; temporarily hide all Ninja AdMax placements.
+   Commercial product/affiliate links remain visible and distinguishable from editorial content. */
+.as-slot,.as-rail,.as-rail-right,.as-fixed-bottom,.as-mosaic,
+.as-interstitial,.mlg-ad-rail,.mlg-auto-ninja,.as-ad-content{display:none!important}
+body{padding-bottom:0!important}
