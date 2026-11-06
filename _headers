@@ -6,3 +6,7 @@
 # until each has useful item-specific explanations; the interactive encyclopedia remains available.
 /minecraft/strategy/items/detail/*
   X-Robots-Tag: noindex, follow
+
+# Brief individual rare-mob references retain search exclusion even if a Worker route falls back.
+/minecraft/strategy/rare-mobs/*.html
+  X-Robots-Tag: noindex, follow
