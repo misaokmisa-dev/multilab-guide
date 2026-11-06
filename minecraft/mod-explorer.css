@@ -427,3 +427,15 @@
 .md-rank-switcher .md-tab[aria-current="page"]:visited{color:#fff}
 #mod-categories,.md-pagination-top{scroll-margin-top:110px}
 @media(max-width:650px){#mod-categories,.md-pagination-top{scroll-margin-top:95px}}
+
+/* Free MOD troubleshooting pathway (2026-11-06) */
+.md-mod-lag-preflight{display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#f0f8f2;border:1px solid #bdd8c5;border-radius:13px;padding:17px 19px;margin:18px 0 15px;color:#204331}
+.md-mod-lag-preflight>div{flex:1 1 270px;min-width:0}
+.md-mod-lag-preflight strong{font-size:17px;color:#194d32;line-height:1.5}
+.md-mod-lag-preflight p{font-size:13px;line-height:1.75;margin:6px 0 0;color:#486453}
+.md-mod-lag-preflight a{display:inline-flex;align-items:center;justify-content:center;min-height:43px;background:#19623d;color:white!important;padding:10px 16px;border-radius:9px;text-decoration:none!important;font-weight:850;font-size:13px;text-align:center}
+.md-mod-lag-preflight a:hover{background:#10492e}
+.md-mod-lag-preflight a:focus-visible,.md-mod-lag-foot a:focus-visible{outline:3px solid #53ce87;outline-offset:3px}
+.md-mod-lag-foot{padding:10px 13px;margin:13px 0;background:#f8fcf8;border-left:3px solid #429a65;border-radius:6px;color:#365c43;font-size:12px;line-height:1.8}
+.md-mod-lag-foot a{color:#136b40;text-underline-offset:3px;font-weight:750}
+@media(max-width:650px){.md-mod-lag-preflight{padding:14px 13px;gap:11px}.md-mod-lag-preflight a{width:100%}}
