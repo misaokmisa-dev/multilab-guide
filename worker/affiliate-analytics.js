@@ -272,6 +272,7 @@ export default {
     headers.delete('Content-Length');
     const outgoing=new Response(asset.body,{status:asset.status,statusText:asset.statusText,headers});
     return new HTMLRewriter()
+      .on('head',{element(element){element.append('<meta name="robots" content="noindex,follow">',{html:true});}})
       .on('script[src*="pagead2.googlesyndication.com"]',{element(element){element.remove();}})
       .transform(outgoing);
   }

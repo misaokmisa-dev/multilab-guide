@@ -20,3 +20,13 @@
 .mlg-editorial-walkthrough>a{white-space:nowrap;background:#145f80;color:white;text-decoration:none;border-radius:11px;padding:14px 17px;font-size:14px;font-weight:800}
 @media(max-width:850px){.mlg-editorial-cards{grid-template-columns:1fr}.mlg-editorial-walkthrough{flex-direction:column;align-items:stretch}.mlg-editorial-walkthrough>a{text-align:center;white-space:normal}}
 @media(max-width:540px){.mlg-editorial-front{padding:37px 0 32px}.mlg-editorial-card{padding:21px}.mlg-editorial-front h2{font-size:26px}.mlg-editorial-walkthrough{padding:21px}}
+
+/* Editorial path from the Minecraft hubs, without replacing existing modules. */
+.mlg-workflow-hub{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1120px;margin:26px auto;padding:26px 30px;border:1px solid #bfdbe8;border-radius:17px;background:linear-gradient(120deg,#edfaff,#f3f8ff);color:#173951;box-shadow:0 5px 16px #102b4111}
+.mlg-workflow-hub span{font-weight:900;color:#1e7086;font-size:12px;letter-spacing:.035em}
+.mlg-workflow-hub h2{font-size:clamp(21px,2.7vw,28px);line-height:1.45;color:#184663;margin:9px 0!important}
+.mlg-workflow-hub p{margin:0;font-size:14px;line-height:1.9;color:#355469;max-width:780px}
+.mlg-workflow-hub>a{flex-shrink:0;text-decoration:none;white-space:nowrap;background:#146181;color:white!important;font-weight:900;border-radius:11px;padding:13px 17px;font-size:14px}
+.mlg-workflow-hub>a:hover{background:#0b465e;color:white!important}
+.mlg-workflow-strategy{max-width:1120px}
+@media(max-width:830px){.mlg-workflow-hub{flex-direction:column;align-items:stretch;margin:19px auto;padding:22px}.mlg-workflow-hub>a{text-align:center;white-space:normal}}
