@@ -2,6 +2,8 @@
 (() => {
 "use strict";
 const conf=window.MULTILAB_ADS||{}, main=document.querySelector("main");
+// During AdSense review do not insert dynamic ad slots, overlays or floating banners.
+if(conf.reviewMode===true)return;
 if(!main) return;
 const preview=new URLSearchParams(location.search).get("ads-preview")==="1";
 const legal=/\/(?:about|privacy|sitemap)\.html$/.test(location.pathname);
