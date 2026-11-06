@@ -16,6 +16,8 @@ on:
       - 'worker/**'
       - 'wrangler.jsonc'
       - 'devices/*.html'
+      - 'minecraft/strategy/items/index.html'
+      - 'minecraft/strategy/items/category/*.html'
       - 'scripts/adsense_policy_check.py'
       - '.github/workflows/adsense-policy-check.yml'
   workflow_dispatch:
