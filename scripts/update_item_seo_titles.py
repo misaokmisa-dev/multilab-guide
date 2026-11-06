@@ -157,11 +157,16 @@ def main() -> None:
         new_url = f"https://mlabg.com/minecraft/strategy/items/detail/{slug}.html"
         old_loc = f"<loc>{old_url}</loc>"
         new_loc = f"<loc>{new_url}</loc>"
-        if sitemap.count(old_loc) != 1:
-            if sitemap.count(new_loc) != 1:
-                raise ValueError(f"Sitemap item URL missing or duplicated: {slug}")
-        else:
+        old_count, new_count = sitemap.count(old_loc), sitemap.count(new_loc)
+        if old_count == 1 and new_count == 0:
             sitemap = sitemap.replace(old_loc, new_loc, 1)
+        elif old_count == 0 and new_count in (0, 1):
+            # During the AdSense quality review, generic per-item pages are
+            # deliberately excluded from the sitemap (and marked noindex).
+            # Keep detailed-item URLs out until their content is enhanced.
+            pass
+        else:
+            raise ValueError(f"Sitemap item URL duplicated or conflicting: {slug}")
     sitemap_path.write_text(sitemap, encoding="utf-8")
 
     # Preserve the generic query-based template for incoming older links.
