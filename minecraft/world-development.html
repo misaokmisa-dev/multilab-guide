@@ -192,6 +192,26 @@
 <p class="wd-stat-caveat">統計はプレイヤーの行動記録です。使用回数は現在の建築物のブロック数と一致するとは限りません。</p>
 </div></section>
 <section class="mlg-review-guide" aria-labelledby="world-method"><h2 id="world-method">ワールド発展度スコアの読み方</h2><p>この採点はMinecraftの公式な評価ではなく、Java版が記録する統計データをもとにしたサイト独自の分析です。スコアが高くても、建築の完成度や冒険の難易度、遊び方の優劣を判定するものではありません。自分のプレイ履歴を振り返るための参考指標として使ってください。</p><h3>統計JSONで分かること・分からないこと</h3><p>Java版のワールドフォルダにある<code>stats</code>内のJSONには、ブロックの使用や破壊、アイテムのクラフト、移動など、ゲームが記録した行動の一部が含まれます。建築物の現在の完成状態、他プレイヤーの実績、拠点の見た目などは統計だけでは正確に再現できません。死亡理由の記録もゲーム側の統計項目やバージョンによって表示できる範囲が異なります。</p><h3>ファイルの見つけ方</h3><ol><li>Java版のワールドをバックアップし、ゲームを終了します。</li><li>Windowsではエクスプローラーのアドレス欄に<code>%appdata%\.minecraft\saves</code>と入力し、対象ワールドのフォルダを開きます。ランチャー設定で保存場所を変えている場合は異なります。</li><li><code>stats</code>フォルダ内の<code>.json</code>ファイルを選び、ページ上部の採点欄に読み込ませます。</li></ol><p>入力したファイルはブラウザ内で処理します。ただし採点が正常終了した際は、匿名のスコア集計データの一部がサーバーへ送信される場合があります。詳細は<a href="/privacy.html">プライバシーポリシー</a>に記載しています。</p></section>
+<section class="mlg-review-guide" aria-labelledby="wd-method-formula"><h2 id="wd-method-formula">採点ロジックと5項目の配点を公開</h2>
+<p>このサイトの採点はゲームが提供する公式スコアではなく、Java版の統計JSONをもとに当サイトが定義した独自の計算です。結果を比較しやすいよう、<strong>どの記録から何を計算しているか</strong>を公開します。ワールドが今どんな見た目になっているかを画像やワールド本体から判断する仕組みではありません。</p>
+<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:14px;min-width:480px"><thead><tr><th scope="col" style="padding:8px;text-align:left;border-bottom:2px solid #b8d6c3">評価項目</th><th scope="col" style="padding:8px;text-align:right;border-bottom:2px solid #b8d6c3">最大配点</th><th scope="col" style="padding:8px;text-align:left;border-bottom:2px solid #b8d6c3">実際に参照する行動記録</th></tr></thead>
+<tbody><tr><td style="padding:8px;border-bottom:1px solid #dbe9df">建築規模</td><td style="padding:8px;text-align:right">60,000 pt</td><td style="padding:8px">使用した建築関連ブロックを種類ごとに重み付けした回数</td></tr>
+<tr><td style="padding:8px;border-bottom:1px solid #dbe9df">建材の多様さ</td><td style="padding:8px;text-align:right">15,000 pt</td><td style="padding:8px">一定回数以上使った、地形素材以外の建材の種類数</td></tr>
+<tr><td style="padding:8px;border-bottom:1px solid #dbe9df">設備・装飾</td><td style="padding:8px;text-align:right">10,000 pt</td><td style="padding:8px">装置・設備・装飾アイテムの使用回数</td></tr>
+<tr><td style="padding:8px;border-bottom:1px solid #dbe9df">採掘・制作</td><td style="padding:8px;text-align:right">8,000 pt</td><td style="padding:8px">採掘回数・クラフト回数の2要素</td></tr>
+<tr><td style="padding:8px;border-bottom:1px solid #dbe9df">探索</td><td style="padding:8px;text-align:right">7,000 pt</td><td style="padding:8px">各移動手段の移動距離・プレイ時間</td></tr></tbody></table></div>
+<h3>建築の点数が伸びる条件と伸びない条件</h3>
+<p>同じ1回の使用でも、装置系は重み1.7、装飾系は1.25、一般的な構造材は1.0、土や砂など一部の地形系は0.08として計算します。また地形系の同じ種類の使用回数は集計の上限を設けています。単純に土を大量に置いただけで高得点になりにくく、設備や建材の種類を増やしたほうがスコアに反映されやすい設計です。</p>
+<h3>長時間遊べば自動で満点になる？</h3>
+<p>なりません。プレイ時間が直接加点されるのは「探索」の一部分で、総配点は最大7,000ptです。「採掘・制作」も最大8,000ptです。建築の評価を含めずにプレイ時間だけ伸ばしても、100,000ptに近づく仕様ではありません。さらに各項目は増加が次第に緩やかになる計算式を使い、有限の記録で理論上の満点に到達しない設計です。</p>
+<h3>統計データを数字に直す実例</h3>
+<p><code>minecraft:play_time</code>などのプレイ時間統計は、Java版のゲームティックを用いて<strong>72,000ティックを1時間</strong>として換算します。たとえば144,000ティックなら2時間です。移動距離の統計はセンチメートル単位で、<strong>100,000cmを1km</strong>として計算します。これらは点数そのものではなく、探索項目の計算に用いる基礎データです。</p>
+<h3>正しく評価できないケース</h3>
+<ul><li>使用回数は現時点の設置数ではありません。置いたあとに壊したり持ち去ったりしても、過去の行動履歴が残る場合があります。</li>
+<li>一部のMOD独自ブロックは対象分類に含まれないため、建築活動を十分に反映しないことがあります。</li>
+<li>マルチプレイで他の人が建築した分や、統計ファイルに記録されていない過去の行動は採点できません。</li>
+<li>プレイ時間・移動方法の統計キーはゲームの更新で変わる場合があります。集計項目が不足すると本来の活動より低く評価されることがあります。</li></ul>
+<p>採点結果は「このワールドの価値」やプレイヤーの技術を決めるものではありません。記録に現れた傾向を振り返るための目安です。<a href="/guides/minecraft-workflow.html">座標・材料・統計を使ったワールドづくりガイド</a>では、採点前後に試す行動の整理方法も紹介しています。</p></section>
 <div class="as-mosaic wd-ad-mosaic" aria-label="広告掲載エリア">
 <aside class="as-slot as-square" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/ad-review-gate.js" data-admax-id="8f484decc94c10e43e237e6221290bc5"></script></div></aside>
 <aside class="as-slot as-square" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/ad-review-gate.js" data-admax-id="9ce9edc81f521ef371d8aaaa1b8b9b32"></script></div></aside>
