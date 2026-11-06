@@ -439,3 +439,8 @@
 .md-mod-lag-foot{padding:10px 13px;margin:13px 0;background:#f8fcf8;border-left:3px solid #429a65;border-radius:6px;color:#365c43;font-size:12px;line-height:1.8}
 .md-mod-lag-foot a{color:#136b40;text-underline-offset:3px;font-weight:750}
 @media(max-width:650px){.md-mod-lag-preflight{padding:14px 13px;gap:11px}.md-mod-lag-preflight a{width:100%}}
+
+/* Organic MOD readers: direct path to a unique free crash-log diagnostic. */
+.md-crash-solution{display:block;width:min(1130px,calc(100% - 34px));margin:14px auto 24px;padding:18px 22px;border:2px solid #70dba0;border-radius:14px;background:linear-gradient(110deg,#123622,#247144);box-shadow:0 10px 24px #123c252a;color:#edfff1!important;font-weight:900;font-size:clamp(15px,2vw,18px);text-decoration:none!important;transition:transform .2s,box-shadow .2s}
+.md-crash-solution:hover{transform:translateY(-2px);box-shadow:0 14px 30px #123c2540;color:#fff!important}
+.md-crash-solution:focus-visible{outline:3px solid #7afa90;outline-offset:3px}
