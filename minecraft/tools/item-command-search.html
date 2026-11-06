@@ -30,6 +30,23 @@
 </section>
 <section id="ml-current" class="ml-i-panel" aria-live="polite">アイテムを選ぶとコマンドを表示します。</section>
 <section class="ml-i-panel ml-i-guide"><h2>アイテムIDと /give の使い方</h2><p>例：<code>/give @s minecraft:diamond 64</code>。コマンドを使うにはゲーム内の権限が必要です。この検索はJava版のアイテムIDを基準にしています。</p><p><strong>統合版（Switch・スマホ・PS等）に注意：</strong>Java版と一部アイテムのID・コマンド仕様が異なります。統合版の全アイテムについて互換性を保証するものではありません。公式の<a href="https://learn.microsoft.com/ja-jp/minecraft/creator/reference/content/commandsreference/examples/commands/give?view=minecraft-bedrock-stable" target="_blank" rel="noopener noreferrer">統合版 /give の仕様</a>を確認してください。</p><p>Java版のアイテム名・素材データ：<a href="https://github.com/PrismarineJS/minecraft-data" target="_blank" rel="noopener noreferrer">PrismarineJS minecraft-data</a>。非公式ツールです。</p></section>
-<aside class="as-slot as-inline-single" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/ad-review-gate.js" data-admax-id="8f484decc94c10e43e237e6221290bc5"></script></div></aside>
+<section class="mlg-review-guide" aria-labelledby="mlg-command-guide-title">
+<h2 id="mlg-command-guide-title">Java版 /give コマンドの使い方：実例で確認</h2>
+<p>この検索ツールの役割は、日本語から正しい英語IDを見つけることと、個数を入力してコマンドを組み立てることです。アイテム一覧で名前を探すより、スペル違いやアンダースコアの入力間違いを減らせます。ここでは自分でコマンドを調整する際の考え方を説明します。</p>
+<h3>例1：自分にダイヤモンド64個を渡す</h3>
+<p><code>/give @s minecraft:diamond 64</code>。<code>@s</code>はコマンドの実行者、<code>minecraft:diamond</code>はJava版のアイテムID、末尾の<code>64</code>は渡す個数を意味します。自分がゲーム内チャットから実行する基本例です。チート・コマンドが許可されていなければ実行できません。</p>
+<h3>例2：近くのプレイヤーに松明16個を渡す</h3>
+<p><code>/give @p minecraft:torch 16</code>。<code>@p</code>は実行位置に最も近いプレイヤーを指します。コマンドブロックやマルチプレイで利用すると、思っていない相手が選ばれる可能性があります。実行者本人を示す<code>@s</code>とは意味が違うため、対象を確認してから利用してください。</p>
+<h3>例3：スペース・大文字・日本語が原因で動かないとき</h3>
+<p>アイテムの表示名と内部IDは一致しません。たとえば「ダイヤモンドの剣」のJava版IDは<code>minecraft:diamond_sword</code>です。英語名の空白をそのまま書かず、検索結果の「アイテムID」からコピーした文字列を使います。MODや開発版にしか存在しないアイテムを、通常のバージョンで使っても認識されません。</p>
+<h3>実行できない場合の切り分け</h3>
+<ol><li><strong>権限を確認：</strong>シングルプレイではコマンド実行の許可、マルチプレイではサーバー管理者が設定した権限が必要です。「不明なコマンド」と表示されたら、まず権限と入力した先頭の<code>/</code>を確認します。</li>
+<li><strong>版を確認：</strong>このページの検索対象はJava版の登録データです。統合版のコマンド構文・追加アイテム・データ形式は一致しない場合があります。</li>
+<li><strong>対象を確認：</strong><code>@s</code>はチャットで実行するプレイヤーの想定です。コマンドブロックでは実行主体がプレイヤーとは限らないため、用途に応じて対象指定を変更します。</li>
+<li><strong>アイテムと数量を確認：</strong>IDのタイプミス、起動バージョンでの未実装、インベントリの空き不足を確認します。大量に渡す前に数量1で試すと原因を分けやすくなります。</li></ol>
+<h3>名前が曖昧なときの調べ方</h3>
+<p>検索欄に「たいまつ」「剣」「ダイヤ」などの一部分を入力すると、関連するアイテム候補を選べます。候補を開いてアイテムIDを確認し、必要数を変更したらコマンドをコピーしてください。使い道やクラフト材料も必要なら<a href="/minecraft/strategy/items/">全アイテム図鑑</a>、複数の完成品に必要な素材を調べたいなら<a href="/minecraft/tools/material-planner.html">材料まとめて逆算ツール</a>を利用できます。</p>
+<p>参考：<a href="https://minecraft.wiki/w/Commands/give" target="_blank" rel="noopener noreferrer">Minecraft Wiki「/give」コマンド仕様</a>。コマンドの形式と対応アイテムはJava版の更新で変化する場合があります。本サイトはMinecraftの非公式ガイドであり、実際のサーバー権限やバージョンを自動判定しません。</p>
+</section><aside class="as-slot as-inline-single" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/ad-review-gate.js" data-admax-id="8f484decc94c10e43e237e6221290bc5"></script></div></aside>
 <div class="as-mosaic as-mosaic-bottom" aria-label="ページ下部の広告エリア"><aside class="as-slot as-square" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/ad-review-gate.js" data-admax-id="8f484decc94c10e43e237e6221290bc5"></script></div></aside><aside class="as-slot as-square" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/ad-review-gate.js" data-admax-id="9ce9edc81f521ef371d8aaaa1b8b9b32"></script></div></aside><aside class="as-slot as-square" aria-label="広告"><span class="as-slot-label">広告</span><div class="as-ad-content"><script src="/ad-review-gate.js" data-admax-id="c524397aa5c2cfcbfe01755de531d9fe"></script></div></aside></div>
 </main><footer class="ml-footer"><div class="ml-shell"><div class="ml-links"><a href="/">総合トップ</a><a href="/minecraft/">マイクラTOP</a><a href="/minecraft/strategy/">攻略情報</a><a href="/privacy.html">プライバシー</a></div><p>MULTI LAB GUIDE © 2026　Minecraft非公式攻略サイト</p><p>Amazonのアソシエイトとして、MULTI LAB GUIDEは適格販売により収入を得ています。</p></div></footer><script src="/interstitial-loader.js"></script><aside class="as-rail as-rail-right" aria-label="右側広告"><span class="as-slot-label">広告</span><button class="as-close" type="button" aria-label="広告を閉じる" onclick="this.parentNode.remove()">×</button><div class="as-ad-content"><script src="/ad-review-gate.js" data-admax-id="fb313b60f0f9f6d3af77a1b97ad84baf"></script></div></aside><aside class="as-fixed-bottom" aria-label="画面下部の固定広告"><div class="as-fixed-bottom-content"><script src="/ad-review-gate.js" data-admax-id="8bffb3e2dd71c5fbfe19ad6f84a16cad"></script></div><button class="as-fixed-bottom-close" type="button" aria-label="固定広告を閉じる" onclick="this.parentNode.remove()">×</button></aside></body></html>
