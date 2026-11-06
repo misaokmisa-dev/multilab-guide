@@ -1,0 +1,153 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/favicon.png?v=20261026" type="image/png">
+<title>【マイクラ】MODが重いときの対処法｜FPS低下・カクつき・メモリ不足を原因別に確認 | MULTI LAB GUIDE</title>
+<meta name="description" content="マイクラJava版でMODを入れたら重くなったときの原因別チェック。FPS低下・数秒ごとのカクつき・チャンク読み込み・マルチ遅延を切り分け、設定やMODの確認から無料で対処する手順を解説。">
+<link rel="canonical" href="https://mlabg.com/minecraft/mods/lag-fix">
+<meta property="og:type" content="article"><meta property="og:title" content="【マイクラ】MODが重いときの対処法｜FPS低下・カクつき・メモリ不足を原因別に確認">
+<meta property="og:description" content="マイクラJava版でMODを入れたら重くなったときの原因別チェック。FPS低下・数秒ごとのカクつき・チャンク読み込み・マルチ遅延を切り分け、設定やMODの確認から無料で対処する手順を解説。">
+<meta property="og:url" content="https://mlabg.com/minecraft/mods/lag-fix">
+<link rel="stylesheet" href="../portal.css">
+<link rel="stylesheet" href="../../site-unified.css">
+<link rel="stylesheet" href="/ad-system.css">
+<link rel="stylesheet" href="/ad-review.css?v=20261106quality01">
+<link rel="stylesheet" href="/global-site-header.css?v=20261027a">
+<link rel="stylesheet" href="/minecraft/strategy/minecraft-ambient.css?v=20261028allcontrols9">
+<script defer src="/affiliate-tracker.js?v=20261106modlag01"></script>
+<script defer src="/site-language.js?v=20261028full"></script>
+
+<style>
+.modlag-wrap{width:min(100%,1040px);margin:0 auto;padding:18px 15px 58px;box-sizing:border-box}
+.modlag-crumb{font-size:13px;color:#526656;margin:13px 0 19px;line-height:1.7}
+.modlag-crumb a{color:#27734a}
+.modlag-article{border-radius:20px;background:#fff;padding:clamp(18px,3.5vw,45px);border:1px solid #d6e6d6;box-shadow:0 12px 32px #11290f12;color:#24362a;line-height:1.95}
+.modlag-article h1{font-size:clamp(26px,4.5vw,41px);color:#17492f;line-height:1.35;margin:8px 0 14px}
+.modlag-article h2{font-size:clamp(21px,2.7vw,27px);line-height:1.48;margin:37px 0 13px;border-bottom:2px solid #d4e7da;padding-bottom:10px;color:#204e35}
+.modlag-article h3{font-size:18px;line-height:1.55;margin:23px 0 8px;color:#23553d}
+.modlag-article a{color:#146d43;text-underline-offset:3px}
+.modlag-article li{margin:7px 0}
+.modlag-article ul,.modlag-article ol{padding-left:25px}
+.modlag-article p{margin:12px 0}
+.modlag-lead{font-size:clamp(15px,1.9vw,18px);line-height:1.9;color:#3b5944}
+.modlag-kicker{font-size:12px;font-weight:850;color:#23734a;letter-spacing:.09em}
+.modlag-notice{background:#f2f8f3;border:1px solid #d6e9d8;padding:14px 17px;border-radius:12px;font-size:14px}
+.modlag-choice{margin:26px 0;background:linear-gradient(145deg,#173f2b,#286640);border-radius:17px;color:white;padding:clamp(18px,3vw,28px)}
+.modlag-choice h2{color:#fff;border:0;padding:0;margin:0 0 8px}
+.modlag-choice p{color:#e0efe2;line-height:1.7}
+.modlag-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:17px 0}
+.modlag-options button{background:white;color:#1b4b30;border:2px solid #c3e1c9;padding:12px 11px;min-height:58px;border-radius:11px;font-size:14px;font-weight:760;text-align:left;cursor:pointer;line-height:1.5}
+.modlag-options button:hover,.modlag-options button:focus-visible{outline:3px solid #91d6a3;outline-offset:2px}
+.modlag-options button[aria-pressed="true"]{background:#e6ffe8;border-color:#63d18b;box-shadow:inset 0 0 0 1px #389d61}
+.modlag-choice .modlag-results{border-radius:12px;background:#fff;color:#214430;padding:16px 19px;line-height:1.8}
+.modlag-results h3{margin:0 0 8px;font-size:19px}
+.modlag-results p{margin:7px 0}
+.modlag-results a{color:#12673d;font-weight:700}
+.modlag-result[hidden]{display:none}
+.modlag-method{border:1px solid #d7e9db;background:#f8fcf9;padding:15px 19px;border-radius:12px}
+.modlag-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.65}
+.modlag-table th,.modlag-table td{padding:10px 11px;border:1px solid #d6e5d9;vertical-align:top}
+.modlag-table th{background:#ebf5ed;text-align:left;color:#234935}
+.modlag-table tr:nth-child(even) td{background:#f9fcf9}
+.modlag-table-wrap{overflow-x:auto}
+.modlag-related{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.modlag-related a{display:flex;flex-direction:column;gap:7px;padding:16px;text-decoration:none;color:#204733;border:1px solid #cfdfd1;background:#f6fbf7;border-radius:12px}
+.modlag-related a strong{font-size:16px}.modlag-related a span{font-size:13px;line-height:1.6}
+.modlag-related a:hover{border-color:#2b965c;background:#ecf7ee}
+.modlag-disclose{font-size:12px;color:#49614d}
+.modlag-source{font-size:13px;line-height:1.8;padding-left:21px}
+@media(max-width:680px){.modlag-options{grid-template-columns:1fr}.modlag-related{grid-template-columns:1fr}.modlag-table{min-width:480px}.modlag-article{border-radius:14px}}
+</style></head><body class="ml-body mc-ambient"><header class="mlg-site-header" data-section="minecraft"><div class="mlg-site-topline"><a class="mlg-site-brand" href="/" aria-label="MULTI LAB GUIDE 総合トップへ戻る"><img class="mlg-site-brand-icon" src="/favicon.png?v=20261026" alt="" width="36" height="36" aria-hidden="true"><span class="mlg-site-brand-name"><span class="mlg-site-brand-main">MULTI <strong>LAB</strong></span><span class="mlg-site-brand-guide">GUIDE</span></span></a><nav class="mlg-site-primary" aria-label="サイト共通ナビゲーション"><a class="mlg-site-link" data-nav="home" href="/">ホーム</a><a class="mlg-site-link" data-nav="roblox" href="/roblox/">ROBLOX</a><a class="mlg-site-link" data-nav="minecraft" href="/minecraft/" aria-current="location">Minecraft</a><a class="mlg-site-link" data-nav="devices" href="/devices/">デバイス</a><a class="mlg-site-link" data-nav="articles" href="/sitemap.html">記事一覧</a></nav></div><div class="mlg-site-context"><nav class="mlg-site-context-inner" aria-label="Minecraft内のメニュー"><span class="mlg-site-context-label">Minecraft</span><a class="mlg-site-context-link" href="/minecraft/">マイクラTOP</a><a class="mlg-site-context-link" href="/minecraft/strategy/">攻略情報</a><a class="mlg-site-context-link" href="/minecraft/mod-ranking.html">人気MOD</a><a class="mlg-site-context-link" href="/minecraft/mod-diagnosis.html">MOD診断</a><a class="mlg-site-context-link" href="/minecraft/world-development.html">ワールド採点</a><a class="mlg-site-context-link" href="/minecraft/server.html">サーバー診断</a><a class="mlg-site-context-link" href="/minecraft/mods/" aria-current="page">MODガイド</a><a class="mlg-site-context-link" href="/minecraft/server.html#articles">解説記事</a></nav></div></header><main id="main">
+<div class="modlag-wrap">
+<nav aria-label="パンくず" class="modlag-crumb"><a href="/minecraft/">マイクラTOP</a> › <a href="/minecraft/mod-ranking">人気MOD</a> › MODが重いときの対処法</nav>
+<article class="modlag-article">
+<span class="modlag-kicker">MINECRAFT JAVA / MOD TROUBLESHOOTING</span>
+<h1>マイクラのMODが重いときの対処法</h1>
+<p class="modlag-lead">MODを入れたらFPSが下がる、数秒ごとに止まる、地形の読み込みが遅い。症状によって確認する場所は異なります。<strong>PCを買い替える前に無料でできる切り分け</strong>から始めましょう。</p>
+<p class="modlag-notice"><strong>対象：Minecraft Java版。</strong> 統合版ではMODや設定の仕組みが異なります。以下は一般的なトラブル確認手順で、特定のPC・MOD構成の改善を保証するものではありません。ワールドと導入構成は先にバックアップしてください。</p>
+<section class="modlag-choice" aria-labelledby="modlag-choose">
+<h2 id="modlag-choose">どんな症状が出ている？</h2>
+<p>最も近い症状を選ぶと、先に調べる項目が切り替わります。入力内容をサーバーへ保存する機能はありません。</p>
+<div class="modlag-options" role="group" aria-label="重さの症状を選択">
+<button type="button" data-symptom="fps" aria-pressed="false">画面の動きが遅い・FPSが低い</button>
+<button type="button" data-symptom="freeze" aria-pressed="false">数秒ごとにカクつく・一瞬止まる</button>
+<button type="button" data-symptom="chunk" aria-pressed="false">移動すると地形の読み込みが遅い</button>
+<button type="button" data-symptom="network" aria-pressed="false">マルチでブロックやMobの反応が遅い</button>
+<button type="button" data-symptom="crash" aria-pressed="false">そもそも起動しない・クラッシュする</button>
+</div>
+<div class="modlag-results" id="modlag-results" aria-live="polite" aria-atomic="true">
+<p id="modlag-placeholder">上の症状を選ぶと、具体的な確認順が表示されます。</p>
+<section class="modlag-result" data-for="fps" hidden><h3>画面が重いとき</h3><ol><li>影MOD・高負荷テクスチャを一度オフにして、同じ場所で比較します。</li><li>描画距離・シミュレーション距離を下げて比較します。</li><li>ビデオドライバーの更新と、適切なGPUが使われているかを確認します。</li><li>改善しなければMOD構成を分けて確認します。</li></ol><p><a href="/minecraft/mod-ranking-utility" data-mlg-funnel="modlag-fps-to-utility">便利・軽量化MODを比較する →</a></p></section>
+<section class="modlag-result" data-for="freeze" hidden><h3>定期的な停止・カクつき</h3><ol><li>ブラウザなどの同時起動アプリを終了し、使用メモリを確認します。</li><li>Java版ランチャーのメモリ割り当てが極端に少ない・多すぎる設定になっていないか調べます。</li><li>直前に追加したMODと前提ライブラリを確認し、少数ずつ有効化して比較します。</li><li>MODパック提供元の推奨メモリ量も確認します。</li></ol><p><a href="#modlag-memory">安全なメモリ確認手順を見る →</a></p></section>
+<section class="modlag-result" data-for="chunk" hidden><h3>地形の読み込みが遅いとき</h3><ol><li>描画距離とシミュレーション距離を少しずつ下げます。</li><li>新規ワールドを作り、同じMOD構成で比較します。</li><li>ワールド生成に影響するMODを一つずつ確認します。</li><li>ストレージ容量や、ほかの重い処理の同時実行も確かめます。</li></ol><p>既存ワールドからMODを外す前には必ずバックアップしてください。</p></section>
+<section class="modlag-result" data-for="network" hidden><h3>マルチでの遅延</h3><ol><li>自分の画面のFPSが安定しているか先に確認します。</li><li>FPSは安定しているのにブロック破壊やMobの反応が遅い場合、サーバー処理やネットワークを切り分けます。</li><li>参加者とサーバーのMOD・ローダー・バージョンを確認します。</li><li>サーバーの負荷、接続状態、描画設定を管理者と一緒に確認します。</li></ol><p><a href="/minecraft/articles/mod-server-choice.html" data-mlg-funnel="modlag-network-to-server-guide">MODマルチサーバーの選び方 →</a></p></section>
+<section class="modlag-result" data-for="crash" hidden><h3>起動失敗やクラッシュは別の原因を確認</h3><ol><li>表示されたエラーメッセージやクラッシュログを控えます。</li><li>バージョン、ローダー、依存MODの一致を確認します。</li><li>バックアップした別環境で、直前に追加したMODを取り除いて試します。</li></ol><p><a href="/minecraft/mods/troubleshooting.html" data-mlg-funnel="modlag-crash-to-troubleshooting">MODが起動しないときの詳しい手順 →</a></p></section>
+</div>
+</section>
+<section aria-labelledby="modlag-steps">
+<h2 id="modlag-steps">まず無料で確認する5つのこと</h2>
+<ol>
+<li><strong>同じ場所・同じ設定で比較する。</strong> FPSやカクつきを判断するときは、影MODや描画距離を変える前後で、できるだけ同じワールド・同じ場所を使います。ワールド生成中だけ重い場合は、平常時と分けて考えます。</li>
+<li><strong>MODを外す前にバックアップ。</strong> 新しいブロックやワールド生成を追加するMODを外すと、保存データに影響する可能性があります。コピーしたテスト用ワールドと別プロファイルで切り分けます。</li>
+<li><strong>GPU・OSの状態を確認。</strong> グラフィックドライバーの更新やOSの更新を確認します。ノートPCでは電源設定や冷却状態でパフォーマンスが変わる場合があります。</li>
+<li><strong>メモリを増やせば必ず改善する、とは考えない。</strong> Java版に割り当てる量は、PCの物理RAMや同時起動アプリの余裕を残して設定します。すべてのメモリを割り当てる方法は避けましょう。</li>
+<li><strong>MODの組み合わせを分けて調べる。</strong> 同じ処理を変更する最適化MOD同士が競合する可能性もあります。対応版・前提MOD・ローダーの条件は各作者の配布ページを確認します。</li>
+</ol>
+</section>
+<section aria-labelledby="modlag-table-title">
+<h2 id="modlag-table-title">症状別の確認先 早見表</h2>
+<div class="modlag-table-wrap"><table class="modlag-table"><thead><tr><th>症状</th><th>最初に見る場所</th><th>誤解しやすい点</th></tr></thead><tbody>
+<tr><td>FPS低下・画面が重い</td><td>描画距離、影MOD、ビデオ設定、GPUドライバー</td><td>サーバーのメモリを増やしても画面描画の問題が解決するとは限らない</td></tr>
+<tr><td>一瞬止まる・周期的にカクつく</td><td>Java版のメモリ設定、ほかのアプリ、MOD構成</td><td>割り当てRAMを最大まで上げるのが正解とは限らない</td></tr>
+<tr><td>チャンクの読み込みが遅い</td><td>描画距離、ワールド生成MOD、ストレージ</td><td>未探索エリア生成時だけの負荷と普段の負荷は違う</td></tr>
+<tr><td>マルチで反応が遅い</td><td>FPSとサーバー処理・ネットワークを別々に確認</td><td>画面が滑らかでもサーバー側が遅延する場合がある</td></tr>
+<tr><td>起動失敗・クラッシュ</td><td>クラッシュログ、MODバージョン、前提ライブラリ</td><td>FPS対策より互換性チェックを優先する</td></tr>
+</tbody></table></div>
+</section>
+<section id="modlag-memory">
+<h2>Java版のメモリ割り当てを確認する方法</h2>
+<p>Minecraft Launcherを使っている場合、起動構成の編集画面にあるJVM引数の <code>-Xmx</code> が、Java版に割り当てるメモリ上限に関係します。たとえば <code>-Xmx4G</code> なら概ね4GBが上限です。ただし、推奨値はMinecraftのバージョン・MODパック・PCの総メモリなどに左右されます。</p>
+<ol><li>現在の起動構成とワールドをバックアップします。</li><li>PCの物理RAM容量と、同時に動くアプリの使用量を確認します。</li><li>MODパックに推奨値がある場合はその指示を優先します。</li><li>少しずつ変更して、同じ場所で挙動を比較します。</li></ol>
+<p><strong>注意：</strong> RAMが足りないPCで割り当てを無理に増やすと、OS側の余裕がなくなり逆効果になる場合があります。Java版のバージョンによって標準割り当て量も異なるため、固定の「全員これでOK」という値は掲載していません。</p>
+<p>公式手順：<a href="https://help.minecraft.net/hc/en-us/articles/39083573916941" target="_blank" rel="noopener noreferrer">Minecraft Help：メモリ割り当ての確認・変更</a></p>
+</section>
+<section>
+<h2>それでも重い場合、PCのどこを確認する？</h2>
+<p>無料の設定変更やMODの切り分けを行っても改善しない場合は、CPU・GPU・メモリ・ストレージのうち、どの部分がボトルネックになりやすいかを用途ごとに考えます。<strong>必ずしもPCの買い替えが必要なわけではありません。</strong></p>
+<div class="modlag-related">
+<a href="/minecraft/articles/mod-pc-guide.html" data-mlg-funnel="modlag-to-mod-pc-guide"><strong>MOD用PCのスペックの考え方</strong><span>CPU・GPU・メモリの役割、ゲーム内容による違いを確認 →</span></a>
+<a href="/devices/pc-diagnosis.html#diagnosis" data-mlg-funnel="modlag-to-pc-diagnosis"><strong>無料8問でPCスペックを整理</strong><span>用途や予算に合わせた目安を確認。診断は購入の義務なし →</span></a>
+</div>
+<p class="modlag-disclose">上記はサイト内の無料案内ページです。商品比較ページにはアフィリエイトリンクが含まれることがあり、購入が発生すると当サイトに報酬が発生する場合があります。</p>
+</section>
+<section>
+<h2>よくある質問</h2>
+<h3>軽量化MODを1つ入れれば必ず速くなりますか？</h3><p>いいえ。描画やメモリなど改善対象が違い、PC構成やMODとの相性にも左右されます。<a href="/minecraft/mod-ranking-utility">便利・軽量化MODの一覧</a>で候補を探し、対応バージョンと互換性を確認してください。</p>
+<h3>MODを入れる前は軽かったのに、突然重くなったのはなぜ？</h3><p>最近追加・更新したMOD、設定変更、ワールドの状態、ドライバーやバックグラウンド処理など複数の原因が考えられます。直前の変更を一つずつ元に戻して比較するのが基本です。</p>
+<h3>統合版のアドオンでもこの方法を使えますか？</h3><p>描画設定や端末負荷の考え方は参考になりますが、MODローダーやJVMメモリ割り当てはMinecraft Java版向けです。統合版には同じ手順をそのまま当てはめないでください。</p>
+</section>
+<section>
+<h2>参考情報と更新方針</h2>
+<ul class="modlag-source">
+<li><a href="https://help.minecraft.net/hc/en-us/articles/4409137348877" target="_blank" rel="noopener noreferrer">Minecraft公式：ビデオ・グラフィックの問題に関する確認手順</a></li>
+<li><a href="https://help.minecraft.net/hc/en-us/articles/39083573916941" target="_blank" rel="noopener noreferrer">Minecraft公式：Java版メモリ割り当て</a></li>
+<li><a href="https://docs.fabricmc.net/players/installing-mods" target="_blank" rel="noopener noreferrer">Fabric公式：MODの導入と互換性</a></li>
+</ul>
+<p class="modlag-disclose">公開：2026年11月6日 ／ 編集：MULTI LAB GUIDE（非公式ガイド）。掲載内容は公式案内と一般的な切り分け手順を整理したもので、実機ベンチマークや独自の性能検証結果ではありません。誤りの報告は<a href="https://github.com/misaokmisa-dev/multilab-guide/issues/new" target="_blank" rel="noopener noreferrer">公開の修正受付</a>から行えます。個人情報は投稿しないでください。</p>
+</section>
+</article></div></main><footer class="ml-footer"><div class="ml-shell"><div class="ml-links"><a href="../../index.html">総合トップ</a><a href="../index.html">マイクラTOP</a><a href="../../about.html">運営方針</a><a href="../../privacy.html">プライバシー</a></div><p>MULTI LAB GUIDE © 2026　Minecraft・各サービスの非公式ガイドです。</p></div><p style="font-size:12px;line-height:1.7;text-align:center;padding:12px 18px;margin:0;opacity:.88">Amazonのアソシエイトとして、MULTI LAB GUIDEは適格販売により収入を得ています。</p></footer>
+<script>
+(()=>{'use strict';
+const buttons=[...document.querySelectorAll('[data-symptom]')];
+const sections=[...document.querySelectorAll('.modlag-result[data-for]')];
+const placeholder=document.getElementById('modlag-placeholder');
+for(const button of buttons){
+ button.addEventListener('click',()=>{
+  const key=button.dataset.symptom;
+  for(const b of buttons)b.setAttribute('aria-pressed',String(b===button));
+  for(const el of sections)el.hidden=el.dataset.for!==key;
+  placeholder.hidden=true;
+  if(typeof window.gtag==='function')window.gtag('event','mlg_mod_lag_check',{symptom:key,page_path:location.pathname});
+ });
+}
+})();
+</script></body></html>
