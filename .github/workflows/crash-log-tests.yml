@@ -1,0 +1,26 @@
+name: Minecraft crash log analyzer tests
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'minecraft/tools/crash-log-analyzer.js'
+      - 'minecraft/mod-ranking.js'
+      - 'tests/crash-log-analyzer.test.cjs'
+      - '.github/workflows/crash-log-tests.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: |
+          node --check minecraft/tools/crash-log-analyzer.js
+          node --check minecraft/mod-ranking.js
+      - name: Offline error-classification and privacy smoke tests
+        run: node tests/crash-log-analyzer.test.cjs
