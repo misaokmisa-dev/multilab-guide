@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/global-site-header.css?v=20261027a"><link rel="stylesheet" href="/ad-review.css?v=20261106quality01">
 <link rel="stylesheet" href="/minecraft/tools/crash-log-analyzer.css?v=1">
 <script defer src="/site-language.js?v=20261028full"></script>
+<script defer src="/affiliate-tracker.js?v=20261106crash01"></script>
 <script defer src="/minecraft/tools/crash-log-analyzer.js?v=1"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Minecraft Java版クラッシュログ診断","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","url":"https://mlabg.com/minecraft/tools/crash-log-analyzer.html","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"description":"Minecraftのlatest.logやクラッシュレポートに含まれる既知のエラー記述から原因候補と確認手順を端末内で表示する、ルールベースの無料ツール。"}</script>
 </head>
@@ -36,10 +37,10 @@
 <section class="cl-panel" aria-labelledby="cl-rules"><h2 id="cl-rules">3. 何を検出できる？</h2><div class="cl-types"><div><strong>MOD依存・ローダー</strong><span>必要なMODが見つからない、対応バージョンが一致しない、読み込みに失敗した</span></div><div><strong>Java実行環境</strong><span>Javaバージョンやクラス形式の非互換性</span></div><div><strong>メモリ不足</strong><span>OutOfMemoryErrorなどの明示的なエラー</span></div><div><strong>描画・GPU</strong><span>GLFW / OpenGL / 描画初期化の失敗</span></div><div><strong>Mixin競合</strong><span>MODがゲーム内部の処理を書き換える際の失敗</span></div><div><strong>アクセス権・接続</strong><span>ファイル権限・サーバーのポート競合・接続エラー</span></div></div>
 <p>これはパターン認識型の診断です。MODの作者名や原因MODを必ず正しく特定できるわけではなく、<strong>PCの交換や有料サーバーの購入を勧める前に、無料の対処から試す</strong>ためのツールです。</p></section>
 <section class="cl-panel" aria-labelledby="cl-next"><h2 id="cl-next">4. 直らないときの次の一手</h2><div class="cl-next-grid">
-<a href="/minecraft/mods/troubleshooting.html"><strong>MOD起動失敗の解決ガイド</strong><span>ゲーム版・依存MOD・ローダーを順に確認する</span></a>
-<a href="/minecraft/mods/lag-fix"><strong>ゲームが重い・カクつく</strong><span>FPS / メモリ / サーバー遅延を切り分ける</span></a>
-<a href="/minecraft/server.html"><strong>友達と遊ぶサーバー容量を診断</strong><span>参加人数やMOD数から必要条件を整理</span></a>
-<a href="/devices/pc-diagnosis.html"><strong>PCの性能を見直す前に</strong><span>推奨スペックを無料で確認する</span></a>
+<a href="/minecraft/mods/troubleshooting.html" data-mlg-funnel="crash-tool-to-free-guide"><strong>MOD起動失敗の解決ガイド</strong><span>ゲーム版・依存MOD・ローダーを順に確認する</span></a>
+<a href="/minecraft/mods/lag-fix" data-mlg-funnel="crash-tool-to-lag-fix"><strong>ゲームが重い・カクつく</strong><span>FPS / メモリ / サーバー遅延を切り分ける</span></a>
+<a href="/minecraft/server.html" data-mlg-funnel="crash-tool-to-server-guide"><strong>友達と遊ぶサーバー容量を診断</strong><span>参加人数やMOD数から必要条件を整理</span></a>
+<a href="/devices/pc-diagnosis.html" data-mlg-funnel="crash-tool-to-pc-diagnosis"><strong>PCの性能を見直す前に</strong><span>推奨スペックを無料で確認する</span></a>
 </div></section>
 <section class="cl-panel cl-faq"><h2>よくある質問と解析の限界</h2>
 <h3>「原因が見つかりません」と出た場合は？</h3><p>エラーメッセージがログに記録されていない場合、既知の文字列に一致しない場合、ファイルのサイズ制限によって末尾が欠けている場合などに起こります。最も新しいログ、または <code>crash-reports</code> の最新ファイルを試し、画面上のエラーメッセージも確認してください。</p>
