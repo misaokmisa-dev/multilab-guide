@@ -93,6 +93,18 @@
 <li><strong>MODの組み合わせを分けて調べる。</strong> 同じ処理を変更する最適化MOD同士が競合する可能性もあります。対応版・前提MOD・ローダーの条件は各作者の配布ページを確認します。</li>
 </ol>
 </section>
+<section aria-labelledby="modlag-fps-compare-title" id="modlag-fps-compare">
+<h2 id="modlag-fps-compare-title">設定変更の効果を数字で比較する</h2>
+<p>同じワールド・同じ場所で、変更前と変更後のFPSを記録しましょう。F3画面などで確認できる値を入力します。瞬間的な最高FPSではなく、同じ場面で数十秒観察したおおよその値を使うと比較しやすくなります。結果はこの画面内だけで計算し、送信・保存しません。</p>
+<div class="modlag-method">
+<div style="display:flex;flex-wrap:wrap;gap:14px;align-items:end">
+<label style="display:grid;gap:5px;flex:1 1 180px"><strong>変更前のFPS</strong><input id="modlag-fps-before" type="number" min="1" max="1000" step="1" inputmode="numeric" placeholder="例：45" style="width:100%;box-sizing:border-box;padding:11px;border:1px solid #9eb9a5;border-radius:9px;font:inherit"></label>
+<label style="display:grid;gap:5px;flex:1 1 180px"><strong>変更後のFPS</strong><input id="modlag-fps-after" type="number" min="1" max="1000" step="1" inputmode="numeric" placeholder="例：60" style="width:100%;box-sizing:border-box;padding:11px;border:1px solid #9eb9a5;border-radius:9px;font:inherit"></label>
+</div>
+<p id="modlag-fps-difference" role="status" aria-live="polite" style="font-weight:750;color:#21563a">両方のFPSを入力すると、差と変化率を表示します。</p>
+</div>
+<p class="modlag-disclose">FPSの差は同じ条件での参考値です。描画距離・MOD構成・ワールド内の位置・プレイ時間が異なる場合、設定変更だけの効果とは判断できません。マルチプレイの通信遅延はFPSでは測れません。</p>
+</section>
 <section aria-labelledby="modlag-table-title">
 <h2 id="modlag-table-title">症状別の確認先 早見表</h2>
 <div class="modlag-table-wrap"><table class="modlag-table"><thead><tr><th>症状</th><th>最初に見る場所</th><th>誤解しやすい点</th></tr></thead><tbody>
@@ -137,6 +149,19 @@
 </article></div></main><footer class="ml-footer"><div class="ml-shell"><div class="ml-links"><a href="../../index.html">総合トップ</a><a href="../index.html">マイクラTOP</a><a href="../../about.html">運営方針</a><a href="../../privacy.html">プライバシー</a></div><p>MULTI LAB GUIDE © 2026　Minecraft・各サービスの非公式ガイドです。</p></div><p style="font-size:12px;line-height:1.7;text-align:center;padding:12px 18px;margin:0;opacity:.88">Amazonのアソシエイトとして、MULTI LAB GUIDEは適格販売により収入を得ています。</p></footer>
 <script>
 (()=>{'use strict';
+const beforeFps=document.getElementById('modlag-fps-before');
+const afterFps=document.getElementById('modlag-fps-after');
+const fpsDifference=document.getElementById('modlag-fps-difference');
+function updateFpsComparison(){
+ const before=Number(beforeFps.value),after=Number(afterFps.value);
+ if(!beforeFps.value||!afterFps.value||!Number.isFinite(before)||!Number.isFinite(after)||before<1||after<1||before>1000||after>1000){
+  fpsDifference.textContent='1〜1000の範囲で、変更前と変更後のFPSを入力してください。';return;
+ }
+ const delta=after-before,percent=Math.round(delta/before*1000)/10;
+ fpsDifference.textContent='FPS差：'+(delta>0?'+':'')+delta+' ／ 変化率：'+(percent>0?'+':'')+percent+'%（'+(delta>0?'改善傾向':delta<0?'低下傾向':'変化なし')+'）';
+}
+beforeFps.addEventListener('input',updateFpsComparison);
+afterFps.addEventListener('input',updateFpsComparison);
 const buttons=[...document.querySelectorAll('[data-symptom]')];
 const sections=[...document.querySelectorAll('.modlag-result[data-for]')];
 const placeholder=document.getElementById('modlag-placeholder');
