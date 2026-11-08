@@ -152,6 +152,7 @@
 const beforeFps=document.getElementById('modlag-fps-before');
 const afterFps=document.getElementById('modlag-fps-after');
 const fpsDifference=document.getElementById('modlag-fps-difference');
+let fpsComparisonMeasured=false;
 function updateFpsComparison(){
  const before=Number(beforeFps.value),after=Number(afterFps.value);
  if(!beforeFps.value||!afterFps.value||!Number.isFinite(before)||!Number.isFinite(after)||before<1||after<1||before>1000||after>1000){
@@ -159,6 +160,11 @@ function updateFpsComparison(){
  }
  const delta=after-before,percent=Math.round(delta/before*1000)/10;
  fpsDifference.textContent='FPS差：'+(delta>0?'+':'')+delta+' ／ 変化率：'+(percent>0?'+':'')+percent+'%（'+(delta>0?'改善傾向':delta<0?'低下傾向':'変化なし')+'）';
+ // Measure a completed comparison once per page view; never transmit the entered FPS values.
+ if(!fpsComparisonMeasured){
+  fpsComparisonMeasured=true;
+  if(typeof window.gtag==='function')window.gtag('event','mlg_mod_fps_compare',{page_path:location.pathname});
+ }
 }
 beforeFps.addEventListener('input',updateFpsComparison);
 afterFps.addEventListener('input',updateFpsComparison);
