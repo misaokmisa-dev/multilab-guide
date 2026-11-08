@@ -1,15 +1,15 @@
 {
   "source": "Roblox public Explore API / top-playing-now, all countries and devices",
   "sourceUrl": "https://www.roblox.com/ja/charts/top-playing-now",
-  "updatedAt": "2026-11-08T01:47:18Z",
-  "totalSourceEntries": 98,
+  "updatedAt": "2026-11-08T09:26:35Z",
+  "totalSourceEntries": 99,
   "games": [
     {
       "placeId": "107778070777162",
       "universeId": "10563114921",
       "name": "卵を盗む",
       "officialName": "Steal An Egg",
-      "playing": 1121509,
+      "playing": 1179893,
       "rating": 91.4,
       "icon": "https://tr.rbxcdn.com/180DAY-910355fa3ecc8a4524e0ffa7a55707a3/512/512/Image/Png/noFilter"
     },
@@ -18,25 +18,16 @@
       "universeId": "1686885941",
       "name": "ブルックヘイブン 🏡RP",
       "officialName": "Brookhaven 🏡RP",
-      "playing": 512283,
+      "playing": 430732,
       "rating": 85.9,
       "icon": "https://tr.rbxcdn.com/180DAY-59e7f600e77655f8507846254b461a8b/512/512/Image/Png/noFilter"
-    },
-    {
-      "placeId": "142823291",
-      "universeId": "66654135",
-      "name": "殺人ミステリー2（Murder Mystery 2）",
-      "officialName": "Murder Mystery 2",
-      "playing": 306847,
-      "rating": 90.8,
-      "icon": "https://tr.rbxcdn.com/180DAY-ab1484ff8063476d413da09dd25df93f/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "120219252362013",
       "universeId": "10766972131",
       "name": "[🎃] 動物に食べ物を投げる",
       "officialName": "Throw Food For Animals",
-      "playing": 306760,
+      "playing": 348252,
       "rating": 94.4,
       "icon": "https://tr.rbxcdn.com/180DAY-29c31870bd22af0578d0b3067022b421/512/512/Image/Png/noFilter"
     },
@@ -45,25 +36,25 @@
       "universeId": "994732206",
       "name": "ブロックスフルーツ",
       "officialName": "[🎃] Blox Fruits",
-      "playing": 300002,
+      "playing": 339426,
       "rating": 92.3,
       "icon": "https://tr.rbxcdn.com/180DAY-8c9483d381a2da30608e6b1bce490bef/512/512/Image/Png/noFilter"
     },
     {
-      "placeId": "18687417158",
-      "universeId": "6331902150",
-      "name": "フォーセイクン（Forsaken）",
-      "officialName": "[UPD 🎃] Forsaken",
-      "playing": 228770,
-      "rating": 84.4,
-      "icon": "https://tr.rbxcdn.com/180DAY-eaa19466a9b077240ad3f505f82731b2/512/512/Image/Png/noFilter"
+      "placeId": "142823291",
+      "universeId": "66654135",
+      "name": "殺人ミステリー2（Murder Mystery 2）",
+      "officialName": "Murder Mystery 2",
+      "playing": 281510,
+      "rating": 90.8,
+      "icon": "https://tr.rbxcdn.com/180DAY-ab1484ff8063476d413da09dd25df93f/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "79546208627805",
       "universeId": "7326934954",
       "name": "森で99の夜 🔦",
       "officialName": "99 Nights in the Forest 🔦",
-      "playing": 210286,
+      "playing": 234488,
       "rating": 90.5,
       "icon": "https://tr.rbxcdn.com/180DAY-c162b715402c51fd948c6686d668456d/512/512/Image/Png/noFilter"
     },
@@ -72,7 +63,7 @@
       "universeId": "6035872082",
       "name": "ライバル",
       "officialName": "RIVALS",
-      "playing": 202270,
+      "playing": 204870,
       "rating": 93.6,
       "icon": "https://tr.rbxcdn.com/180DAY-1912e777e949b6490e59fa4ac83b1063/512/512/Image/Png/noFilter"
     },
@@ -81,169 +72,106 @@
       "universeId": "383310974",
       "name": "Adopt Me!（アドプトミー）",
       "officialName": "[⚡] Adopt Me!",
-      "playing": 179824,
+      "playing": 198515,
       "rating": 86.4,
       "icon": "https://tr.rbxcdn.com/180DAY-16972705ca6b7ee982e76269d5b887e8/512/512/Image/Png/noFilter"
-    },
-    {
-      "placeId": "16116270224",
-      "universeId": "5569032992",
-      "name": "ダンディの世界",
-      "officialName": "🌙 Dandy's World [ALPHA]",
-      "playing": 145435,
-      "rating": 88.3,
-      "icon": "https://tr.rbxcdn.com/180DAY-f3ea2e51271c1904847d9c1fca32fcac/512/512/Image/Png/noFilter"
-    },
-    {
-      "placeId": "9391468976",
-      "universeId": "3508322461",
-      "name": "呪術の大混乱",
-      "officialName": "[🎃] Jujutsu Shenanigans",
-      "playing": 129537,
-      "rating": 86.3,
-      "icon": "https://tr.rbxcdn.com/180DAY-d050b3c50d30c76d215accd60ddbb1c5/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "114326934417838",
       "universeId": "10765288803",
       "name": "卵を壊して盗む",
       "officialName": "Break and Steal an Egg",
-      "playing": 126320,
+      "playing": 116042,
       "rating": 97.2,
-      "icon": "https://tr.rbxcdn.com/180DAY-cd99e57580a01ce360e9439a3a231f70/512/512/Image/Png/noFilter"
+      "icon": "https://tr.rbxcdn.com/180DAY-b36ccfc216e5d9aa18c1175cb9dcfb02/512/512/Image/Png/noFilter"
     },
     {
-      "placeId": "119958473240233",
-      "universeId": "10771421858",
-      "name": "スプラッシュ禁止 🎃",
-      "officialName": "DONT SPLASH",
-      "playing": 113281,
-      "rating": 86.6,
-      "icon": "https://tr.rbxcdn.com/180DAY-dd68d67af2864e8e1b129350a1618b82/512/512/Image/Png/noFilter"
-    },
-    {
-      "placeId": "16732694052",
-      "universeId": "5750914919",
-      "name": "フィッシュ",
-      "officialName": "Fisch 🦈 [HAMMI]",
-      "playing": 108217,
-      "rating": 90.8,
-      "icon": "https://tr.rbxcdn.com/180DAY-d668190d2422d331931a8801b3f99e9e/512/512/Image/Png/noFilter"
-    },
-    {
-      "placeId": "80681221431821",
-      "universeId": "7529591378",
-      "name": "[ALPHA] Practical Basketball",
-      "officialName": "[ALPHA] Practical Basketball",
-      "playing": 99435,
-      "rating": 92.9,
-      "icon": "https://tr.rbxcdn.com/180DAY-5661b714329afc0758438520266cfad3/512/512/Image/Png/noFilter"
-    },
-    {
-      "placeId": "121864768012064",
-      "universeId": "6701277882",
-      "name": "魚を捕まえよう！ 🐟",
-      "officialName": "[15 MINS] Fish It! 🐟",
-      "playing": 94306,
-      "rating": 82.8,
-      "icon": "https://tr.rbxcdn.com/180DAY-21353f5e986e958493f632bc1d760591/512/512/Image/Png/noFilter"
+      "placeId": "18687417158",
+      "universeId": "6331902150",
+      "name": "フォーセイクン（Forsaken）",
+      "officialName": "[UPD 🎃] Forsaken",
+      "playing": 109447,
+      "rating": 84.4,
+      "icon": "https://tr.rbxcdn.com/180DAY-eaa19466a9b077240ad3f505f82731b2/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "8304191830",
       "universeId": "3183403065",
       "name": "[☀️UPD 21🏖️] Anime Adventures",
       "officialName": "[☀️UPD 21🏖️] Anime Adventures",
-      "playing": 90464,
+      "playing": 103649,
       "rating": 92.1,
       "icon": "https://tr.rbxcdn.com/180DAY-7ceb7a64126dbc19469cfdd375fbe762/512/512/Image/Png/noFilter"
     },
     {
-      "placeId": "7041939546",
-      "universeId": "2711375305",
-      "name": "Catalog Avatar Creator",
-      "officialName": "Catalog Avatar Creator",
-      "playing": 86700,
-      "rating": 93.7,
-      "icon": "https://tr.rbxcdn.com/180DAY-4091747afd807e31c643fac0b3ad3448/512/512/Image/Png/noFilter"
-    },
-    {
-      "placeId": "10449761463",
-      "universeId": "3808081382",
-      "name": "最強の戦場",
-      "officialName": "[HALLOWEEN] The Strongest Battlegrounds",
-      "playing": 82276,
-      "rating": 83.7,
-      "icon": "https://tr.rbxcdn.com/180DAY-f8865ce7904972a639d64e1770041f35/512/512/Image/Png/noFilter"
+      "placeId": "16116270224",
+      "universeId": "5569032992",
+      "name": "ダンディの世界",
+      "officialName": "🌙 Dandy's World [ALPHA]",
+      "playing": 100472,
+      "rating": 88.3,
+      "icon": "https://tr.rbxcdn.com/180DAY-f3ea2e51271c1904847d9c1fca32fcac/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "109983668079237",
       "universeId": "7709344486",
       "name": "ブレインロットを盗む",
       "officialName": "[💀] Steal a Brainrot",
-      "playing": 81686,
+      "playing": 92694,
       "rating": 85.1,
       "icon": "https://tr.rbxcdn.com/180DAY-28e6ab0b77c56d60e9f0dc9327ef3cc0/512/512/Image/Png/noFilter"
     },
     {
-      "placeId": "135856908115931",
-      "universeId": "7219654364",
-      "name": "[X2🎃デュエル] 殺人者VS保安官",
-      "officialName": "[💀DUELS] Murderers VS Sheriffs",
-      "playing": 80591,
-      "rating": 86.5,
-      "icon": "https://tr.rbxcdn.com/180DAY-e3ec01625d4eb72943a414fbfc6a4f02/512/512/Image/Png/noFilter"
+      "placeId": "16732694052",
+      "universeId": "5750914919",
+      "name": "フィッシュ",
+      "officialName": "Fisch 🦈 [HAMMI]",
+      "playing": 92350,
+      "rating": 90.8,
+      "icon": "https://tr.rbxcdn.com/180DAY-d668190d2422d331931a8801b3f99e9e/512/512/Image/Png/noFilter"
     },
     {
-      "placeId": "73956553001240",
-      "universeId": "6931042565",
-      "name": "バレーボールレジェンド",
-      "officialName": "[UPD] Volleyball Legends",
-      "playing": 77144,
-      "rating": 95.1,
-      "icon": "https://tr.rbxcdn.com/180DAY-a6629226f818fae29f397bef7c1b29e8/512/512/Image/Png/noFilter"
+      "placeId": "119958473240233",
+      "universeId": "10771421858",
+      "name": "スプラッシュ禁止 🎃",
+      "officialName": "DONT SPLASH",
+      "playing": 82770,
+      "rating": 86.6,
+      "icon": "https://tr.rbxcdn.com/180DAY-dd68d67af2864e8e1b129350a1618b82/512/512/Image/Png/noFilter"
     },
     {
-      "placeId": "15101393044",
-      "universeId": "5203828273",
-      "name": "ドレス・トゥ・インプレス💖",
-      "officialName": "[🎃] Dress To Impress",
-      "playing": 70443,
-      "rating": 90.5,
-      "icon": "https://tr.rbxcdn.com/180DAY-929ff39bc1d926f3de0298cdf3470b41/512/512/Image/Png/noFilter"
+      "placeId": "9391468976",
+      "universeId": "3508322461",
+      "name": "呪術の大混乱",
+      "officialName": "[🎃] Jujutsu Shenanigans",
+      "playing": 82245,
+      "rating": 86.3,
+      "icon": "https://tr.rbxcdn.com/180DAY-d050b3c50d30c76d215accd60ddbb1c5/512/512/Image/Png/noFilter"
     },
     {
-      "placeId": "121868512253414",
-      "universeId": "10770575733",
-      "name": "Ragdoll Physics 🩸",
-      "officialName": "Ragdoll Physics 🩸",
-      "playing": 62758,
-      "rating": 91.2,
-      "icon": "https://tr.rbxcdn.com/180DAY-b451e42db531018568af695f4d934448/512/512/Image/Png/noFilter"
+      "placeId": "10449761463",
+      "universeId": "3808081382",
+      "name": "最強の戦場",
+      "officialName": "[HALLOWEEN] The Strongest Battlegrounds",
+      "playing": 68741,
+      "rating": 83.7,
+      "icon": "https://tr.rbxcdn.com/180DAY-f8865ce7904972a639d64e1770041f35/512/512/Image/Png/noFilter"
     },
     {
-      "placeId": "13379208636",
-      "universeId": "4658598196",
-      "name": "アタック・オン・タイタン・レボリューション",
-      "officialName": "Attack on Titan Revolution",
-      "playing": 59467,
-      "rating": 95.9,
-      "icon": "https://tr.rbxcdn.com/180DAY-71892f9fe174d45e8cd4a297144113ff/512/512/Image/Png/noFilter"
-    },
-    {
-      "placeId": "91246277860636",
-      "universeId": "10772066587",
-      "name": "[UPD] MALAM SAMA OPAH ",
-      "officialName": "[UPD] MALAM SAMA OPAH ",
-      "playing": 58746,
-      "rating": 84.5,
-      "icon": "https://tr.rbxcdn.com/180DAY-16f78e15ba4193e3e2b5383a16127a61/512/512/Image/Png/noFilter"
+      "placeId": "121864768012064",
+      "universeId": "6701277882",
+      "name": "魚を捕まえよう！ 🐟",
+      "officialName": "[🌙UPD] Fish It! 🐟",
+      "playing": 67705,
+      "rating": 82.8,
+      "icon": "https://tr.rbxcdn.com/180DAY-1f636db748771ff87df575c6d6518a6a/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "9872472334",
       "universeId": "3647333358",
       "name": "脱出",
       "officialName": "[🎃HLWN🎃] Evade ",
-      "playing": 56431,
+      "playing": 66563,
       "rating": 93.9,
       "icon": "https://tr.rbxcdn.com/180DAY-9791576d34c2e0b9e392b355409d6c82/512/512/Image/Png/noFilter"
     },
@@ -252,7 +180,7 @@
       "universeId": "10762636904",
       "name": "[💰X2] Cameraman Tower Defense",
       "officialName": "[💰X2] Cameraman Tower Defense",
-      "playing": 56249,
+      "playing": 62998,
       "rating": 98.4,
       "icon": "https://tr.rbxcdn.com/180DAY-0682eb40fb67e619b641a3741688bd57/512/512/Image/Png/noFilter"
     },
@@ -261,18 +189,90 @@
       "universeId": "6739698191",
       "name": "[ブッチャー x 🎃] 暴力地区",
       "officialName": "[WEEK 3 🎃 x BUTCHER] Violence District",
-      "playing": 55400,
+      "playing": 62895,
       "rating": 92.9,
       "icon": "https://tr.rbxcdn.com/180DAY-09da8a9c4c14139a7c5af5890a36787e/512/512/Image/Png/noFilter"
+    },
+    {
+      "placeId": "15101393044",
+      "universeId": "5203828273",
+      "name": "ドレス・トゥ・インプレス💖",
+      "officialName": "[🎃] Dress To Impress",
+      "playing": 58737,
+      "rating": 90.5,
+      "icon": "https://tr.rbxcdn.com/180DAY-929ff39bc1d926f3de0298cdf3470b41/512/512/Image/Png/noFilter"
+    },
+    {
+      "placeId": "7041939546",
+      "universeId": "2711375305",
+      "name": "Catalog Avatar Creator",
+      "officialName": "Catalog Avatar Creator",
+      "playing": 53584,
+      "rating": 93.7,
+      "icon": "https://tr.rbxcdn.com/180DAY-4091747afd807e31c643fac0b3ad3448/512/512/Image/Png/noFilter"
+    },
+    {
+      "placeId": "91246277860636",
+      "universeId": "10772066587",
+      "name": "[UPD] MALAM SAMA OPAH ",
+      "officialName": "[UPD] MALAM SAMA OPAH ",
+      "playing": 51528,
+      "rating": 84.4,
+      "icon": "https://tr.rbxcdn.com/180DAY-16f78e15ba4193e3e2b5383a16127a61/512/512/Image/Png/noFilter"
     },
     {
       "placeId": "77900175935766",
       "universeId": "10769671316",
       "name": "[⭐UPD] Survive Your Ideas",
       "officialName": "[⭐UPD] Survive Your Ideas",
-      "playing": 55246,
-      "rating": 83.2,
+      "playing": 51131,
+      "rating": 84.1,
       "icon": "https://tr.rbxcdn.com/180DAY-c3b4682b073174ad4c932e081dcf0fc7/512/512/Image/Png/noFilter"
+    },
+    {
+      "placeId": "8737899170",
+      "universeId": "3317771874",
+      "name": "✨ Pet Simulator 99! (日本語)",
+      "officialName": "🎭 [MINIGAMES] Pet Simulator 99! 🎃",
+      "playing": 50001,
+      "rating": 94.7,
+      "icon": "https://tr.rbxcdn.com/180DAY-90f12c7dfe5fe57a391edf5e44bb72c5/512/512/Image/Png/noFilter"
+    },
+    {
+      "placeId": "13379208636",
+      "universeId": "4658598196",
+      "name": "アタック・オン・タイタン・レボリューション",
+      "officialName": "Attack on Titan Revolution",
+      "playing": 49736,
+      "rating": 95.9,
+      "icon": "https://tr.rbxcdn.com/180DAY-71892f9fe174d45e8cd4a297144113ff/512/512/Image/Png/noFilter"
+    },
+    {
+      "placeId": "4520749081",
+      "universeId": "1451439645",
+      "name": "キング・レガシー",
+      "officialName": "[🐉UPD 11 PART 1🎃] King Legacy",
+      "playing": 49426,
+      "rating": 91.5,
+      "icon": "https://tr.rbxcdn.com/180DAY-04c84ed09a851c6908c3eb13c90a8529/512/512/Image/Png/noFilter"
+    },
+    {
+      "placeId": "73956553001240",
+      "universeId": "6931042565",
+      "name": "バレーボールレジェンド",
+      "officialName": "[UPD] Volleyball Legends",
+      "playing": 46320,
+      "rating": 95.1,
+      "icon": "https://tr.rbxcdn.com/180DAY-a6629226f818fae29f397bef7c1b29e8/512/512/Image/Png/noFilter"
+    },
+    {
+      "placeId": "6961824067",
+      "universeId": "2668101271",
+      "name": "物や人を飛ばす",
+      "officialName": "Fling Things and People",
+      "playing": 45746,
+      "rating": 80.4,
+      "icon": "https://tr.rbxcdn.com/180DAY-298897e01eeb244af09a923c7c0cdbcc/512/512/Image/Png/noFilter"
     }
   ]
 }
