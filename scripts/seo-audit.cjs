@@ -36,6 +36,38 @@ for(const url of urls){
   }
  }
 }
-const result={sitemapCount:urls.length,missing,wrongCanonical:wrong,missingCanonical:noCanonical,noindexInSitemap:noindex,brokenLinks:[...bad.values()].sort((a,b)=>b.refs-a.refs)};
+let result={sitemapCount:urls.length,missing,wrongCanonical:wrong,missingCanonical:noCanonical,noindexInSitemap:noindex,brokenLinks:[...bad.values()].sort((a,b)=>b.refs-a.refs)};
+
+if(process.argv.includes('--all')){
+ function list(dir=''){
+  let found=[];for(const entry of fs.readdirSync(path.join(ROOT,dir),{withFileTypes:true})){
+   if(['.git','node_modules','.next','.wrangler'].includes(entry.name))continue;
+   const next=path.posix.join(dir,entry.name);
+   if(entry.isDirectory())found.push(...list(next));
+   else if(next.endsWith('.html'))found.push(next);
+  }return found;
+ }
+ const files=list(),allBad=new Map(),allCanon=[],canonAbsent=[];
+ for(const p of files){
+  const html=read(p),c=canonical(html);
+  const preferred=SITE+'/'+(p==='index.html'?'':p.endsWith('/index.html')?p.slice(0,-10):p);
+  if(c){
+   if(c!==preferred&&c!==preferred.replace(/\.html$/,''))allCanon.push({file:p,canonical:c,preferred});
+  }else canonAbsent.push(p);
+  for(const link of html.matchAll(/<a\b[^>]*>/gi)){
+   const href=attrs(link[0]).href;
+   if(!href||href[0]==='#'||/^(?:mailto:|tel:|javascript:|data:)/i.test(href))continue;
+   let abs;try{abs=new URL(href,SITE+'/'+p)}catch{continue}
+   if(abs.origin!==SITE||abs.pathname.startsWith('/api/'))continue;
+   if(!source(abs.href)?.file){
+    const k=abs.pathname,v=allBad.get(k)||{url:k,refs:0,sources:[]};
+    v.refs++;if(v.sources.length<5&&!v.sources.includes(p))v.sources.push(p);
+    allBad.set(k,v);
+   }
+  }
+ }
+ result.allHtml={files:files.length,missingCanonicalCount:canonAbsent.length,missingCanonicalSamples:canonAbsent.slice(0,35),otherCanonicalCount:allCanon.length,otherCanonicalSamples:allCanon.slice(0,40),brokenTargetCount:allBad.size,brokenTargets:[...allBad.values()].sort((a,b)=>b.refs-a.refs).slice(0,100)};
+}
+
 console.log(JSON.stringify(result,null,2));
 if(process.argv.includes('--strict')&&(missing.length||wrong.length||noCanonical.length||noindex.length||bad.size))process.exitCode=1;
