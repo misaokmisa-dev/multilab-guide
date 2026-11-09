@@ -36,7 +36,7 @@ for(const url of urls){
   }
  }
 }
-let result={sitemapCount:urls.length,missing,wrongCanonical:wrong,missingCanonical:noCanonical,noindexInSitemap:noindex,brokenLinks:[...bad.values()].sort((a,b)=>b.refs-a.refs)};
+let result={sitemapCount:urls.length,noncanonicalSitemapUrls:urls.filter(u=>u.endsWith('.html')),missing,wrongCanonical:wrong,missingCanonical:noCanonical,noindexInSitemap:noindex,brokenLinks:[...bad.values()].sort((a,b)=>b.refs-a.refs)};
 
 if(process.argv.includes('--all')){
  function list(dir=''){
@@ -70,4 +70,4 @@ if(process.argv.includes('--all')){
 }
 
 console.log(JSON.stringify(result,null,2));
-if(process.argv.includes('--strict')&&(missing.length||wrong.length||noCanonical.length||noindex.length||bad.size))process.exitCode=1;
+if(process.argv.includes('--strict')&&(result.noncanonicalSitemapUrls.length||missing.length||wrong.length||noCanonical.length||noindex.length||bad.size))process.exitCode=1;

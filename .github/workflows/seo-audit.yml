@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '22'
       - name: Validate sitemap, canonicals and all internal links on indexed pages
-        run: node scripts/seo-audit.cjs --all > seo-audit.json
+        run: node scripts/seo-audit.cjs --all --strict > seo-audit.json
       - name: Print audit results
         if: always()
         run: cat seo-audit.json

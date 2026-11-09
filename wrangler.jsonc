@@ -10,7 +10,8 @@
       "/api/*",
       "/minecraft/strategy/items/detail/*",
       "/minecraft/strategy/rare-mobs/*"
-    ]
+    ],
+    "html_handling": "auto-trailing-slash"
   },
   "analytics_engine_datasets": [
     {
