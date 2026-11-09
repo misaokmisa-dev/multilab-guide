@@ -105,6 +105,18 @@
 </div>
 <p class="modlag-disclose">FPSの差は同じ条件での参考値です。描画距離・MOD構成・ワールド内の位置・プレイ時間が異なる場合、設定変更だけの効果とは判断できません。マルチプレイの通信遅延はFPSでは測れません。</p>
 </section>
+<section aria-labelledby="modlag-test-protocol">
+<h2 id="modlag-test-protocol">改善したか判断するための比較手順</h2>
+<p>設定を変えた直後の一瞬のFPSだけでは判断しにくいため、次の順番で測ると原因を絞りやすくなります。測定中は同じMinecraftバージョン・MOD構成・画面解像度を使ってください。</p>
+<ol>
+<li><strong>比較する場面を固定。</strong> ワールドをバックアップし、同じ地点・視線方向・天候・描画距離で測ります。新しいチャンクの生成中は避けます。</li>
+<li><strong>変更前を3回記録。</strong> F3などでFPSを確認し、同じ場面を各30秒程度観察して、おおよその値と引っかかりの回数をメモします。3回の中央値を基準にします。</li>
+<li><strong>設定を1項目だけ変更。</strong> 例として描画距離だけを下げ、影MODやメモリ設定を同時に変更しないようにします。</li>
+<li><strong>変更後も3回記録。</strong> 同じ条件で観察し、中央値を上の比較欄に入力します。FPSが上がっても、一瞬の停止が増えていないかも確認します。</li>
+<li><strong>結果を判断。</strong> 数字が安定して改善すれば設定を保存し、変わらなければ元に戻して次の項目を調べます。差が小さい場合は誤差の可能性もあります。</li>
+</ol>
+<p class="modlag-notice"><strong>測定上の注意：</strong> 3回の中央値は簡易比較のための方法であり、厳密なベンチマークではありません。FPSは画面描画の指標で、マルチプレイの通信遅延やサーバーTPSを直接表しません。</p>
+</section>
 <section aria-labelledby="modlag-table-title">
 <h2 id="modlag-table-title">症状別の確認先 早見表</h2>
 <div class="modlag-table-wrap"><table class="modlag-table"><thead><tr><th>症状</th><th>最初に見る場所</th><th>誤解しやすい点</th></tr></thead><tbody>
