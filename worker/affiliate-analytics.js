@@ -273,6 +273,13 @@ export default {
     const outgoing=new Response(asset.body,{status:asset.status,statusText:asset.statusText,headers});
     return new HTMLRewriter()
       .on('head',{element(element){element.append('<meta name="robots" content="noindex,follow">',{html:true});}})
+      // Cloudflare serves /item without .html and redirects /item.html there.
+      // Keep self-canonical links aligned while preserving noindex on thin pages.
+      .on('link[rel="canonical"]',{element(element){
+        const href=element.getAttribute('href');
+        if(href&&href.startsWith('https://mlabg.com/')&&href.endsWith('.html'))
+          element.setAttribute('href',href.slice(0,-5));
+      }})
       .on('script[src*="pagead2.googlesyndication.com"]',{element(element){element.remove();}})
       .transform(outgoing);
   }
