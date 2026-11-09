@@ -1,0 +1,30 @@
+name: Sitemap and internal link SEO audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - 'scripts/seo-audit.cjs'
+      - '.github/workflows/seo-audit.yml'
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate sitemap, canonicals and all internal links on indexed pages
+        run: node scripts/seo-audit.cjs > seo-audit.json
+      - name: Print audit results
+        if: always()
+        run: cat seo-audit.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seo-audit
+          path: seo-audit.json
