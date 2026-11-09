@@ -3,11 +3,11 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>【マイクラ】 ワールド発展度採点 【Minecraft】</title>
 <meta name="description" content="あなたのMinecraftワールドの発展度をスコア化。Java版のワールドファイル（statsのJSON）から採点、称号とスコアカードをXでシェア。">
-<link rel="canonical" href="https://mlabg.com/minecraft/world-development.html">
+<link rel="canonical" href="https://mlabg.com/minecraft/world-development">
 <link rel="icon" type="image/png" href="/favicon.png?v=20261026">
 <meta property="og:title" content="【マイクラ】 ワールド発展度採点 【Minecraft】">
 <meta property="og:description" content="自分のワールドをスコアでチェック。結果を友達と比べよう！">
-<meta property="og:type" content="website"><meta property="og:url" content="https://mlabg.com/minecraft/world-development.html">
+<meta property="og:type" content="website"><meta property="og:url" content="https://mlabg.com/minecraft/world-development">
 <meta property="og:image" content="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/cherrygrove-header.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/global-site-header.css?v=20261027a">
@@ -426,7 +426,7 @@ function resolveWorldLabel(){
  return entered||activeWorldName;
 }
 function buildShareText(r){
- return '🌍 マイクラ ワールド発展度\n「'+r.world+'」\n🏆 '+format(r.score)+' / 100,000 pt\n称号：'+r.grade+'\n\nあなたのワールドは何点？\n#マイクラ #ワールド発展度\nhttps://mlabg.com/minecraft/world-development.html';
+ return '🌍 マイクラ ワールド発展度\n「'+r.world+'」\n🏆 '+format(r.score)+' / 100,000 pt\n称号：'+r.grade+'\n\nあなたのワールドは何点？\n#マイクラ #ワールド発展度\nhttps://mlabg.com/minecraft/world-development';
 }
 function calculate(data){
  const stats=data.stats;
