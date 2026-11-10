@@ -256,6 +256,12 @@ export default {
     return json({source:'Cloudflare Workers Analytics Engine',days,rows:result.data||[],sampled:true,updatedAt:new Date().toISOString()});
    }catch(err){return json({error:'計測データを読み込めませんでした',detail:String(err.message||err).slice(0,180)},503)}
   }
+  // GSC URL cleanup: this is a directory, not a missing item. Readers who
+  // follow a bare /detail/ link should land at the actual catalog index.
+  if((url.pathname==='/minecraft/strategy/items/detail/' || url.pathname==='/minecraft/strategy/items/detail')
+    && (request.method==='GET' || request.method==='HEAD'))
+    return Response.redirect(new URL('/minecraft/strategy/items/',url),301);
+
   // AdSense content-quality review: auto-generated item-detail pages have
   // short generic descriptions. Preserve the encyclopedia's usability but
   // temporarily stop monetization and indexing on those detail pages.
