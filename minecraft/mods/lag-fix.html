@@ -114,6 +114,16 @@
 <tr><th scope="row">3回目</th><td>＿＿＿</td><td>＿＿＿</td></tr>
 <tr><th scope="row">中央値</th><td>＿＿＿</td><td>＿＿＿</td></tr>
 </tbody></table></div>
+<div class="modlag-method" style="margin-top:16px">
+<h3 style="margin-top:0">3回のFPSから中央値を自動計算</h3>
+<p>変更前・変更後を各3回入力すると中央値を計算し、上の比較欄に反映できます。入力値は送信・保存しません。</p>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+<fieldset style="min-width:0;border:1px solid #cbded0;border-radius:10px"><legend>変更前</legend><div style="display:grid;gap:7px"><input class="modlag-sample-before" type="number" min="1" max="1000" placeholder="1回目 FPS" aria-label="変更前1回目FPS" style="width:100%;box-sizing:border-box"><input class="modlag-sample-before" type="number" min="1" max="1000" placeholder="2回目 FPS" aria-label="変更前2回目FPS" style="width:100%;box-sizing:border-box"><input class="modlag-sample-before" type="number" min="1" max="1000" placeholder="3回目 FPS" aria-label="変更前3回目FPS" style="width:100%;box-sizing:border-box"></div></fieldset>
+<fieldset style="min-width:0;border:1px solid #cbded0;border-radius:10px"><legend>変更後</legend><div style="display:grid;gap:7px"><input class="modlag-sample-after" type="number" min="1" max="1000" placeholder="1回目 FPS" aria-label="変更後1回目FPS" style="width:100%;box-sizing:border-box"><input class="modlag-sample-after" type="number" min="1" max="1000" placeholder="2回目 FPS" aria-label="変更後2回目FPS" style="width:100%;box-sizing:border-box"><input class="modlag-sample-after" type="number" min="1" max="1000" placeholder="3回目 FPS" aria-label="変更後3回目FPS" style="width:100%;box-sizing:border-box"></div></fieldset>
+</div>
+<button type="button" id="modlag-median-apply" style="margin-top:12px;padding:11px 16px;border:0;border-radius:9px;background:#20643e;color:#fff;font-weight:700;cursor:pointer">中央値で比較する</button>
+<p id="modlag-median-status" role="status" aria-live="polite">6つの測定値を入力してください。</p>
+</div>
 <p>例：45・60・50 FPSなら中央値は50 FPSです。設定名・描画距離・影MODの有無・ワールド内の場所も一緒にメモすると、後から比較しやすくなります。FPSが改善しても引っかかりが増えた場合は、体感の改善とは限りません。</p>
 </section>
 <section aria-labelledby="modlag-test-protocol">
@@ -189,6 +199,19 @@ function updateFpsComparison(){
   if(typeof window.gtag==='function')window.gtag('event','mlg_mod_fps_compare',{page_path:location.pathname});
  }
 }
+document.getElementById('modlag-median-apply').addEventListener('click',()=>{
+ const getMedian=selector=>{
+  const values=[...document.querySelectorAll(selector)].map(el=>el.value.trim()===''?NaN:Number(el.value));
+  if(values.length!==3||values.some(v=>!Number.isFinite(v)||v<1||v>1000))return null;
+  return values.sort((a,b)=>a-b)[1];
+ };
+ const before=getMedian('.modlag-sample-before'),after=getMedian('.modlag-sample-after');
+ const status=document.getElementById('modlag-median-status');
+ if(before===null||after===null){status.textContent='6つすべてに1〜1000のFPSを入力してください。';return;}
+ beforeFps.value=String(before);afterFps.value=String(after);
+ updateFpsComparison();
+ status.textContent='変更前の中央値 '+before+' FPS ／ 変更後の中央値 '+after+' FPS。上の比較欄に反映しました。';
+});
 beforeFps.addEventListener('input',updateFpsComparison);
 afterFps.addEventListener('input',updateFpsComparison);
 const buttons=[...document.querySelectorAll('[data-symptom]')];
