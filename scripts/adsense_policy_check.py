@@ -73,6 +73,25 @@ for url in locs:
     check("/items/detail/" not in url and not re.search(r"/rare-mobs/[^/]+\.html$", url),
           f"Thin reference detail is in the indexable sitemap: {url}")
 
+# The public site serves one nonindexed item browser, not 1,672 generic SEO articles.
+ignore=(ROOT / ".assetsignore").read_text(encoding="utf-8")
+viewer=(ROOT / "minecraft/strategy/items/view.html").read_text(encoding="utf-8")
+library=(ROOT / "minecraft/strategy/items/encyclopedia.js").read_text(encoding="utf-8")
+check("minecraft/strategy/items/detail/**" in ignore,
+      "Mass-generated item detail HTMLs must not be published as static pages")
+check('name="robots" content="noindex,follow"' in viewer and
+      "pagead2.googlesyndication.com" not in viewer,
+      "Unified item browser should not be a monetized standalone SEO page")
+check('function itemUrl(i){return B+"view?item="' in library,
+      "Item links must use one shared tool rather than original generic pages")
+check("VALID_ITEM_SLUGS.has(item)" in worker and
+      "new URL('/minecraft/strategy/items/view',url.origin)" in worker,
+      "Old item bookmarks must redirect only verified item identifiers")
+for entry in [ROOT / "minecraft/strategy/items/index.html", *(ROOT / "minecraft/strategy/items/category").glob("*.html")]:
+    html = entry.read_text(encoding="utf-8")
+    check(not re.search(r'href=["\']\/minecraft\/strategy\/items\/detail\/[a-z0-9_]+\.html',html),
+          f"Catalog still links directly to template-generated SEO page: {entry.relative_to(ROOT)}")
+
 check(len(locs) >= 40, "Sitemap unexpectedly lost most editorial pages")
 if errors:
     print(f"AdSense policy regression audit: {len(errors)} issue(s):")

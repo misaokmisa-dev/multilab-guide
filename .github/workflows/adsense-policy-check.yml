@@ -14,6 +14,10 @@ on:
       - 'ad-review.css'
       - 'interstitial-loader.js'
       - 'worker/**'
+      - '.assetsignore'
+      - 'minecraft/strategy/items/view.html'
+      - 'minecraft/strategy/items/encyclopedia.js'
+      - 'tests/adsense-item-consolidation.test.cjs'
       - 'wrangler.jsonc'
       - 'devices/*.html'
       - 'minecraft/strategy/items/index.html'
@@ -30,4 +34,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify AdSense-related site safeguards
-        run: python3 scripts/adsense_policy_check.py
+        run: |
+          python3 scripts/adsense_policy_check.py
+          node tests/adsense-item-consolidation.test.cjs
