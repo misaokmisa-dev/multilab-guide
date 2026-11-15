@@ -10,3 +10,7 @@ README.md
 package.json
 package-lock.json
 worker/
+
+# AdSense content quality: old template-generated item detail pages are not
+# public static documents; Worker redirects known bookmarks to the usable viewer.
+minecraft/strategy/items/detail/**
