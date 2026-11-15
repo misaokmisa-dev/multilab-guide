@@ -1,0 +1,27 @@
+name: Minecraft item viewer DOM smoke tests
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'minecraft/strategy/items/view.html'
+      - 'minecraft/strategy/items/encyclopedia.js'
+      - 'minecraft/strategy/items/*-data.js'
+      - 'tests/item-browser-dom.test.cjs'
+      - '.github/workflows/item-browser-dom.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated DOM test runtime
+        run: npm install --no-save --no-package-lock --ignore-scripts jsdom@26
+      - name: Check browser script syntax
+        run: node --check minecraft/strategy/items/encyclopedia.js
+      - name: Render three known item pages and an unknown item
+        run: node tests/item-browser-dom.test.cjs
