@@ -275,7 +275,7 @@ export default {
   // repetitive SEO documents themselves. Missing original assets stay 404.
   if(isAutoItemDetail && (request.method==='GET'||request.method==='HEAD')) {
     const raw=url.pathname.slice('/minecraft/strategy/items/detail/'.length);
-    const item=raw==='new' || raw==='new.html' ? url.searchParams.get('item') : raw.replace(/\\.html$/,'');
+    const item=raw==='new' || raw==='new.html' ? url.searchParams.get('item') : raw.replace(/\.html$/,'');
     if(item && /^[a-z0-9_]{2,96}$/.test(item)) {
       const asset=await env.ASSETS.fetch(request);
       if(asset.status===200 && (asset.headers.get('content-type')||'').includes('text/html')) {
