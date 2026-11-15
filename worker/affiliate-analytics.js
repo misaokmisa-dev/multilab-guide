@@ -270,6 +270,24 @@ export default {
   // mob pages are currently short, so keep them usable without indexing or ads.
   const isBriefRareMobDetail=/^\/minecraft\/strategy\/rare-mobs\/[^/]+(?:\.html)?$/.test(url.pathname)
     && !/^\/minecraft\/strategy\/rare-mobs\/index(?:\.html)?$/.test(url.pathname);
+  // Consolidate 1,672 near-identical generated articles into one usable item
+  // detail browser. Keep existing bookmarks functional, without serving the
+  // repetitive SEO documents themselves. Missing original assets stay 404.
+  if(isAutoItemDetail && (request.method==='GET'||request.method==='HEAD')) {
+    const raw=url.pathname.slice('/minecraft/strategy/items/detail/'.length);
+    const item=raw==='new' || raw==='new.html' ? url.searchParams.get('item') : raw.replace(/\\.html$/,'');
+    if(item && /^[a-z0-9_]{2,96}$/.test(item)) {
+      const asset=await env.ASSETS.fetch(request);
+      if(asset.status===200 && (asset.headers.get('content-type')||'').includes('text/html')) {
+        const target=new URL('/minecraft/strategy/items/view',url.origin);
+        target.searchParams.set('item',item);
+        return Response.redirect(target,301);
+      }
+      if(asset.status!==301 && asset.status!==302 && asset.status!==307 && asset.status!==308)return asset;
+      // A legacy .html URL is automatically normalized by Cloudflare first.
+      return asset;
+    }
+  }
   if(isAutoItemDetail || isBriefRareMobDetail) {
     const asset=await env.ASSETS.fetch(request);
     if(asset.status!==200 || !(asset.headers.get('content-type')||'').includes('text/html'))return asset;

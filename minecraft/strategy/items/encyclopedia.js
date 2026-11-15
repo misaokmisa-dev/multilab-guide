@@ -101,7 +101,8 @@ function score(i,query){
  }
  return total;
 }
-function itemUrl(i){return B+"detail/"+encodeURIComponent(i.name)+".html";}
+// One practical item viewer instead of 1,672 automatically generated, thin SEO pages.
+function itemUrl(i){return B+"view?item="+encodeURIComponent(i.name);}
 const CHEST_ICON_URLS={chest:"https://minecraft.wiki/images/Invicon_Chest.png?1cab7",ender_chest:"https://minecraft.wiki/images/Invicon_Ender_Chest.png?b4e68",trapped_chest:"https://minecraft.wiki/images/Invicon_Trapped_Chest.png?cf2b7"};
 // Resolve every gallery and item-detail image with the same rule as tools:
 // exact flat item sprite is authoritative; block faces / unrelated materials
@@ -608,7 +609,8 @@ function initDetail(){
  const hero=q("section","ency-detail-hero");hero.append(icon(item,105));
  const part=q("div");const tag=q("span","ency-kicker",groupMap.get(item.cat)?.title+" / Java "+(item.release==="26.4-snapshot-6"?"26.4 Snapshot 6（開発版）":item.release));
  if(item.id>1504){
- document.querySelector('link[rel="canonical"]')?.setAttribute("href",location.origin+itemUrl(item));
+ if(!location.pathname.endsWith("/view")&&!location.pathname.endsWith("/view.html"))
+  document.querySelector('link[rel="canonical"]')?.setAttribute("href",location.origin+itemUrl(item));
  // Individual 2026 pages already ship their full English-name SEO summary in
  // the original HTML. Only legacy query-based /new.html needs a JS fallback.
  if(location.pathname.endsWith("/new.html"))
