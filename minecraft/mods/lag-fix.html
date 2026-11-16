@@ -83,6 +83,7 @@
 <section class="modlag-result" data-for="crash" hidden><h3>起動失敗やクラッシュは別の原因を確認</h3><ol><li>表示されたエラーメッセージやクラッシュログを控えます。</li><li>バージョン、ローダー、依存MODの一致を確認します。</li><li>バックアップした別環境で、直前に追加したMODを取り除いて試します。</li></ol><p><a href="/minecraft/mods/troubleshooting.html" data-mlg-funnel="modlag-crash-to-troubleshooting">MODが起動しないときの詳しい手順 →</a></p><p>クラッシュログがある場合は、個人情報を確認してから <a href="/minecraft/tools/crash-log-analyzer" data-mlg-funnel="modlag-crash-to-log-analyzer">無料クラッシュログ解析ツールで原因候補を確認する →</a> こともできます。ログの解析結果は原因の確定ではないため、MODの対応バージョンや依存関係と照合してください。</p></section>
 </div>
 </section>
+<section aria-labelledby="modlag-fps-tps"><h2 id="modlag-fps-tps">FPS低下とサーバーの処理遅延を見分ける</h2><p>画面がカクつく場合はまずFPSを確認します。FPSは自分のPCが1秒間に描画する画像の枚数で、値が下がると画面が滑らかに動きません。一方、マルチプレイでブロックを壊しても戻る、Mobが止まってから急に動く場合は、サーバーの処理遅延や通信状態も疑います。</p><div class="modlag-table-wrap"><table class="modlag-table"><thead><tr><th>症状</th><th>先に確認すること</th></tr></thead><tbody><tr><td>視点を動かすと映像がカクつく</td><td>F3などでFPSを確認し、描画距離・影MODを一つずつ変更</td></tr><tr><td>FPSは安定しているのにMobやブロックの反応が遅い</td><td>サーバー負荷・通信遅延を確認。FPS改善だけでは解決しないことがある</td></tr><tr><td>数秒おきに画面全体が止まる</td><td>メモリ使用量・同時起動アプリ・MOD競合を確認</td></tr></tbody></table></div><p>Java版サーバーのTPSは通常20を目標に処理されますが、クライアントのFPSとは別の指標です。TPSが低いかどうかはサーバー側の計測で確認し、画面のFPS値から推測しないでください。</p></section>
 <section aria-labelledby="modlag-steps">
 <h2 id="modlag-steps">まず無料で確認する5つのこと</h2>
 <ol>
